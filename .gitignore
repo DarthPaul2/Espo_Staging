@@ -1,13 +1,9 @@
 data/config.php
-data/config-internal.php
 data/cache/
 data/logs/
 data/upload/
-public/upload/
-public/files/
-public/pdf/
-vendor/
 venv/
+vendor/
 node_modules/
 *.log
 *.tmp
@@ -16,6 +12,3 @@ Thumbs.db
 .idea/
 .vscode/
 test_env.php
-application/
-client/modules/
-install/
