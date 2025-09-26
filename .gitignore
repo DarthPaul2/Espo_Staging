@@ -2,9 +2,33 @@ data/config.php
 data/cache/
 data/logs/
 data/upload/
+
+# application: игнор всего, кроме i18n
+application/**
+!application/Espo/
+application/Espo/**
+!application/Espo/Resources/
+!application/Espo/Resources/i18n/
+
+# client: игнор всего, кроме client/custom
+client/**
+!client/custom/
+
+# install: игнор всего, кроме install/core
+install/**
+!install/core/
+
+# окружения
 venv/
 vendor/
 node_modules/
+
+# public: оставить под контролем, но исключить загрузки/временное
+public/upload/
+public/files/
+public/pdf/
+
+# прочее
 *.log
 *.tmp
 .DS_Store
