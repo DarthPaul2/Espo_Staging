@@ -1,0 +1,14 @@
+[
+    {
+        "name": "lieferscheinnummer",
+        "width": 20
+    },
+    {
+        "name": "account",
+        "width": 20
+    },
+    {
+        "name": "lieferdatum",
+        "width": 20
+    }
+]

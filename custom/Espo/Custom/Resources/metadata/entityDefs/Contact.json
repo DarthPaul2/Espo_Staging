@@ -1,0 +1,29 @@
+{
+    "fields": {
+        "lastName": {
+            "required": false,
+            "options": []
+        },
+        "cRecalcFlag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        }
+    },
+    "links": {
+        "cHauptkontakt": {
+            "type": "hasMany",
+            "foreign": "cFirmenHauptkontakt",
+            "entity": "Account",
+            "audited": false,
+            "isCustom": true
+        },
+        "cLieferscheins": {
+            "type": "hasMany",
+            "foreign": "kontaktperson",
+            "entity": "CLieferschein",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}

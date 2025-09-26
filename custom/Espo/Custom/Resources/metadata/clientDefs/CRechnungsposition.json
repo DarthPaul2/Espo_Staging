@@ -1,0 +1,23 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "edit": "custom:views/c-rechnungsposition/record/edit",
+        "editSmall": "custom:views/c-rechnungsposition/record/edit-small"
+    },
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "material": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "rechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    },
+    "kanbanViewMode": false,
+    "color": null,
+    "iconClass": null
+}

@@ -1,0 +1,32 @@
+{
+    "fields": {
+        "cKundennummer": "Kunden Nr.",
+        "cHausnummer": "Hausnummer",
+        "cFirmenHauptkontakt": "Firmen Hauptkontakt",
+        "cAngebots": "Angebots",
+        "cRechnungs": "Rechnungs",
+        "cAuftrags": "Auftrags",
+        "cLieferscheins": "Lieferscheins"
+    },
+    "links": {
+        "cFirmenHauptkontakt": "Firmen Hauptkontakt",
+        "cAngebots": "Angebots",
+        "cRechnungs": "Rechnungs",
+        "cAuftrags": "Auftrags",
+        "cLieferscheins": "Lieferscheins"
+    },
+    "options": {
+        "type": {
+            "": "",
+            "Customer": "Kunde",
+            "Investor": "Investor",
+            "Partner": "Partner",
+            "Reseller": "Wiederverkäufer",
+            "Privat Kunde": "Privat Kunde",
+            "Firma": "Firmen Kunde",
+            "Kommunal / Städtisch": "Kommunal / Städtisch",
+            "Firmenmitglied": "Firmenmitglied",
+            "Lieferant": "Lieferant"
+        }
+    }
+}

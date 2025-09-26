@@ -1,0 +1,14 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#1e90ff",
+    "iconClass": "far fa-clock",
+    "relationshipPanels": {
+        "techniker": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

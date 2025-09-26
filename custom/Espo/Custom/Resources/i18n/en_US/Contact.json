@@ -1,0 +1,11 @@
+{
+    "fields": {
+        "cHauptkontakt": "Hauptkontakt",
+        "cRecalcFlag": "Recalc-Trigger",
+        "cLieferscheins": "Lieferscheins"
+    },
+    "links": {
+        "cHauptkontakt": "Hauptkontakt",
+        "cLieferscheins": "Lieferscheins"
+    }
+}

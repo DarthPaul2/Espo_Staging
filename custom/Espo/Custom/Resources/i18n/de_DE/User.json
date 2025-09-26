@@ -1,0 +1,10 @@
+{
+    "fields": {
+        "cArbeitszeiten": "Arbeitszeiten",
+        "cAuftrags": "Auftrags"
+    },
+    "links": {
+        "cArbeitszeiten": "Arbeitszeiten",
+        "cAuftrags": "Auftrags"
+    }
+}

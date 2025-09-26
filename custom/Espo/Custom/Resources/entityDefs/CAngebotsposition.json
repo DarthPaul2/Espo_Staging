@@ -1,0 +1,8 @@
+{
+    "hooks": {
+        "UpdateAngebotTotals": [
+            "afterSave",
+            "afterRemove"
+        ]
+    }
+}

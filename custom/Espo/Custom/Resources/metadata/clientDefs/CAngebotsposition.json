@@ -1,0 +1,27 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "recordViews": {
+        "edit": "custom:views/c-angebotsposition/record/edit",
+        "editSmall": "custom:views/c-angebotsposition/record/edit-small"
+    },
+    "relationshipPanels": {
+        "angebot": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "material": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "auftragspositions": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    },
+    "kanbanViewMode": false,
+    "color": null,
+    "iconClass": null
+}

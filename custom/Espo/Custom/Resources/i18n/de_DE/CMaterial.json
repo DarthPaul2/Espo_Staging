@@ -1,0 +1,25 @@
+{
+    "labels": {
+        "Create CMaterial": "Material erstellen"
+    },
+    "fields": {
+        "appklesecId": "AppklesecId",
+        "code": "Code",
+        "barcode": "Barcode",
+        "kategorie": "Kategorie",
+        "einheit": "Einheit",
+        "preis": "Preis",
+        "verwendet": "Verwendet",
+        "aktiv": "Aktiv",
+        "positionen": "Positionen",
+        "rechnungspositions": "Rechnungspositions",
+        "lieferscheinpositions": "Lieferscheinpositions",
+        "auftragspositions": "Auftragspositions"
+    },
+    "links": {
+        "positionen": "Positionen",
+        "rechnungspositions": "Rechnungspositions",
+        "lieferscheinpositions": "Lieferscheinpositions",
+        "auftragspositions": "Auftragspositions"
+    }
+}

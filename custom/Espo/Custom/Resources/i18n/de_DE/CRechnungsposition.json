@@ -1,0 +1,29 @@
+{
+    "labels": {
+        "Create CRechnungsposition": "Rechnungsposition erstellen"
+    },
+    "fields": {
+        "menge": "Menge",
+        "einheit": "Einheit",
+        "preis": "Preis",
+        "einkaufspreis": "Einkaufspreis",
+        "steuer": "Steuer",
+        "rabatt": "Rabatt (%)",
+        "gesamt": "Gesamt",
+        "sortierung": "Sortierung",
+        "netto": "Netto",
+        "material": "Material",
+        "materialDescription": "MaterialDescription",
+        "materialEinheit": "Material Einheit",
+        "materialPreis": "Material Preis",
+        "beschreibung": "Bemerkung",
+        "description": "Material – Beschreibung",
+        "rechnungOption13b": "§ 13b UStG",
+        "rechnungOption12": "§ 12 Abs. 3 UStG",
+        "rechnung": "Rechnung"
+    },
+    "links": {
+        "material": "Material",
+        "rechnung": "Rechnung"
+    }
+}

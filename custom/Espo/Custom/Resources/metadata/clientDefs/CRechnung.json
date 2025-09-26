@@ -1,0 +1,40 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "edit": "custom:views/c-rechnung/record/edit",
+        "detail": "custom:views/c-rechnung/record/detail"
+    },
+    "modalViews": [],
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "0": {
+            "name": "rechnungspositions",
+            "label": "Positionen",
+            "create": true,
+            "select": true
+        },
+        "account": {
+            "view": "views/record/panels/relationship"
+        },
+        "angebot": {
+            "view": "views/record/panels/relationship"
+        },
+        "auftrag": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "lieferscheins": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "mahnregel": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    },
+    "kanbanViewMode": false,
+    "color": "#ffa41a",
+    "iconClass": "fas fa-money-bill-wheat"
+}

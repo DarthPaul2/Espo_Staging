@@ -1,0 +1,97 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "angebot"
+                }
+            ],
+            [
+                {
+                    "name": "accountKundenNr"
+                },
+                {
+                    "name": "betragNetto"
+                },
+                {
+                    "name": "betragBrutto"
+                }
+            ],
+            [
+                {
+                    "name": "leistungsdatumVon"
+                },
+                {
+                    "name": "leistungsdatumBis"
+                }
+            ],
+            [
+                {
+                    "name": "status"
+                },
+                {
+                    "name": "pdfUrl"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "gesetzOption12"
+                },
+                {
+                    "name": "gesetzOption13b"
+                }
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                },
+                {
+                    "name": "bemerkungVorlage"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Umsatzsteuer"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "faelligAm"
+                },
+                {
+                    "name": "mahnregel"
+                }
+            ],
+            [
+                {
+                    "name": "mahnstufe"
+                },
+                {
+                    "name": "letzteMahnungAm"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Zahlungsinformationen"
+    }
+]

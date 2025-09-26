@@ -1,0 +1,30 @@
+{
+    "labels": {
+        "CAbwesenheit": "Abwesenheit",
+        "CAbwesenheitPlural": "Abwesenheiten",
+        "Create CAbwesenheit": "Abwesenheit erstellen",
+        "Schedule CAbwesenheit": "Abwesenheit planen",
+        "Set Held": "Auf durchgeführt setzen",
+        "Set Not Held": "Auf nicht durchgeführt setzen"
+    },
+    "massActions": {
+        "setHeld": "Auf durchgeführt setzen",
+        "setNotHeld": "Auf nicht durchgeführt setzen"
+    },
+    "presetFilters": {
+        "planned": "Geplant",
+        "held": "Durchgeführt",
+        "todays": "Heutige"
+    },
+    "fields": {
+        "typ": "Typ",
+        "color": "Farbe",
+        "calendarTitle": "Kalendertitel"
+    },
+    "options": {
+        "typ": {
+            "U": "Urlaub",
+            "K": "Krankheit"
+        }
+    }
+}

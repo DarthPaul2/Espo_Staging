@@ -1,0 +1,35 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "edit": "custom:views/c-angebot/record/edit",
+        "detail": "custom:views/c-angebot/record/detail"
+    },
+    "modalViews": [],
+    "relationshipPanels": {
+        "0": {
+            "name": "positionen",
+            "label": "Positionen",
+            "create": true,
+            "select": true
+        },
+        "rechnungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "auftrag": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "lieferscheins": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "auftragspositions": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    },
+    "kanbanViewMode": false,
+    "color": "#aaa3fb",
+    "iconClass": "far fa-rectangle-list"
+}
