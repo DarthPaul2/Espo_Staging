@@ -1,8 +1,0 @@
-{
-    "convertCurrency": {
-        "implementationClassName": "Espo\\Core\\Action\\Actions\\ConvertCurrency"
-    },
-    "merge": {
-        "implementationClassName": "Espo\\Core\\Action\\Actions\\Merge"
-    }
-}

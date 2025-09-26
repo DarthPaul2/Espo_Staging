@@ -1,5 +1,0 @@
-{
-    "selectApplierClassNameList": [
-        "Espo\\Core\\Select\\Applier\\AdditionalAppliers\\IsStarred"
-    ]
-}
