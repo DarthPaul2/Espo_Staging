@@ -1,0 +1,42 @@
+[
+    {
+        "name": "type",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "cKundennummer",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "name",
+        "width": 30,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "billingAddressPostalCode",
+        "width": 5,
+        "align": "left"
+    },
+    {
+        "name": "billingAddressCity",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "phoneNumber",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "emailAddress",
+        "width": 19,
+        "align": "left"
+    },
+    {
+        "name": "description",
+        "width": 16
+    }
+]

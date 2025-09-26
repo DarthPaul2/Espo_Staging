@@ -1,0 +1,40 @@
+{
+    "labels": {
+        "Create CLieferschein": "Lieferschein erstellen"
+    },
+    "fields": {
+        "auftrag": "Auftrag",
+        "account": "Account",
+        "lieferscheinpositions": "Lieferscheinpositions",
+        "accountKundenNr": "Kunden-Nr.",
+        "serviceNummer": "Service-Nr.",
+        "lieferdatum": "Lieferdatum",
+        "bemerkung": "Bemerkung",
+        "pdfUrl": "PDF-Link",
+        "betragNetto": "Betrag (netto)",
+        "betragBrutto": "Betrag (brutto)",
+        "ustBetrag": "USt-Betrag",
+        "einleitung": "Einleitung",
+        "lieferscheinnummer": "Lieferschein Nr.",
+        "angebot": "Angebot",
+        "rechnung": "Rechnung",
+        "versendetAm": "Versendet am",
+        "kontaktperson": "Kontaktperson",
+        "name": "Lieferscheintitel",
+        "lieferadresse": "Lieferadresse",
+        "lieferadresseStreet": "Lieferadresse Straße",
+        "lieferadresseCity": "Lieferadresse Ort",
+        "lieferadresseState": "Lieferadresse Bundesland/Kanton",
+        "lieferadresseCountry": "Lieferadresse Land",
+        "lieferadressePostalCode": "Lieferadresse PLZ",
+        "lieferadresseMap": "Lieferadresse Karte"
+    },
+    "links": {
+        "auftrag": "Auftrag",
+        "account": "Account",
+        "lieferscheinpositions": "Lieferscheinpositions",
+        "angebot": "Angebot",
+        "rechnung": "Rechnung",
+        "kontaktperson": "Kontaktperson"
+    }
+}

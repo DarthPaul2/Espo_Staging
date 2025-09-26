@@ -1,0 +1,7 @@
+{
+    "hooks": {
+        "afterCreate": [
+            "OutlookSync"
+        ]
+    }
+}

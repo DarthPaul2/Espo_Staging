@@ -1,0 +1,16 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "material": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "lieferschein": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "actions": {
+        "read": true,
+        "list": true,
+        "create": true,
+        "edit": true,
+        "delete": true
+    },
+    "contactLink": null,
+    "accountLink": null
+}

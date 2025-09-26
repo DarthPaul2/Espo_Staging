@@ -1,0 +1,14 @@
+data/config.php
+data/cache/
+data/logs/
+data/upload/
+venv/
+vendor/
+node_modules/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+test_env.php

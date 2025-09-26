@@ -1,0 +1,30 @@
+{
+    "labels": {
+        "Create CAuftragsposition": "Auftragsposition erstellen"
+    },
+    "fields": {
+        "auftrag": "Auftrag",
+        "angebot": "Angebot",
+        "angebotsposition": "Angebotsposition",
+        "material": "Material",
+        "beschreibung": "Bemerkung",
+        "einheit": "Einheit",
+        "menge": "Menge",
+        "preis": "Preis",
+        "netto": "Netto",
+        "gesamt": "Gesamt",
+        "rabatt": "Rabatt",
+        "steuer": "Steuer",
+        "einkaufspreis": "Einkaufspreis",
+        "sortierung": "Sortierung",
+        "angebotOption12": "§ 12 Abs. 3 UStG",
+        "angebotOption13b": "§ 13b UStG",
+        "includeInAuftrag": "Im Auftrag"
+    },
+    "links": {
+        "auftrag": "Auftrag",
+        "angebot": "Angebot",
+        "angebotsposition": "Angebotsposition",
+        "material": "Material"
+    }
+}

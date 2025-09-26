@@ -1,0 +1,52 @@
+[
+    {
+        "name": "name",
+        "width": 20,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "code",
+        "width": 5,
+        "align": "left"
+    },
+    {
+        "name": "kategorie",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "preis",
+        "width": 8,
+        "align": "left"
+    },
+    {
+        "name": "einheit",
+        "width": 8,
+        "align": "left"
+    },
+    {
+        "name": "barcode",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "createdAt",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "modifiedAt",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "description",
+        "width": 16
+    },
+    {
+        "name": "verwendet",
+        "width": 10,
+        "align": "left"
+    }
+]

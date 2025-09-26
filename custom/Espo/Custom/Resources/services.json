@@ -1,0 +1,48 @@
+{
+    "hooks": {
+        "updateAngebotTotals": {
+            "className": "Espo\\Custom\\Hooks\\CAngebotsposition\\UpdateAngebotTotals",
+            "arguments": [
+                "@entityManager"
+            ]
+        },
+        "updatePositionsOnTaxChange": {
+            "className": "Espo\\Custom\\Hooks\\CAngebot\\UpdatePositionsOnTaxChange",
+            "arguments": [
+                "@entityManager"
+            ]
+        },
+        "updateRechnungTotals": {
+            "className": "Espo\\Custom\\Hooks\\CRechnungsposition\\UpdateRechnungTotals",
+            "arguments": [
+                "@entityManager"
+            ]
+        },
+        "rechnungAutoNumber": {
+            "className": "Espo\\Custom\\Hooks\\CRechnung\\AutoNumber",
+            "arguments": [
+                "@entityManager",
+                "@log"
+            ]
+        },
+        "rechnungBemerkungVorlage": {
+            "className": "Espo\\Custom\\Hooks\\CRechnung\\BemerkungVorlage",
+            "arguments": [
+                "@log"
+            ]
+        },
+        "rechnungPositionsLinkRecalc": {
+            "className": "Espo\\Custom\\Hooks\\CRechnung\\PositionsLinkRecalc",
+            "arguments": [
+                "@entityManager"
+            ]
+        },
+        "rechnungAngebotImporter": {
+            "className": "Espo\\Custom\\Hooks\\CRechnung\\AngebotImporter",
+            "arguments": [
+                "@entityManager",
+                "@log"
+            ]
+        }
+    }
+}

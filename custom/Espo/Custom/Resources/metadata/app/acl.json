@@ -1,0 +1,8 @@
+{
+    "CAbwesenheit": {
+        "read": "all",
+        "edit": "all",
+        "delete": "all",
+        "create": "all"
+    }
+}

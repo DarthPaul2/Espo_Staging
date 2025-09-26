@@ -1,0 +1,18 @@
+{
+    "links": {
+        "cArbeitszeiten": {
+            "type": "hasMany",
+            "foreign": "techniker",
+            "entity": "CArbeitszeit",
+            "audited": false,
+            "isCustom": true
+        },
+        "cAuftrags": {
+            "type": "hasMany",
+            "foreign": "auftragsbestaetigungGesendetVon",
+            "entity": "CAuftrag",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}

@@ -1,0 +1,41 @@
+{
+    "fields": {
+        "auftragsnummer": "Auftrags-Nr.",
+        "status": "Status",
+        "account": "Account",
+        "rechnungs": "Rechnungs",
+        "lieferscheins": "Lieferscheins",
+        "accountKundenNr": "Kunden-Nr.",
+        "bemerkung": "Bemerkung",
+        "leistungsdatumVon": "Leistungsdatum von",
+        "leistungsdatumBis": "Leistungsdatum bis",
+        "angebots": "Angebots",
+        "betragNetto": "Nettobetrag",
+        "betragBrutto": "Bruttobetrag",
+        "verrechnetNetto": "Verrechnet Netto",
+        "verrechnetBrutto": "Verrechnet Brutto",
+        "pdfUrl": "PDF-Link",
+        "auftragsbestaetigungGesendetAm": "Auftragsbestätigung gesendet am",
+        "auftragsbestaetigungGesendetVon": "Gesendet von",
+        "auftragspositions": "Auftragspositions"
+    },
+    "links": {
+        "account": "Account",
+        "rechnungs": "Rechnungs",
+        "lieferscheins": "Lieferscheins",
+        "angebots": "Angebots",
+        "auftragsbestaetigungGesendetVon": "Gesendet von",
+        "auftragspositions": "Auftragspositions"
+    },
+    "labels": {
+        "Create CAuftrag": "Create Auftrag"
+    },
+    "options": {
+        "status": {
+            "offen": "offen",
+            "in Bearbeitung": "in Bearbeitung",
+            "abgeschlossen": "abgeschlossen",
+            "storniert": "storniert"
+        }
+    }
+}

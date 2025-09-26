@@ -1,0 +1,12 @@
+{
+    "relationshipPanels": {
+        "hauptkontakt": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "lieferscheins": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

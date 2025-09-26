@@ -1,0 +1,82 @@
+{
+    "fields": {
+        "cKundennummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "cHausnummer": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
+        },
+        "cFirmenHauptkontakt": {
+            "type": "link"
+        },
+        "type": {
+            "options": [
+                "",
+                "Customer",
+                "Investor",
+                "Partner",
+                "Reseller",
+                "Privat Kunde",
+                "Firma",
+                "Kommunal / Städtisch",
+                "Firmenmitglied",
+                "Lieferant"
+            ],
+            "style": {
+                "": null,
+                "Customer": null,
+                "Investor": null,
+                "Partner": null,
+                "Reseller": null,
+                "Privat Kunde": null,
+                "Firma": null,
+                "Kommunal / Städtisch": null,
+                "Firmenmitglied": null,
+                "Lieferant": null
+            }
+        }
+    },
+    "links": {
+        "cFirmenHauptkontakt": {
+            "type": "belongsTo",
+            "foreign": "cHauptkontakt",
+            "entity": "Contact",
+            "audited": false,
+            "isCustom": true
+        },
+        "cAngebots": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CAngebot",
+            "audited": false,
+            "isCustom": true
+        },
+        "cRechnungs": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cAuftrags": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CAuftrag",
+            "audited": false,
+            "isCustom": true
+        },
+        "cLieferscheins": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CLieferschein",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}

@@ -1,0 +1,111 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "auftragsnummer"
+                },
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
+                    "name": "accountKundenNr"
+                },
+                {
+                    "name": "leistungsdatumVon"
+                },
+                {
+                    "name": "leistungsdatumBis"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "betragNetto"
+                },
+                {
+                    "name": "betragBrutto"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Summen (Angebot)"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "verrechnetNetto"
+                },
+                {
+                    "name": "verrechnetBrutto"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Verrechnet (Rechnungen)"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "bemerkung"
+                },
+                {
+                    "name": "description"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Beschreibung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "pdfUrl"
+                },
+                {
+                    "name": "auftragsbestaetigungGesendetAm"
+                },
+                {
+                    "name": "auftragsbestaetigungGesendetVon"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "PDF Dokumentation"
+    }
+]

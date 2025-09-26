@@ -1,0 +1,60 @@
+{
+    "fields": {
+        "rechnungsnummer": "Rechnungs-Nr.",
+        "einleitung": "Einleitung",
+        "bemerkung": "Bemerkung",
+        "betragNetto": "Betrag (netto)",
+        "betragBrutto": "Betrag (brutto)",
+        "ustBetrag": "USt-Betrag",
+        "faelligAm": "Fällig am",
+        "leistungsdatumVon": "Leistungsdatum von",
+        "leistungsdatumBis": "Leistungsdatum bis",
+        "gesetzOption13b": "§13b UStG (Reverse Charge)",
+        "gesetzOption12": "§12 UStG (erm. Steuersatz)",
+        "account": "Account",
+        "accountKundenNr": "Kunden-Nr.",
+        "angebot": "Angebot",
+        "status": "Status",
+        "serviceNummer": "Service-Nr.",
+        "pdfUrl": "PDF-URL",
+        "sachbearbeiter": "Sachbearbeiter/-in",
+        "bemerkungVorlage": "Abschlussbemerkung",
+        "rechnungspositions": "Rechnungspositions",
+        "auftrag": "Auftrag",
+        "lieferscheins": "Lieferscheins",
+        "mahnregel": "Mahnregel",
+        "mahnstufe": "Mahnstufe",
+        "letzteMahnungAm": "Letzte Mahnung am"
+    },
+    "links": {
+        "account": "Account",
+        "angebot": "Angebot",
+        "rechnungspositions": "Rechnungspositions",
+        "auftrag": "Auftrag",
+        "lieferscheins": "Lieferscheins",
+        "mahnregel": "Mahnregel"
+    },
+    "labels": {
+        "Create CRechnung": "Create Rechnung"
+    },
+    "options": {
+        "status": {
+            "offen": "offen",
+            "versendet": "versendet",
+            "bezahlt": "bezahlt",
+            "storniert": "storniert"
+        },
+        "bemerkungVorlage": {
+            "- auswählen -": "- auswählen -",
+            "Bitte überweisen Sie den Rechnungsbetrag...": "Bitte überweisen Sie den Rechnungsbetrag...",
+            "Bitte auswählen…": "Bitte auswählen…"
+        },
+        "mahnstufe": {
+            "zahlungserinnerung": "Zahlungserinnerung",
+            "mahnung1": "Mahnung 1",
+            "mahnung2": "Mahnung 2",
+            "mahnung3": "Letzte Mahnung",
+            "inkasso": "Inkasso"
+        }
+    }
+}

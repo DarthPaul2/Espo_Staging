@@ -1,0 +1,34 @@
+[
+    {
+        "name": "material",
+        "width": 20
+    },
+    {
+        "name": "menge",
+        "width": 20
+    },
+    {
+        "name": "einheit",
+        "width": 20
+    },
+    {
+        "name": "preis",
+        "width": 20
+    },
+    {
+        "name": "einkaufspreis",
+        "width": 20
+    },
+    {
+        "name": "steuer",
+        "width": 20
+    },
+    {
+        "name": "rabatt",
+        "width": 20
+    },
+    {
+        "name": "gesamt",
+        "width": 20
+    }
+]

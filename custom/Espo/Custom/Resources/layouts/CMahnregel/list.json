@@ -1,0 +1,42 @@
+[
+    {
+        "name": "name",
+        "width": 20,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "aktiv",
+        "width": 6,
+        "align": "left"
+    },
+    {
+        "name": "autoSendEmails",
+        "width": 18,
+        "align": "left"
+    },
+    {
+        "name": "zahlungserinnerungTage",
+        "width": 18,
+        "align": "left"
+    },
+    {
+        "name": "mahnung1Tage",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "mahnung2Tage",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "mahnungLetTage",
+        "width": 16
+    },
+    {
+        "name": "inkassoTage",
+        "width": 10,
+        "align": "left"
+    }
+]

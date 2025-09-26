@@ -1,0 +1,30 @@
+[
+    {
+        "name": "material",
+        "width": 20
+    },
+    {
+        "name": "description",
+        "width": 20
+    },
+    {
+        "name": "menge",
+        "width": 20
+    },
+    {
+        "name": "einheit",
+        "width": 20
+    },
+    {
+        "name": "preis",
+        "width": 20
+    },
+    {
+        "name": "gesamt",
+        "width": 20
+    },
+    {
+        "name": "includeInAuftrag",
+        "width": 20
+    }
+]

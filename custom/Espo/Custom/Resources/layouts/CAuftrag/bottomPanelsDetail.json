@@ -1,0 +1,17 @@
+{
+    "_delimiter_": {
+        "disabled": true
+    },
+    "auftragspositions": {
+        "index": 0
+    },
+    "angebots": {
+        "index": 1
+    },
+    "rechnungs": {
+        "index": 2
+    },
+    "lieferscheins": {
+        "index": 3
+    }
+}

@@ -1,0 +1,3 @@
+{
+    "beforeSaveCustomScript": "// grün für Urlaub (U), rosa für Krankheit (K)\nif (typ == 'U') {\n    color = '#00994d';\n    calendarTitle = name + ' - ' + typ;\n} else if (typ == 'K') {\n    color = '#b30000';\n    calendarTitle = name + ' - ' + typ;\n} else {\n    calendarTitle = name;\n}\n"
+}

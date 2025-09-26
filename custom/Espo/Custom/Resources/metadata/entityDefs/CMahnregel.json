@@ -1,0 +1,144 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": false,
+            "pattern": "$noBadCharacters",
+            "options": []
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        },
+        "aktiv": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "autoSendEmails": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "zahlungserinnerungTage": {
+            "type": "int",
+            "isCustom": true
+        },
+        "zahlungserinnerungGebuehr": {
+            "type": "currency",
+            "isCustom": true
+        },
+        "mahnung1Tage": {
+            "type": "int",
+            "isCustom": true
+        },
+        "mahnung1Gebuehr": {
+            "type": "currency",
+            "isCustom": true
+        },
+        "mahnung2Tage": {
+            "type": "int",
+            "isCustom": true
+        },
+        "mahnung2Gebuehr": {
+            "type": "currency",
+            "isCustom": true
+        },
+        "mahnungLetTage": {
+            "type": "int",
+            "isCustom": true
+        },
+        "mahnungLetGebuehr": {
+            "type": "currency",
+            "isCustom": true
+        },
+        "inkassoTage": {
+            "type": "int",
+            "isCustom": true
+        },
+        "inkassoGebuehr": {
+            "type": "currency",
+            "isCustom": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "rechnungs": {
+            "type": "hasMany",
+            "foreign": "mahnregel",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    }
+}

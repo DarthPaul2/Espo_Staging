@@ -1,0 +1,9 @@
+{
+    "tabs": {
+        "Account": true,
+        "Contact": true,
+        "Opportunity": true,
+        "Task": true,
+        "CAbwesenheit": true
+    }
+}

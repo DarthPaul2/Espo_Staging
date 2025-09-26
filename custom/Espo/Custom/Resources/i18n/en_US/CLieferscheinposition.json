@@ -1,0 +1,23 @@
+{
+    "fields": {
+        "sortierung": "Sortierung",
+        "menge": "Menge",
+        "einheit": "Einheit",
+        "beschreibung": "Bemerkung",
+        "preis": "Preis",
+        "gesamt": "Gesamt",
+        "material": "Material",
+        "materialDescription": "MaterialDescription",
+        "materialEinheit": "MaterialEinheit",
+        "materialPreis": "MaterialPreis",
+        "lieferschein": "Lieferschein",
+        "rabatt": "Rabatt (%)"
+    },
+    "links": {
+        "material": "Material",
+        "lieferschein": "Lieferschein"
+    },
+    "labels": {
+        "Create CLieferscheinposition": "Create Lieferscheinposition"
+    }
+}
