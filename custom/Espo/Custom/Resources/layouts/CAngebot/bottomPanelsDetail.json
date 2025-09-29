@@ -4,7 +4,8 @@
     },
     "positionen": {
         "dynamicLogicVisible": null,
-        "style": "default",
+        "style": "warning",
+        "dynamicLogicStyled": null,
         "sticked": false,
         "index": 0
     }

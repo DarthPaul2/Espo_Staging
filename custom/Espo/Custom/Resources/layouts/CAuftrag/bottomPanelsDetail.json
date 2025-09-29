@@ -3,15 +3,25 @@
         "disabled": true
     },
     "auftragspositions": {
+        "dynamicLogicVisible": null,
+        "style": "warning",
+        "dynamicLogicStyled": null,
+        "sticked": false,
         "index": 0
     },
     "angebots": {
         "index": 1
     },
     "rechnungs": {
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "sticked": false,
         "index": 2
     },
     "lieferscheins": {
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "sticked": false,
         "index": 3
     }
 }

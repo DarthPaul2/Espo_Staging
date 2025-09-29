@@ -1,12 +1,13 @@
 [
     {
-        "name": "lieferscheinnummer",
+        "name": "name",
         "width": 45,
+        "link": true,
         "noLabel": true,
         "align": "left"
     },
     {
-        "name": "lieferdatum",
+        "name": "faelligAm",
         "width": 20
     }
 ]

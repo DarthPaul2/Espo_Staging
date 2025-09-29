@@ -3,6 +3,10 @@
         "disabled": true
     },
     "lieferscheinpositions": {
+        "dynamicLogicVisible": null,
+        "style": "warning",
+        "dynamicLogicStyled": null,
+        "sticked": false,
         "index": 0
     }
 }

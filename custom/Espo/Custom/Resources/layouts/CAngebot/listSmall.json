@@ -1,0 +1,15 @@
+[
+    {
+        "name": "name",
+        "width": 45,
+        "link": true,
+        "noLabel": true,
+        "align": "left"
+    },
+    {
+        "name": "createdAt",
+        "width": 20,
+        "noLabel": true,
+        "align": "left"
+    }
+]

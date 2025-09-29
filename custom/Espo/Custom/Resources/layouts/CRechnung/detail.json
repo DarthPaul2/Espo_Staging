@@ -13,6 +13,7 @@
                 {
                     "name": "accountKundenNr"
                 },
+                false,
                 {
                     "name": "betragNetto"
                 },
@@ -87,7 +88,8 @@
             ]
         ],
         "dynamicLogicVisible": null,
-        "style": "default",
+        "style": "info",
+        "dynamicLogicStyled": null,
         "tabBreak": false,
         "hidden": false,
         "noteText": null,
