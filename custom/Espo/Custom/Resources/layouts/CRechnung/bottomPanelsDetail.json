@@ -8,5 +8,12 @@
         "dynamicLogicStyled": null,
         "sticked": false,
         "index": 0
+    },
+    "mahnungs": {
+        "dynamicLogicVisible": null,
+        "style": "danger",
+        "dynamicLogicStyled": null,
+        "sticked": false,
+        "index": 1
     }
 }

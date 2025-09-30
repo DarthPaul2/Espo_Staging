@@ -1,0 +1,56 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "rechnung"
+                },
+                {
+                    "name": "mahnstufe"
+                },
+                {
+                    "name": "mahngebhr"
+                },
+                {
+                    "name": "gesendetAm"
+                }
+            ],
+            [
+                {
+                    "name": "status"
+                },
+                false,
+                {
+                    "name": "pdfUrl"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "tageUeberfaellig"
+                },
+                {
+                    "name": "betragOffen"
+                },
+                {
+                    "name": "mahnregel"
+                },
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Details"
+    }
+]

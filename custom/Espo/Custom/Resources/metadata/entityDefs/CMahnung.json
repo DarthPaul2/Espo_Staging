@@ -1,12 +1,13 @@
 {
-    "isCustom": true,
-    "isApi": true,
     "fields": {
         "name": {
             "type": "varchar",
             "required": false,
             "pattern": "$noBadCharacters",
             "options": []
+        },
+        "description": {
+            "type": "text"
         },
         "createdAt": {
             "type": "datetime",
@@ -35,54 +36,74 @@
             "type": "linkMultiple",
             "view": "views/fields/teams"
         },
-        "aktiv": {
-            "notNull": true,
-            "type": "bool",
+        "rechnung": {
+            "type": "link"
+        },
+        "mahnregel": {
+            "type": "link"
+        },
+        "mahnstufe": {
+            "type": "enum",
+            "options": [
+                "zahlungserinnerung",
+                "mahnung1",
+                "mahnung2",
+                "letztemahnung",
+                "inkasso"
+            ],
+            "style": {
+                "zahlungserinnerung": null,
+                "mahnung1": null,
+                "mahnung2": null,
+                "letztemahnung": null,
+                "inkasso": null
+            },
+            "default": "zahlungserinnerung",
+            "maxLength": 100,
             "isCustom": true
         },
-        "autoSendEmails": {
-            "notNull": true,
-            "type": "bool",
-            "isCustom": true
-        },
-        "zahlungserinnerungTage": {
-            "type": "int",
-            "isCustom": true
-        },
-        "zahlungserinnerungGebuehr": {
+        "mahngebhr": {
             "type": "currency",
             "isCustom": true
         },
-        "mahnung1Tage": {
+        "status": {
+            "type": "enum",
+            "options": [
+                "Erstellt",
+                "Gesendet",
+                "Storniert"
+            ],
+            "default": "Erstellt",
+            "style": {
+                "Erstellt": null,
+                "Gesendet": null,
+                "Storniert": null
+            },
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "gesendetAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "pdfUrl": {
+            "type": "url",
+            "isCustom": true
+        },
+        "tageUeberfaellig": {
             "type": "int",
             "isCustom": true
         },
-        "mahnung1Gebuehr": {
+        "betragOffen": {
             "type": "currency",
             "isCustom": true
         },
-        "mahnung2Tage": {
-            "type": "int",
-            "isCustom": true
-        },
-        "mahnung2Gebuehr": {
-            "type": "currency",
-            "isCustom": true
-        },
-        "mahnungLetTage": {
-            "type": "int",
-            "isCustom": true
-        },
-        "mahnungLetGebuehr": {
-            "type": "currency",
-            "isCustom": true
-        },
-        "inkassoTage": {
-            "type": "int",
-            "isCustom": true
-        },
-        "inkassoGebuehr": {
-            "type": "currency",
+        "bemerkung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
             "isCustom": true
         }
     },
@@ -105,17 +126,17 @@
             "relationName": "entityTeam",
             "layoutRelationshipsDisabled": true
         },
-        "rechnungs": {
-            "type": "hasMany",
-            "foreign": "mahnregel",
+        "rechnung": {
+            "type": "belongsTo",
+            "foreign": "mahnungs",
             "entity": "CRechnung",
             "audited": false,
             "isCustom": true
         },
-        "mahnungs": {
-            "type": "hasMany",
-            "foreign": "mahnregel",
-            "entity": "CMahnung",
+        "mahnregel": {
+            "type": "belongsTo",
+            "foreign": "mahnungs",
+            "entity": "CMahnregel",
             "audited": false,
             "isCustom": true
         }

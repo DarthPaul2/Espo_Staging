@@ -3,14 +3,12 @@
     "boolFilterList": [
         "onlyMy"
     ],
-    "color": "#000000",
-    "iconClass": "fas fa-money-bill-trend-up",
     "relationshipPanels": {
-        "rechnungs": {
+        "rechnung": {
             "layout": null,
             "selectPrimaryFilterName": null
         },
-        "mahnungs": {
+        "mahnregel": {
             "layout": null,
             "selectPrimaryFilterName": null
         }

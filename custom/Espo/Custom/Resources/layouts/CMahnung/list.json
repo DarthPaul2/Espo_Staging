@@ -1,0 +1,30 @@
+[
+    {
+        "name": "createdAt",
+        "width": 16
+    },
+    {
+        "name": "rechnung",
+        "width": 16
+    },
+    {
+        "name": "mahnstufe",
+        "width": 16
+    },
+    {
+        "name": "mahngebhr",
+        "width": 16
+    },
+    {
+        "name": "status",
+        "width": 16
+    },
+    {
+        "name": "pdfUrl",
+        "width": 16
+    },
+    {
+        "name": "gesendetAm",
+        "width": 16
+    }
+]

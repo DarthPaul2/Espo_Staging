@@ -1,0 +1,39 @@
+{
+    "fields": {
+        "rechnung": "Rechnung",
+        "mahnregel": "Mahnregel",
+        "mahnstufe": "Mahnstufe",
+        "mahngebhr": "Mahngebühr",
+        "mahngebhrCurrency": "Mahngebühr (Währung)",
+        "mahngebhrConverted": "Mahngebühr (Konvertiert)",
+        "status": "Status",
+        "gesendetAm": "Gesendet Am",
+        "pdfUrl": "PDF-Mahnung",
+        "tageUeberfaellig": "Tage überfällig",
+        "betragOffen": "Betrag offen",
+        "betragOffenCurrency": "Betrag offen (Währung)",
+        "betragOffenConverted": "Betrag offen (Konvertiert)",
+        "bemerkung": "Bemerkung"
+    },
+    "links": {
+        "rechnung": "Rechnung",
+        "mahnregel": "Mahnregel"
+    },
+    "labels": {
+        "Create CMahnung": "Create Mahnung"
+    },
+    "options": {
+        "mahnstufe": {
+            "zahlungserinnerung": "Zahlungserinnerung",
+            "mahnung1": "Mahnung 1",
+            "mahnung2": "Mahnung 2",
+            "letztemahnung": "Letzte Mahnung",
+            "inkasso": "Inkasso"
+        },
+        "status": {
+            "Erstellt": "Erstellt",
+            "Gesendet": "Gesendet",
+            "Storniert": "Storniert"
+        }
+    }
+}

@@ -27,7 +27,8 @@
         "lieferscheins": "Lieferscheins",
         "mahnregel": "Mahnregel",
         "mahnstufe": "Mahnstufe",
-        "letzteMahnungAm": "Letzte Mahnung am"
+        "letzteMahnungAm": "Letzte Mahnung am",
+        "mahnungs": "Mahnungs"
     },
     "links": {
         "account": "Account",
@@ -35,7 +36,8 @@
         "rechnungspositions": "Rechnungspositions",
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
-        "mahnregel": "Mahnregel"
+        "mahnregel": "Mahnregel",
+        "mahnungs": "Mahnungs"
     },
     "options": {
         "status": {

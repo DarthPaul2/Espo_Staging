@@ -22,10 +22,12 @@
         "inkassoGebuehr": "Gebühr (Inkasso)",
         "inkassoGebuehrCurrency": "Gebühr (Inkasso) (Währung)",
         "inkassoGebuehrConverted": "Gebühr (Inkasso) (Konvertiert)",
-        "rechnungs": "Rechnungs"
+        "rechnungs": "Rechnungs",
+        "mahnungs": "Mahnungs"
     },
     "links": {
-        "rechnungs": "Rechnungs"
+        "rechnungs": "Rechnungs",
+        "mahnungs": "Mahnungs"
     },
     "labels": {
         "Create CMahnregel": "Create Mahnregel"

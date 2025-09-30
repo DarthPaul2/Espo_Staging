@@ -263,6 +263,13 @@
             "entity": "CMahnregel",
             "audited": false,
             "isCustom": true
+        },
+        "mahnungs": {
+            "type": "hasMany",
+            "foreign": "rechnung",
+            "entity": "CMahnung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

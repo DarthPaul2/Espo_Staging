@@ -11,7 +11,8 @@
         "CLieferschein": "Lieferschein",
         "CLieferscheinposition": "Lieferscheinposition",
         "CAuftragsposition": "Auftragsposition",
-        "CMahnregel": "Mahnregel"
+        "CMahnregel": "Mahnregel",
+        "CMahnung": "Mahnung"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -25,7 +26,8 @@
         "CLieferschein": "Lieferscheine",
         "CLieferscheinposition": "Lieferscheinpositionen",
         "CAuftragsposition": "Auftragspositions",
-        "CMahnregel": "Mahnregeln"
+        "CMahnregel": "Mahnregeln",
+        "CMahnung": "Mahnungen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

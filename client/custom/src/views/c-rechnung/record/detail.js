@@ -313,6 +313,13 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 style: 'default',
                 title: 'Rechnung per E-Mail senden'
             });
+            this.buttonList.push({
+                name: 'createMahnung',
+                label: this.translate ? this.translate('Mahnung erzeugen', 'labels', 'CRechnung') : 'Mahnung erzeugen',
+                style: 'danger',
+                title: 'Mahnung als PDF erzeugen'
+            });
+
         },
 
         // ==== PDF Preview ====
@@ -497,6 +504,37 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 this.notify(false, 'loading', notifyId);
                 this.notify('Kundendaten konnten nicht geladen werden.', 'error');
                 console.error('[CRechnung/detail] Fehler beim Laden der Firma:', err);
+            });
+        },
+        // ==== Mahnung erzeugen ====
+        actionCreateMahnung: function () {
+            const id = this.model && this.model.id;
+            if (!id) return;
+
+            const notifyId = this.notify('Mahnung wird erzeugt…', 'loading');
+
+            const url = `${this.FLASK_BASE}/mahnung/${encodeURIComponent(id)}/create_pdf`;
+
+            $.ajax({
+                url,
+                method: 'POST',
+                contentType: 'application/json',
+                headers: { 'Authorization': this.BASIC_AUTH },
+                success: (resp) => {
+                    this.notify(false, 'loading', notifyId);
+                    if (resp?.pdfUrl) {
+                        this.notify('Mahnung-PDF erzeugt', 'success');
+                        // обновим поле pdfUrl (или отдельное поле, если решим так хранить)
+                        this.model.save({ pdfUrl: resp.pdfUrl }, { success: () => this.reRender() });
+                    } else {
+                        this.notify('PDF erstellt, aber keine URL erhalten', 'warning');
+                    }
+                },
+                error: (xhr) => {
+                    this.notify(false, 'loading', notifyId);
+                    this.notify('Fehler bei Mahnung-PDF', 'error');
+                    console.error('[CRechnung/detail] createMahnung:error', xhr);
+                }
             });
         },
 

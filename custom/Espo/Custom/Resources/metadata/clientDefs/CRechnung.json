@@ -32,6 +32,10 @@
         "mahnregel": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "mahnungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,
