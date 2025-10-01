@@ -20,12 +20,12 @@
     },
     {
         "name": "mahngebhr",
-        "width": 10,
+        "width": 14,
         "align": "left"
     },
     {
         "name": "gesamtbetrag",
-        "width": 12,
+        "width": 14,
         "align": "left"
     }
 ]

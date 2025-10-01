@@ -108,7 +108,7 @@
         },
         "gesamtbetrag": {
             "type": "currency",
-            "readOnly": true,
+            "view": "custom:views/fields/gesamtbetrag",
             "isCustom": true
         }
     },
