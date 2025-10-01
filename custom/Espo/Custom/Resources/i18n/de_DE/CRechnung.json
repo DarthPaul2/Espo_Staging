@@ -22,22 +22,22 @@
         "pdfUrl": "PDF-URL",
         "sachbearbeiter": "Sachbearbeiter/-in",
         "bemerkungVorlage": "Abschlussbemerkung",
-        "rechnungspositions": "Rechnungspositions",
+        "rechnungspositions": "Rechnungspositionen",
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
         "mahnregel": "Mahnregel",
         "mahnstufe": "Mahnstufe",
         "letzteMahnungAm": "Letzte Mahnung am",
-        "mahnungs": "Mahnungs"
+        "mahnungs": "Mahnungen"
     },
     "links": {
         "account": "Account",
         "angebot": "Angebot",
-        "rechnungspositions": "Rechnungspositions",
+        "rechnungspositions": "Rechnungspositionen",
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
         "mahnregel": "Mahnregel",
-        "mahnungs": "Mahnungs"
+        "mahnungs": "Mahnungen"
     },
     "options": {
         "status": {

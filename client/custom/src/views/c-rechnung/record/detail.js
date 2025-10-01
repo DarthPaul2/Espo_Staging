@@ -524,11 +524,14 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     this.notify(false, 'loading', notifyId);
                     if (resp?.pdfUrl) {
                         this.notify('Mahnung-PDF erzeugt', 'success');
-                        // обновим поле pdfUrl (или отдельное поле, если решим так хранить)
-                        this.model.save({ pdfUrl: resp.pdfUrl }, { success: () => this.reRender() });
+
+                        // 👉 больше не сохраняем pdfUrl в Rechnung!
+                        // Просто откроем ссылку сразу в новой вкладке
+                        window.open(resp.pdfUrl, '_blank');
                     } else {
                         this.notify('PDF erstellt, aber keine URL erhalten', 'warning');
                     }
+
                 },
                 error: (xhr) => {
                     this.notify(false, 'loading', notifyId);

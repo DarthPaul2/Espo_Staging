@@ -36,6 +36,10 @@
         "mahnungs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "rechnungspositions": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

@@ -26,5 +26,10 @@
     {
         "name": "gesendetAm",
         "width": 16
+    },
+    {
+        "name": "gesamtbetrag",
+        "width": 12,
+        "align": "left"
     }
 ]

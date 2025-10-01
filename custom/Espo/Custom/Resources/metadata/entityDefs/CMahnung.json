@@ -48,14 +48,14 @@
                 "zahlungserinnerung",
                 "mahnung1",
                 "mahnung2",
-                "letztemahnung",
+                "mahnung3",
                 "inkasso"
             ],
             "style": {
                 "zahlungserinnerung": null,
                 "mahnung1": null,
                 "mahnung2": null,
-                "letztemahnung": null,
+                "mahnung3": null,
                 "inkasso": null
             },
             "default": "zahlungserinnerung",
@@ -104,6 +104,11 @@
             "type": "text",
             "rowsMin": 2,
             "cutHeight": 200,
+            "isCustom": true
+        },
+        "gesamtbetrag": {
+            "type": "currency",
+            "readOnly": true,
             "isCustom": true
         }
     },
