@@ -13,6 +13,7 @@ application/Espo/**
 # client: игнор всего, кроме client/custom
 client/**
 !client/custom/
+!client/custom/**
 
 # install: игнор всего, кроме install/core
 install/**
