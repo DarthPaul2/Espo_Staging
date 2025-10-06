@@ -6,14 +6,16 @@
         "cAngebots": "Angebots",
         "cRechnungs": "Rechnungs",
         "cAuftrags": "Auftrags",
-        "cLieferscheins": "Lieferscheins"
+        "cLieferscheins": "Lieferscheins",
+        "cWerkzeug": "Werkzeug"
     },
     "links": {
         "cFirmenHauptkontakt": "Firmen Hauptkontakt",
         "cAngebots": "Angebots",
         "cRechnungs": "Rechnungs",
         "cAuftrags": "Auftrags",
-        "cLieferscheins": "Lieferscheins"
+        "cLieferscheins": "Lieferscheins",
+        "cWerkzeug": "Werkzeug"
     },
     "options": {
         "type": {

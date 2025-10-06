@@ -1,0 +1,8 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#2ac9ff",
+    "iconClass": "far fa-sun"
+}

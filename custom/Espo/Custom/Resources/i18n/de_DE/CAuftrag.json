@@ -21,7 +21,8 @@
         "pdfUrl": "PDF-Link",
         "auftragsbestaetigungGesendetAm": "Auftragsbestätigung gesendet am",
         "auftragsbestaetigungGesendetVon": "Gesendet von",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "werkzeugs": "Werkzeugs"
     },
     "options": {
         "status": {
@@ -37,6 +38,7 @@
         "lieferscheins": "Lieferscheinen",
         "angebots": "Angeboten",
         "auftragsbestaetigungGesendetVon": "Gesendet von",
-        "auftragspositions": "Auftragspositionen"
+        "auftragspositions": "Auftragspositionen",
+        "werkzeugs": "Werkzeugs"
     }
 }

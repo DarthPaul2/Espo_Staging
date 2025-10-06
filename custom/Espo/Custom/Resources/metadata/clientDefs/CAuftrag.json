@@ -31,6 +31,10 @@
         "auftragspositions": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "werkzeugs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

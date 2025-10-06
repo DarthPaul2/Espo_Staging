@@ -40,6 +40,9 @@
                 "Firmenmitglied": null,
                 "Lieferant": null
             }
+        },
+        "cWerkzeug": {
+            "type": "link"
         }
     },
     "links": {
@@ -75,6 +78,13 @@
             "type": "hasMany",
             "foreign": "account",
             "entity": "CLieferschein",
+            "audited": false,
+            "isCustom": true
+        },
+        "cWerkzeug": {
+            "type": "belongsTo",
+            "foreign": "accounts",
+            "entity": "CWerkzeug",
             "audited": false,
             "isCustom": true
         }

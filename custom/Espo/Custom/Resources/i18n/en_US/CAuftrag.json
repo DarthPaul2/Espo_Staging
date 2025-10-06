@@ -17,7 +17,8 @@
         "pdfUrl": "PDF-Link",
         "auftragsbestaetigungGesendetAm": "Auftragsbestätigung gesendet am",
         "auftragsbestaetigungGesendetVon": "Gesendet von",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "werkzeugs": "Werkzeugs"
     },
     "links": {
         "account": "Account",
@@ -25,7 +26,8 @@
         "lieferscheins": "Lieferscheins",
         "angebots": "Angebots",
         "auftragsbestaetigungGesendetVon": "Gesendet von",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "werkzeugs": "Werkzeugs"
     },
     "labels": {
         "Create CAuftrag": "Create Auftrag"

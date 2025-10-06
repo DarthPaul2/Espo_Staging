@@ -1,0 +1,8 @@
+{
+    "relationshipPanels": {
+        "werkzeug": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

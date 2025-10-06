@@ -200,6 +200,14 @@
             "entity": "Contact",
             "audited": false,
             "isCustom": true
+        },
+        "werkzeugs": {
+            "type": "hasMany",
+            "relationName": "cWerkzeugLieferschein",
+            "foreign": "lieferscheins",
+            "entity": "CWerkzeug",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

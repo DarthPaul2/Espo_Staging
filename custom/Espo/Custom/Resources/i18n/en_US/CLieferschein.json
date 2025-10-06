@@ -23,7 +23,8 @@
         "lieferadresseState": "Lieferadresse Bundesland/Kanton",
         "lieferadresseCountry": "Lieferadresse Land",
         "lieferadressePostalCode": "Lieferadresse PLZ",
-        "lieferadresseMap": "Lieferadresse Karte"
+        "lieferadresseMap": "Lieferadresse Karte",
+        "werkzeugs": "Werkzeugs"
     },
     "links": {
         "auftrag": "Auftrag",
@@ -31,7 +32,8 @@
         "lieferscheinpositions": "Lieferscheinpositions",
         "angebot": "Angebot",
         "rechnung": "Rechnung",
-        "kontaktperson": "Kontaktperson"
+        "kontaktperson": "Kontaktperson",
+        "werkzeugs": "Werkzeugs"
     },
     "labels": {
         "Create CLieferschein": "Create Lieferschein"

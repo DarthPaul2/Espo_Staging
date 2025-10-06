@@ -12,7 +12,9 @@
         "CLieferscheinposition": "Lieferscheinposition",
         "CAuftragsposition": "Auftragsposition",
         "CMahnregel": "Mahnregel",
-        "CMahnung": "Mahnung"
+        "CMahnung": "Mahnung",
+        "CWerkzeug": "Werkzeug",
+        "CWartung": "Wartung"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -27,7 +29,9 @@
         "CLieferscheinposition": "Lieferscheinpositionen",
         "CAuftragsposition": "Auftragspositions",
         "CMahnregel": "Mahnregeln",
-        "CMahnung": "Mahnungen"
+        "CMahnung": "Mahnungen",
+        "CWerkzeug": "Werkzeuge",
+        "CWartung": "Wartungen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

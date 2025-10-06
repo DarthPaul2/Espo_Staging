@@ -1,0 +1,71 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "kategorie"
+                },
+                {
+                    "name": "zustand"
+                }
+            ],
+            [
+                {
+                    "name": "inventarnummer"
+                },
+                {
+                    "name": "seriennummer"
+                },
+                {
+                    "name": "standort"
+                }
+            ],
+            [
+                {
+                    "name": "description"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "ausgegebenAm"
+                },
+                {
+                    "name": "zurckgegebenAm"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Ausgabe & Rückgabe"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "dokumente"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Doku"
+    }
+]

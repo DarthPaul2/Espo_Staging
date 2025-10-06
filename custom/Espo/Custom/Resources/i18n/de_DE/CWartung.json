@@ -1,0 +1,70 @@
+{
+    "labels": {
+        "Create CWartung": "Wartung erstellen"
+    },
+    "fields": {
+        "anlageTyp": "Anlagentyp",
+        "intervall": "Intervall",
+        "startDatum": "Startdatum",
+        "regelModus": "Regelmodus",
+        "letzteWartung": "Letzte Wartung",
+        "naechsteWartung": "Nächste Wartung fällig",
+        "vorwarnTage": "Vorwarnzeit (Tage)",
+        "faelligkeitsStatus": "Fälligkeitsstatus (anzeige)",
+        "status": "Status",
+        "planSlot": "PlanSlot",
+        "faelligkeitsTag": "Faelligkeitstag (Monatstag)",
+        "autoAufgabeErstellen": "Auto-Aufgabe erzeugen",
+        "autoBenachrichtigen": "Auto-Benachrichtigung",
+        "prioritaet": "Priorität",
+        "bemerkung": "Bemerkung",
+        "externalWartungId": "Externe Wartung-ID",
+        "vertragsNummer": "Vertragsnummer"
+    },
+    "options": {
+        "anlageTyp": {
+            "bma": "BMA",
+            "ema": "EMA",
+            "video": "Video",
+            "zutritt": "Zutritt",
+            "other": "Sonstiges"
+        },
+        "intervall": {
+            "monatlich": "monatlich",
+            "quartal": "quartal",
+            "halbjaehrlich": "halbjaehrlich",
+            "jaehrlich": "jaehrlich"
+        },
+        "regelModus": {
+            "abLetzterWartung": "ab letzter Wartung",
+            "abStartdatum": "ab Startdatum (fixe Termine)"
+        },
+        "faelligkeitsStatus": {
+            "faellig": "faellig",
+            "baldFaellig": "baldFaellig",
+            "nichtFaellig": "nichtFaellig",
+            "beendet": "beendet"
+        },
+        "status": {
+            "aktiv": "Aktiv",
+            "ausgesetzt": "Ausgesetzt",
+            "beendet": "Beendet"
+        },
+        "planSlot": {
+            "none": "—",
+            "q1": "Q I",
+            "q2": "Q II",
+            "q3": "Q III",
+            "q4": "Q IV"
+        },
+        "prioritaet": {
+            "hoch": "hoch",
+            "normal": "normal",
+            "niedrig": "niedrig"
+        }
+    },
+    "tooltips": {
+        "autoAufgabeErstellen": "Die automatische Erstellung einer Aufgabe bei Ablauf der Frist zulassen.",
+        "externalWartungId": "Technische ID für die Synchronisierung mit App/Server."
+    }
+}

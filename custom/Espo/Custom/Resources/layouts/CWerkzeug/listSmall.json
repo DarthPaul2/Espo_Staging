@@ -1,0 +1,22 @@
+[
+    {
+        "name": "name",
+        "link": true
+    },
+    {
+        "name": "assignedUser",
+        "width": 20
+    },
+    {
+        "name": "zustand",
+        "width": 20
+    },
+    {
+        "name": "ausgegebenAm",
+        "width": 20
+    },
+    {
+        "name": "zurckgegebenAm",
+        "width": 20
+    }
+]

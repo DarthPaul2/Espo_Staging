@@ -1,0 +1,17 @@
+{
+    "_delimiter_": {
+        "disabled": true
+    },
+    "auftrags": {
+        "index": 0
+    },
+    "lieferscheins": {
+        "index": 1
+    },
+    "accounts": {
+        "index": 2
+    },
+    "documents": {
+        "index": 3
+    }
+}

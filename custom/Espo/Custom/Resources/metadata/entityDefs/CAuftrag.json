@@ -207,6 +207,14 @@
             "entity": "CAuftragsposition",
             "audited": false,
             "isCustom": true
+        },
+        "werkzeugs": {
+            "type": "hasMany",
+            "relationName": "cWerkzeugAuftrag",
+            "foreign": "auftrags",
+            "entity": "CWerkzeug",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

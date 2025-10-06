@@ -27,6 +27,10 @@
         "lieferscheins": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "werkzeug": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

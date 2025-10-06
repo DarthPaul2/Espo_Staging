@@ -17,17 +17,17 @@
     },
     {
         "name": "billingAddressPostalCode",
-        "width": 5,
+        "width": 7,
         "align": "left"
     },
     {
         "name": "billingAddressCity",
-        "width": 12,
+        "width": 11,
         "align": "left"
     },
     {
         "name": "phoneNumber",
-        "width": 12,
+        "width": 14,
         "align": "left"
     },
     {

@@ -19,6 +19,10 @@
         "auftragsbestaetigungGesendetVon": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "werkzeugs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

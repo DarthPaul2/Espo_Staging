@@ -1,0 +1,16 @@
+{
+    "fields": {
+        "cWerkzeug": {
+            "type": "link"
+        }
+    },
+    "links": {
+        "cWerkzeug": {
+            "type": "belongsTo",
+            "foreign": "documents",
+            "entity": "CWerkzeug",
+            "audited": false,
+            "isCustom": true
+        }
+    }
+}
