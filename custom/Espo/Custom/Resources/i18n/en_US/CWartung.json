@@ -16,9 +16,20 @@
         "prioritaet": "Priorität",
         "bemerkung": "Bemerkung",
         "externalWartungId": "Externe Wartung-ID",
-        "vertragsNummer": "Vertragsnummer"
+        "vertragsNummer": "Vertragsnummer",
+        "account": "Account",
+        "tasks": "Tasks",
+        "documents": "Documents",
+        "werkzeugs": "Werkzeugs",
+        "user": "User"
     },
-    "links": [],
+    "links": {
+        "account": "Account",
+        "tasks": "Tasks",
+        "documents": "Documents",
+        "werkzeugs": "Werkzeugs",
+        "user": "User"
+    },
     "labels": {
         "Create CWartung": "Create Wartung"
     },

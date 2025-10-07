@@ -1,0 +1,45 @@
+[
+    {
+        "name": "account",
+        "width": 26,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "anlageTyp",
+        "width": 10,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "intervall",
+        "width": 8,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "naechsteWartung",
+        "width": 16
+    },
+    {
+        "name": "assignedUser",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "teams",
+        "width": 8,
+        "notSortable": true,
+        "align": "left"
+    },
+    {
+        "name": "faelligkeitsStatus",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 6,
+        "align": "left"
+    }
+]

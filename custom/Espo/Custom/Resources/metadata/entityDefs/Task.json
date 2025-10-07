@@ -3,5 +3,29 @@
         "afterCreate": [
             "OutlookSync"
         ]
+    },
+    "fields": {
+        "cWartung": {
+            "type": "link"
+        },
+        "parent": {
+            "entityList": [
+                "Account",
+                "Contact",
+                "Lead",
+                "Opportunity",
+                "Case",
+                "CWartung"
+            ]
+        }
+    },
+    "links": {
+        "cWartung": {
+            "type": "belongsTo",
+            "foreign": "tasks",
+            "entity": "CWartung",
+            "audited": false,
+            "isCustom": true
+        }
     }
 }

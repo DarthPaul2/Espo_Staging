@@ -1,10 +1,10 @@
 {
     "relationshipPanels": {
-        "werkzeug": {
+        "wartung": {
             "layout": null,
             "selectPrimaryFilterName": null
         },
-        "wartung": {
+        "parent": {
             "layout": null,
             "selectPrimaryFilterName": null
         }

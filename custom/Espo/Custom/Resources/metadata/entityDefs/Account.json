@@ -87,6 +87,13 @@
             "entity": "CWerkzeug",
             "audited": false,
             "isCustom": true
+        },
+        "cWartungs": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CWartung",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

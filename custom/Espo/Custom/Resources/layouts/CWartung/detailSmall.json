@@ -1,0 +1,41 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "anlageTyp"
+                },
+                {
+                    "name": "intervall"
+                },
+                {
+                    "name": "naechsteWartung"
+                }
+            ],
+            [
+                {
+                    "name": "letzteWartung"
+                },
+                {
+                    "name": "prioritaet"
+                },
+                {
+                    "name": "startDatum"
+                },
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
+                    "name": "user"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

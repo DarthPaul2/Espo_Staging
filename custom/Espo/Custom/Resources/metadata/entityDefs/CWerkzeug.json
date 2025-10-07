@@ -180,6 +180,14 @@
             "entity": "Document",
             "audited": false,
             "isCustom": true
+        },
+        "wartungs": {
+            "type": "hasMany",
+            "relationName": "cWartungWerkzeug",
+            "foreign": "werkzeugs",
+            "entity": "CWartung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

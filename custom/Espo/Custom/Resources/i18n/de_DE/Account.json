@@ -7,7 +7,8 @@
         "cRechnungs": "Rechnungs",
         "cAuftrags": "Auftrags",
         "cLieferscheins": "Lieferscheins",
-        "cWerkzeug": "Werkzeug"
+        "cWerkzeug": "Werkzeug",
+        "cWartungs": "Wartungs"
     },
     "links": {
         "cFirmenHauptkontakt": "Firmen Hauptkontakt",
@@ -15,7 +16,8 @@
         "cRechnungs": "Rechnungs",
         "cAuftrags": "Auftrags",
         "cLieferscheins": "Lieferscheins",
-        "cWerkzeug": "Werkzeug"
+        "cWerkzeug": "Werkzeug",
+        "cWartungs": "Wartungs"
     },
     "options": {
         "type": {

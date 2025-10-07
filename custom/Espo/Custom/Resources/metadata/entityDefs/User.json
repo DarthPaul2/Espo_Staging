@@ -13,6 +13,13 @@
             "entity": "CAuftrag",
             "audited": false,
             "isCustom": true
+        },
+        "cWartungs": {
+            "type": "hasMany",
+            "foreign": "user",
+            "entity": "CWartung",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

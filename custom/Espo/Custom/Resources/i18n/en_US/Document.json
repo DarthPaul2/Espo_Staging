@@ -1,8 +1,10 @@
 {
     "fields": {
-        "cWerkzeug": "Werkzeug"
+        "cWerkzeug": "Werkzeug",
+        "cWartung": "Wartung"
     },
     "links": {
-        "cWerkzeug": "Werkzeug"
+        "cWerkzeug": "Werkzeug",
+        "cWartung": "Wartung"
     }
 }

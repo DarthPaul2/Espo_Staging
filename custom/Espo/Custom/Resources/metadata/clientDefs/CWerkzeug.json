@@ -19,6 +19,10 @@
         "documents": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "wartungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

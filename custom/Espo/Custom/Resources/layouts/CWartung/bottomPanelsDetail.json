@@ -1,0 +1,14 @@
+{
+    "_delimiter_": {
+        "disabled": true
+    },
+    "tasks": {
+        "index": 0
+    },
+    "documents": {
+        "index": 1
+    },
+    "werkzeugs": {
+        "index": 2
+    }
+}

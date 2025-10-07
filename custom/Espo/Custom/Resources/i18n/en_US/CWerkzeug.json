@@ -13,13 +13,15 @@
         "lieferscheins": "Lieferscheins",
         "documents": "Documents",
         "ausgegebenAm": "Ausgegeben Am",
-        "zurckgegebenAm": "Zurückgegeben am"
+        "zurckgegebenAm": "Zurückgegeben am",
+        "wartungs": "Wartungs"
     },
     "links": {
         "accounts": "Accounts",
         "auftrags": "Auftrags",
         "lieferscheins": "Lieferscheins",
-        "documents": "Documents"
+        "documents": "Documents",
+        "wartungs": "Wartungs"
     },
     "labels": {
         "Create CWerkzeug": "Create Werkzeug"

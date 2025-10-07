@@ -67,6 +67,4 @@ public function afterSave(Entity $entity, array $options = []): void
         $this->log->error('SyncTask afterSave exception: ' . $e->getMessage());
     }
 }
-
-
 }

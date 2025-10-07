@@ -19,7 +19,12 @@
         "prioritaet": "Priorität",
         "bemerkung": "Bemerkung",
         "externalWartungId": "Externe Wartung-ID",
-        "vertragsNummer": "Vertragsnummer"
+        "vertragsNummer": "Vertragsnummer",
+        "account": "Account",
+        "tasks": "Tasks",
+        "documents": "Documents",
+        "werkzeugs": "Werkzeugs",
+        "user": "User"
     },
     "options": {
         "anlageTyp": {
@@ -66,5 +71,12 @@
     "tooltips": {
         "autoAufgabeErstellen": "Die automatische Erstellung einer Aufgabe bei Ablauf der Frist zulassen.",
         "externalWartungId": "Technische ID für die Synchronisierung mit App/Server."
+    },
+    "links": {
+        "account": "Account",
+        "tasks": "Tasks",
+        "documents": "Documents",
+        "werkzeugs": "Werkzeugs",
+        "user": "User"
     }
 }

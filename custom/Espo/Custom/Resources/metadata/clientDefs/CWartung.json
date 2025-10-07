@@ -4,5 +4,27 @@
         "onlyMy"
     ],
     "color": "#2ac9ff",
-    "iconClass": "far fa-sun"
+    "iconClass": "far fa-sun",
+    "relationshipPanels": {
+        "account": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "tasks": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "documents": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "werkzeugs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "user": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
 }

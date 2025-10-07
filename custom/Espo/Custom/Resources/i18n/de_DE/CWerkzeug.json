@@ -16,7 +16,8 @@
         "lieferscheins": "Lieferscheins",
         "documents": "Documents",
         "ausgegebenAm": "Ausgegeben Am",
-        "zurckgegebenAm": "Zurückgegeben am"
+        "zurckgegebenAm": "Zurückgegeben am",
+        "wartungs": "Wartungs"
     },
     "options": {
         "kategorie": {
@@ -38,6 +39,7 @@
         "accounts": "Accounts",
         "auftrags": "Auftrags",
         "lieferscheins": "Lieferscheins",
-        "documents": "Documents"
+        "documents": "Documents",
+        "wartungs": "Wartungs"
     }
 }

@@ -1,0 +1,112 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                }
+            ],
+            [
+                {
+                    "name": "anlageTyp"
+                },
+                {
+                    "name": "intervall"
+                },
+                {
+                    "name": "regelModus"
+                }
+            ],
+            [
+                {
+                    "name": "startDatum"
+                },
+                false,
+                {
+                    "name": "status"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "letzteWartung"
+                },
+                {
+                    "name": "naechsteWartung"
+                },
+                {
+                    "name": "vorwarnTage"
+                },
+                {
+                    "name": "faelligkeitsStatus"
+                }
+            ],
+            [
+                {
+                    "name": "prioritaet"
+                },
+                false,
+                {
+                    "name": "autoAufgabeErstellen"
+                },
+                {
+                    "name": "autoBenachrichtigen"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Planung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "user"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Verantwortlich"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "externalWartungId"
+                },
+                {
+                    "name": "vertragsNummer"
+                }
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Vertrag & Verwaltung"
+    }
+]

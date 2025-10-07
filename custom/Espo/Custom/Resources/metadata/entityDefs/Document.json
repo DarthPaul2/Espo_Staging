@@ -2,6 +2,9 @@
     "fields": {
         "cWerkzeug": {
             "type": "link"
+        },
+        "cWartung": {
+            "type": "link"
         }
     },
     "links": {
@@ -9,6 +12,13 @@
             "type": "belongsTo",
             "foreign": "documents",
             "entity": "CWerkzeug",
+            "audited": false,
+            "isCustom": true
+        },
+        "cWartung": {
+            "type": "belongsTo",
+            "foreign": "documents",
+            "entity": "CWartung",
             "audited": false,
             "isCustom": true
         }

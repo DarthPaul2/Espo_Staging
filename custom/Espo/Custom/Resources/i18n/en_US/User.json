@@ -1,10 +1,12 @@
 {
     "fields": {
         "cArbeitszeiten": "Arbeitszeiten",
-        "cAuftrags": "Auftrags"
+        "cAuftrags": "Auftrags",
+        "cWartungs": "Wartungs"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
-        "cAuftrags": "Auftrags"
+        "cAuftrags": "Auftrags",
+        "cWartungs": "Wartungs"
     }
 }
