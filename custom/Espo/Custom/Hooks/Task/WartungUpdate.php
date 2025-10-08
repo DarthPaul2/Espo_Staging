@@ -25,18 +25,16 @@ class WartungUpdate
                 return;
             }
 
-            // 2️⃣ Проверяем, связана ли задача с Wartung
-            $parentType = $entity->get('parentType');
-            $parentId   = $entity->get('parentId');
-
-            if ($parentType !== 'CWartung' || !$parentId) {
-                return; // ничего не делаем
+            // 2️⃣ Проверяем наличие поля связи cWartungId
+            $wartungId = $entity->get('cWartungId');
+            if (empty($wartungId)) {
+                return; // не связано с Wartung
             }
 
             // 3️⃣ Получаем саму Wartung
-            $wartung = $this->em->getEntity('CWartung', $parentId);
+            $wartung = $this->em->getEntity('CWartung', $wartungId);
             if (!$wartung) {
-                $this->log->warning("[WartungUpdate] CWartung {$parentId} not found.");
+                $this->log->warning("[WartungUpdate] CWartung {$wartungId} not found.");
                 return;
             }
 
@@ -44,21 +42,26 @@ class WartungUpdate
             $letzte = new \DateTime();
             $wartung->set('letzteWartung', $letzte->format('Y-m-d'));
 
+            // Расчёт следующей даты по интервалу
             $intervall = $wartung->get('intervall') ?? 'jaehrlich';
+            $naechste = clone $letzte;
             switch ($intervall) {
-                case 'monatlich':    $letzte->modify('+1 month'); break;
-                case 'quartal':      $letzte->modify('+3 months'); break;
-                case 'halbjaehrlich':$letzte->modify('+6 months'); break;
-                case 'jaehrlich':    $letzte->modify('+1 year'); break;
+                case 'monatlich':     $naechste->modify('+1 month'); break;
+                case 'quartal':       $naechste->modify('+3 months'); break;
+                case 'halbjaehrlich': $naechste->modify('+6 months'); break;
+                case 'jaehrlich':     $naechste->modify('+1 year');  break;
             }
 
-            $wartung->set('naechsteWartung', $letzte->format('Y-m-d'));
-            $wartung->set('faelligkeitsStatus', 'nichtFaellig');
-            $wartung->set('status', 'aktiv');
+            $wartung->set('naechsteWartung', $naechste->format('Y-m-d'));
 
+            // Меняем статусы
+            $wartung->set('status', 'beendet');
+            $wartung->set('faelligkeitsStatus', 'beendet');
+
+            // Сохраняем обновлённую Wartung
             $this->em->saveEntity($wartung);
 
-            $this->log->info("[WartungUpdate] Wartung {$parentId} updated after Task completion.");
+            $this->log->info("[WartungUpdate] ✅ Wartung {$wartungId} updated: beendet, nächste={$naechste->format('Y-m-d')}");
 
         } catch (\Throwable $e) {
             $this->log->error('[WartungUpdate] Exception: ' . $e->getMessage());

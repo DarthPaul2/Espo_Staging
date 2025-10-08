@@ -20,9 +20,42 @@ define('custom:views/c-lieferschein/record/edit', ['views/record/edit'], functio
             // реагируем, если пользователь выбрал Auftrag вручную
             this.listenTo(this.model, 'change:auftragId', (m, id) => {
                 if (!id) return;
-                L('Auftrag geändert → lade Positionen', id);
-                this._importAuftragPositionen(id);
+
+                L('Auftrag geändert → lade Auftrag & übernehme Account', id);
+
+                // Запрашиваем данные заказа напрямую
+                Espo.Ajax.getRequest(`CAuftrag/${encodeURIComponent(id)}`)
+                    .then((auftrag) => {
+                        if (!auftrag) {
+                            this.notify('Auftrag nicht gefunden.', 'warning');
+                            return;
+                        }
+
+                        // Устанавливаем Account из заказа
+                        this.model.set({
+                            accountId: auftrag.accountId || null,
+                            accountName: auftrag.accountName || '',
+                            lieferadresseStreet: auftrag.lieferadresseStreet || auftrag.accountBillingStreet || '',
+                            lieferadresseCity: auftrag.lieferadresseCity || auftrag.accountBillingCity || '',
+                            lieferadressePostalCode: auftrag.lieferadressePostalCode || auftrag.accountBillingPostalCode || '',
+                            lieferadresseCountry: auftrag.lieferadresseCountry || auftrag.accountBillingCountry || ''
+                        });
+
+                        // Принудительно обновляем UI
+                        const v = this.getFieldView && (this.getFieldView('account') || this.getFieldView('accountId'));
+                        if (v && typeof v.reRender === 'function') v.reRender();
+
+                        L('Account übernommen', {
+                            id: auftrag.accountId,
+                            name: auftrag.accountName
+                        });
+                    })
+                    .catch((err) => {
+                        console.error(LOG_NS, 'Fehler beim Laden des Auftrags:', err);
+                        this.notify('Fehler beim Laden des Auftrags.', 'error');
+                    });
             });
+
         },
 
         /**

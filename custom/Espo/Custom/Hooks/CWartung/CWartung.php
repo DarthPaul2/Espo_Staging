@@ -11,6 +11,26 @@ class CWartung
      */
     public function beforeSave(Entity $entity, array $options = [])
     {
+
+         // --- 0. Автогенерация Name, если пусто
+    if (!$entity->get('name')) {
+        $accountName = trim((string) $entity->get('accountName'));
+        $anlage      = (string) $entity->get('anlageTyp');
+
+        // Небольшая карта для красивого лейбла без обращения к Language
+        $labels = [
+            'bma'     => 'BMA',
+            'ema'     => 'EMA',
+            'video'   => 'Video',
+            'zutritt' => 'Zutritt',
+            'other'   => 'Sonstiges',
+        ];
+        $anlageLabel = $labels[$anlage] ?? ucfirst($anlage ?: 'Wartung');
+
+        $title = trim(($accountName ?: 'Ohne Firma') . " - " . $anlageLabel . " - Wartung");
+        $entity->set('name', $title);
+    }
+
         // --- 1. Если статус "beendet" — ничего не пересчитываем
         if ($entity->get('status') === 'beendet') {
             $entity->set('faelligkeitsStatus', 'beendet');

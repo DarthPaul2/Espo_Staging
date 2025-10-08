@@ -50,12 +50,19 @@ class AngebotImporter
             'gesetzOption13b'   => $angebot->get('gesetzOption13b'),
             'leistungsdatumVon' => $angebot->get('leistungsdatumVon'),
             'leistungsdatumBis' => $angebot->get('leistungsdatumBis'),
+            // важно: тянем общую ставку НДС из Angebots, если есть
+            'ustSatz'           => $angebot->get('ustSatz') ?? 19,
         ]);
 
         $this->em->saveEntity($entity, [
             'skipHooks'    => true,
             'skipWorkflow' => true,
         ]);
+
+        // глобальные режимы НДС для счёта
+        $noVat = (bool) $entity->get('gesetzOption13b') || (bool) $entity->get('gesetzOption12');
+        // дефолтная ставка НДС
+        $ustSatzDefault = (float) ($entity->get('ustSatz') ?? $angebot->get('ustSatz') ?? 19);
 
         // === 2) Копируем позиции ===
         $posList = $this->em->getRepository('CAngebotsposition')
@@ -69,8 +76,13 @@ class AngebotImporter
             $preis  = (float) $pos->get('preis') ?: 0.0;
             $rabatt = (float) $pos->get('rabatt') ?: 0.0;
 
-            $netto  = round($menge * $preis * (1 - $rabatt / 100), 2);
-            $brutto = round($netto * (1 + ((float) $pos->get('steuer') ?: 0) / 100), 2);
+            $netto = round($menge * $preis * (1 - $rabatt / 100), 2);
+
+            // ставка позиции: если есть своя steuer — берём её, иначе — общий ustSatz; при режиме noVat → 0
+            $posSteuerRaw = $pos->get('steuer');
+            $posSteuer = $noVat ? 0.0 : ( ($posSteuerRaw === null || $posSteuerRaw === '') ? $ustSatzDefault : (float) $posSteuerRaw );
+
+            $brutto = round($netto * (1 + $posSteuer / 100), 2);
 
             $recPos = $this->em->createEntity('CRechnungsposition', [
                 'rechnungId'          => $entity->getId(),
@@ -81,9 +93,9 @@ class AngebotImporter
                 'preis'               => $preis,
                 'einkaufspreis'       => $pos->get('einkaufspreis'),
                 'rabatt'              => $rabatt,
-                'steuer'              => $pos->get('steuer'),
+                'steuer'              => $noVat ? 0.0 : ($posSteuerRaw === null || $posSteuerRaw === '' ? $ustSatzDefault : (float) $posSteuerRaw),
                 'netto'               => $netto,
-                'gesamt'              => $brutto,
+                'gesamt'              => $brutto,   // Brutto с НДС (или 0% при noVat)
                 'materialId'          => $pos->get('materialId'),
                 'materialDescription' => $pos->get('materialDescription'),
                 'materialEinheit'     => $pos->get('materialEinheit'),
@@ -98,7 +110,5 @@ class AngebotImporter
 
             $sort++;
         }
-
-        $this->log->debug("✅ Import fertig: " . count($posList) . " Position(en) kopiert.");
-    }
+}
 }
