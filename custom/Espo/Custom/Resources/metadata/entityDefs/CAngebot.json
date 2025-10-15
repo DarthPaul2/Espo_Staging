@@ -76,7 +76,8 @@
         "gueltigBis": {
             "notNull": false,
             "type": "date",
-            "isCustom": true
+            "isCustom": true,
+            "required": true
         },
         "gesetzOption13b": {
             "notNull": true,
@@ -146,7 +147,7 @@
                 "Die Lieferfähigkeit der angefragten...": null,
                 "Unsere Angebote sind freibleibend und...": null
             },
-            "default": "Zahlungsbedingungen: 10 Tage ohne Abzug...",
+            "default": "Wir hoffen, dass dieses Angebot Ihren...",
             "maxLength": 100,
             "isCustom": true
         },

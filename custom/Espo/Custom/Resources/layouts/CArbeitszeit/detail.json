@@ -66,6 +66,12 @@
                     "name": "ueberstundenminuten"
                 },
                 false
+            ],
+            [
+                {
+                    "name": "feiertagwochenende"
+                },
+                false
             ]
         ],
         "dynamicLogicVisible": null,
@@ -135,12 +141,6 @@
             [
                 {
                     "name": "autoended"
-                },
-                false
-            ],
-            [
-                {
-                    "name": "feiertagwochenende"
                 },
                 false
             ]

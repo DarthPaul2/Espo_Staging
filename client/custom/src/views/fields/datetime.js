@@ -6,6 +6,8 @@ define('custom:views/fields/datetime', ['views/fields/datetime', 'moment'], func
     (function patchMoment() {
         try {
             if (moment && moment.updateLocale) {
+                moment.tz.setDefault('Europe/Berlin'); // 👈 фиксация зоны ДО изменения locale
+                console.log('[CUSTOM datetime.js] setDefault Europe/Berlin');
                 moment.updateLocale('de', {
                     calendar: {
                         sameDay: 'DD.MM.YYYY HH:mm',
@@ -25,11 +27,14 @@ define('custom:views/fields/datetime', ['views/fields/datetime', 'moment'], func
                     }
                 });
                 console.log('[CUSTOM datetime.js] patched moment.updateLocale → absolute + German format');
+            } else {
+                console.warn('[CUSTOM datetime.js] moment or updateLocale missing');
             }
         } catch (e) {
             console.error('[CUSTOM datetime.js] moment patch failed', e);
         }
     })();
+
 
     return Dep.extend({
         getDateTimeStringValue: function () {

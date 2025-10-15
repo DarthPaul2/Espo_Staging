@@ -8,17 +8,23 @@
     "relationshipPanels": {
         "angebots": {
             "view": "views/record/panels/relationship",
-            "create": true,
+            "rowActionsView": "custom:views/c-auftrag/record/relationship-row-actions-no-delete",
+            "create": false,
+            "delete": false,
             "select": true
         },
         "rechnungs": {
             "view": "views/record/panels/relationship",
+            "rowActionsView": "custom:views/c-auftrag/record/relationship-row-actions-no-delete",
             "create": true,
+            "delete": false,
             "select": true
         },
         "lieferscheins": {
             "view": "views/record/panels/relationship",
-            "create": true,
+            "rowActionsView": "custom:views/c-auftrag/record/relationship-row-actions-no-delete",
+            "create": false,
+            "delete": false,
             "select": true
         },
         "account": {
@@ -30,11 +36,15 @@
         },
         "auftragspositions": {
             "layout": null,
-            "selectPrimaryFilterName": null
+            "selectPrimaryFilterName": null,
+            "delete": false,
+            "rowActionsView": "custom:views/c-auftrag/record/relationship-row-actions-no-delete"
         },
         "werkzeugs": {
             "layout": null,
-            "selectPrimaryFilterName": null
+            "selectPrimaryFilterName": null,
+            "create": false,
+            "select": true
         }
     },
     "kanbanViewMode": false,

@@ -21,7 +21,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
         getPositionsCollection() {
             const pv = this.getPanelView();
             if (!pv || !pv.collection) {
-                L('getPositionsCollection: no panel view/collection');
                 return null;
             }
             return pv.collection;
@@ -88,16 +87,13 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
         loadPositionsFromPanel() {
             const col = this.getPositionsCollection();
             if (!col) return Promise.reject(new Error('Panel collection not found'));
-            L('positions: fetch panel collection', { url: col.url });
             return new Promise((resolve, reject) => {
                 col.fetch({
                     success: (c) => {
                         const data = c.toJSON();
-                        L('positions: panel fetched', { count: data.length });
                         resolve(data);
                     },
                     error: (xhr) => {
-                        L('positions: panel fetch error', { status: xhr?.status, response: xhr?.responseText });
                         reject(new Error('Panel fetch failed'));
                     }
                 });
@@ -134,7 +130,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
             // --- локальный пересчёт и подстановка в поля ---
             const bumpTotalsFields = (netto, brutto, src) => {
-                L('bumpTotalsFields', { netto, brutto, src });
                 // обновляем модель без silent, чтобы биндинги поля дернулись
                 this.model.set({ betragNetto: netto, betragBrutto: brutto });
 
@@ -163,17 +158,14 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     totalBrutto += brutto;
                 });
 
-                L('quickLocalRecalc: sums', { totalNetto, totalBrutto });
                 bumpTotalsFields(totalNetto, totalBrutto, 'local:' + reason);
             };
 
             const hardRefreshFromServer = (src) => {
-                L('hardRefreshFromServer:start', { src });
                 this.model.fetch({
                     success: () => {
                         const n = this.model.get('betragNetto') || 0;
                         const b = this.model.get('betragBrutto') || 0;
-                        L('hardRefreshFromServer:done', { n, b });
                         this.reRender();
                         setTimeout(() => bumpTotalsFields(n, b, 'server:' + src), 0);
                     },
@@ -318,6 +310,32 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 label: this.translate ? this.translate('Mahnung erzeugen', 'labels', 'CRechnung') : 'Mahnung erzeugen',
                 style: 'danger',
                 title: 'Mahnung als PDF erzeugen'
+            });
+
+            this.listenTo(this.model, 'change:angebotId', () => {
+                const angebotId = this.model.get('angebotId');
+                if (!angebotId) return;
+
+                const notifyId = this.notify('Angebot gewählt – Positionen werden importiert…', 'loading');
+
+                this.listenToOnce(this.model, 'sync', () => {
+                    this.notify(false, 'loading', notifyId);
+
+                    // ждём чуть-чуть, чтобы Espo успел снять флаг dirty
+                    setTimeout(() => {
+                        try {
+                            // сбрасываем dirty-флаг вручную
+                            this.model.changed = {};
+                            this.model._previousAttributes = { ...this.model.attributes };
+                            this.model.trigger('change:clear');
+                        } catch (e) {
+                            console.warn('[CRechnung/detail] clear dirty failed', e);
+                        }
+
+                        // теперь можно перезагружать без предупреждения
+                        window.location.reload();
+                    }, 500);
+                });
             });
 
         },

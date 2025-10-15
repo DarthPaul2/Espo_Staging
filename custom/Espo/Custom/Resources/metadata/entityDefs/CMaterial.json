@@ -52,15 +52,47 @@
             "isCustom": true
         },
         "kategorie": {
-            "type": "varchar",
-            "maxLength": 100,
-            "options": [],
+            "type": "enum",
+            "required": true,
+            "default": "Sonstiges",
+            "options": [
+                "Brandmeldetechnik",
+                "Einbruchmeldetechnik",
+                "Systemkomponenten",
+                "Elektronische Schließsysteme",
+                "Erweiterungen / Zubehör",
+                "Meldertausch- und Prüfgeräte",
+                "Signalgeber",
+                "Übertragungseinrichtungen",
+                "Zutrittskontrollsysteme",
+                "Sonstiges"
+            ],
             "isCustom": true
         },
         "einheit": {
-            "type": "varchar",
-            "maxLength": 50,
-            "options": [],
+            "type": "enum",
+            "required": true,
+            "default": "Stk.",
+            "options": [
+                "Stk.",
+                "m",
+                "cm",
+                "mm",
+                "kg",
+                "g",
+                "l",
+                "m²",
+                "m³",
+                "Rol.",
+                "Pkg.",
+                "Dos.",
+                "Ktn.",
+                "Satz",
+                "VE",
+                "h",
+                "d",
+                "Paar"
+            ],
             "isCustom": true
         },
         "preis": {

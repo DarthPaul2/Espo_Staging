@@ -3,9 +3,6 @@
         "rows": [
             [
                 {
-                    "name": "auftragsnummer"
-                },
-                {
                     "name": "account"
                 },
                 {
@@ -13,6 +10,9 @@
                 }
             ],
             [
+                {
+                    "name": "auftragsnummer"
+                },
                 {
                     "name": "accountKundenNr"
                 },

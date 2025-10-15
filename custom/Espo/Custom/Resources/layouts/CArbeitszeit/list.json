@@ -1,11 +1,15 @@
 [
     {
         "name": "createdAt",
-        "width": 16
+        "width": 16,
+        "link": true,
+        "align": "left"
     },
     {
         "name": "techniker",
-        "width": 16
+        "width": 16,
+        "link": true,
+        "align": "left"
     },
     {
         "name": "startzeit",

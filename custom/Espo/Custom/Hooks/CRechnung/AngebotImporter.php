@@ -19,7 +19,8 @@ class AngebotImporter
     /**
      * При изменении поля angebotId:
      *   1. Копируем данные из CAngebot в CRechnung (кроме titel, einleitung).
-     *   2. Копируем все CAngebotsposition → CRechnungsposition с пересчётом netto/gesamt.
+     *   2. Удаляем все существующие позиции CRechnungsposition.
+     *   3. Копируем все CAngebotsposition → CRechnungsposition с пересчётом netto/gesamt.
      */
     public function afterSave(Entity $entity, array $options = []): void
     {
@@ -38,9 +39,10 @@ class AngebotImporter
             return;
         }
 
-        $this->log->debug("➡️ Importiere Felder & Positionen von Angebot {$angebotId} in Rechnung {$entity->getId()}.");
+        $rechnungId = $entity->getId();
+        $this->log->debug("➡️ Importiere Felder & Positionen von Angebot {$angebotId} in Rechnung {$rechnungId}.");
 
-        // === 1) Копируем поля из Angebot (без titel и einleitung) ===
+        // === 1) Копируем основные поля из Angebot (без titel и einleitung) ===
         $entity->set([
             'accountId'         => $angebot->get('accountId'),
             'accountName'       => $angebot->get('accountName'),
@@ -50,7 +52,6 @@ class AngebotImporter
             'gesetzOption13b'   => $angebot->get('gesetzOption13b'),
             'leistungsdatumVon' => $angebot->get('leistungsdatumVon'),
             'leistungsdatumBis' => $angebot->get('leistungsdatumBis'),
-            // важно: тянем общую ставку НДС из Angebots, если есть
             'ustSatz'           => $angebot->get('ustSatz') ?? 19,
         ]);
 
@@ -59,16 +60,31 @@ class AngebotImporter
             'skipWorkflow' => true,
         ]);
 
-        // глобальные режимы НДС для счёта
-        $noVat = (bool) $entity->get('gesetzOption13b') || (bool) $entity->get('gesetzOption12');
-        // дефолтная ставка НДС
-        $ustSatzDefault = (float) ($entity->get('ustSatz') ?? $angebot->get('ustSatz') ?? 19);
+        /// === 2) Удаляем старые позиции счёта ===
+        $oldPositions = $this->em->getRepository('CRechnungsposition')
+            ->where(['rechnungId' => $rechnungId])
+            ->find();
 
-        // === 2) Копируем позиции ===
+        $deletedCount = 0;
+        foreach ($oldPositions as $oldPos) {
+            $this->em->removeEntity($oldPos, [
+                'skipHooks'    => true,
+                'skipWorkflow' => true,
+            ]);
+            $deletedCount++;
+        }
+
+        $this->log->debug("🧹 Alte Positionen gelöscht: {$deletedCount}");
+
+
+        // === 3) Импортируем позиции из Angebots ===
         $posList = $this->em->getRepository('CAngebotsposition')
             ->where(['angebotId' => $angebotId, 'deleted' => false])
             ->order('sortierung')
             ->find();
+
+        $noVat = (bool) $entity->get('gesetzOption13b') || (bool) $entity->get('gesetzOption12');
+        $ustSatzDefault = (float) ($entity->get('ustSatz') ?? $angebot->get('ustSatz') ?? 19);
 
         $sort = 1;
         foreach ($posList as $pos) {
@@ -78,14 +94,17 @@ class AngebotImporter
 
             $netto = round($menge * $preis * (1 - $rabatt / 100), 2);
 
-            // ставка позиции: если есть своя steuer — берём её, иначе — общий ustSatz; при режиме noVat → 0
             $posSteuerRaw = $pos->get('steuer');
-            $posSteuer = $noVat ? 0.0 : ( ($posSteuerRaw === null || $posSteuerRaw === '') ? $ustSatzDefault : (float) $posSteuerRaw );
+            $posSteuer = $noVat ? 0.0 : (
+                ($posSteuerRaw === null || $posSteuerRaw === '')
+                    ? $ustSatzDefault
+                    : (float) $posSteuerRaw
+            );
 
             $brutto = round($netto * (1 + $posSteuer / 100), 2);
 
             $recPos = $this->em->createEntity('CRechnungsposition', [
-                'rechnungId'          => $entity->getId(),
+                'rechnungId'          => $rechnungId,
                 'menge'               => $menge,
                 'einheit'             => $pos->get('einheit'),
                 'beschreibung'        => $pos->get('beschreibung'),
@@ -93,9 +112,9 @@ class AngebotImporter
                 'preis'               => $preis,
                 'einkaufspreis'       => $pos->get('einkaufspreis'),
                 'rabatt'              => $rabatt,
-                'steuer'              => $noVat ? 0.0 : ($posSteuerRaw === null || $posSteuerRaw === '' ? $ustSatzDefault : (float) $posSteuerRaw),
+                'steuer'              => $posSteuer,
                 'netto'               => $netto,
-                'gesamt'              => $brutto,   // Brutto с НДС (или 0% при noVat)
+                'gesamt'              => $brutto,
                 'materialId'          => $pos->get('materialId'),
                 'materialDescription' => $pos->get('materialDescription'),
                 'materialEinheit'     => $pos->get('materialEinheit'),
@@ -110,5 +129,12 @@ class AngebotImporter
 
             $sort++;
         }
-}
+
+        $this->log->info(
+    '✅ Angebot ' . $angebotId .
+    ' erfolgreich in Rechnung ' . $rechnungId .
+    ' importiert (' . ($sort - 1) . ' Positionen).'
+);
+
+    }
 }

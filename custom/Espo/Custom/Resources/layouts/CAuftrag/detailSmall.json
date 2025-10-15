@@ -3,7 +3,21 @@
         "rows": [
             [
                 {
+                    "name": "account"
+                },
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
                     "name": "auftragsnummer"
+                },
+                {
+                    "name": "leistungsdatumVon"
+                },
+                {
+                    "name": "leistungsdatumBis"
                 }
             ]
         ],

@@ -1,3 +1,3 @@
 {
-    "beforeSaveCustomScript": "// ⏱ Dauer (Минуты)\r\nif (startzeit && endzeit) {\r\n    dauer_minuten = datetime\\diffMinutes(endzeit, startzeit);\r\n} else {\r\n    dauer_minuten = null;\r\n}\r\n\r\n// ⏱ Pause (Минуты) – минимум 30 мин при Dauer >= 360, если пауза не указана\r\nif (dauer_minuten >= 360 && !pause_minuten) {\r\n    pause_minuten = 30;\r\n}\r\n\r\n// ⏱ Netto (Минуты)\r\nif (dauer_minuten) {\r\n    netto_minuten = dauer_minuten - (pause_minuten ? pause_minuten : 0);\r\n} else {\r\n    netto_minuten = null;\r\n}\r\n\r\n// ⏱ Überstunden (Минуты) – всё что сверх 480 мин (8 часов)\r\nif (netto_minuten > 480) {\r\n    ueberstunden_minuten = netto_minuten - 480;\r\n} else {\r\n    ueberstunden_minuten = 0;\r\n}\r\n\r\n// 🔄 Статус (по аналогии с сервером)\r\nstatus = endzeit ? \"closed\" : \"open\";\r\n"
+    "beforeSaveCustomScript": null
 }
