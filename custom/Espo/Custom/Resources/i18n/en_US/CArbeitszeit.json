@@ -16,7 +16,9 @@
         "externalid": "Externe ID",
         "techniker": "Techniker",
         "startkarte": "Startkarte",
-        "endkarte": "Endkarte"
+        "endkarte": "Endkarte",
+        "arbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
+        "arbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
     },
     "labels": {
         "Create CArbeitszeit": "Create Arbeitszeit"
@@ -29,7 +31,9 @@
         }
     },
     "links": {
-        "techniker": "Techniker"
+        "techniker": "Techniker",
+        "arbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
+        "arbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
     },
     "tooltips": {
         "dauerminuten": "Gibt die Gesamtdauer in Minuten an",

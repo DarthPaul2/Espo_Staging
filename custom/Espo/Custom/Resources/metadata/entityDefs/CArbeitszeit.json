@@ -163,6 +163,20 @@
             "entity": "User",
             "audited": false,
             "isCustom": true
+        },
+        "arbeitszeitMonatsuebersichts": {
+            "type": "hasMany",
+            "foreign": "arbeitszeit",
+            "entity": "CArbeitszeitMonatsuebersicht",
+            "audited": false,
+            "isCustom": true
+        },
+        "arbeitszeitJahresuebersichts": {
+            "type": "hasMany",
+            "foreign": "arbeitszeit",
+            "entity": "CArbeitszeitJahresuebersicht",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {
@@ -194,5 +208,8 @@
                 "id"
             ]
         }
+    },
+    "recordView": {
+        "bottomPanelsAlwaysVisible": true
     }
 }

@@ -1,8 +1,14 @@
 [
     {
         "name": "lieferscheinnummer",
-        "width": 45,
-        "noLabel": true,
+        "width": 20,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "account",
+        "width": 35,
+        "link": true,
         "align": "left"
     },
     {

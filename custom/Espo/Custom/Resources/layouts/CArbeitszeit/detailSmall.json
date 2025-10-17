@@ -1,0 +1,52 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "techniker"
+                },
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
+                    "name": "startzeit"
+                },
+                {
+                    "name": "endzeit"
+                }
+            ],
+            [
+                {
+                    "name": "startlat"
+                },
+                {
+                    "name": "startlng"
+                },
+                {
+                    "name": "endlat"
+                },
+                {
+                    "name": "endlng"
+                }
+            ],
+            [
+                {
+                    "name": "dauerminuten"
+                },
+                {
+                    "name": "pauseminuten"
+                },
+                {
+                    "name": "nettominuten"
+                },
+                {
+                    "name": "ueberstundenminuten"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

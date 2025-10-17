@@ -82,7 +82,9 @@
         "gesamt": {
             "notNull": false,
             "type": "float",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": false,
+            "view": "custom:views/fields/gesamt"
         },
         "sortierung": {
             "type": "int",
@@ -91,7 +93,9 @@
         "netto": {
             "notNull": false,
             "type": "float",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": false,
+            "view": "custom:views/fields/netto"
         },
         "material": {
             "type": "link"

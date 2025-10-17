@@ -1,34 +1,32 @@
 [
     {
         "name": "material",
-        "width": 20
+        "width": 38,
+        "align": "left"
     },
     {
         "name": "menge",
-        "width": 20
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "einheit",
-        "width": 20
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "preis",
-        "width": 20
-    },
-    {
-        "name": "einkaufspreis",
-        "width": 20
-    },
-    {
-        "name": "steuer",
-        "width": 20
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "rabatt",
-        "width": 20
+        "width": 13,
+        "align": "left"
     },
     {
         "name": "gesamt",
-        "width": 20
+        "width": 12,
+        "align": "left"
     }
 ]

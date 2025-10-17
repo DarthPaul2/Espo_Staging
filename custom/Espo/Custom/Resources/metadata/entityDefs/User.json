@@ -20,6 +20,20 @@
             "entity": "CWartung",
             "audited": false,
             "isCustom": true
+        },
+        "cArbeitszeitMonatsuebersichts": {
+            "type": "hasMany",
+            "foreign": "user",
+            "entity": "CArbeitszeitMonatsuebersicht",
+            "audited": false,
+            "isCustom": true
+        },
+        "cArbeitszeitJahresuebersichts": {
+            "type": "hasMany",
+            "foreign": "user",
+            "entity": "CArbeitszeitJahresuebersicht",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

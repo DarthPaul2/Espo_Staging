@@ -15,7 +15,7 @@ class AfterSave
 
     public function __construct(Log $log, Config $config)
     {
-        $this->log    = $log;
+        $this->log = $log;
         $this->config = $config;
         $this->berlinTz = new DateTimeZone('Europe/Berlin');
     }
@@ -23,20 +23,40 @@ class AfterSave
     public function afterSave(Entity $entity, array $options = []): void
     {
         try {
-            // 🔹 Пропускаем, если сохранение инициировано Flask (во избежание рекурсии)
+            // 🔹 1. Если сохранение пришло из Flask — выходим (чтобы не создать цикл)
             if (!empty($options['fromFlask']) || $entity->get('fromFlask')) {
                 $this->log->debug("[CArbeitszeit→Flask] skip recursive update for {$entity->getId()}");
                 return;
             }
 
-            // 🔹 Пропускаем, если нет externalid (значит, запись не синхронизирована)
+            // 🔹 2. Проверка на наличие externalid
             $externalId = $entity->get('externalid');
             if (empty($externalId)) {
                 $this->log->debug("[CArbeitszeit→Flask] no externalid for {$entity->getId()}");
                 return;
             }
 
-            // 🔹 Пропускаем, если изменение пришло от системного пользователя Espo
+            // 🔹 3. Пропускаем, если нет реальных изменений (иначе будет зацикливание)
+            $watched = [
+                'startzeit', 'endzeit', 'pauseminuten', 'dauerminuten',
+                'nettominuten', 'autoended', 'status',
+                'ueberstundenminuten', 'feiertagwochenende'
+            ];
+
+            $hasChanges = false;
+            foreach ($watched as $attr) {
+                if ($entity->isAttributeChanged($attr)) {
+                    $hasChanges = true;
+                    break;
+                }
+            }
+
+            if (!$hasChanges) {
+                $this->log->debug("[CArbeitszeit→Flask] no relevant changes for {$entity->getId()}, skip");
+                return;
+            }
+
+            // 🔹 4. Пропускаем изменения от системного пользователя
             $currentUser = $this->config->get('systemUserId') ?? null;
             $modifiedBy  = $entity->get('modifiedById');
             if ($modifiedBy === $currentUser) {
@@ -44,45 +64,44 @@ class AfterSave
                 return;
             }
 
-            // 🔹 Настройки подключения к Flask (берутся из config.php)
+            // 🔹 5. Подготовка подключения
             $baseUrl = rtrim($this->config->get('flaskPdfUrl'), '/');
             $user    = $this->config->get('flaskAuthUser');
             $pass    = $this->config->get('flaskAuthPass');
             $url     = "{$baseUrl}/arbeitszeiten/{$externalId}";
 
-            // 🔹 Преобразуем время UTC → Berlin (без смещения)
-            $startzeit = $entity->get('startzeit');
-            $endzeit   = $entity->get('endzeit');
-
+            // 🔹 6. Конвертация времени (UTC → Berlin)
             $startLocal = null;
             $endLocal = null;
 
-            if (!empty($startzeit)) {
-                $dt = new DateTime($startzeit, new DateTimeZone('UTC'));
+            if ($entity->get('startzeit')) {
+                $dt = new DateTime($entity->get('startzeit'), new DateTimeZone('UTC'));
                 $dt->setTimezone($this->berlinTz);
                 $startLocal = $dt->format('Y-m-d H:i:s');
             }
 
-            if (!empty($endzeit)) {
-                $dt = new DateTime($endzeit, new DateTimeZone('UTC'));
+            if ($entity->get('endzeit')) {
+                $dt = new DateTime($entity->get('endzeit'), new DateTimeZone('UTC'));
                 $dt->setTimezone($this->berlinTz);
                 $endLocal = $dt->format('Y-m-d H:i:s');
             }
 
-            // 🔹 Формируем тело запроса (теперь с корректным временем)
+            // 🔹 7. Формируем тело запроса
             $payload = [
                 'startzeit'      => $startLocal,
                 'endzeit'        => $endLocal,
                 'pause_minuten'  => $entity->get('pauseminuten'),
                 'dauer_minuten'  => $entity->get('dauerminuten'),
                 'netto_minuten'  => $entity->get('nettominuten'),
-                'auto_ended'     => $entity->get('autoEnded') ?? false,
+                'auto_ended'     => $entity->get('autoended') ?? false,
+                'ueberstunden_minuten' => $entity->get('ueberstundenminuten'),
+                'feiertagwochenende'   => $entity->get('feiertagwochenende'),
                 'fromFlask'      => true,
             ];
 
             $this->log->info("[CArbeitszeit→Flask] send payload: " . json_encode($payload, JSON_UNESCAPED_UNICODE));
 
-            // 🔹 Отправляем PUT во Flask
+            // 🔹 8. Отправляем PUT во Flask
             $ch = curl_init($url);
             curl_setopt_array($ch, [
                 CURLOPT_RETURNTRANSFER => true,

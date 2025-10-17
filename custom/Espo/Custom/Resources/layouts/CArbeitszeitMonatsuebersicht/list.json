@@ -1,0 +1,30 @@
+[
+    {
+        "name": "datum",
+        "width": 16
+    },
+    {
+        "name": "startzeit",
+        "width": 16
+    },
+    {
+        "name": "endzeit",
+        "width": 16
+    },
+    {
+        "name": "summeDauer",
+        "width": 16
+    },
+    {
+        "name": "summeNetto",
+        "width": 16
+    },
+    {
+        "name": "summeUeberstunden",
+        "width": 16
+    },
+    {
+        "name": "summeFeiertagWochenende",
+        "width": 16
+    }
+]

@@ -79,20 +79,22 @@
             "isCustom": true
         },
         "netto": {
+            "notNull": false,
             "type": "float",
             "isCustom": true,
             "dbField": "netto",
-            "notNull": false,
             "exportDisabled": false,
-            "importDisabled": false
+            "importDisabled": false,
+            "readOnly": false
         },
         "gesamt": {
+            "notNull": false,
             "type": "float",
             "isCustom": true,
             "dbField": "gesamt",
-            "notNull": false,
             "exportDisabled": false,
-            "importDisabled": false
+            "importDisabled": false,
+            "readOnly": false
         },
         "includeInAuftrag": {
             "type": "bool",

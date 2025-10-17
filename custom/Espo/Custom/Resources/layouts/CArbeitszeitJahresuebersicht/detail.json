@@ -1,0 +1,33 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "user"
+                }
+            ],
+            [
+                {
+                    "name": "monat"
+                },
+                {
+                    "name": "summeDauer"
+                },
+                {
+                    "name": "summeNetto"
+                },
+                {
+                    "name": "summeUeberstunden"
+                }
+            ],
+            [
+                {
+                    "name": "summeFeiertagWochenende"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

@@ -6,27 +6,17 @@
     },
     {
         "name": "menge",
-        "width": 8,
+        "width": 10,
         "align": "left"
     },
     {
         "name": "einheit",
-        "width": 8,
+        "width": 10,
         "align": "left"
     },
     {
         "name": "preis",
         "width": 10,
-        "align": "left"
-    },
-    {
-        "name": "einkaufspreis",
-        "width": 12,
-        "align": "left"
-    },
-    {
-        "name": "steuer",
-        "width": 8,
         "align": "left"
     },
     {
@@ -36,7 +26,7 @@
     },
     {
         "name": "gesamt",
-        "width": 10,
+        "width": 12,
         "align": "left"
     }
 ]

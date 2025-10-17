@@ -14,7 +14,9 @@
         "CMahnregel": "Mahnregel",
         "CMahnung": "Mahnung",
         "CWerkzeug": "Werkzeug",
-        "CWartung": "Wartung"
+        "CWartung": "Wartung",
+        "CArbeitszeitMonatsuebersicht": "Arbeitszeit Monatsuebersicht",
+        "CArbeitszeitJahresuebersicht": "Arbeitszeit Jahresuebersicht"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -31,7 +33,9 @@
         "CMahnregel": "Mahnregeln",
         "CMahnung": "Mahnungen",
         "CWerkzeug": "Werkzeuge",
-        "CWartung": "Wartungen"
+        "CWartung": "Wartungen",
+        "CArbeitszeitMonatsuebersicht": "Arbeitszeiten Monatsübersichten",
+        "CArbeitszeitJahresuebersicht": "Arbeitszeiten Jahresübersichten"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

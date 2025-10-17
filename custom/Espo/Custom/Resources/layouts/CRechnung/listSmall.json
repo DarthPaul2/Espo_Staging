@@ -1,13 +1,23 @@
 [
     {
-        "name": "name",
-        "width": 45,
+        "name": "rechnungsnummer",
+        "width": 20,
         "link": true,
-        "noLabel": true,
         "align": "left"
     },
     {
-        "name": "faelligAm",
+        "name": "account",
+        "width": 35,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "betragBrutto",
         "width": 20
+    },
+    {
+        "name": "faelligAm",
+        "width": 20,
+        "align": "left"
     }
 ]

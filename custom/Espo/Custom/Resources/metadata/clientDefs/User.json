@@ -27,6 +27,22 @@
         "wartungs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "cArbeitszeitMonatsuebersichts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "cArbeitszeitJahresuebersichts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "arbeitszeitMonatsuebersichts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "arbeitszeitJahresuebersichts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

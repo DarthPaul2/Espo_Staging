@@ -20,7 +20,9 @@
         "techniker": "Techniker",
         "createdAt": "Datum",
         "startkarte": "Startkarte",
-        "endkarte": "Endkarte"
+        "endkarte": "Endkarte",
+        "arbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
+        "arbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
     },
     "options": {
         "status": {
@@ -30,7 +32,9 @@
         }
     },
     "links": {
-        "techniker": "Techniker"
+        "techniker": "Techniker",
+        "arbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
+        "arbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
     },
     "tooltips": {
         "dauerminuten": "Gibt die Gesamtdauer in Minuten an",

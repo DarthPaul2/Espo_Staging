@@ -91,12 +91,16 @@
         "rabatt": {
             "notNull": false,
             "type": "float",
-            "isCustom": true
+            "isCustom": true,
+            "default": 0
         },
         "gesamt": {
             "notNull": false,
             "type": "float",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": false,
+            "readOnlyAfterCreate": false,
+            "view": "custom:views/fields/gesamt"
         },
         "beschreibung": {
             "type": "text",
@@ -133,7 +137,9 @@
         "netto": {
             "notNull": false,
             "type": "float",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": false,
+            "view": "custom:views/fields/netto"
         },
         "materialPreis": {
             "readOnly": true,

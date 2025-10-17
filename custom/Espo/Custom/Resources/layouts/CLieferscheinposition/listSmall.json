@@ -1,22 +1,17 @@
 [
     {
         "name": "material",
-        "width": 20
+        "width": 85,
+        "align": "left"
     },
     {
         "name": "menge",
-        "width": 20
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "einheit",
-        "width": 20
-    },
-    {
-        "name": "preis",
-        "width": 20
-    },
-    {
-        "name": "gesamt",
-        "width": 20
+        "width": 10,
+        "align": "left"
     }
 ]

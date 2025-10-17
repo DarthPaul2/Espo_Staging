@@ -1,0 +1,22 @@
+[
+    {
+        "name": "monat",
+        "width": 20
+    },
+    {
+        "name": "summeDauer",
+        "width": 20
+    },
+    {
+        "name": "summeNetto",
+        "width": 20
+    },
+    {
+        "name": "summeUeberstunden",
+        "width": 20
+    },
+    {
+        "name": "summeFeiertagWochenende",
+        "width": 20
+    }
+]

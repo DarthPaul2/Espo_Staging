@@ -2,11 +2,15 @@
     "fields": {
         "cArbeitszeiten": "Arbeitszeiten",
         "cAuftrags": "Auftrags",
-        "cWartungs": "Wartungs"
+        "cWartungs": "Wartungs",
+        "cArbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
+        "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
         "cAuftrags": "Auftrags",
-        "cWartungs": "Wartungs"
+        "cWartungs": "Wartungs",
+        "cArbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
+        "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
     }
 }

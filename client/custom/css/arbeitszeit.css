@@ -29,7 +29,7 @@
 
 /* Заголовок таблицы */
 .list[data-scope="CArbeitszeit"] table thead tr th {
-    background-color: #452daf !important;
+    background-color: #6d61a3 !important;
     color: #c2c2c2 !important;
     font-weight: bold !important;
 
@@ -85,4 +85,82 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+/* ===== Панели статистики CArbeitszeit ===== */
+/* ===== Универсальный стиль для обеих панелей ===== */
+.az-panel {
+    --az-bg: #fde0aa;
+    --az-bg-odd: #d3d1c8;
+    --az-bg-even: #faefb1;
+    --az-border: #ceb733;
+    --az-head-bg: linear-gradient(180deg, #1d1a07 0%, #524918 100%);
+    --az-head-text: #000000;
+    --az-text: #1b1b1b;
+    --az-hover: #fdc57c;
+    --az-weekend: #2e4a3a;
+    --az-weekend-border: #3f6a51;
+    --az-badge-wf-bg: #275d3d;
+    --az-badge-wf-text: #effaf4;
+}
+
+/* Общие таблицы статистики */
+.az-stat-table {
+    background: var(--az-bg);
+    color: var(--az-text);
+    border: 1px solid var(--az-border);
+    border-radius: 6px;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.az-stat-table thead th {
+    background: var(--az-head-bg);
+    color: var(--az-head-text);
+    font-weight: 600;
+    padding: 6px 8px;
+}
+
+.az-stat-table td {
+    padding: 4px 8px;
+}
+
+/* Зебра + hover */
+.az-stat-table tbody tr:nth-child(odd) {
+    background: var(--az-bg-odd);
+}
+
+.az-stat-table tbody tr:nth-child(even) {
+    background: var(--az-bg-even);
+}
+
+.az-stat-table tbody tr:hover {
+    background: var(--az-hover);
+}
+
+/* Подсветка выходных */
+.az-stat-table tbody tr.weekend {
+    background: var(--az-weekend);
+    border-left: 4px solid var(--az-weekend-border);
+}
+
+/* Выравнивания и бейджи */
+.az-cell-right {
+    text-align: right;
+}
+
+.az-cell-center {
+    text-align: center;
+}
+
+.az-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.az-badge-wf {
+    background: var(--az-badge-wf-bg);
+    color: var(--az-badge-wf-text);
 }

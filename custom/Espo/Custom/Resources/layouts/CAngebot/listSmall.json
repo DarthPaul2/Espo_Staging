@@ -1,9 +1,19 @@
 [
     {
-        "name": "name",
-        "width": 45,
+        "name": "angebotsnummer",
+        "width": 20,
         "link": true,
-        "noLabel": true,
+        "align": "left"
+    },
+    {
+        "name": "account",
+        "width": 35,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "betragBrutto",
+        "width": 20,
         "align": "left"
     },
     {

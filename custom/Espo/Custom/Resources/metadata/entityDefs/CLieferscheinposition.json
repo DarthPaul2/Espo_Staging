@@ -64,7 +64,9 @@
         "gesamt": {
             "notNull": false,
             "type": "float",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": false,
+            "view": "custom:views/fields/gesamt"
         },
         "material": {
             "type": "link"

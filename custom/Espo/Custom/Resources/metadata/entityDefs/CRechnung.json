@@ -86,7 +86,8 @@
         "faelligAm": {
             "notNull": false,
             "type": "date",
-            "isCustom": true
+            "isCustom": true,
+            "required": true
         },
         "leistungsdatumVon": {
             "notNull": false,

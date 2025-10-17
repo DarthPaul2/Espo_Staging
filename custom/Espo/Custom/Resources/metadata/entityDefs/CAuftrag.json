@@ -114,24 +114,32 @@
             "isCustom": true
         },
         "betragNetto": {
+            "notNull": false,
             "type": "float",
             "dbColumn": "betrag_netto",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": true
         },
         "betragBrutto": {
+            "notNull": false,
             "type": "float",
             "dbColumn": "betrag_brutto",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": true
         },
         "verrechnetNetto": {
+            "notNull": false,
             "type": "float",
             "dbColumn": "verrechnet_netto",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": true
         },
         "verrechnetBrutto": {
+            "notNull": false,
             "type": "float",
             "dbColumn": "verrechnet_brutto",
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": true
         },
         "pdfUrl": {
             "type": "url",

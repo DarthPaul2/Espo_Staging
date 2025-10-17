@@ -1,0 +1,20 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "arbeitszeit": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "arbeitszeitMonatsuebersichts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "user": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}
