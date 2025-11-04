@@ -30,6 +30,8 @@
     {
         "rows": [
             [
+                false,
+                false,
                 {
                     "name": "betragNetto"
                 },
@@ -40,20 +42,46 @@
         ],
         "dynamicLogicVisible": null,
         "style": "default",
+        "dynamicLogicStyled": null,
         "tabBreak": false,
         "hidden": false,
         "noteText": null,
         "noteStyle": "info",
-        "customLabel": "Summen (Angebot)"
+        "customLabel": "Gesamtsumme Auftrag"
     },
     {
         "rows": [
             [
                 {
+                    "name": "labelSummeRechnungen"
+                },
+                {
                     "name": "verrechnetNetto"
                 },
                 {
                     "name": "verrechnetBrutto"
+                }
+            ],
+            [
+                {
+                    "name": "labelBezahlt"
+                },
+                {
+                    "name": "bezahltNetto"
+                },
+                {
+                    "name": "bezahltBrutto"
+                }
+            ],
+            [
+                {
+                    "name": "labelRestbetrag"
+                },
+                {
+                    "name": "restbetragNetto"
+                },
+                {
+                    "name": "restbetragBrutto"
                 }
             ]
         ],
@@ -64,7 +92,7 @@
         "hidden": false,
         "noteText": null,
         "noteStyle": "info",
-        "customLabel": "Verrechnet (Rechnungen)"
+        "label": ""
     },
     {
         "rows": [

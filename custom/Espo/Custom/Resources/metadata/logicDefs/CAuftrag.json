@@ -1,0 +1,132 @@
+{
+    "fields": {
+        "betragBrutto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        },
+        "betragNetto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        },
+        "verrechnetBrutto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        },
+        "verrechnetNetto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        },
+        "bezahltNetto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        },
+        "bezahltBrutto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        },
+        "restbetragNetto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        },
+        "restbetragBrutto": {
+            "readOnly": {
+                "conditionGroup": [
+                    {
+                        "type": "notEquals",
+                        "attribute": "$user.id",
+                        "data": {
+                            "values": {
+                                "name": "Pavel Malanov"
+                            }
+                        },
+                        "value": "689c8cf54ecdfc0bf"
+                    }
+                ]
+            }
+        }
+    }
+}

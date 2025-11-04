@@ -3,6 +3,9 @@
     "boolFilterList": [
         "onlyMy"
     ],
+    "recordViews": {
+        "editSmall": "custom:views/c-auftragsposition/record/edit-small"
+    },
     "relationshipPanels": {
         "auftrag": {
             "layout": null,

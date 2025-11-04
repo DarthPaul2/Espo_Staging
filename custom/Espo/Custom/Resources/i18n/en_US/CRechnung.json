@@ -25,7 +25,8 @@
         "mahnregel": "Mahnregel",
         "mahnstufe": "Mahnstufe",
         "letzteMahnungAm": "Letzte Mahnung am",
-        "mahnungs": "Mahnungen"
+        "mahnungs": "Mahnungen",
+        "rechnungstyp": "Rechnungstyp"
     },
     "links": {
         "account": "Account",
@@ -57,6 +58,11 @@
             "mahnung2": "Mahnung 2",
             "mahnung3": "Letzte Mahnung",
             "inkasso": "Inkasso"
+        },
+        "rechnungstyp": {
+            "teilrechnung": "Teilrechnung",
+            "schlussrechnung": "Schlussrechnung",
+            "gutschrift": "Gutschrift"
         }
     }
 }

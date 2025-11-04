@@ -18,20 +18,23 @@
     },
     {
         "name": "name",
-        "width": 10,
+        "width": 16,
         "link": true,
         "align": "left"
     },
     {
         "name": "leistungsdatumVon",
-        "width": 16
+        "width": 14,
+        "align": "left"
     },
     {
         "name": "leistungsdatumBis",
-        "width": 16
+        "width": 14,
+        "align": "left"
     },
     {
         "name": "status",
-        "width": 16
+        "width": 12,
+        "align": "left"
     }
 ]

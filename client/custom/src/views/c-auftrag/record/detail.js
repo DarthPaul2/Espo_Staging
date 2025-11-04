@@ -89,7 +89,24 @@ define('custom:views/c-auftrag/record/detail', ['views/record/detail'], function
                             // разгружаем наблюдателей и жёстко перезагружаем страницу один раз
                             try { obs.disconnect(); } catch (e) { }
                             panelEl.removeEventListener('click', armIfActionClick, true);
-                            HARD_RELOAD_ONCE('angebots rows changed after armed');
+                            try {
+                                if (typeof self._recalcOnServer === 'function') {
+                                    self._recalcOnServer();
+                                }
+                            } catch (e) {
+                                console.warn('[CAuftrag/detail] recalcOnServer failed:', e);
+                            }
+
+                            setTimeout(() => {
+                                self.model.fetch({
+                                    success: () => {
+                                        self.reRender();
+                                        setTimeout(() => self._applyPdfLinkLabel(), 0);
+                                    },
+                                    error: (xhr) => console.warn('[CAuftrag/detail] fetch after recalc failed:', xhr?.status)
+                                });
+                            }, 400);
+
                         }
                     });
 
@@ -172,6 +189,12 @@ define('custom:views/c-auftrag/record/detail', ['views/record/detail'], function
             this.listenTo(this.model, 'change:pdfUrl', () => {
                 setTimeout(() => this._applyPdfLinkLabel(), 0);
             });
+
+            // Автопересчёт при изменении позиций
+            window.addEventListener('c-auftragsposition:updated', () => {
+                if (this._recalcOnServer) this._recalcOnServer();
+            });
+
         },
 
         // ======================== actions ========================

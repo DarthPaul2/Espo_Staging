@@ -173,7 +173,8 @@
             "isCustom": true
         },
         "auftrag": {
-            "type": "link"
+            "type": "link",
+            "required": true
         },
         "mahnregel": {
             "type": "link"
@@ -201,6 +202,22 @@
         "letzteMahnungAm": {
             "notNull": false,
             "type": "date",
+            "isCustom": true
+        },
+        "rechnungstyp": {
+            "type": "enum",
+            "options": [
+                "teilrechnung",
+                "schlussrechnung",
+                "gutschrift"
+            ],
+            "style": {
+                "teilrechnung": null,
+                "schlussrechnung": null,
+                "gutschrift": null
+            },
+            "default": "schlussrechnung",
+            "maxLength": 100,
             "isCustom": true
         }
     },

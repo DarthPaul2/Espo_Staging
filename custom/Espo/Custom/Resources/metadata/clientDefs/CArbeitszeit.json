@@ -7,5 +7,6 @@
     "iconClass": "far fa-clock",
     "views": {
         "list": "custom:views/c-arbeitszeit/list"
-    }
+    },
+    "kanbanViewMode": false
 }

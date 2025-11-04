@@ -18,7 +18,14 @@
         "auftragsbestaetigungGesendetAm": "Auftragsbestätigung gesendet am",
         "auftragsbestaetigungGesendetVon": "Gesendet von",
         "auftragspositions": "Auftragspositions",
-        "werkzeugs": "Werkzeugs"
+        "werkzeugs": "Werkzeugs",
+        "labelSummeRechnungen": "SUMME AUSGESTELLTER RECHNUNGEN:",
+        "labelBezahlt": "SUMME BEZAHLT:",
+        "bezahltNetto": "Bezahlt Netto",
+        "bezahltBrutto": "Bezahlt Brutto",
+        "labelRestbetrag": "RESTBETRAG:",
+        "restbetragNetto": "Restbetrag Netto",
+        "restbetragBrutto": "Restbetrag Brutto"
     },
     "links": {
         "account": "Account",
@@ -38,6 +45,15 @@
             "in Bearbeitung": "in Bearbeitung",
             "abgeschlossen": "abgeschlossen",
             "storniert": "storniert"
+        },
+        "labelSummeRechnungen": {
+            "": "   "
+        },
+        "labelBezahlt": {
+            "": "   "
+        },
+        "labelRestbetrag": {
+            "": "     "
         }
     }
 }

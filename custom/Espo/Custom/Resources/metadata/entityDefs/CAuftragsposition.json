@@ -56,6 +56,22 @@
         "material": {
             "type": "link"
         },
+        "materialPreis": {
+            "type": "foreign",
+            "link": "material",
+            "field": "preis",
+            "view": "views/fields/foreign-float",
+            "readOnly": true,
+            "isCustom": true
+        },
+        "materialEinheit": {
+            "type": "foreign",
+            "link": "material",
+            "field": "einheit",
+            "view": "views/fields/foreign-varchar",
+            "readOnly": true,
+            "isCustom": true
+        },
         "beschreibung": {
             "type": "text",
             "rowsMin": 2,

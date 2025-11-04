@@ -65,7 +65,8 @@
             "maxLength": 100,
             "options": [],
             "readOnlyAfterCreate": true,
-            "isCustom": true
+            "isCustom": true,
+            "required": false
         },
         "status": {
             "type": "enum",
@@ -117,29 +118,31 @@
             "notNull": false,
             "type": "float",
             "dbColumn": "betrag_netto",
+            "view": "custom:views/fields/betrag-auftrag",
             "isCustom": true,
-            "readOnly": true
+            "default": 0
         },
         "betragBrutto": {
             "notNull": false,
             "type": "float",
             "dbColumn": "betrag_brutto",
+            "view": "custom:views/fields/betrag-auftrag",
             "isCustom": true,
-            "readOnly": true
+            "default": 0
         },
         "verrechnetNetto": {
             "notNull": false,
             "type": "float",
             "dbColumn": "verrechnet_netto",
             "isCustom": true,
-            "readOnly": true
+            "default": 0
         },
         "verrechnetBrutto": {
             "notNull": false,
             "type": "float",
             "dbColumn": "verrechnet_brutto",
             "isCustom": true,
-            "readOnly": true
+            "default": 0
         },
         "pdfUrl": {
             "type": "url",
@@ -153,6 +156,68 @@
         },
         "auftragsbestaetigungGesendetVon": {
             "type": "link"
+        },
+        "labelSummeRechnungen": {
+            "type": "enum",
+            "options": [
+                ""
+            ],
+            "style": {
+                "": null
+            },
+            "maxLength": 100,
+            "isCustom": true,
+            "readOnly": true
+        },
+        "labelBezahlt": {
+            "type": "enum",
+            "readOnly": true,
+            "options": [
+                ""
+            ],
+            "style": {
+                "": null
+            },
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "bezahltNetto": {
+            "notNull": false,
+            "type": "float",
+            "default": 0,
+            "isCustom": true
+        },
+        "bezahltBrutto": {
+            "notNull": false,
+            "type": "float",
+            "default": 0,
+            "isCustom": true
+        },
+        "labelRestbetrag": {
+            "type": "enum",
+            "options": [
+                ""
+            ],
+            "style": {
+                "": null
+            },
+            "readOnly": true,
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "restbetragNetto": {
+            "notNull": false,
+            "type": "float",
+            "default": 0,
+            "view": "custom:views/fields/restbetrag-auftrag",
+            "isCustom": true
+        },
+        "restbetragBrutto": {
+            "notNull": false,
+            "type": "float",
+            "default": 0,
+            "view": "custom:views/fields/restbetrag-auftrag",
+            "isCustom": true
         }
     },
     "links": {

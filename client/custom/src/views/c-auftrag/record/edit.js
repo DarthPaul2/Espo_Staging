@@ -5,29 +5,31 @@ define('custom:views/c-auftrag/record/edit', ['views/record/edit'], function (De
     const LOG = (t, p) => { try { console.log('[CAuftrag/edit]', t, p || ''); } catch (e) { } };
 
     return Dep.extend({
+
+        // Оставляю на случай будущих нужд (не используется здесь)
         FLASK_BASE: 'https://klesec.pagekite.me/api',
 
         setup: function () {
+            // Стандартная инициализация формы редактирования заказа
             Dep.prototype.setup.call(this);
 
-            const syncFields = () => {
-                ['betragNetto', 'betragBrutto', 'verrechnetNetto', 'verrechnetBrutto'].forEach(n => {
-                    const fv = this.getFieldView && this.getFieldView(n);
-                    if (fv && fv.setValue) fv.setValue(this.model.get(n) || 0, { render: true, fromModel: true });
-                });
-            };
+            // НИКАКИХ блокировок/переключений режима/disable-инпутов.
+            // НИКАКОЙ чистки полей перед сохранением.
+            // НИКАКИХ вызовов автопересчёта после сохранения.
+            // Всё редактируется пользователем и сохраняется как есть.
 
-            this.once('after:render', () => syncFields(), this);
-
-            this.listenTo(this, 'after:save', () => {
-                const id = this.model.id;
-                if (!id) return;
-                $.ajax({
-                    url: `${this.FLASK_BASE}/auftrag/${encodeURIComponent(id)}/recalc_totals`,
-                    method: 'POST',
-                    complete: () => { this.model.fetch({ success: () => this.reRender() }); }
+            // Если когда-то захочешь мягкую нормализацию числовых полей — расскомментируй ниже.
+            /*
+            const TOTAL_FIELDS = ['betragNetto', 'betragBrutto', 'verrechnetNetto', 'verrechnetBrutto'];
+            this.on('before:save', (attrs) => {
+                if (!attrs || typeof attrs !== 'object') return;
+                TOTAL_FIELDS.forEach(n => {
+                    // пример: пустые строки превращать в null (или 0 — по желанию)
+                    if (attrs[n] === '' || attrs[n] === undefined) attrs[n] = null; // или 0
                 });
             });
-        }
+            */
+        },
+
     });
 });

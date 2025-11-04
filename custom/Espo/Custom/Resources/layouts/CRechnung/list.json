@@ -32,6 +32,10 @@
         "align": "left"
     },
     {
+        "name": "assignedUser",
+        "width": 16
+    },
+    {
         "name": "status",
         "width": 12,
         "align": "left"
