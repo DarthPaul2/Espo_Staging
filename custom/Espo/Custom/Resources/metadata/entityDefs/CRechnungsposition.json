@@ -132,6 +132,9 @@
         },
         "rechnung": {
             "type": "link"
+        },
+        "auftragsposition": {
+            "type": "link"
         }
     },
     "links": {
@@ -164,6 +167,13 @@
             "type": "belongsTo",
             "foreign": "rechnungspositions",
             "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "auftragsposition": {
+            "type": "belongsTo",
+            "foreign": "rechnungspositions",
+            "entity": "CAuftragsposition",
             "audited": false,
             "isCustom": true
         }

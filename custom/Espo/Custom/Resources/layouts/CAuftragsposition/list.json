@@ -26,5 +26,10 @@
     {
         "name": "includeInAuftrag",
         "width": 16
+    },
+    {
+        "name": "bereitsabgerechnet",
+        "width": 14,
+        "align": "left"
     }
 ]

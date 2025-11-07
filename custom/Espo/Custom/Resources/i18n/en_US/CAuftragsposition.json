@@ -16,13 +16,16 @@
         "sortierung": "Sortierung",
         "angebotOption12": "§ 12 Abs. 3 UStG",
         "angebotOption13b": "§ 13b UStG",
-        "includeInAuftrag": "Im Auftrag"
+        "includeInAuftrag": "Im Auftrag",
+        "bereitsabgerechnet": "Bereits abgerechnet",
+        "rechnungspositions": "Rechnungspositions"
     },
     "links": {
         "auftrag": "Auftrag",
         "angebot": "Angebot",
         "angebotsposition": "Angebotsposition",
-        "material": "Material"
+        "material": "Material",
+        "rechnungspositions": "Rechnungspositions"
     },
     "labels": {
         "Create CAuftragsposition": "Create Auftragsposition"

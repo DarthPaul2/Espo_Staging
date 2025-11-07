@@ -19,5 +19,9 @@
         "name": "faelligAm",
         "width": 20,
         "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 20
     }
 ]

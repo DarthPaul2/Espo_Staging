@@ -22,6 +22,10 @@
         "material": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "rechnungspositions": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

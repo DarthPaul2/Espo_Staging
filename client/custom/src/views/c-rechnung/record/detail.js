@@ -125,6 +125,49 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
         setup: function () {
             Dep.prototype.setup.call(this);
 
+            // ✅ Перезагружаем ТОЛЬКО после нажатия "Сохранить", если Angebot меняли
+            this.once('after:render', () => {
+                const fvAngebot = this.getFieldView && this.getFieldView('angebot');
+                if (!fvAngebot) return;
+
+                // флаг изменения Angebot
+                this._angebotChanged = false;
+
+                // 1) Пользователь сменил Angebot → только помечаем флаг
+                this.listenTo(fvAngebot, 'change', () => {
+                    this._angebotChanged = true;
+                });
+
+                // 2) Перехватываем клик по кнопке "Сохранить"
+                this.$el.off('.crecSave').on('click.crecSave', '.action[data-action="save"]', () => {
+                    if (!this._angebotChanged) return; // если Angebot не трогали — ничего не делаем
+
+                    const notifyId = this.notify('Angebot gewählt – Positionen werden importiert…', 'loading');
+
+                    // Ждём успешного сохранения модели
+                    this.listenToOnce(this.model, 'sync', () => {
+                        this.notify(false, 'loading', notifyId);
+
+                        // Сбрасываем "грязность", чтобы не было предупреждений браузера
+                        try {
+                            this.model.changed = {};
+                            this.model._previousAttributes = { ...this.model.attributes };
+                            this.model.trigger('change:clear');
+                            if (this.model.setNotModified) this.model.setNotModified();
+                            if (this.setIsNotModified) this.setIsNotModified();
+                        } catch (e) { }
+
+                        // ⏳ ДАЁМ ЗАДЕРЖКУ для серверного импорта позиций, затем полный reload
+                        setTimeout(() => {
+                            window.location.reload(); // полный перезапуск страницы
+                        }, 1000); // при необходимости увеличь до 1500–2000 мс
+
+                        // сбрасываем флаг, чтобы последующие сохранения не перезагружали страницу
+                        this._angebotChanged = false;
+                    });
+                });
+            });
+
             this.once('after:render', () => this._applyPdfLinkLabel(), this);
             this.listenTo(this.model, 'change:pdfUrl', () => setTimeout(() => this._applyPdfLinkLabel(), 0));
 
@@ -310,32 +353,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 label: this.translate ? this.translate('Mahnung erzeugen', 'labels', 'CRechnung') : 'Mahnung erzeugen',
                 style: 'danger',
                 title: 'Mahnung als PDF erzeugen'
-            });
-
-            this.listenTo(this.model, 'change:angebotId', () => {
-                const angebotId = this.model.get('angebotId');
-                if (!angebotId) return;
-
-                const notifyId = this.notify('Angebot gewählt – Positionen werden importiert…', 'loading');
-
-                this.listenToOnce(this.model, 'sync', () => {
-                    this.notify(false, 'loading', notifyId);
-
-                    // ждём чуть-чуть, чтобы Espo успел снять флаг dirty
-                    setTimeout(() => {
-                        try {
-                            // сбрасываем dirty-флаг вручную
-                            this.model.changed = {};
-                            this.model._previousAttributes = { ...this.model.attributes };
-                            this.model.trigger('change:clear');
-                        } catch (e) {
-                            console.warn('[CRechnung/detail] clear dirty failed', e);
-                        }
-
-                        // теперь можно перезагружать без предупреждения
-                        window.location.reload();
-                    }, 500);
-                });
             });
 
         },
@@ -561,6 +578,7 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
         // ==== cleanup ====
         onRemove: function () {
+            this.$el.off('.crecSave');
             window.removeEventListener('c-rechnungsposition:saved', this._onPositionSaved);
 
             Dep.prototype.onRemove.call(this);

@@ -156,6 +156,11 @@
             "field": "gesetzOption13b",
             "view": "views/fields/foreign-bool",
             "isCustom": true
+        },
+        "bereitsabgerechnet": {
+            "type": "bool",
+            "default": false,
+            "isCustom": true
         }
     },
     "links": {
@@ -202,6 +207,13 @@
             "type": "belongsTo",
             "foreign": "auftragspositions",
             "entity": "CMaterial",
+            "audited": false,
+            "isCustom": true
+        },
+        "rechnungspositions": {
+            "type": "hasMany",
+            "foreign": "auftragsposition",
+            "entity": "CRechnungsposition",
             "audited": false,
             "isCustom": true
         }

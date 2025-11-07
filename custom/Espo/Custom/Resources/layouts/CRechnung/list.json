@@ -1,7 +1,7 @@
 [
     {
         "name": "rechnungsnummer",
-        "width": 16,
+        "width": 14,
         "link": true,
         "align": "left"
     },
@@ -18,7 +18,12 @@
     },
     {
         "name": "faelligAm",
-        "width": 12,
+        "width": 9,
+        "align": "left"
+    },
+    {
+        "name": "rechnungstyp",
+        "width": 13,
         "align": "left"
     },
     {
@@ -37,7 +42,7 @@
     },
     {
         "name": "status",
-        "width": 12,
+        "width": 8,
         "align": "left"
     }
 ]

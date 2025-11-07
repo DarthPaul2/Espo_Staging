@@ -20,10 +20,12 @@
         "description": "Material – Beschreibung",
         "rechnungOption13b": "§ 13b UStG",
         "rechnungOption12": "§ 12 Abs. 3 UStG",
-        "rechnung": "Rechnung"
+        "rechnung": "Rechnung",
+        "auftragsposition": "Auftragsposition"
     },
     "links": {
         "material": "Material",
-        "rechnung": "Rechnung"
+        "rechnung": "Rechnung",
+        "auftragsposition": "Auftragsposition"
     }
 }

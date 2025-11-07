@@ -6,7 +6,14 @@
         ],
         "afterSave": [
             "AngebotImporter",
-            "UpdateRechnungTotals"
+            "UpdateRechnungTotals",
+            "MarkAuftragspositionAbgerechnet"
+        ],
+        "afterRelate": [
+            "MarkAuftragspositionAbgerechnet"
+        ],
+        "afterUnrelate": [
+            "MarkAuftragspositionAbgerechnet"
         ]
     },
     "fields": {
@@ -209,14 +216,16 @@
             "options": [
                 "teilrechnung",
                 "schlussrechnung",
-                "gutschrift"
+                "gutschrift",
+                "einzelrechnung"
             ],
             "style": {
                 "teilrechnung": null,
                 "schlussrechnung": null,
-                "gutschrift": null
+                "gutschrift": null,
+                "einzelrechnung": null
             },
-            "default": "schlussrechnung",
+            "default": "einzelrechnung",
             "maxLength": 100,
             "isCustom": true
         }

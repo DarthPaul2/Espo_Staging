@@ -15,6 +15,10 @@
         "rechnung": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "auftragsposition": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

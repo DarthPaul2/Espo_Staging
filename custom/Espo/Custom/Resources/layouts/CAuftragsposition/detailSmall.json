@@ -30,6 +30,11 @@
                 {
                     "name": "beschreibung"
                 }
+            ],
+            [
+                {
+                    "name": "bereitsabgerechnet"
+                }
             ]
         ],
         "style": "default",

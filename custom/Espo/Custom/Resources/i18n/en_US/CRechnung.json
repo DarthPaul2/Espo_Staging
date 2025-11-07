@@ -62,7 +62,8 @@
         "rechnungstyp": {
             "teilrechnung": "Teilrechnung",
             "schlussrechnung": "Schlussrechnung",
-            "gutschrift": "Gutschrift"
+            "gutschrift": "Gutschrift",
+            "einzelrechnung": "Einzelrechnung"
         }
     }
 }
