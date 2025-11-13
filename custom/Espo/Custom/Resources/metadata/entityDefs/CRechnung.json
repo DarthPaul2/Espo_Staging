@@ -6,14 +6,19 @@
         ],
         "afterSave": [
             "AngebotImporter",
+            "SchlussImporter",
             "UpdateRechnungTotals",
-            "MarkAuftragspositionAbgerechnet"
+            "MarkAuftragspositionAbgerechnet",
+            "ResetBereitsabgerechnetOnDelete"
         ],
         "afterRelate": [
             "MarkAuftragspositionAbgerechnet"
         ],
         "afterUnrelate": [
             "MarkAuftragspositionAbgerechnet"
+        ],
+        "beforeRemove": [
+            "ResetBereitsabgerechnetOnDelete"
         ]
     },
     "fields": {
@@ -141,10 +146,10 @@
             "default": "offen",
             "displayAsLabel": true,
             "style": {
-                "offen": null,
+                "offen": "primary",
                 "versendet": null,
-                "bezahlt": null,
-                "storniert": null
+                "bezahlt": "success",
+                "storniert": "danger"
             },
             "maxLength": 100,
             "isCustom": true

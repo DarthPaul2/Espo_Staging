@@ -6,7 +6,15 @@
                     "name": "account"
                 },
                 {
+                    "name": "rechnungstyp"
+                }
+            ],
+            [
+                {
                     "name": "angebot"
+                },
+                {
+                    "name": "auftrag"
                 }
             ],
             [
@@ -22,6 +30,14 @@
             ],
             [
                 {
+                    "name": "leistungsdatumVon"
+                },
+                {
+                    "name": "leistungsdatumBis"
+                }
+            ],
+            [
+                {
                     "name": "faelligAm"
                 },
                 {
@@ -29,14 +45,6 @@
                 },
                 {
                     "name": "pdfUrl"
-                }
-            ],
-            [
-                {
-                    "name": "leistungsdatumVon"
-                },
-                {
-                    "name": "leistungsdatumBis"
                 }
             ]
         ],

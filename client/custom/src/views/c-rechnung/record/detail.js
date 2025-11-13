@@ -20,11 +20,29 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
         getPositionsCollection() {
             const pv = this.getPanelView();
-            if (!pv || !pv.collection) {
-                return null;
-            }
+            if (!pv || !pv.collection) return null;
             return pv.collection;
         },
+
+        getRechnungTyp() {
+            return String(this.model.get('rechnungstyp') || '').toLowerCase();
+        },
+
+
+        showLoader(msg = 'Bitte warten…') {
+            return this.notify(msg, 'loading');
+        },
+
+        hideLoader(id) {
+            this.notify(false, 'loading', id);
+        },
+
+        // --- тип счета ---
+        getRechnungstyp() {
+            return String(this.model.get('rechnungstyp') || '').toLowerCase(); // 'teilrechnung' | 'schlussrechnung' | ''
+        },
+        isTeil() { return this.getRechnungstyp() === 'teilrechnung'; },
+        isSchluss() { return this.getRechnungstyp() === 'schlussrechnung'; },
 
         // ==== PDF payload ====
         buildPayload: function (positions) {
@@ -89,13 +107,8 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
             if (!col) return Promise.reject(new Error('Panel collection not found'));
             return new Promise((resolve, reject) => {
                 col.fetch({
-                    success: (c) => {
-                        const data = c.toJSON();
-                        resolve(data);
-                    },
-                    error: (xhr) => {
-                        reject(new Error('Panel fetch failed'));
-                    }
+                    success: c => resolve(c.toJSON()),
+                    error: () => reject(new Error('Panel fetch failed'))
                 });
             });
         },
@@ -125,30 +138,29 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
         setup: function () {
             Dep.prototype.setup.call(this);
 
-            // ✅ Перезагружаем ТОЛЬКО после нажатия "Сохранить", если Angebot меняли
+            // === Поведение выбора Angebot как во «втором» коде ===
             this.once('after:render', () => {
-                const fvAngebot = this.getFieldView && this.getFieldView('angebot');
+                const fvAngebot = this.getFieldView && (this.getFieldView('angebot') || this.getFieldView('angebotId'));
                 if (!fvAngebot) return;
 
-                // флаг изменения Angebot
                 this._angebotChanged = false;
 
-                // 1) Пользователь сменил Angebot → только помечаем флаг
+                // помечаем, что пользователь менял Angebot
                 this.listenTo(fvAngebot, 'change', () => {
                     this._angebotChanged = true;
                 });
 
-                // 2) Перехватываем клик по кнопке "Сохранить"
+                // реагируем только на явное сохранение
                 this.$el.off('.crecSave').on('click.crecSave', '.action[data-action="save"]', () => {
-                    if (!this._angebotChanged) return; // если Angebot не трогали — ничего не делаем
+                    if (!this._angebotChanged) return;
 
                     const notifyId = this.notify('Angebot gewählt – Positionen werden importiert…', 'loading');
 
-                    // Ждём успешного сохранения модели
+                    // ждём подтверждения от сервера (одноразово)
                     this.listenToOnce(this.model, 'sync', () => {
                         this.notify(false, 'loading', notifyId);
 
-                        // Сбрасываем "грязность", чтобы не было предупреждений браузера
+                        // очистим «грязные» флаги, чтобы не было лишних диалогов
                         try {
                             this.model.changed = {};
                             this.model._previousAttributes = { ...this.model.attributes };
@@ -157,12 +169,7 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                             if (this.setIsNotModified) this.setIsNotModified();
                         } catch (e) { }
 
-                        // ⏳ ДАЁМ ЗАДЕРЖКУ для серверного импорта позиций, затем полный reload
-                        setTimeout(() => {
-                            window.location.reload(); // полный перезапуск страницы
-                        }, 1000); // при необходимости увеличь до 1500–2000 мс
-
-                        // сбрасываем флаг, чтобы последующие сохранения не перезагружали страницу
+                        setTimeout(() => { window.location.reload(); }, 800);
                         this._angebotChanged = false;
                     });
                 });
@@ -172,10 +179,8 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
             this.listenTo(this.model, 'change:pdfUrl', () => setTimeout(() => this._applyPdfLinkLabel(), 0));
 
             // --- локальный пересчёт и подстановка в поля ---
-            const bumpTotalsFields = (netto, brutto, src) => {
-                // обновляем модель без silent, чтобы биндинги поля дернулись
+            const bumpTotalsFields = (netto, brutto) => {
                 this.model.set({ betragNetto: netto, betragBrutto: brutto });
-
                 const fvN = this.getFieldView && this.getFieldView('betragNetto');
                 const fvB = this.getFieldView && this.getFieldView('betragBrutto');
                 if (fvN?.setValue) fvN.setValue(netto, { render: true, fromModel: true });
@@ -186,7 +191,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 const col = this.getPositionsCollection();
                 if (!col) { L('quickLocalRecalc: no collection', { reason }); return; }
 
-                // идентичная логика Angebot: 13b/12 = НДС 0, иначе 19
                 const flags = { rc: !!this.model.get('gesetzOption13b'), pv: !!this.model.get('gesetzOption12') };
                 const vatRate = (flags.rc || flags.pv) ? 0 : 19;
 
@@ -216,7 +220,7 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 });
             };
 
-            // --- перехваты удалений/отвязок (jQuery + fetch + XHR) как в Angebot ---
+            // --- перехваты удалений/отвязок (jQuery + fetch + XHR) ---
             (function installDeletionSoftRefreshOnce(self, softRefreshFn) {
                 if (window.__CREC_POS_SOFT_HOOK_INSTALLED) return;
                 window.__CREC_POS_SOFT_HOOK_INSTALLED = true;
@@ -225,13 +229,8 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     const u = String(url || '');
                     const m = String(method || 'GET').toUpperCase();
 
-                    // DELETE /CRechnungsposition/<id>
                     if (m === 'DELETE' && /\/CRechnungsposition\/[^/?#]+/i.test(u)) return true;
-
-                    // unlinkRelated|massUnlinkRelated для CRechnung (любой unlink считаем релевантным)
                     if (/\/CRechnung\/action\/(unlinkRelated|massUnlinkRelated|unlink|massUnlink)/i.test(u)) return true;
-
-                    // generic
                     if (/\/CRechnung\/action\/.*unlink/i.test(u)) return true;
 
                     return false;
@@ -300,7 +299,7 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 }
             })(this, hardRefreshFromServer.bind(this));
 
-            // --- init & подписки как в Angebot ---
+            // --- init & подписки ---
             this.once('after:render', () => {
                 window.__rechnungTax = {
                     rc: !!this.model.get('gesetzOption13b'),
@@ -354,20 +353,47 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 style: 'danger',
                 title: 'Mahnung als PDF erzeugen'
             });
-
         },
 
         // ==== PDF Preview ====
         actionPdfPreview: function () {
-            const id = this.model.id;
             const notifyId = this.notify('PDF wird erstellt…', 'loading');
 
-            const proceed = (rows) => {
-                const pos = this.buildPositionsForPdf(rows);
-                L('pdfPreview: positions prepared', pos);
-                const payload = this.buildPayload(pos);
-                const url = this.FLASK_BASE + '/rechnungen/preview_pdf';
-                L('pdfPreview: POST', { url });
+            // SCHLUSSRECHNUNG → сервер сам тянет позиции по auftragId
+            if (this.isSchluss()) {
+                const auftragId = this.model.get('auftragId');
+                if (!auftragId) {
+                    this.notify(false, 'loading', notifyId);
+                    return this.notify('Auftrag-ID fehlt für Schlussrechnung.', 'error');
+                }
+
+                const payload = {
+                    auftrag_id: this.model.get('auftragId'),
+
+                    // «шапка»
+                    kunde: this.model.get('accountName'),
+                    strasse: this.model.get('strasse'),
+                    hausnummer: this.model.get('hausnummer'),
+                    plz: this.model.get('plz'),
+                    ort: this.model.get('ort'),
+
+                    rechnungsnummer: this.model.get('rechnungsnummer'),
+                    servicenummer: this.model.get('serviceNummer'),
+                    kundennummer: this.model.get('accountKundenNr'),
+
+                    faellig_am: this.model.get('faelligAm'),
+                    datum: this.model.get('createdAt'),
+                    leistungsdatum_von: this.model.get('leistungsdatumVon'),
+                    leistungsdatum_bis: this.model.get('leistungsdatumBis'),
+
+                    sachbearbeiter: this.model.get('sachbearbeiter'),
+                    titel: this.model.get('titel') || 'SCHLUSSRECHNUNG',
+                    einleitung: this.model.get('einleitung') || '',
+
+                    bemerkung: this.model.get('bemerkung') || ''
+                };
+
+                const url = this.FLASK_BASE + '/schlussrechnungen/preview_pdf';
                 $.ajax({
                     url,
                     method: 'POST',
@@ -376,14 +402,48 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     headers: { 'Authorization': this.BASIC_AUTH },
                     data: JSON.stringify(payload),
                     success: (blob) => {
-                        L('pdfPreview: success (blob size)', blob?.size);
-                        this.notify(false, 'loading', notifyId);
                         const blobUrl = URL.createObjectURL(blob);
                         window.open(blobUrl, '_blank');
+
+                        // даём браузеру секунду «раскрыть» PDF, прежде чем гасить лоадер
+                        setTimeout(() => {
+                            this.notify(false, 'loading', notifyId);
+                        }, 1000);
                     },
                     error: (xhr) => {
                         this.notify(false, 'loading', notifyId);
-                        L('pdfPreview: AJAX error', { status: xhr?.status, statusText: xhr?.statusText, responseText: xhr?.responseText });
+                        let msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
+                        this.notify(msg, 'error');
+                    }
+                });
+                return;
+            }
+
+            // TEILRECHNUNG → позиции из панели/REST, другой роут
+            const id = this.model.id;
+            const proceed = (rows) => {
+                const pos = this.buildPositionsForPdf(rows);
+                const payload = this.buildPayload(pos);
+                if (!payload.titel) payload.titel = 'TEILRECHNUNG';
+
+                const url = this.FLASK_BASE + '/teilrechnungen/preview_pdf';
+                $.ajax({
+                    url,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    xhrFields: { responseType: 'blob' },
+                    headers: { 'Authorization': this.BASIC_AUTH },
+                    data: JSON.stringify(payload),
+                    success: (blob) => {
+                        const blobUrl = URL.createObjectURL(blob);
+                        window.open(blobUrl, '_blank');
+
+                        setTimeout(() => {
+                            this.notify(false, 'loading', notifyId);
+                        }, 1000);
+                    },
+                    error: (xhr) => {
+                        this.notify(false, 'loading', notifyId);
                         let msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
                         this.notify(msg, 'error');
                     }
@@ -393,68 +453,121 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
             this.loadPositionsFromPanel()
                 .catch(() => this.loadPositionsViaRest(id))
                 .then(proceed)
-                .catch(err => {
+                .catch(() => {
                     this.notify(false, 'loading', notifyId);
-                    L('pdfPreview: positions load failed', err?.message || err);
                     this.notify('Keine Positionen gefunden.', 'error');
                 });
         },
+
+
 
         // ==== PDF Save ====
         actionPdfSave: function () {
-            const espoId = this.model.id;
-            if (!espoId) return;
-
             const notifyId = this.notify('PDF wird erzeugt und gespeichert…', 'loading');
+
+            // SCHLUSSRECHNUNG → сервер сам тянет позиции; ключ — Rechnungsnummer
+            if (this.isSchluss()) {
+                const nr = this.model.get('rechnungsnummer');
+                const auftragId = this.model.get('auftragId');
+
+                if (!nr) {
+                    this.notify(false, 'loading', notifyId);
+                    return this.notify('Rechnungsnummer fehlt.', 'error');
+                }
+                if (!auftragId) {
+                    this.notify(false, 'loading', notifyId);
+                    return this.notify('Auftrag-ID fehlt für Schlussrechnung.', 'error');
+                }
+
+                const url = `${this.FLASK_BASE}/schlussrechnungen/${encodeURIComponent(nr)}/save_pdf`;
+                const payload = {
+                    rechnungsnummer: nr,
+                    servicenummer: this.model.get('serviceNummer') || undefined,
+                    bemerkung: this.model.get('bemerkung') || ''
+                };
+
+                $.ajax({
+                    url,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    headers: { 'Authorization': this.BASIC_AUTH },
+                    data: JSON.stringify(payload),
+                    success: (resp) => {
+                        // сначала обновляем модель и открываем PDF
+                        if (resp?.pdfUrl) {
+                            this.model.save({ pdfUrl: resp.pdfUrl }, {
+                                success: () => { this.reRender(); }
+                            });
+                            window.open(resp.pdfUrl, '_blank');
+                        }
+
+                        // потом гасим лоадер с небольшой задержкой
+                        setTimeout(() => {
+                            this.notify(false, 'loading', notifyId);
+                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                        }, 800);
+                    },
+                    error: (xhr) => {
+                        this.notify(false, 'loading', notifyId);
+                        let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                        this.notify(msg, 'error');
+                    }
+                });
+                return;
+            }
+
+            // TEILRECHNUNG → сохраняем с позициями на новом роуте
+            const espoId = this.model.id;
+            const afterRows = (rows) => {
+                const pos = this.buildPositionsForPdf(rows);
+                if (!pos.length) {
+                    this.notify(false, 'loading', notifyId);
+                    return this.notify('Keine Positionen gefunden.', 'error');
+                }
+
+                const payload = this.buildPayload(pos);
+                if (!payload.titel) payload.titel = 'TEILRECHNUNG';
+
+                const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
+                const url = `${this.FLASK_BASE}/teilrechnungen/${key}/save_pdf`;
+
+                $.ajax({
+                    url,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    headers: { 'Authorization': this.BASIC_AUTH },
+                    data: JSON.stringify(payload),
+                    success: (resp) => {
+                        if (resp?.pdfUrl) {
+                            this.model.save({ pdfUrl: resp.pdfUrl }, {
+                                success: () => { this.reRender(); }
+                            });
+                            window.open(resp.pdfUrl, '_blank');
+                        }
+
+                        setTimeout(() => {
+                            this.notify(false, 'loading', notifyId);
+                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                        }, 800);
+                    },
+                    error: (xhr) => {
+                        this.notify(false, 'loading', notifyId);
+                        let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                        this.notify(msg, 'error');
+                    }
+                });
+            };
 
             this.loadPositionsFromPanel()
                 .catch(() => this.loadPositionsViaRest(espoId))
-                .then(rows => {
-                    const pos = this.buildPositionsForPdf(rows);
-                    if (!pos.length) {
-                        this.notify(false, 'loading', notifyId);
-                        this.notify('Keine Positionen gefunden.', 'error');
-                        return;
-                    }
-
-                    const payload = this.buildPayload(pos);
-                    const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
-                    const url = `${this.FLASK_BASE}/rechnungen/${key}/save_pdf`;
-
-                    L('pdfSave: POST', { url });
-
-                    $.ajax({
-                        url,
-                        method: 'POST',
-                        contentType: 'application/json',
-                        headers: { 'Authorization': this.BASIC_AUTH },
-                        data: JSON.stringify(payload),
-                        success: (resp) => {
-                            L('pdfSave: success', resp);
-                            this.notify(false, 'loading', notifyId);
-                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
-
-                            if (resp?.pdfUrl) {
-                                this.model.save({ pdfUrl: resp.pdfUrl }, {
-                                    success: () => { L('pdfSave: pdfUrl saved to CRM', resp.pdfUrl); this.reRender(); },
-                                    error: (xhr) => L('pdfSave: failed to save pdfUrl in CRM', xhr)
-                                });
-                            }
-                        },
-                        error: (xhr) => {
-                            this.notify(false, 'loading', notifyId);
-                            L('pdfSave: AJAX error', { status: xhr?.status, statusText: xhr?.statusText, responseText: xhr?.responseText });
-                            let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
-                            this.notify(msg, 'error');
-                        }
-                    });
-                })
-                .catch(err => {
+                .then(afterRows)
+                .catch(() => {
                     this.notify(false, 'loading', notifyId);
-                    L('pdfSave: positions load failed', err?.message || err);
                     this.notify('Keine Positionen gefunden.', 'error');
                 });
         },
+
+
 
         // --- helpers: открываем штатный композер с предзаполнением ---
         _openEspoEmailCompose: function (attrs) {
@@ -541,6 +654,7 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 console.error('[CRechnung/detail] Fehler beim Laden der Firma:', err);
             });
         },
+
         // ==== Mahnung erzeugen ====
         actionCreateMahnung: function () {
             const id = this.model && this.model.id;
@@ -559,14 +673,10 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     this.notify(false, 'loading', notifyId);
                     if (resp?.pdfUrl) {
                         this.notify('Mahnung-PDF erzeugt', 'success');
-
-                        // 👉 больше не сохраняем pdfUrl в Rechnung!
-                        // Просто откроем ссылку сразу в новой вкладке
                         window.open(resp.pdfUrl, '_blank');
                     } else {
                         this.notify('PDF erstellt, aber keine URL erhalten', 'warning');
                     }
-
                 },
                 error: (xhr) => {
                     this.notify(false, 'loading', notifyId);
@@ -580,7 +690,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
         onRemove: function () {
             this.$el.off('.crecSave');
             window.removeEventListener('c-rechnungsposition:saved', this._onPositionSaved);
-
             Dep.prototype.onRemove.call(this);
         },
 

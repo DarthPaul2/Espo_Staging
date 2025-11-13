@@ -33,6 +33,13 @@ class AngebotImporter
             return;
         }
 
+        // ⬅️ GUARD: для Schlussrechnung импорт из Angebots не делаем
+        $typ = (string) $entity->get('rechnungstyp');
+        if ($typ === 'schlussrechnung') {
+            $this->log->debug('[AngebotImporter] Skip: rechnungstyp=schlussrechnung');
+            return;
+        }
+
         $angebotId = $entity->get('angebotId');
         if (empty($angebotId)) {
             return;

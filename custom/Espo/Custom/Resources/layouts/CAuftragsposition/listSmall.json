@@ -1,22 +1,22 @@
 [
     {
         "name": "material",
-        "width": 36,
+        "width": 34,
         "align": "left"
     },
     {
         "name": "menge",
-        "width": 10,
+        "width": 8,
         "align": "left"
     },
     {
         "name": "einheit",
-        "width": 10,
+        "width": 8,
         "align": "left"
     },
     {
         "name": "preis",
-        "width": 10,
+        "width": 9,
         "align": "left"
     },
     {
@@ -26,12 +26,12 @@
     },
     {
         "name": "includeInAuftrag",
-        "width": 13,
+        "width": 11,
         "align": "left"
     },
     {
         "name": "bereitsabgerechnet",
-        "width": 14,
+        "width": 18,
         "align": "left"
     }
 ]
