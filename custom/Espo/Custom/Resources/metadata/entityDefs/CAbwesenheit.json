@@ -13,8 +13,9 @@
     "fields": {
         "name": {
             "type": "varchar",
-            "required": true,
-            "pattern": "$noBadCharacters"
+            "required": false,
+            "pattern": "$noBadCharacters",
+            "options": []
         },
         "status": {
             "type": "enum",
@@ -137,11 +138,15 @@
             "type": "enum",
             "options": [
                 "U",
-                "K"
+                "K",
+                "unbezahlterUrlaub",
+                "freizeitausgleich"
             ],
             "style": {
                 "U": "event-type-urlaub",
-                "K": "event-type-krankheit"
+                "K": "event-type-krankheit",
+                "unbezahlterUrlaub": "warning",
+                "freizeitausgleich": "info"
             },
             "default": "U",
             "isCustom": true
@@ -187,7 +192,8 @@
         "orderBy": "dateStart",
         "order": "desc",
         "textFilterFields": [
-            "name"
+            "name",
+            "assignedUser.lastName"
         ],
         "fullTextSearch": false,
         "countDisabled": false

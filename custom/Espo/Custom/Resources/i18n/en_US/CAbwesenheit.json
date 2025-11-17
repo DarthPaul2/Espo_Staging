@@ -24,7 +24,9 @@
         },
         "typ": {
             "U": "Urlaub",
-            "K": "Krankheit"
+            "K": "Krankheit",
+            "unbezahlterUrlaub": "Unbezahlter Urlaub",
+            "freizeitausgleich": "Freizeitausgleich"
         }
     },
     "labels": {

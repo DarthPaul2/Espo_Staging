@@ -1,0 +1,18 @@
+{
+    "stream": true,
+    "disabled": false,
+    "kanbanStatusIgnoreList": [
+        "Canceled",
+        "Deferred"
+    ],
+    "stars": false,
+    "preserveAuditLog": false,
+    "completedStatusList": [
+        "Completed"
+    ],
+    "canceledStatusList": [
+        "Canceled"
+    ],
+    "collaborators": true,
+    "assignedUsers": false
+}

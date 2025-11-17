@@ -54,10 +54,10 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 steuer: steuer,
 
                 kunde: this.model.get('accountName'),
-                strasse: this.model.get('strasse'),
-                hausnummer: this.model.get('hausnummer'),
-                plz: this.model.get('plz'),
-                ort: this.model.get('ort'),
+                strasse: this.model.get('accountBillingAddressStreet'),
+                hausnummer: this.model.get('accountHausnummer'),
+                plz: this.model.get('accountBillingAddressPostalCode'),
+                ort: this.model.get('accountBillingAddressCity'),
 
                 angebotsnummer: this.model.get('angebotsnummer'),
                 servicenummer: this.model.get('serviceNummer'),

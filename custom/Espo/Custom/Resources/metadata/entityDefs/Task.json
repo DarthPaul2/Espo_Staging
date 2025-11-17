@@ -17,6 +17,20 @@
                 "Case",
                 "CWartung"
             ]
+        },
+        "collaborators": {
+            "type": "linkMultiple",
+            "view": "views/fields/collaborators",
+            "maxCount": 30,
+            "fieldManagerParamList": [
+                "readOnly",
+                "readOnlyAfterCreate",
+                "audited",
+                "autocompleteOnEmpty",
+                "maxCount",
+                "inlineEditDisabled",
+                "tooltipText"
+            ]
         }
     },
     "links": {
@@ -26,6 +40,22 @@
             "entity": "CWartung",
             "audited": false,
             "isCustom": true
+        },
+        "collaborators": {
+            "type": "hasMany",
+            "entity": "User",
+            "relationName": "entityCollaborator",
+            "layoutRelationshipsDisabled": true
         }
-    }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc",
+        "textFilterFields": [
+            "name"
+        ],
+        "fullTextSearch": false,
+        "countDisabled": false
+    },
+    "optimisticConcurrencyControl": true
 }

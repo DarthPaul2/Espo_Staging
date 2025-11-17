@@ -8,5 +8,8 @@
             "layout": null,
             "selectPrimaryFilterName": null
         }
-    }
+    },
+    "kanbanViewMode": true,
+    "color": null,
+    "iconClass": "fas fa-tasks"
 }

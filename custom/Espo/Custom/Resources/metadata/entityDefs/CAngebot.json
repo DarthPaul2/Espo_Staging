@@ -49,6 +49,38 @@
             "isCustom": true,
             "readOnlyAfterCreate": true
         },
+        "accountBillingAddressStreet": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "billingAddressStreet",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountBillingAddressPostalCode": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "billingAddressPostalCode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountBillingAddressCity": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "billingAddressCity",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountHausnummer": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "cHausnummer",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
         "einleitung": {
             "type": "text",
             "rowsMin": 2,

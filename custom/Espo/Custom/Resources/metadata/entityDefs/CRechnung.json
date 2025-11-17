@@ -2,7 +2,8 @@
     "hooks": {
         "beforeSave": [
             "AutoNumber",
-            "BemerkungVorlage"
+            "BemerkungVorlage",
+            "RequireAuftragForTypes"
         ],
         "afterSave": [
             "AngebotImporter",
@@ -122,13 +123,54 @@
             "isCustom": true
         },
         "account": {
-            "type": "link"
+            "type": "link",
+            "required": true
         },
         "accountKundenNr": {
             "readOnly": true,
             "type": "foreign",
             "link": "account",
             "field": "cKundennummer",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountName": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "name",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountBillingStreet": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "billingAddressStreet",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountHausnummer": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "cHausnummer",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountBillingPlz": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "billingAddressPostalCode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
+        "accountBillingOrt": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "account",
+            "field": "billingAddressCity",
             "view": "views/fields/foreign-varchar",
             "isCustom": true
         },
@@ -186,7 +228,7 @@
         },
         "auftrag": {
             "type": "link",
-            "required": true
+            "required": false
         },
         "mahnregel": {
             "type": "link"

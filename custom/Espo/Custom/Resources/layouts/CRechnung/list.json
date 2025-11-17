@@ -1,13 +1,13 @@
 [
     {
         "name": "rechnungsnummer",
-        "width": 14,
+        "width": 12,
         "link": true,
         "align": "left"
     },
     {
         "name": "account",
-        "width": 23,
+        "width": 26,
         "link": true,
         "align": "left"
     },

@@ -60,10 +60,10 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 ust_betrag: steuer,
 
                 kunde: this.model.get('accountName'),
-                strasse: this.model.get('strasse'),
-                hausnummer: this.model.get('hausnummer'),
-                plz: this.model.get('plz'),
-                ort: this.model.get('ort'),
+                strasse: this.model.get('accountBillingStreet'),
+                hausnummer: this.model.get('accountHausnummer'),
+                plz: this.model.get('accountBillingPlz'),
+                ort: this.model.get('accountBillingOrt'),
 
                 rechnungsnummer: this.model.get('rechnungsnummer'),
                 servicenummer: this.model.get('serviceNummer'),
@@ -76,6 +76,7 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
                 status: this.model.get('status'),
                 sachbearbeiter: this.model.get('sachbearbeiter'),
+                auftragsnummer: this.model.get('auftragsnummer'),
 
                 typ: 'rechnung',
                 positionen: positions || []
@@ -357,9 +358,12 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
         // ==== PDF Preview ====
         actionPdfPreview: function () {
+            const id = this.model.id;
+            if (!id) return;
+
             const notifyId = this.notify('PDF wird erstellt…', 'loading');
 
-            // SCHLUSSRECHNUNG → сервер сам тянет позиции по auftragId
+            // ===== 1) SCHLUSSRECHNUNG =====
             if (this.isSchluss()) {
                 const auftragId = this.model.get('auftragId');
                 if (!auftragId) {
@@ -378,7 +382,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     ort: this.model.get('ort'),
 
                     rechnungsnummer: this.model.get('rechnungsnummer'),
-                    servicenummer: this.model.get('serviceNummer'),
                     kundennummer: this.model.get('accountKundenNr'),
 
                     faellig_am: this.model.get('faelligAm'),
@@ -389,7 +392,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     sachbearbeiter: this.model.get('sachbearbeiter'),
                     titel: this.model.get('titel') || 'SCHLUSSRECHNUNG',
                     einleitung: this.model.get('einleitung') || '',
-
                     bemerkung: this.model.get('bemerkung') || ''
                 };
 
@@ -405,7 +407,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                         const blobUrl = URL.createObjectURL(blob);
                         window.open(blobUrl, '_blank');
 
-                        // даём браузеру секунду «раскрыть» PDF, прежде чем гасить лоадер
                         setTimeout(() => {
                             this.notify(false, 'loading', notifyId);
                         }, 1000);
@@ -419,14 +420,74 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 return;
             }
 
-            // TEILRECHNUNG → позиции из панели/REST, другой роут
-            const id = this.model.id;
-            const proceed = (rows) => {
-                const pos = this.buildPositionsForPdf(rows);
-                const payload = this.buildPayload(pos);
-                if (!payload.titel) payload.titel = 'TEILRECHNUNG';
+            // ===== 2) TEILRECHNUNG =====
+            if (this.isTeil()) {
+                const espoId = this.model.id;
+                const auftragId = this.model.get('auftragId');   // ← тоже берём
 
-                const url = this.FLASK_BASE + '/teilrechnungen/preview_pdf';
+                const afterRowsTeil = (rows) => {
+                    const pos = this.buildPositionsForPdf(rows);
+                    if (!pos.length) {
+                        this.notify(false, 'loading', notifyId);
+                        return this.notify('Keine Positionen gefunden.', 'error');
+                    }
+
+                    const payload = this.buildPayload(pos);
+                    if (!payload.titel) payload.titel = 'TEILRECHNUNG';
+
+                    // >>> ВАЖНО: передаём Auftrag из UI <<<
+                    if (auftragId) {
+                        payload.auftrag_id = auftragId;
+                    }
+
+                    const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
+                    const url = `${this.FLASK_BASE}/teilrechnungen/${key}/save_pdf`;
+
+                    $.ajax({
+                        url,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: { 'Authorization': this.BASIC_AUTH },
+                        data: JSON.stringify(payload),
+                        success: (resp) => {
+                            if (resp?.pdfUrl) {
+                                this.model.save({ pdfUrl: resp.pdfUrl }, {
+                                    success: () => { this.reRender(); }
+                                });
+                                window.open(resp.pdfUrl, '_blank');
+                            }
+
+                            setTimeout(() => {
+                                this.notify(false, 'loading', notifyId);
+                                this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                            }, 800);
+                        },
+                        error: (xhr) => {
+                            this.notify(false, 'loading', notifyId);
+                            let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                            this.notify(msg, 'error');
+                        }
+                    });
+                };
+
+                this.loadPositionsFromPanel()
+                    .catch(() => this.loadPositionsViaRest(espoId))
+                    .then(afterRowsTeil)
+                    .catch(() => {
+                        this.notify(false, 'loading', notifyId);
+                        this.notify('Keine Positionen gefunden.', 'error');
+                    });
+
+                return;
+            }
+
+
+            // ===== 3) NORMALE RECHNUNG (Einzelrechnung / ohne speziellen Typ) =====
+            const proceedNormal = (rows) => {
+                const pos = this.buildPositionsForPdf(rows);
+                const payload = this.buildPayload(pos);   // typ: 'rechnung'
+
+                const url = this.FLASK_BASE + '/rechnungen/preview_pdf'; // ← твой «старый» маршрут
                 $.ajax({
                     url,
                     method: 'POST',
@@ -452,7 +513,7 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
             this.loadPositionsFromPanel()
                 .catch(() => this.loadPositionsViaRest(id))
-                .then(proceed)
+                .then(proceedNormal)
                 .catch(() => {
                     this.notify(false, 'loading', notifyId);
                     this.notify('Keine Positionen gefunden.', 'error');
@@ -460,12 +521,12 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
         },
 
 
-
         // ==== PDF Save ====
         actionPdfSave: function () {
             const notifyId = this.notify('PDF wird erzeugt und gespeichert…', 'loading');
+            const espoId = this.model.id;
 
-            // SCHLUSSRECHNUNG → сервер сам тянет позиции; ключ — Rechnungsnummer
+            // ===== 1) SCHLUSSRECHNUNG =====
             if (this.isSchluss()) {
                 const nr = this.model.get('rechnungsnummer');
                 const auftragId = this.model.get('auftragId');
@@ -482,8 +543,20 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 const url = `${this.FLASK_BASE}/schlussrechnungen/${encodeURIComponent(nr)}/save_pdf`;
                 const payload = {
                     rechnungsnummer: nr,
-                    servicenummer: this.model.get('serviceNummer') || undefined,
-                    bemerkung: this.model.get('bemerkung') || ''
+                    auftrag_id: auftragId,
+                    bemerkung: this.model.get('bemerkung') || '',
+                    kunde: this.model.get('accountName'),
+                    strasse: this.model.get('strasse'),
+                    hausnummer: this.model.get('hausnummer'),
+                    plz: this.model.get('plz'),
+                    ort: this.model.get('ort'),
+                    kundennummer: this.model.get('accountKundenNr') || '',
+                    faellig_am: this.model.get('faelligAm') || '',
+                    datum: this.model.get('createdAt'),
+                    leistungsdatum_von: this.model.get('leistungsdatumVon'),
+                    leistungsdatum_bis: this.model.get('leistungsdatumBis'),
+                    einleitung: this.model.get('einleitung'),
+                    sachbearbeiter: this.model.get('sachbearbeiter')
                 };
 
                 $.ajax({
@@ -493,7 +566,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     headers: { 'Authorization': this.BASIC_AUTH },
                     data: JSON.stringify(payload),
                     success: (resp) => {
-                        // сначала обновляем модель и открываем PDF
                         if (resp?.pdfUrl) {
                             this.model.save({ pdfUrl: resp.pdfUrl }, {
                                 success: () => { this.reRender(); }
@@ -501,7 +573,6 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                             window.open(resp.pdfUrl, '_blank');
                         }
 
-                        // потом гасим лоадер с небольшой задержкой
                         setTimeout(() => {
                             this.notify(false, 'loading', notifyId);
                             this.notify(resp?.message || 'PDF gespeichert.', 'success');
@@ -516,9 +587,69 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 return;
             }
 
-            // TEILRECHNUNG → сохраняем с позициями на новом роуте
-            const espoId = this.model.id;
-            const afterRows = (rows) => {
+            // ===== 2) TEILRECHNUNG =====
+            if (this.isTeil()) {
+                const espoId = this.model.id;
+                const auftragId = this.model.get('auftragId');   // ← тоже берём
+
+                const afterRowsTeil = (rows) => {
+                    const pos = this.buildPositionsForPdf(rows);
+                    if (!pos.length) {
+                        this.notify(false, 'loading', notifyId);
+                        return this.notify('Keine Positionen gefunden.', 'error');
+                    }
+
+                    const payload = this.buildPayload(pos);
+                    if (!payload.titel) payload.titel = 'TEILRECHNUNG';
+
+                    // >>> ВАЖНО: передаём Auftrag из UI <<<
+                    if (auftragId) {
+                        payload.auftrag_id = auftragId;
+                    }
+
+                    const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
+                    const url = `${this.FLASK_BASE}/teilrechnungen/${key}/save_pdf`;
+
+                    $.ajax({
+                        url,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: { 'Authorization': this.BASIC_AUTH },
+                        data: JSON.stringify(payload),
+                        success: (resp) => {
+                            if (resp?.pdfUrl) {
+                                this.model.save({ pdfUrl: resp.pdfUrl }, {
+                                    success: () => { this.reRender(); }
+                                });
+                                window.open(resp.pdfUrl, '_blank');
+                            }
+
+                            setTimeout(() => {
+                                this.notify(false, 'loading', notifyId);
+                                this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                            }, 800);
+                        },
+                        error: (xhr) => {
+                            this.notify(false, 'loading', notifyId);
+                            let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                            this.notify(msg, 'error');
+                        }
+                    });
+                };
+
+                this.loadPositionsFromPanel()
+                    .catch(() => this.loadPositionsViaRest(espoId))
+                    .then(afterRowsTeil)
+                    .catch(() => {
+                        this.notify(false, 'loading', notifyId);
+                        this.notify('Keine Positionen gefunden.', 'error');
+                    });
+
+                return;
+            }
+
+            // ===== 3) NORMALE RECHNUNG (без Auftrag) =====
+            const afterRowsNormal = (rows) => {
                 const pos = this.buildPositionsForPdf(rows);
                 if (!pos.length) {
                     this.notify(false, 'loading', notifyId);
@@ -526,10 +657,8 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 }
 
                 const payload = this.buildPayload(pos);
-                if (!payload.titel) payload.titel = 'TEILRECHNUNG';
-
                 const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
-                const url = `${this.FLASK_BASE}/teilrechnungen/${key}/save_pdf`;
+                const url = `${this.FLASK_BASE}/rechnungen/${key}/save_pdf`; // ← твой обычный маршрут
 
                 $.ajax({
                     url,
@@ -560,13 +689,12 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
             this.loadPositionsFromPanel()
                 .catch(() => this.loadPositionsViaRest(espoId))
-                .then(afterRows)
+                .then(afterRowsNormal)
                 .catch(() => {
                     this.notify(false, 'loading', notifyId);
                     this.notify('Keine Positionen gefunden.', 'error');
                 });
         },
-
 
 
         // --- helpers: открываем штатный композер с предзаполнением ---
