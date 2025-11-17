@@ -50,38 +50,84 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
             const brutto = this.model.get('betragBrutto') || 0;
             const steuer = Math.round((brutto - netto) * 100) / 100;
 
+            // тип счета (enum: Rechnung, Teilrechnung, Schlussrechnung, Gutschrift, ...)
+            const typLower = String(this.model.get('rechnungstyp') || '').toLowerCase();
+
+            // 🔹 Auftrags-Nr. – берём из auftragName и отрезаем всё после "·"
+            const rawAuftragName = this.model.get('auftragName') || '';
+            const auftragsnummer = (rawAuftragName.split('·')[0] || '').trim();
+
+            // 🔹 Kunden-Nr. – либо прямое поле, либо foreign из Account
+            const kundennummer =
+                this.model.get('kundennummer') ||
+                this.model.get('accountKundenNr') ||
+                '';
+
+            // 🔹 Leistungsdatum von / bis
+            const ldVon = this.model.get('leistungsdatumVon') || '';
+            const ldBis = this.model.get('leistungsdatumBis') || '';
+
+            // 🔹 Datum – берём с запасом: datum → erstelltAm → createdAt
+            const datum = this.model.get('createdAt') || '';
+
+            // 🔹 Titel
+            let titel = this.model.get('titel') || '';
+
+            if (!titel) {
+                if (typLower === 'gutschrift') {
+                    // GUTSCHRIFT für Auftrag KSA-25-10002
+                    titel = auftragsnummer
+                        ? 'GUTSCHRIFT für Auftrag ' + auftragsnummer
+                        : 'GUTSCHRIFT';
+                } else {
+                    titel = 'RECHNUNG';
+                }
+            }
+
             return {
+                // говорим универсальному рендереру, что это СЧЁТ
+                typ: 'rechnung',
+
+                // чтобы на бэке можно было отличить Gutschrift от обычной Rechnung
+                rechnungstyp: this.model.get('rechnungstyp') || '',
+
                 id: this.model.id,
-                titel: this.model.get('titel') || 'RECHNUNG',
-                einleitung: this.model.get('einleitung') || '',
-                bemerkung: this.model.get('bemerkung') || '',
+
+                titel: titel,
+                einleitung: this.model.get('einleitung'),
+                bemerkung: this.model.get('bemerkung'),
+
                 betrag_netto: netto,
                 betrag_brutto: brutto,
                 ust_betrag: steuer,
 
+                // адрес клиента
                 kunde: this.model.get('accountName'),
                 strasse: this.model.get('accountBillingStreet'),
                 hausnummer: this.model.get('accountHausnummer'),
                 plz: this.model.get('accountBillingPlz'),
                 ort: this.model.get('accountBillingOrt'),
 
+                // номера
                 rechnungsnummer: this.model.get('rechnungsnummer'),
-                servicenummer: this.model.get('serviceNummer'),
-                kundennummer: this.model.get('accountKundenNr'),
+                kundennummer: kundennummer,
 
+                // даты / Sachbearbeiter
                 faellig_am: this.model.get('faelligAm'),
-                datum: this.model.get('createdAt'),
-                leistungsdatum_von: this.model.get('leistungsdatumVon'),
-                leistungsdatum_bis: this.model.get('leistungsdatumBis'),
-
-                status: this.model.get('status'),
+                datum: datum,
                 sachbearbeiter: this.model.get('sachbearbeiter'),
-                auftragsnummer: this.model.get('auftragsnummer'),
+                leistungsdatum_von: ldVon,
+                leistungsdatum_bis: ldBis,
 
-                typ: 'rechnung',
+                // привязка к Auftrag
+                auftrag_id: this.model.get('auftragId') || null,
+                auftragsnummer: auftragsnummer,
+
+                // позиции
                 positionen: positions || []
             };
         },
+
 
         buildPositionsForPdf(rows) {
             return (rows || []).map(p => {
