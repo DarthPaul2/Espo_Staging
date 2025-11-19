@@ -1,6 +1,9 @@
 console.log('[LOAD] custom:views/c-lieferschein/record/detail');
 
-define('custom:views/c-lieferschein/record/detail', ['views/record/detail'], function (Dep) {
+define('custom:views/c-lieferschein/record/detail', [
+    'views/record/detail',
+    'custom:global/loader'
+], function (Dep, Loader) {
 
     const LOG_NS = '[CLieferschein/detail]';
     const L = (tag, payload) => { try { console.log(LOG_NS, tag, payload || ''); } catch (e) { } };
@@ -115,7 +118,8 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
             const id = this.model.id;
             if (!id) return;
 
-            const notifyId = this.notify('PDF wird erstellt…', 'loading');
+            // показываем лоадер и блокируем кнопки
+            Loader.showFor(this, 'PDF-Vorschau wird erstellt…');
 
             const positions = this.getPositionsCollection()?.toJSON() || [];
             const payload = this.buildPayload(this.buildPositionsForPdf(positions));
@@ -129,14 +133,16 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
                 headers: { 'Authorization': this.BASIC_AUTH },
                 data: JSON.stringify(payload),
                 success: (blob) => {
-                    this.notify(false, 'loading', notifyId);
                     const blobUrl = URL.createObjectURL(blob);
                     window.open(blobUrl, '_blank');
                 },
                 error: (xhr) => {
-                    this.notify(false, 'loading', notifyId);
                     this.notify('Fehler bei PDF-Vorschau', 'error');
-                    L('pdfPreview:error', xhr);
+                    console.error('[CLieferschein/detail] pdfPreview:error', xhr);
+                },
+                complete: () => {
+                    // в любом случае снимаем лоадер и разблокируем кнопки
+                    Loader.hideFor(this);
                 }
             });
         },
@@ -145,6 +151,9 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
         actionPdfSave: function () {
             const id = this.model.id;
             if (!id) return;
+
+            // показываем лоадер и блокируем кнопки
+            Loader.showFor(this, 'PDF-Vorschau wird erstellt…');
 
             const notifyId = this.notify('PDF wird gespeichert…', 'loading');
 
@@ -169,6 +178,10 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
                     this.notify(false, 'loading', notifyId);
                     this.notify('Fehler beim Speichern der PDF', 'error');
                     L('pdfSave:error', xhr);
+                },
+                complete: () => {
+                    // в любом случае снимаем лоадер и разблокируем кнопки
+                    Loader.hideFor(this);
                 }
             });
         },

@@ -17,10 +17,18 @@
                     "name": "inventarnummer"
                 },
                 {
-                    "name": "seriennummer"
+                    "name": "barcode"
                 },
                 {
                     "name": "standort"
+                }
+            ],
+            [
+                {
+                    "name": "ausgegebenAm"
+                },
+                {
+                    "name": "zurckgegebenAm"
                 }
             ],
             [
@@ -31,25 +39,6 @@
         ],
         "style": "default",
         "label": "Overview"
-    },
-    {
-        "rows": [
-            [
-                {
-                    "name": "ausgegebenAm"
-                },
-                {
-                    "name": "zurckgegebenAm"
-                }
-            ]
-        ],
-        "dynamicLogicVisible": null,
-        "style": "default",
-        "tabBreak": false,
-        "hidden": false,
-        "noteText": null,
-        "noteStyle": "info",
-        "customLabel": "Ausgabe & Rückgabe"
     },
     {
         "rows": [

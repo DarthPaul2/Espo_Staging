@@ -5,17 +5,16 @@
                 {
                     "name": "name"
                 },
+                false,
                 {
-                    "name": "code"
-                },
-                {
-                    "name": "kategorie"
+                    "name": "einheit"
                 }
             ],
             [
                 {
-                    "name": "einheit"
+                    "name": "kategorie"
                 },
+                false,
                 {
                     "name": "preis"
                 }
@@ -24,6 +23,7 @@
                 {
                     "name": "barcode"
                 },
+                false,
                 {
                     "name": "verwendet"
                 }

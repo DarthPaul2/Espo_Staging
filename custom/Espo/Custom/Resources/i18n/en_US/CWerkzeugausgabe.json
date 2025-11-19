@@ -1,0 +1,20 @@
+{
+    "fields": {
+        "ausgegebenAm": "Ausgegeben am",
+        "zurueckgegebenAm": "Zurueckgegeben am",
+        "status": "Status",
+        "werkzeug": "Werkzeug"
+    },
+    "links": {
+        "werkzeug": "Werkzeug"
+    },
+    "labels": {
+        "Create CWerkzeugausgabe": "Create Werkzeugausgabe"
+    },
+    "options": {
+        "status": {
+            "ausgegeben": "Ausgegeben",
+            "zurueckgegeben": "Zurückgegeben"
+        }
+    }
+}

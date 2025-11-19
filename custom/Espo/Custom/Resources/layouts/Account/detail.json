@@ -5,8 +5,9 @@
                 {
                     "name": "name"
                 },
+                false,
                 {
-                    "name": "website"
+                    "name": "type"
                 }
             ],
             [
@@ -15,6 +16,9 @@
                 },
                 {
                     "name": "phoneNumber"
+                },
+                {
+                    "name": "website"
                 }
             ],
             [
@@ -22,26 +26,19 @@
                     "name": "billingAddress"
                 },
                 {
+                    "name": "cHausnummer"
+                },
+                {
                     "name": "shippingAddress"
                 }
             ],
             [
                 {
-                    "name": "cHausnummer"
-                },
-                false
-            ],
-            [
-                {
-                    "name": "cFirmenHauptkontakt"
-                },
-                false
-            ],
-            [
-                {
                     "name": "cKundennummer"
                 },
-                false
+                {
+                    "name": "cFirmenHauptkontakt"
+                }
             ]
         ],
         "style": "default",
@@ -51,13 +48,8 @@
         "rows": [
             [
                 {
-                    "name": "type"
-                },
-                {
                     "name": "industry"
-                }
-            ],
-            [
+                },
                 {
                     "name": "description"
                 }

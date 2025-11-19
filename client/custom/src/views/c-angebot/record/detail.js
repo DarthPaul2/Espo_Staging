@@ -1,7 +1,11 @@
 // custom:views/c-angebot/record/detail
 console.log('[LOAD] custom:views/c-angebot/record/detail');
 
-define('custom:views/c-angebot/record/detail', ['views/record/detail'], function (Dep) {
+define('custom:views/c-angebot/record/detail', [
+    'views/record/detail',
+    'custom:global/loader'
+], function (Dep, Loader) {
+
 
     const LOG_NS = '[CAngebot/detail]';
     const L = (tag, payload) => {
@@ -279,6 +283,12 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
         // ==== PDF Preview ====
         actionPdfPreview: function () {
             const id = this.model.id;
+            if (!id) return;
+
+            // глобальный лоадер + блокировка кнопок
+            Loader.showFor(this, 'PDF-Vorschau wird erstellt…');
+
+            // уведомление Espo (оставляем как текстовое)
             const notifyId = this.notify('PDF wird erstellt…', 'loading');
 
             const proceed = (rows) => {
@@ -298,15 +308,24 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                     data: JSON.stringify(payload),
                     success: (blob) => {
                         L('pdfPreview: success (blob size)', blob?.size);
-                        this.notify(false, 'loading', notifyId);
                         const blobUrl = URL.createObjectURL(blob);
                         window.open(blobUrl, '_blank');
                     },
                     error: (xhr) => {
-                        this.notify(false, 'loading', notifyId);
-                        L('pdfPreview: AJAX error', { status: xhr?.status, statusText: xhr?.statusText, responseText: xhr?.responseText });
-                        let msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
+                        L('pdfPreview: AJAX error', {
+                            status: xhr?.status,
+                            statusText: xhr?.statusText,
+                            responseText: xhr?.responseText
+                        });
+                        const msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
                         this.notify(msg, 'error');
+                    },
+                    complete: () => {
+                        // всегда убираем лоадер и loading-уведомление
+                        Loader.hideFor(this);
+                        if (notifyId) {
+                            this.notify(false, 'loading', notifyId);
+                        }
                     }
                 });
             };
@@ -315,16 +334,25 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 .catch(() => this.loadPositionsViaRest(id))
                 .then(proceed)
                 .catch(err => {
-                    this.notify(false, 'loading', notifyId);
+                    // ошибка ещё до AJAX (позиции не загрузились)
                     L('pdfPreview: positions load failed', err?.message || err);
                     this.notify('Keine Positionen gefunden.', 'error');
+
+                    Loader.hideFor(this);
+                    if (notifyId) {
+                        this.notify(false, 'loading', notifyId);
+                    }
                 });
         },
+
 
         // ==== PDF Save ====
         actionPdfSave: function () {
             const espoId = this.model.id;
             if (!espoId) return;
+
+            // глобальный лоадер + блокировка кнопок
+            Loader.showFor(this, 'PDF wird erzeugt und gespeichert…');
 
             const notifyId = this.notify('PDF wird erzeugt und gespeichert…', 'loading');
 
@@ -333,8 +361,12 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 .then(rows => {
                     const pos = this.buildPositionsForPdf(rows);
                     if (!pos.length) {
-                        this.notify(false, 'loading', notifyId);
                         this.notify('Keine Positionen gefunden.', 'error');
+
+                        Loader.hideFor(this);
+                        if (notifyId) {
+                            this.notify(false, 'loading', notifyId);
+                        }
                         return;
                     }
 
@@ -352,7 +384,6 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                         data: JSON.stringify(payload),
                         success: (resp) => {
                             L('pdfSave: success', resp);
-                            this.notify(false, 'loading', notifyId);
                             this.notify(resp?.message || 'PDF gespeichert.', 'success');
 
                             if (resp?.pdfUrl) {
@@ -366,17 +397,31 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                             }
                         },
                         error: (xhr) => {
-                            this.notify(false, 'loading', notifyId);
-                            L('pdfSave: AJAX error', { status: xhr?.status, statusText: xhr?.statusText, responseText: xhr?.responseText });
-                            let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                            L('pdfSave: AJAX error', {
+                                status: xhr?.status,
+                                statusText: xhr?.statusText,
+                                responseText: xhr?.responseText
+                            });
+                            const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
                             this.notify(msg, 'error');
+                        },
+                        complete: () => {
+                            // всегда снимаем лоадер и loading-уведомление
+                            Loader.hideFor(this);
+                            if (notifyId) {
+                                this.notify(false, 'loading', notifyId);
+                            }
                         }
                     });
                 })
                 .catch(err => {
-                    this.notify(false, 'loading', notifyId);
                     L('pdfSave: positions load failed', err?.message || err);
                     this.notify('Keine Positionen gefunden.', 'error');
+
+                    Loader.hideFor(this);
+                    if (notifyId) {
+                        this.notify(false, 'loading', notifyId);
+                    }
                 });
         },
 

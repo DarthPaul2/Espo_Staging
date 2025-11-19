@@ -6,14 +6,15 @@ define('custom:views/c-auftrag/record/relationship-row-actions-no-delete',
 
             setup: function () {
                 Parent.prototype.setup.call(this);
-                console.log('[CAuftrag] custom relationship row-actions loaded (final)');
+                // лог больше не нужен
+                // console.log('[CAuftrag] custom relationship row-actions loaded (final)');
             },
 
             getActionList: function () {
                 const list = Parent.prototype.getActionList.call(this) || [];
                 // убираем только Löschen (removeRelated)
                 const filtered = list.filter(a => a?.action !== 'removeRelated');
-                console.log('[CAuftrag] filtered actions:', filtered.map(x => x.action));
+                // console.log('[CAuftrag] filtered actions:', filtered.map(x => x.action));
                 return filtered;
             }
         });

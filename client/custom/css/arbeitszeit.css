@@ -164,3 +164,12 @@
     background: var(--az-badge-wf-bg);
     color: var(--az-badge-wf-text);
 }
+
+/* Жёстко включаем сетку для списка CArbeitszeit */
+.list[data-scope="CArbeitszeit"] table,
+.list[data-scope="CArbeitszeit"] table th,
+.list[data-scope="CArbeitszeit"] table td {
+    border: 1px solid #c2c2c2 !important;
+    /* можно поменять цвет */
+    border-collapse: collapse !important;
+}

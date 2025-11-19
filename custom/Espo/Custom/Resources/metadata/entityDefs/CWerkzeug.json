@@ -1,4 +1,9 @@
 {
+    "hooks": {
+        "beforeSave": [
+            "AutoInventarnummer"
+        ]
+    },
     "fields": {
         "name": {
             "type": "varchar",
@@ -30,7 +35,11 @@
         "assignedUser": {
             "type": "link",
             "required": false,
-            "view": "views/fields/assigned-user"
+            "view": "views/fields/assigned-user",
+            "defaultAttributes": {
+                "assignedUserId": "689da665ab072995d",
+                "assignedUserName": "Jerome Van Hoegaerden"
+            }
         },
         "teams": {
             "type": "linkMultiple",
@@ -40,7 +49,8 @@
             "type": "varchar",
             "maxLength": 100,
             "options": [],
-            "isCustom": true
+            "isCustom": true,
+            "default": null
         },
         "seriennummer": {
             "type": "varchar",
@@ -68,12 +78,6 @@
             "maxLength": 100,
             "isCustom": true
         },
-        "standort": {
-            "type": "varchar",
-            "maxLength": 100,
-            "options": [],
-            "isCustom": true
-        },
         "zustand": {
             "type": "enum",
             "options": [
@@ -85,14 +89,15 @@
             ],
             "style": {
                 "funktionsfähig": null,
-                "defekt": null,
-                "inReparatur": null,
-                "verloren": null,
+                "defekt": "danger",
+                "inReparatur": "info",
+                "verloren": "danger",
                 "außerBetrieb": null
             },
             "default": "funktionsfähig",
             "maxLength": 100,
-            "isCustom": true
+            "isCustom": true,
+            "displayAsLabel": true
         },
         "letztePruefung": {
             "notNull": false,
@@ -115,12 +120,34 @@
             "notNull": false,
             "type": "datetime",
             "minuteStep": 30,
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": true
         },
         "zurckgegebenAm": {
             "notNull": false,
             "type": "datetime",
             "minuteStep": 30,
+            "isCustom": true,
+            "readOnly": true
+        },
+        "standort": {
+            "type": "enum",
+            "options": [
+                "lager",
+                "inBenutzung"
+            ],
+            "style": {
+                "lager": "success",
+                "inBenutzung": "warning"
+            },
+            "default": "lager",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "barcode": {
+            "type": "barcode",
+            "len": 255,
+            "codeType": "EAN13",
             "isCustom": true
         }
     },
@@ -186,6 +213,13 @@
             "relationName": "cWartungWerkzeug",
             "foreign": "werkzeugs",
             "entity": "CWartung",
+            "audited": false,
+            "isCustom": true
+        },
+        "werkzeugausgabes": {
+            "type": "hasMany",
+            "foreign": "werkzeug",
+            "entity": "CWerkzeugausgabe",
             "audited": false,
             "isCustom": true
         }

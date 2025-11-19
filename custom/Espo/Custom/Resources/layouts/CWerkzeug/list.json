@@ -1,25 +1,20 @@
 [
     {
         "name": "name",
-        "width": 16,
+        "width": 26,
         "link": true,
         "align": "left"
     },
     {
         "name": "kategorie",
-        "width": 16,
+        "width": 12,
         "link": true,
         "align": "left"
     },
     {
         "name": "inventarnummer",
-        "width": 14,
+        "width": 12,
         "link": true,
-        "align": "left"
-    },
-    {
-        "name": "assignedUser",
-        "width": 16,
         "align": "left"
     },
     {
@@ -29,15 +24,22 @@
     },
     {
         "name": "standort",
-        "width": 8,
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "assignedUser",
+        "width": 16,
         "align": "left"
     },
     {
         "name": "ausgegebenAm",
-        "width": 16
+        "width": 14,
+        "align": "left"
     },
     {
         "name": "zurckgegebenAm",
-        "width": 16
+        "width": 14,
+        "align": "left"
     }
 ]

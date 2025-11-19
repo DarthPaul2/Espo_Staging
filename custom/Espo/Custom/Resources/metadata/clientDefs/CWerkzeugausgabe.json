@@ -1,0 +1,14 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#60c609",
+    "iconClass": "fas fa-arrow-right-arrow-left",
+    "relationshipPanels": {
+        "werkzeug": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

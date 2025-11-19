@@ -6,7 +6,6 @@
         "inventarnummer": "Inventarnummer",
         "seriennummer": "Seriennummer",
         "kategorie": "Kategorie",
-        "standort": "Standort",
         "zustand": "Zustand",
         "letztePruefung": "Letzte Prüfung",
         "naechstePruefung": "Nächste Prüfung fällig",
@@ -17,7 +16,10 @@
         "documents": "Documents",
         "ausgegebenAm": "Ausgegeben Am",
         "zurckgegebenAm": "Zurückgegeben am",
-        "wartungs": "Wartungs"
+        "wartungs": "Wartungs",
+        "werkzeugausgabes": "Werkzeugausgabes",
+        "standort": "Standort",
+        "barcode": "Barcode"
     },
     "options": {
         "kategorie": {
@@ -33,6 +35,10 @@
             "inReparatur": "in Reparatur",
             "verloren": "Verloren",
             "außerBetrieb": "außer Betrieb"
+        },
+        "standort": {
+            "lager": "Lager",
+            "inBenutzung": "In Benutzung"
         }
     },
     "links": {
@@ -40,6 +46,7 @@
         "auftrags": "Auftrags",
         "lieferscheins": "Lieferscheins",
         "documents": "Documents",
-        "wartungs": "Wartungs"
+        "wartungs": "Wartungs",
+        "werkzeugausgabes": "Werkzeugausgabes"
     }
 }

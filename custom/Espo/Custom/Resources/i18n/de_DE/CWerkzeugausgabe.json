@@ -1,0 +1,20 @@
+{
+    "labels": {
+        "Create CWerkzeugausgabe": "Werkzeugausgabe erstellen"
+    },
+    "fields": {
+        "ausgegebenAm": "Ausgegeben am",
+        "zurueckgegebenAm": "Zurueckgegeben am",
+        "status": "Status",
+        "werkzeug": "Werkzeug"
+    },
+    "options": {
+        "status": {
+            "ausgegeben": "Ausgegeben",
+            "zurueckgegeben": "Zurückgegeben"
+        }
+    },
+    "links": {
+        "werkzeug": "Werkzeug"
+    }
+}

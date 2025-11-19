@@ -1,0 +1,22 @@
+[
+    {
+        "name": "werkzeug",
+        "width": 20
+    },
+    {
+        "name": "assignedUser",
+        "width": 20
+    },
+    {
+        "name": "ausgegebenAm",
+        "width": 20
+    },
+    {
+        "name": "zurueckgegebenAm",
+        "width": 20
+    },
+    {
+        "name": "status",
+        "width": 20
+    }
+]

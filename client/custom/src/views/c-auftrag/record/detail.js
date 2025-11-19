@@ -1,7 +1,11 @@
 // client/custom/src/views/c-auftrag/record/detail.js
 console.log('[LOAD] custom:views/c-auftrag/record/detail');
 
-define('custom:views/c-auftrag/record/detail', ['views/record/detail'], function (Dep) {
+define('custom:views/c-auftrag/record/detail', [
+    'views/record/detail',
+    'custom:global/loader'
+], function (Dep, Loader) {
+
 
     const LOG = (t, p) => { try { console.log('[CAuftrag/detail]', t, p || ''); } catch (e) { } };
 
@@ -201,18 +205,40 @@ define('custom:views/c-auftrag/record/detail', ['views/record/detail'], function
         actionRecalc: function () {
             const id = this.model.id;
             if (!id) return;
+
+            // глобальный лоадер + блокировка кнопок
+            Loader.showFor(this, 'Summen werden aktualisiert…');
+
             const notifyId = this.notify('Wird aktualisiert…', 'loading');
+
             $.ajax({
                 url: `${this.FLASK_BASE}/auftrag/${encodeURIComponent(id)}/recalc_totals`,
                 method: 'POST',
-                success: () => { this.notify(false, 'loading', notifyId); this.model.fetch({ success: () => this.reRender() }); },
-                error: () => { this.notify(false, 'loading', notifyId); this.notify('Fehler beim Aktualisieren', 'error'); }
+                success: () => {
+                    this.model.fetch({
+                        success: () => this.reRender()
+                    });
+                },
+                error: () => {
+                    this.notify('Fehler beim Aktualisieren', 'error');
+                },
+                complete: () => {
+                    // всегда снимаем лоадер и loading-уведомление
+                    Loader.hideFor(this);
+                    if (notifyId) {
+                        this.notify(false, 'loading', notifyId);
+                    }
+                }
             });
         },
+
 
         actionPdfSave: function () {
             const espoId = this.model.id;
             if (!espoId) return;
+
+            // глобальный лоадер + блокировка
+            Loader.showFor(this, 'PDF wird erzeugt und gespeichert…');
 
             const notifyId = this.notify('PDF wird erzeugt und gespeichert…', 'loading');
 
@@ -251,19 +277,28 @@ Ihr KleSec Team`,
                 headers: { 'Authorization': this.BASIC_AUTH },
                 data: JSON.stringify(payload),
                 success: (resp) => {
-                    this.notify(false, 'loading', notifyId);
-                    this.notify('PDF gespeichert.', 'success');
+                    this.notify(resp?.message || 'PDF gespeichert.', 'success');
+
                     if (resp?.pdfUrl) {
-                        this.model.save({ pdfUrl: resp.pdfUrl }, { success: () => this.reRender() });
+                        this.model.save({ pdfUrl: resp.pdfUrl }, {
+                            success: () => this.reRender()
+                        });
                     }
                 },
                 error: (xhr) => {
-                    this.notify(false, 'loading', notifyId);
                     this.notify('Fehler beim Speichern der PDF.', 'error');
                     LOG('pdfSave:error', { status: xhr?.status, text: xhr?.responseText });
+                },
+                complete: () => {
+                    // в любом случае снимаем лоадер и loading-уведомление
+                    Loader.hideFor(this);
+                    if (notifyId) {
+                        this.notify(false, 'loading', notifyId);
+                    }
                 }
             });
         },
+
 
         // --- helpers: где взять фирму у заказа (account|firma|kunde) ---
         _getAccountRef: function () {
@@ -323,10 +358,11 @@ Ihr KleSec Team`,
                 return;
             }
 
-            this.notify('E-Mail-Entwurf wird vorbereitet…', 'loading');
-            const notifyId = this.lastNotifyId;
+            // глобальный лоадер + блокировка
+            Loader.showFor(this, 'E-Mail-Entwurf wird vorbereitet…');
 
-            // === ВАЖНО: используем Espo.Ajax для API-запроса ===
+            const notifyId = this.notify('E-Mail-Entwurf wird vorbereitet…', 'loading');
+
             Espo.Ajax.getRequest(`Account/${encodeURIComponent(ref.id)}`).then((acc) => {
                 let toEmail = acc && (acc.emailAddress || acc.emailAddressPrimary || '');
                 if (!toEmail && Array.isArray(acc?.emailAddressData)) {
@@ -335,7 +371,6 @@ Ihr KleSec Team`,
                 }
 
                 if (!toEmail) {
-                    this.notify(false, 'loading', notifyId);
                     this.notify('Beim Kunden ist keine E-Mail-Adresse hinterlegt.', 'error');
                     console.warn('[CAuftrag/detail] ⚠️ Kunde ohne E-Mail:', acc);
                 }
@@ -349,9 +384,12 @@ Ihr KleSec Team`,
                     `Mit freundlichen Grüßen<br>` +
                     `Ihr KleSec Team`;
 
-                this.notify(false, 'loading', notifyId);
+                // закрываем лоадер и loading-уведомление перед открытием композера
+                Loader.hideFor(this);
+                if (notifyId) {
+                    this.notify(false, 'loading', notifyId);
+                }
 
-                // открыть композер
                 this._openEspoEmailCompose({
                     to: toEmail || '',
                     subject,
@@ -363,11 +401,15 @@ Ihr KleSec Team`,
                 });
 
             }).catch(err => {
-                this.notify(false, 'loading', notifyId);
+                Loader.hideFor(this);
+                if (notifyId) {
+                    this.notify(false, 'loading', notifyId);
+                }
                 this.notify('Kundendaten konnten nicht geladen werden.', 'error');
                 console.error('[CAuftrag/detail] Fehler beim Laden der Firma:', err);
             });
         },
+
 
         // ======================== helpers ========================
         _applyPdfLinkLabel: function () {

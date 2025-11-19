@@ -1,0 +1,29 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "werkzeug"
+                },
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
+                    "name": "ausgegebenAm"
+                },
+                {
+                    "name": "zurueckgegebenAm"
+                }
+            ],
+            [
+                {
+                    "name": "description"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

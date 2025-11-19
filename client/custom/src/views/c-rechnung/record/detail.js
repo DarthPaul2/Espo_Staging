@@ -1,7 +1,10 @@
 // custom:views/c-rechnung/record/detail
 console.log('[LOAD] custom:views/c-rechnung/record/detail');
 
-define('custom:views/c-rechnung/record/detail', ['views/record/detail'], function (Dep) {
+define('custom:views/c-rechnung/record/detail', [
+    'views/record/detail',
+    'custom:global/loader'
+], function (Dep, Loader) {
 
     const LOG_NS = '[CRechnung/detail]';
     const L = (tag, payload) => { try { console.log(LOG_NS, tag, payload || ''); } catch (e) { } };
@@ -30,12 +33,21 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
 
         showLoader(msg = 'Bitte warten…') {
+            // глобальный спиннер + блокировка кнопок
+            Loader.showFor(this, msg);
+            // и стандартное espocrm-уведомление
             return this.notify(msg, 'loading');
         },
 
         hideLoader(id) {
-            this.notify(false, 'loading', id);
+            // снимаем спиннер и разблокируем кнопки
+            Loader.hideFor(this);
+            // гасим loading-уведомление, если есть id
+            if (id) {
+                this.notify(false, 'loading', id);
+            }
         },
+
 
         // --- тип счета ---
         getRechnungstyp() {
@@ -407,13 +419,13 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
             const id = this.model.id;
             if (!id) return;
 
-            const notifyId = this.notify('PDF wird erstellt…', 'loading');
+            const notifyId = this.showLoader('PDF wird erstellt…');
 
             // ===== 1) SCHLUSSRECHNUNG =====
             if (this.isSchluss()) {
                 const auftragId = this.model.get('auftragId');
                 if (!auftragId) {
-                    this.notify(false, 'loading', notifyId);
+                    this.hideLoader(notifyId);
                     return this.notify('Auftrag-ID fehlt für Schlussrechnung.', 'error');
                 }
 
@@ -452,15 +464,12 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     success: (blob) => {
                         const blobUrl = URL.createObjectURL(blob);
                         window.open(blobUrl, '_blank');
-
-                        setTimeout(() => {
-                            this.notify(false, 'loading', notifyId);
-                        }, 1000);
+                        setTimeout(() => this.hideLoader(notifyId), 500);
                     },
                     error: (xhr) => {
-                        this.notify(false, 'loading', notifyId);
-                        let msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
+                        const msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
                         this.notify(msg, 'error');
+                        this.hideLoader(notifyId);
                     }
                 });
                 return;
@@ -469,22 +478,18 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
             // ===== 2) TEILRECHNUNG =====
             if (this.isTeil()) {
                 const espoId = this.model.id;
-                const auftragId = this.model.get('auftragId');   // ← тоже берём
+                const auftragId = this.model.get('auftragId');
 
                 const afterRowsTeil = (rows) => {
                     const pos = this.buildPositionsForPdf(rows);
                     if (!pos.length) {
-                        this.notify(false, 'loading', notifyId);
-                        return this.notify('Keine Positionen gefunden.', 'error');
+                        this.notify('Keine Positionen gefunden.', 'error');
+                        return this.hideLoader(notifyId);
                     }
 
                     const payload = this.buildPayload(pos);
                     if (!payload.titel) payload.titel = 'TEILRECHNUNG';
-
-                    // >>> ВАЖНО: передаём Auftrag из UI <<<
-                    if (auftragId) {
-                        payload.auftrag_id = auftragId;
-                    }
+                    if (auftragId) payload.auftrag_id = auftragId;
 
                     const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
                     const url = `${this.FLASK_BASE}/teilrechnungen/${key}/save_pdf`;
@@ -502,16 +507,13 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                                 });
                                 window.open(resp.pdfUrl, '_blank');
                             }
-
-                            setTimeout(() => {
-                                this.notify(false, 'loading', notifyId);
-                                this.notify(resp?.message || 'PDF gespeichert.', 'success');
-                            }, 800);
+                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                            this.hideLoader(notifyId);
                         },
                         error: (xhr) => {
-                            this.notify(false, 'loading', notifyId);
-                            let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                            const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
                             this.notify(msg, 'error');
+                            this.hideLoader(notifyId);
                         }
                     });
                 };
@@ -520,20 +522,19 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     .catch(() => this.loadPositionsViaRest(espoId))
                     .then(afterRowsTeil)
                     .catch(() => {
-                        this.notify(false, 'loading', notifyId);
                         this.notify('Keine Positionen gefunden.', 'error');
+                        this.hideLoader(notifyId);
                     });
 
                 return;
             }
 
-
-            // ===== 3) NORMALE RECHNUNG (Einzelrechnung / ohne speziellen Typ) =====
+            // ===== 3) NORMALE RECHNUNG =====
             const proceedNormal = (rows) => {
                 const pos = this.buildPositionsForPdf(rows);
-                const payload = this.buildPayload(pos);   // typ: 'rechnung'
+                const payload = this.buildPayload(pos);
+                const url = this.FLASK_BASE + '/rechnungen/preview_pdf';
 
-                const url = this.FLASK_BASE + '/rechnungen/preview_pdf'; // ← твой «старый» маршрут
                 $.ajax({
                     url,
                     method: 'POST',
@@ -544,15 +545,12 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     success: (blob) => {
                         const blobUrl = URL.createObjectURL(blob);
                         window.open(blobUrl, '_blank');
-
-                        setTimeout(() => {
-                            this.notify(false, 'loading', notifyId);
-                        }, 1000);
+                        setTimeout(() => this.hideLoader(notifyId), 500);
                     },
                     error: (xhr) => {
-                        this.notify(false, 'loading', notifyId);
-                        let msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
+                        const msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
                         this.notify(msg, 'error');
+                        this.hideLoader(notifyId);
                     }
                 });
             };
@@ -561,16 +559,19 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 .catch(() => this.loadPositionsViaRest(id))
                 .then(proceedNormal)
                 .catch(() => {
-                    this.notify(false, 'loading', notifyId);
                     this.notify('Keine Positionen gefunden.', 'error');
+                    this.hideLoader(notifyId);
                 });
         },
 
 
+
         // ==== PDF Save ====
         actionPdfSave: function () {
-            const notifyId = this.notify('PDF wird erzeugt und gespeichert…', 'loading');
             const espoId = this.model.id;
+            if (!espoId) return;
+
+            const notifyId = this.showLoader('PDF wird erzeugt und gespeichert…');
 
             // ===== 1) SCHLUSSRECHNUNG =====
             if (this.isSchluss()) {
@@ -578,11 +579,11 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 const auftragId = this.model.get('auftragId');
 
                 if (!nr) {
-                    this.notify(false, 'loading', notifyId);
+                    this.hideLoader(notifyId);
                     return this.notify('Rechnungsnummer fehlt.', 'error');
                 }
                 if (!auftragId) {
-                    this.notify(false, 'loading', notifyId);
+                    this.hideLoader(notifyId);
                     return this.notify('Auftrag-ID fehlt für Schlussrechnung.', 'error');
                 }
 
@@ -618,16 +619,13 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                             });
                             window.open(resp.pdfUrl, '_blank');
                         }
-
-                        setTimeout(() => {
-                            this.notify(false, 'loading', notifyId);
-                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
-                        }, 800);
+                        this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                        this.hideLoader(notifyId);
                     },
                     error: (xhr) => {
-                        this.notify(false, 'loading', notifyId);
-                        let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                        const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
                         this.notify(msg, 'error');
+                        this.hideLoader(notifyId);
                     }
                 });
                 return;
@@ -635,23 +633,18 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
 
             // ===== 2) TEILRECHNUNG =====
             if (this.isTeil()) {
-                const espoId = this.model.id;
-                const auftragId = this.model.get('auftragId');   // ← тоже берём
+                const auftragId = this.model.get('auftragId');
 
                 const afterRowsTeil = (rows) => {
                     const pos = this.buildPositionsForPdf(rows);
                     if (!pos.length) {
-                        this.notify(false, 'loading', notifyId);
-                        return this.notify('Keine Positionen gefunden.', 'error');
+                        this.notify('Keine Positionen gefunden.', 'error');
+                        return this.hideLoader(notifyId);
                     }
 
                     const payload = this.buildPayload(pos);
                     if (!payload.titel) payload.titel = 'TEILRECHNUNG';
-
-                    // >>> ВАЖНО: передаём Auftrag из UI <<<
-                    if (auftragId) {
-                        payload.auftrag_id = auftragId;
-                    }
+                    if (auftragId) payload.auftrag_id = auftragId;
 
                     const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
                     const url = `${this.FLASK_BASE}/teilrechnungen/${key}/save_pdf`;
@@ -669,16 +662,13 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                                 });
                                 window.open(resp.pdfUrl, '_blank');
                             }
-
-                            setTimeout(() => {
-                                this.notify(false, 'loading', notifyId);
-                                this.notify(resp?.message || 'PDF gespeichert.', 'success');
-                            }, 800);
+                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                            this.hideLoader(notifyId);
                         },
                         error: (xhr) => {
-                            this.notify(false, 'loading', notifyId);
-                            let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                            const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
                             this.notify(msg, 'error');
+                            this.hideLoader(notifyId);
                         }
                     });
                 };
@@ -687,24 +677,24 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                     .catch(() => this.loadPositionsViaRest(espoId))
                     .then(afterRowsTeil)
                     .catch(() => {
-                        this.notify(false, 'loading', notifyId);
                         this.notify('Keine Positionen gefunden.', 'error');
+                        this.hideLoader(notifyId);
                     });
 
                 return;
             }
 
-            // ===== 3) NORMALE RECHNUNG (без Auftrag) =====
+            // ===== 3) NORMALE RECHNUNG =====
             const afterRowsNormal = (rows) => {
                 const pos = this.buildPositionsForPdf(rows);
                 if (!pos.length) {
-                    this.notify(false, 'loading', notifyId);
-                    return this.notify('Keine Positionen gefunden.', 'error');
+                    this.notify('Keine Positionen gefunden.', 'error');
+                    return this.hideLoader(notifyId);
                 }
 
                 const payload = this.buildPayload(pos);
                 const key = encodeURIComponent(this.model.get('rechnungsnummer') || espoId);
-                const url = `${this.FLASK_BASE}/rechnungen/${key}/save_pdf`; // ← твой обычный маршрут
+                const url = `${this.FLASK_BASE}/rechnungen/${key}/save_pdf`;
 
                 $.ajax({
                     url,
@@ -719,16 +709,13 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                             });
                             window.open(resp.pdfUrl, '_blank');
                         }
-
-                        setTimeout(() => {
-                            this.notify(false, 'loading', notifyId);
-                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
-                        }, 800);
+                        this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                        this.hideLoader(notifyId);
                     },
                     error: (xhr) => {
-                        this.notify(false, 'loading', notifyId);
-                        let msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                        const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
                         this.notify(msg, 'error');
+                        this.hideLoader(notifyId);
                     }
                 });
             };
@@ -737,8 +724,8 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 .catch(() => this.loadPositionsViaRest(espoId))
                 .then(afterRowsNormal)
                 .catch(() => {
-                    this.notify(false, 'loading', notifyId);
                     this.notify('Keine Positionen gefunden.', 'error');
+                    this.hideLoader(notifyId);
                 });
         },
 
@@ -834,7 +821,86 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
             const id = this.model && this.model.id;
             if (!id) return;
 
-            const notifyId = this.notify('Mahnung wird erzeugt…', 'loading');
+            // --- 1) Prüfen: Fälligkeitsdatum vorhanden? ---
+            const faelligRaw = this.model.get('faelligAm');
+            if (!faelligRaw) {
+                const warnId = this.notify(
+                    'Es ist kein Fälligkeitsdatum (Fällig am) gesetzt. Mahnung kann nicht erzeugt werden.',
+                    'warning'
+                );
+                setTimeout(() => this.notify(false, 'warning', warnId), 5000);
+                return;
+            }
+
+            // Erwartetes Format: 'YYYY-MM-DD' oder 'YYYY-MM-DD HH:MM:SS'
+            const dateStr = String(faelligRaw).slice(0, 10); // nur Datumsteil
+            const parts = dateStr.split('-');
+            let diffDays = null;
+            let dueMidnight = null;
+
+            if (parts.length === 3) {
+                const year = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const day = parseInt(parts[2], 10);
+
+                if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+                    // Datum ohne Zeitanteil
+                    const dueDate = new Date(year, month - 1, day);
+                    const today = new Date();
+
+                    dueMidnight = new Date(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+                    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+                    const msPerDay = 24 * 60 * 60 * 1000;
+                    diffDays = Math.floor((todayMidnight - dueMidnight) / msPerDay);
+                }
+            }
+
+            if (diffDays === null || !dueMidnight) {
+                const warnId = this.notify(
+                    'Fälligkeitsdatum konnte nicht ausgewertet werden. Mahnung wird nicht erzeugt.',
+                    'warning'
+                );
+                setTimeout(() => this.notify(false, 'warning', warnId), 5000);
+                return;
+            }
+
+            // --- 2a) Fälligkeit liegt in der Zukunft ---
+            if (diffDays < 0) {
+                const msPerDay = 24 * 60 * 60 * 1000;
+                const daysUntilDue = -diffDays;                         // Tage bis zum Fälligkeitsdatum
+                const earliestMahnungDate = new Date(dueMidnight.getTime() + 12 * msPerDay);
+
+                const d = String(earliestMahnungDate.getDate()).padStart(2, '0');
+                const m = String(earliestMahnungDate.getMonth() + 1).padStart(2, '0');
+                const y = earliestMahnungDate.getFullYear();
+
+                const warnId = this.notify(
+                    `Die Rechnung ist noch nicht fällig. Bis zum Fälligkeitsdatum sind noch ${daysUntilDue} Tag(e). ` +
+                    `Eine Mahnung kann frühestens 12 Tage nach Fälligkeit erstellt werden, also ab dem ${d}.${m}.${y}.`,
+                    'warning'
+                );
+                setTimeout(() => this.notify(false, 'warning', warnId), 5000);
+                return;
+            }
+
+            // --- 2b) Rechnung ist fällig, aber 12 Tage sind noch nicht vorbei ---
+            if (diffDays < 12) {
+                const passed = diffDays;              // Tage seit Fälligkeit
+                const remaining = 12 - passed;        // fehlende Tage bis Mahnung zulässig
+
+                const warnId = this.notify(
+                    `Seit dem Fälligkeitsdatum sind erst ${passed} Tag(e) vergangen. ` +
+                    `Eine Mahnung kann frühestens 12 Tage nach Fälligkeit erstellt werden. ` +
+                    `Es fehlen noch ${remaining} Tag(e).`,
+                    'warning'
+                );
+                setTimeout(() => this.notify(false, 'warning', warnId), 5000);
+                return;
+            }
+
+            // --- 3) Bedingung erfüllt: ≥ 12 Tage nach Fälligkeit → Mahnung erzeugen ---
+            const notifyId = this.showLoader('Mahnung wird erzeugt…');
 
             const url = `${this.FLASK_BASE}/mahnung/${encodeURIComponent(id)}/create_pdf`;
 
@@ -844,21 +910,22 @@ define('custom:views/c-rechnung/record/detail', ['views/record/detail'], functio
                 contentType: 'application/json',
                 headers: { 'Authorization': this.BASIC_AUTH },
                 success: (resp) => {
-                    this.notify(false, 'loading', notifyId);
                     if (resp?.pdfUrl) {
                         this.notify('Mahnung-PDF erzeugt', 'success');
                         window.open(resp.pdfUrl, '_blank');
                     } else {
                         this.notify('PDF erstellt, aber keine URL erhalten', 'warning');
                     }
+                    this.hideLoader(notifyId);
                 },
                 error: (xhr) => {
-                    this.notify(false, 'loading', notifyId);
                     this.notify('Fehler bei Mahnung-PDF', 'error');
                     console.error('[CRechnung/detail] createMahnung:error', xhr);
+                    this.hideLoader(notifyId);
                 }
             });
         },
+
 
         // ==== cleanup ====
         onRemove: function () {

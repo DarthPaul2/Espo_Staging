@@ -23,6 +23,10 @@
         "wartungs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "werkzeugausgabes": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,
