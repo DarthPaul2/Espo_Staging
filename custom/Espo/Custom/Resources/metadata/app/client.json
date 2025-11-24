@@ -2,6 +2,7 @@
   "cssList": [
     "__APPEND__",
     "client/custom/css/arbeitszeit.css",
+    "client/custom/css/customstyle.css",
     "client/custom/custom.css"
   ]
 }

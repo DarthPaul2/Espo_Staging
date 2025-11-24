@@ -109,6 +109,52 @@
             "notNull": true,
             "type": "bool",
             "isCustom": true
+        },
+        "hersteller": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "herstellerArtikelnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "herstellerEan": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
+        },
+        "externeKategorie": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "ekPreis": {
+            "notNull": false,
+            "type": "float",
+            "default": 0,
+            "isCustom": true
+        },
+        "waehrung": {
+            "type": "currency",
+            "isCustom": true
+        },
+        "mwstSatz": {
+            "notNull": false,
+            "type": "float",
+            "default": 19,
+            "isCustom": true
+        },
+        "herstellerKatalogCode": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
         }
     },
     "links": {
@@ -160,8 +206,17 @@
         }
     },
     "collection": {
-        "orderBy": "createdAt",
-        "order": "desc"
+        "orderBy": "verwendet",
+        "order": "desc",
+        "textFilterFields": [
+            "name",
+            "code",
+            "hersteller",
+            "herstellerArtikelnummer",
+            "description"
+        ],
+        "fullTextSearch": false,
+        "countDisabled": false
     },
     "indexes": {
         "name": {
@@ -188,5 +243,6 @@
                 "id"
             ]
         }
-    }
+    },
+    "optimisticConcurrencyControl": false
 }

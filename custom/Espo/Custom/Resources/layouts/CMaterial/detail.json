@@ -36,5 +36,45 @@
         ],
         "style": "default",
         "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "hersteller"
+                },
+                {
+                    "name": "herstellerArtikelnummer"
+                },
+                {
+                    "name": "herstellerEan"
+                }
+            ],
+            [
+                {
+                    "name": "herstellerKatalogCode"
+                },
+                false,
+                false
+            ],
+            [
+                {
+                    "name": "ekPreis"
+                },
+                {
+                    "name": "waehrung"
+                },
+                false
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "info",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Информация о производителе"
     }
 ]

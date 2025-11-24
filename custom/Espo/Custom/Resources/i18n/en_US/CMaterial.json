@@ -11,7 +11,17 @@
         "positionen": "Positionen",
         "rechnungspositions": "Rechnungspositions",
         "lieferscheinpositions": "Lieferscheinpositions",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "hersteller": "Hersteller",
+        "herstellerArtikelnummer": "Hersteller Artikelnummer",
+        "herstellerEan": "Hersteller EAN",
+        "externeKategorie": "Externe Kategorie",
+        "ekPreis": "EK-Preis",
+        "waehrung": "Währung",
+        "waehrungCurrency": "Währung (Währung)",
+        "waehrungConverted": "Währung (Konvertiert)",
+        "mwstSatz": "MwSt.-Satz",
+        "herstellerKatalogCode": "Hersteller Katalogcode"
     },
     "links": {
         "positionen": "Positionen",

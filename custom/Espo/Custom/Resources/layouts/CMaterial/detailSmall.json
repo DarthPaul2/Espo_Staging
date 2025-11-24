@@ -1,0 +1,30 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                false,
+                {
+                    "name": "einheit"
+                }
+            ],
+            [
+                {
+                    "name": "kategorie"
+                },
+                {
+                    "name": "preis"
+                }
+            ],
+            [
+                {
+                    "name": "description"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

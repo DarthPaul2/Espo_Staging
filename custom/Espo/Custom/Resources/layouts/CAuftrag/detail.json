@@ -24,8 +24,13 @@
                 }
             ]
         ],
+        "dynamicLogicVisible": null,
         "style": "default",
-        "label": "Overview"
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "customLabel": "Überblick"
     },
     {
         "rows": [
@@ -86,13 +91,14 @@
             ]
         ],
         "dynamicLogicVisible": null,
-        "style": "default",
+        "style": "info",
+        "dynamicLogicStyled": null,
         "tabBreak": false,
         "tabLabel": null,
         "hidden": false,
         "noteText": null,
         "noteStyle": "info",
-        "label": ""
+        "customLabel": "RS"
     },
     {
         "rows": [
@@ -106,7 +112,8 @@
             ]
         ],
         "dynamicLogicVisible": null,
-        "style": "default",
+        "style": "primary",
+        "dynamicLogicStyled": null,
         "tabBreak": false,
         "tabLabel": null,
         "hidden": false,

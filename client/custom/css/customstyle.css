@@ -1,0 +1,44 @@
+/* Überblick – panel-0 */
+.record-grid .left .middle .panel[data-name="panel-0"],
+.record-grid .left .middle .panel[data-name="panel-0"]>.panel-heading,
+.record-grid .left .middle .panel[data-name="panel-0"]>.panel-body {
+    background-color: #f6f7ff !important;
+    border-color: #f6f7ff !important;
+    color: #484848 !important;
+}
+
+/* Gesamtsumme Auftrag – panel-1 */
+.record-grid .left .middle .panel[data-name="panel-1"],
+.record-grid .left .middle .panel[data-name="panel-1"]>.panel-heading,
+.record-grid .left .middle .panel[data-name="panel-1"]>.panel-body {
+    background-color: #f5f6fd !important;
+    border-color: #f5f6fd !important;
+    color: #484848 !important;
+}
+
+/* RS – panel-2 */
+.record-grid .left .middle .panel[data-name="panel-2"],
+.record-grid .left .middle .panel[data-name="panel-2"]>.panel-heading,
+.record-grid .left .middle .panel[data-name="panel-2"]>.panel-body {
+    background-color: #f6fff9 !important;
+    border-color: #f6fff9 !important;
+    color: #484848 !important;
+}
+
+/* Beschreibung – panel-3 */
+.record-grid .left .middle .panel[data-name="panel-3"],
+.record-grid .left .middle .panel[data-name="panel-3"]>.panel-heading,
+.record-grid .left .middle .panel[data-name="panel-3"]>.panel-body {
+    background-color: #fbf7ff !important;
+    border-color: #fbf7ff !important;
+    color: #484848 !important;
+}
+
+/* PDF Dokumentation – panel-4 */
+.record-grid .left .middle .panel[data-name="panel-4"],
+.record-grid .left .middle .panel[data-name="panel-4"]>.panel-heading,
+.record-grid .left .middle .panel[data-name="panel-4"]>.panel-body {
+    background-color: #f6fcff !important;
+    border-color: #f6fcff !important;
+    color: #484848 !important;
+}
