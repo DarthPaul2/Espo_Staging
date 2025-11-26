@@ -1,6 +1,6 @@
 {
     "labels": {
-        "Create CMaterial": "Material erstellen"
+        "Create CMaterial": "Erstellen Material/Serviceleistung"
     },
     "fields": {
         "appklesecId": "AppklesecId",
@@ -24,12 +24,60 @@
         "waehrungCurrency": "Währung (Währung)",
         "waehrungConverted": "Währung (Konvertiert)",
         "mwstSatz": "MwSt.-Satz",
-        "herstellerKatalogCode": "Hersteller Katalogcode"
+        "herstellerKatalogCode": "Hersteller Katalogcode",
+        "barcodeId": "Barcode_id"
     },
     "links": {
         "positionen": "Positionen",
         "rechnungspositions": "Rechnungspositions",
         "lieferscheinpositions": "Lieferscheinpositions",
         "auftragspositions": "Auftragspositions"
+    },
+    "options": {
+        "kategorie": {
+            "10": "Brandmeldetechnik",
+            "20": "Einbruchmeldetechnik",
+            "30": "Systemkomponenten",
+            "31": "Netzwerktechnik / IT",
+            "32": "Kabel / Leitungen",
+            "33": "Stromversorgung / Netzgeräte / Akkus",
+            "34": "Montagematerial / Befestigung",
+            "40": "Elektronische Schließsysteme",
+            "50": "Erweiterungen / Zubehör",
+            "51": "Ersatzteile",
+            "60": "Meldertausch- und Prüfgeräte",
+            "70": "Signalgeber",
+            "80": "Übertragungseinrichtungen",
+            "81": "Zutrittskontrollsysteme",
+            "82": "Videoüberwachung",
+            "88": "Serviceleistung",
+            "99": "Sonstiges"
+        },
+        "einheit": {
+            "Stk.": "Stk.",
+            "m": "m",
+            "cm": "cm",
+            "mm": "mm",
+            "kg": "kg",
+            "g": "g",
+            "l": "l",
+            "m²": "m²",
+            "m³": "m³",
+            "Rol.": "Rol.",
+            "Pkg.": "Pkg.",
+            "Dos.": "Dos.",
+            "Ktn.": "Ktn.",
+            "Satz": "Satz",
+            "VE": "VE",
+            "h": "h",
+            "d": "d",
+            "Paar": "Paar",
+            "monat": "Monat",
+            "jahr": "Jahr",
+            "pausch": "Pausch.",
+            "tag": "Tag",
+            "vpe": "VPE",
+            "lfdm": "LFDM"
+        }
     }
 }

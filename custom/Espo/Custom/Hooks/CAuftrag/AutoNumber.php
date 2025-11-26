@@ -41,11 +41,17 @@ class AutoNumber
                 $max = $stmt->fetchColumn();
                 $max = $max !== null ? (int) $max : 0;
 
-                $next  = $max >= 10000 ? $max + 1 : 10001;
-                $value = $pfx . (string) $next;
+                // если ещё нет номеров за этот год → начинаем с 1
+                $next = $max > 0 ? $max + 1 : 1;
+
+                // форматируем в 4 знака с ведущими нулями: 0001, 0002, 0118, 1234
+                $numberPart = str_pad((string) $next, 4, '0', STR_PAD_LEFT);
+
+                $value = $pfx . $numberPart; // KSA-25-0001, KSA-25-0118 и т.д.
 
                 $entity->set('auftragsnummer', $value);
                 $this->log->debug('Generated Auftragsnummer: ' . $value);
+
             } finally {
                 if (!empty($gotLock)) {
                     $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([

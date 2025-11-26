@@ -17,10 +17,8 @@
         "align": "left"
     },
     {
-        "name": "name",
-        "width": 16,
-        "link": true,
-        "align": "left"
+        "name": "bemerkung",
+        "width": 16
     },
     {
         "name": "leistungsdatumVon",

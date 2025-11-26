@@ -12,7 +12,8 @@
     },
     {
         "name": "hersteller",
-        "width": 16
+        "width": 12,
+        "align": "left"
     },
     {
         "name": "kategorie",
@@ -26,17 +27,18 @@
     },
     {
         "name": "einheit",
-        "width": 8,
+        "width": 6,
         "align": "left"
     },
     {
         "name": "barcode",
-        "width": 16,
+        "width": 14,
         "align": "left"
     },
     {
         "name": "description",
-        "width": 16
+        "width": 24,
+        "align": "left"
     },
     {
         "name": "verwendet",

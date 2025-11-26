@@ -1,4 +1,9 @@
 {
+    "hooks": {
+        "beforeSave": [
+            "GenerateBarcode"
+        ]
+    },
     "fields": {
         "name": {
             "type": "varchar",
@@ -54,20 +59,46 @@
         "kategorie": {
             "type": "enum",
             "required": true,
-            "default": "Sonstiges",
+            "default": "99",
             "options": [
-                "Brandmeldetechnik",
-                "Einbruchmeldetechnik",
-                "Systemkomponenten",
-                "Elektronische Schließsysteme",
-                "Erweiterungen / Zubehör",
-                "Meldertausch- und Prüfgeräte",
-                "Signalgeber",
-                "Übertragungseinrichtungen",
-                "Zutrittskontrollsysteme",
-                "Sonstiges"
+                "10",
+                "20",
+                "30",
+                "40",
+                "50",
+                "60",
+                "70",
+                "80",
+                "81",
+                "99",
+                "88",
+                "31",
+                "32",
+                "33",
+                "34",
+                "51",
+                "82"
             ],
-            "isCustom": true
+            "isCustom": true,
+            "style": {
+                "10": null,
+                "20": null,
+                "30": null,
+                "31": null,
+                "32": null,
+                "33": null,
+                "34": null,
+                "40": null,
+                "50": null,
+                "51": null,
+                "60": null,
+                "70": null,
+                "80": null,
+                "81": null,
+                "82": null,
+                "88": null,
+                "99": null
+            }
         },
         "einheit": {
             "type": "enum",
@@ -91,9 +122,41 @@
                 "VE",
                 "h",
                 "d",
-                "Paar"
+                "Paar",
+                "monat",
+                "jahr",
+                "pausch",
+                "tag",
+                "vpe",
+                "lfdm"
             ],
-            "isCustom": true
+            "isCustom": true,
+            "style": {
+                "Stk.": null,
+                "m": null,
+                "cm": null,
+                "mm": null,
+                "kg": null,
+                "g": null,
+                "l": null,
+                "m²": null,
+                "m³": null,
+                "Rol.": null,
+                "Pkg.": null,
+                "Dos.": null,
+                "Ktn.": null,
+                "Satz": null,
+                "VE": null,
+                "h": null,
+                "d": null,
+                "Paar": null,
+                "monat": null,
+                "jahr": null,
+                "pausch": null,
+                "tag": null,
+                "vpe": null,
+                "lfdm": null
+            }
         },
         "preis": {
             "notNull": false,
@@ -154,6 +217,11 @@
             "type": "varchar",
             "maxLength": 100,
             "options": [],
+            "isCustom": true
+        },
+        "barcodeId": {
+            "type": "int",
+            "readOnly": true,
             "isCustom": true
         }
     },

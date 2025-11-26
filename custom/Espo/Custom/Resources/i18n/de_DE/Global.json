@@ -6,10 +6,14 @@
     "CAbwesenheit": "Abwesenheiten",
     "scopeNamesPlural": {
         "CAngebotsposition": "Angebotspositionen",
-        "CAngebot": "Angebote"
+        "CAngebot": "Angebote",
+        "CMaterial": "Materialen/Serviceleistungen"
     },
     "Global": {
         "Today": "",
         "Tomorrow": ""
+    },
+    "scopeNames": {
+        "CMaterial": "Material/Serviceleistung"
     }
 }
