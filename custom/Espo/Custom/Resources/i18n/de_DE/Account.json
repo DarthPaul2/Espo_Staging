@@ -32,5 +32,8 @@
             "Firmenmitglied": "Firmenmitglied",
             "Lieferant": "Lieferant"
         }
+    },
+    "labels": {
+        "Create Account": "Erstellen Kunde"
     }
 }

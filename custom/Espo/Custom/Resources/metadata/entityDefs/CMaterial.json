@@ -120,7 +120,6 @@
                 "Ktn.",
                 "Satz",
                 "VE",
-                "h",
                 "d",
                 "Paar",
                 "monat",
@@ -128,7 +127,9 @@
                 "pausch",
                 "tag",
                 "vpe",
-                "lfdm"
+                "lfdm",
+                "std",
+                "einht"
             ],
             "isCustom": true,
             "style": {
@@ -147,7 +148,6 @@
                 "Ktn.": null,
                 "Satz": null,
                 "VE": null,
-                "h": null,
                 "d": null,
                 "Paar": null,
                 "monat": null,
@@ -155,7 +155,9 @@
                 "pausch": null,
                 "tag": null,
                 "vpe": null,
-                "lfdm": null
+                "lfdm": null,
+                "std": null,
+                "einht": null
             }
         },
         "preis": {

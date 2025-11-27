@@ -7,13 +7,15 @@
     "scopeNamesPlural": {
         "CAngebotsposition": "Angebotspositionen",
         "CAngebot": "Angebote",
-        "CMaterial": "Materialen/Serviceleistungen"
+        "CMaterial": "Materialen/Serviceleistungen",
+        "Account": "Kunden"
     },
     "Global": {
         "Today": "",
         "Tomorrow": ""
     },
     "scopeNames": {
-        "CMaterial": "Material/Serviceleistung"
+        "CMaterial": "Material/Serviceleistung",
+        "Account": "Kunde"
     }
 }

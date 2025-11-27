@@ -77,7 +77,9 @@
             "pausch": "Pausch.",
             "tag": "Tag",
             "vpe": "VPE",
-            "lfdm": "LFDM"
+            "lfdm": "LFDM",
+            "std": "Std.",
+            "einht": "Einheit"
         }
     }
 }
