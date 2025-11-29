@@ -62,7 +62,7 @@ class SyncAngebotspositionen
      * Копируем/обновляем все позиции одного Angebots в CAuftragsposition.
      * Делает TИХИЕ save'ы (skipRecalc), а затем один общий пересчёт.
      */
-    private function upsertFromAngebot(string $auftragId, string $angebotId): array
+    public function upsertFromAngebot(string $auftragId, string $angebotId): array
     {
         $created = 0; $updated = 0; $skipped = 0; $errors = 0;
 
@@ -161,6 +161,113 @@ class SyncAngebotspositionen
         $this->triggerRecalc($auftragId, "upsertFromAngebot(angebotId={$angebotId})");
 
         return compact('created', 'updated', 'skipped', 'errors');
+    }
+
+        /**
+     * Полное пересоздание Auftragspositionen ИЗ СЧЕТОВ для заданного Auftrags.
+     * Берём только Rechnungen со статусом aus $statusList (по умолчанию ['offen', 'bezahlt']).
+     * Удаляем (soft-delete) старые позиции, у которых angebotId IS NULL (т.е. "из счетов").
+     */
+    public function rebuildFromInvoices(string $auftragId, array $statusList = ['offen', 'bezahlt']): array
+    {
+        $deletedOld = 0;
+        $created    = 0;
+        $errors     = 0;
+
+        // 1) Убираем старые Auftragspositionen, которые НЕ привязаны к Angebot (angebotId IS NULL)
+        try {
+            $oldList = $this->em->getRepository('CAuftragsposition')
+                ->where([
+                    'auftragId' => $auftragId,
+                    'deleted'   => false,
+                    'angebotId' => null,   // оставляем только "счётные" позиции
+                ])
+                ->find();
+
+            foreach ($oldList as $ap) {
+                $ap->set('deleted', true);
+                $this->em->saveEntity($ap, ['skipRecalc' => true]);
+                $deletedOld++;
+            }
+
+            $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: soft-deleted old invoice-based positions: {$deletedOld}");
+        } catch (\Throwable $e) {
+            $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: failed to delete old positions: " . $e->getMessage());
+        }
+
+        // 2) Находим все Rechnungen по Auftrags, со статусом из $statusList
+        $rechnungen = $this->em->getRepository('CRechnung')
+            ->where([
+                'auftragId' => $auftragId,
+                'deleted'   => false,
+                'status'    => $statusList,   // IN (offen, bezahlt)
+            ])
+            ->find();
+
+        $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: auftrag={$auftragId}, rechnungenCount=" . count($rechnungen));
+
+        foreach ($rechnungen as $rechnung) {
+            $rechnungId = (string) $rechnung->getId();
+
+            // все позиции этой Rechnung
+            $posList = $this->em->getRepository('CRechnungsposition')
+                ->where([
+                    'rechnungId' => $rechnungId,
+                    'deleted'    => false,
+                ])
+                ->order('sortierung')
+                ->find();
+
+            $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: rechnung={$rechnungId}, srcCount=" . count($posList));
+
+            foreach ($posList as $pos) {
+                $posId = (string) $pos->getId();
+
+                try {
+                    $ap = $this->em->createEntity('CAuftragsposition');
+                    $ap->set([
+                        'auftragId' => $auftragId,
+
+                        // ВАЖНО: не трогаем поля Angebot*, чтобы можно было отличить "из ангебота" и "из счетов"
+                        // 'angebotId'          => null,
+                        // 'angebotspositionId' => null,
+
+                        'name'          => $pos->get('name'),
+                        'beschreibung'  => $pos->get('beschreibung') ?: $pos->get('description'),
+                        'materialId'    => $pos->get('materialId'),
+
+                        'einheit'       => $pos->get('einheit'),
+                        'menge'         => $pos->get('menge'),
+                        'preis'         => $pos->get('preis'),
+                        'netto'         => $pos->get('netto'),
+                        'gesamt'        => $pos->get('gesamt'),
+                        'rabatt'        => $pos->get('rabatt'),
+                        'steuer'        => $pos->get('steuer'),
+                        'einkaufspreis' => $pos->get('einkaufspreis'),
+                        'sortierung'    => $pos->get('sortierung'),
+
+                        'includeInAuftrag' => true,
+                    ]);
+
+                    $this->em->saveEntity($ap, ['skipRecalc' => true]);
+                    $created++;
+                } catch (\Throwable $e) {
+                    $errors++;
+                    $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: create failed: auftrag={$auftragId}, rechnung={$rechnungId}, pos={$posId}, err=" . $e->getMessage());
+                }
+            }
+        }
+
+        $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices done: deletedOld={$deletedOld}, created={$created}, errors={$errors}");
+
+        // один общий пересчёт после партии
+        $this->triggerRecalc($auftragId, "rebuildFromInvoices(status=" . implode(',', $statusList) . ")");
+
+        return [
+            'deletedOld' => $deletedOld,
+            'created'    => $created,
+            'errors'     => $errors,
+        ];
     }
 
     /* ========================= Hooks ========================= */

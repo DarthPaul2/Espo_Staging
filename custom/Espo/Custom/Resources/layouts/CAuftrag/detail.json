@@ -96,14 +96,14 @@
             ]
         ],
         "dynamicLogicVisible": null,
-        "style": "info",
+        "style": "success",
         "dynamicLogicStyled": null,
         "tabBreak": false,
         "tabLabel": null,
         "hidden": false,
         "noteText": null,
         "noteStyle": "info",
-        "customLabel": "RS"
+        "customLabel": "Rechnungen"
     },
     {
         "rows": [

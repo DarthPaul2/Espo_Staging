@@ -299,6 +299,82 @@ Ihr KleSec Team`,
             });
         },
 
+        afterRender: function () {
+            Dep.prototype.afterRender.call(this);
+
+            // === SUPER HARD MODE — гарантированно ===
+            setTimeout(() => {
+
+                const $panel = this.$el.find(
+                    'div.panel.panel-warning.panel-auftragspositions.headered[data-name="auftragspositions"]'
+                ).first();
+
+                console.log('[DEBUG] Auftragspositions panel found?', $panel.length);
+
+                if (!$panel.length) {
+                    console.log('[DEBUG] Panel not found, try again in 300 ms');
+                    setTimeout(() => this.afterRender(), 300);
+                    return;
+                }
+
+                // Если уже вставлено — выходим
+                if (this.$el.find('div[data-name="auftragspositions-actions"]').length) {
+                    console.log('[DEBUG] actions already inserted');
+                    return;
+                }
+
+                const $actions = $(`
+                    <div data-name="auftragspositions-actions" 
+                        style="display: inline-flex; gap: 6px; padding: 5px 8px; margin-bottom: 6px; margin-top: -5px; background: #efda97; border-radius: 6px; border: 1px solid #e5e5e5;">
+
+                        <button class="btn btn-default" data-action="fillFromInvoices" style="margin-right: 6px;">
+                            Aus Rechnungen übernehmen
+                        </button>
+
+                        <button class="btn btn-default" data-action="fillFromOffers">
+                            Aus Angeboten übernehmen
+                        </button>
+
+                    </div>
+                `);
+
+
+                // ВСТАВИЛИ КНОПКИ
+                $actions.insertBefore($panel);
+
+                console.log('[DEBUG] ACTIONS INSERTED ABOVE AUFTRAGSPOSITIONS');
+
+                // обработчики
+                $actions.on('click', '[data-action="fillFromInvoices"]', () => this._fillFromInvoices());
+                $actions.on('click', '[data-action="fillFromOffers"]', () => this._fillFromOffers());
+
+            }, 500); // ← задержка гарантирует 100% отрисовку
+        },
+
+
+
+        _fillFromInvoices: function () {
+            const id = this.model.id;
+            if (!id) return;
+
+            Espo.Ajax.postRequest('CAuftrag/action/fillPositionsFromInvoices', { id })
+                .then(() => {
+                    Espo.Ui.success('Auftragspositionen aus Rechnungen übernommen.');
+                    this.model.fetch({ success: () => this.reRender() });
+                });
+        },
+
+        _fillFromOffers: function () {
+            const id = this.model.id;
+            if (!id) return;
+
+            Espo.Ajax.postRequest('CAuftrag/action/fillPositionsFromOffers', { id })
+                .then(() => {
+                    Espo.Ui.success('Auftragspositionen aus Angeboten übernommen.');
+                    this.model.fetch({ success: () => this.reRender() });
+                });
+        },
+
 
         // --- helpers: где взять фирму у заказа (account|firma|kunde) ---
         _getAccountRef: function () {

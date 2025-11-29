@@ -129,7 +129,8 @@
                 "vpe",
                 "lfdm",
                 "std",
-                "einht"
+                "einht",
+                "Km"
             ],
             "isCustom": true,
             "style": {
@@ -157,7 +158,8 @@
                 "vpe": null,
                 "lfdm": null,
                 "std": null,
-                "einht": null
+                "einht": null,
+                "Km": null
             }
         },
         "preis": {

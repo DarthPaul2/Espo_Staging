@@ -79,7 +79,8 @@
             "vpe": "VPE",
             "lfdm": "LFDM",
             "std": "Std.",
-            "einht": "Einheit"
+            "einht": "Einheit",
+            "Km": "Km"
         }
     }
 }

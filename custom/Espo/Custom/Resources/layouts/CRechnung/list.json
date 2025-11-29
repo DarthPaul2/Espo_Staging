@@ -1,7 +1,7 @@
 [
     {
         "name": "rechnungsnummer",
-        "width": 12,
+        "width": 10,
         "link": true,
         "align": "left"
     },
@@ -13,7 +13,7 @@
     },
     {
         "name": "betragBrutto",
-        "width": 12,
+        "width": 11,
         "align": "left"
     },
     {
@@ -33,16 +33,17 @@
     },
     {
         "name": "letzteMahnungAm",
-        "width": 16,
+        "width": 12,
         "align": "left"
     },
     {
-        "name": "assignedUser",
-        "width": 16
+        "name": "pdfUrl",
+        "width": 12,
+        "align": "left"
     },
     {
         "name": "status",
-        "width": 8,
+        "width": 6,
         "align": "left"
     }
 ]

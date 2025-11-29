@@ -20,6 +20,14 @@
                     "name": "preis"
                 },
                 {
+                    "name": "rabatt"
+                }
+            ],
+            [
+                {
+                    "name": "steuer"
+                },
+                {
                     "name": "gesamt"
                 }
             ],

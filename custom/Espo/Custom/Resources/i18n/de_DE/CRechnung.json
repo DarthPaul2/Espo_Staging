@@ -3,7 +3,7 @@
         "Create CRechnung": "Rechnung erstellen"
     },
     "fields": {
-        "rechnungsnummer": "Rechnungs-Nr.",
+        "rechnungsnummer": "Rech.-Nr.",
         "einleitung": "Einleitung",
         "bemerkung": "Bemerkung",
         "betragNetto": "Betrag (netto)",
@@ -27,7 +27,7 @@
         "lieferscheins": "Lieferscheins",
         "mahnregel": "Mahnregel",
         "mahnstufe": "Mahnstufe",
-        "letzteMahnungAm": "Letzte Mahnung am",
+        "letzteMahnungAm": "Letzte Mahnung",
         "mahnungs": "Mahnungen",
         "rechnungstyp": "Rechnungstyp"
     },
