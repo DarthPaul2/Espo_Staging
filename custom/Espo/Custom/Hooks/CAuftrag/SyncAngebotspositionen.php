@@ -174,13 +174,12 @@ class SyncAngebotspositionen
         $created    = 0;
         $errors     = 0;
 
-        // 1) Убираем старые Auftragspositionen, которые НЕ привязаны к Angebot (angebotId IS NULL)
+        // 1) Убираем ВСЕ старые Auftragspositionen этого Auftrags
         try {
             $oldList = $this->em->getRepository('CAuftragsposition')
                 ->where([
                     'auftragId' => $auftragId,
                     'deleted'   => false,
-                    'angebotId' => null,   // оставляем только "счётные" позиции
                 ])
                 ->find();
 
@@ -190,10 +189,11 @@ class SyncAngebotspositionen
                 $deletedOld++;
             }
 
-            $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: soft-deleted old invoice-based positions: {$deletedOld}");
+            $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: soft-deleted ALL old positions for auftrag={$auftragId}: {$deletedOld}");
         } catch (\Throwable $e) {
             $this->log->warning("[SyncAngebotspositionen] rebuildFromInvoices: failed to delete old positions: " . $e->getMessage());
         }
+
 
         // 2) Находим все Rechnungen по Auftrags, со статусом из $statusList
         $rechnungen = $this->em->getRepository('CRechnung')

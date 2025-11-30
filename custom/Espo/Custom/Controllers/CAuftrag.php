@@ -44,6 +44,7 @@ class CAuftrag extends Base
         }
 
         if (!$angebotIds) {
+            // НИЧЕГО не чистим, просто сообщаем
             return [
                 'success' => true,
                 'message' => 'Keine verknüpften Angebote gefunden.',
@@ -51,7 +52,24 @@ class CAuftrag extends Base
             ];
         }
 
-        // используем твой хук-класс как сервис
+        // 1) СНАЧАЛА очищаем ВСЕ текущие Auftragspositionen этого Auftrags
+        $oldList = $em->getRepository('CAuftragsposition')
+            ->where([
+                'auftragId' => $auftragId,
+                'deleted'   => false,
+            ])
+            ->find();
+
+        $deletedOld = 0;
+        foreach ($oldList as $ap) {
+            $ap->set('deleted', true);
+            $em->saveEntity($ap, ['skipRecalc' => true]);
+            $deletedOld++;
+        }
+
+        $log->warning("[CAuftrag::fillPositionsFromOffers] soft-deleted ALL old positions for auftrag={$auftragId}: {$deletedOld}");
+
+        // 2) Используем твой хук-класс как сервис
         $sync = new SyncAngebotspositionen($em, $log);
 
         $result = [];
@@ -62,11 +80,14 @@ class CAuftrag extends Base
         return [
             'success' => true,
             'message' => 'Auftragspositionen aus Angeboten übernommen.',
-            'details' => $result,
+            'details' => [
+                'deletedOld' => $deletedOld,
+                'perAngebot' => $result,
+            ],
         ];
     }
 
-        /**
+    /**
      * Кнопка: "Aus Rechnungen übernehmen"
      * Берём Rechnungen этого Auftrags со статусом 'offen' или 'bezahlt'
      * и пересоздаём Auftragspositionen из CRechnungsposition.
@@ -98,5 +119,4 @@ class CAuftrag extends Base
             'details' => $result,
         ];
     }
-
 }
