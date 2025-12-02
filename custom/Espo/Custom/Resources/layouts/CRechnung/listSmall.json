@@ -1,24 +1,24 @@
 [
     {
         "name": "rechnungsnummer",
-        "width": 16,
+        "width": 15,
         "link": true,
         "align": "left"
     },
     {
         "name": "account",
-        "width": 35,
+        "width": 31,
         "link": true,
         "align": "left"
     },
     {
         "name": "rechnungstyp",
-        "width": 16,
+        "width": 19,
         "align": "left"
     },
     {
         "name": "betragBrutto",
-        "width": 16,
+        "width": 14,
         "align": "left"
     },
     {
@@ -28,7 +28,7 @@
     },
     {
         "name": "status",
-        "width": 12,
+        "width": 11,
         "align": "left"
     }
 ]

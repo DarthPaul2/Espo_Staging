@@ -63,7 +63,8 @@
             "teilrechnung": "Teilrechnung",
             "schlussrechnung": "Schlussrechnung",
             "gutschrift": "Gutschrift",
-            "einzelrechnung": "Einzelrechnung"
+            "einzelrechnung": "Einzelrechnung",
+            "abschlagsrechnung": "Abschlagsrechnung"
         }
     }
 }

@@ -261,16 +261,18 @@
         "rechnungstyp": {
             "type": "enum",
             "options": [
+                "einzelrechnung",
                 "teilrechnung",
                 "schlussrechnung",
                 "gutschrift",
-                "einzelrechnung"
+                "abschlagsrechnung"
             ],
             "style": {
+                "einzelrechnung": null,
                 "teilrechnung": null,
                 "schlussrechnung": null,
                 "gutschrift": null,
-                "einzelrechnung": null
+                "abschlagsrechnung": null
             },
             "default": "einzelrechnung",
             "maxLength": 100,
@@ -347,10 +349,12 @@
         }
     },
     "collection": {
-        "orderBy": "createdAt",
+        "orderBy": "rechnungsnummer",
         "order": "desc",
         "textFilterFields": [
-            "name"
+            "name",
+            "rechnungsnummer",
+            "account.cKundennummer"
         ],
         "fullTextSearch": false,
         "countDisabled": false

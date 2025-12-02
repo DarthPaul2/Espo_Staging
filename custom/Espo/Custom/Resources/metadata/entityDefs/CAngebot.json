@@ -85,7 +85,8 @@
             "type": "text",
             "rowsMin": 2,
             "cutHeight": 200,
-            "isCustom": true
+            "isCustom": true,
+            "default": "Sehr geehrte Damen und Herren,\nwir danken Ihnen für Ihr Interesse an den Leistungen der KleSec GmbH.\nNachfolgend erhalten Sie das Angebot für Sie.\n\nHaben Sie Fragen zu dem Angebot oder wünschen Sie detailliertere Informationen zu unseren Ausführungen?\nDann zögern Sie bitte nicht, mit Ihrem persönlichen Ansprechpartner über folgende Kommunikationswege in Verbindung zu treten:\n\nIhr Ansprechpartner: Tobias Schiller\nE-Mail: schiller@klesec.de\nTel.: 0171 6969930\n\nBeauftragungen bitte an: schiller@klesec.de\n\nDas Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinweisen zusammen."
         },
         "bemerkung": {
             "type": "text",
@@ -139,9 +140,9 @@
                 "geschlossen"
             ],
             "style": {
-                "in_arbeit": null,
-                "abgerechnet": null,
-                "geschlossen": null
+                "in_arbeit": "danger",
+                "abgerechnet": "warning",
+                "geschlossen": "success"
             },
             "default": "in_arbeit",
             "displayAsLabel": true,

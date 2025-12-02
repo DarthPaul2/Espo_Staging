@@ -314,6 +314,24 @@
                 "createdAt",
                 "id"
             ]
+        },
+        "barcodeId": {
+            "columns": [
+                "barcodeId",
+                "deleted"
+            ]
+        },
+        "code": {
+            "columns": [
+                "code",
+                "deleted"
+            ]
+        },
+        "barcode": {
+            "columns": [
+                "barcode",
+                "deleted"
+            ]
         }
     },
     "optimisticConcurrencyControl": false

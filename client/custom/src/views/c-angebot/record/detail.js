@@ -8,6 +8,21 @@ define('custom:views/c-angebot/record/detail', [
 
 
     const LOG_NS = '[CAngebot/detail]';
+    const DEFAULT_EINLEITUNG = `Sehr geehrte Damen und Herren,
+wir danken Ihnen für Ihr Interesse an den Leistungen der KleSec GmbH.
+Nachfolgend erhalten Sie das Angebot für Sie.
+
+Haben Sie Fragen zu dem Angebot oder wünschen Sie detailliertere Informationen zu unseren Ausführungen?
+Dann zögern Sie bitte nicht, mit Ihrem persönlichen Ansprechpartner über folgende Kommunikationswege in Verbindung zu treten:
+
+Ihr Ansprechpartner: Tobias Schiller  
+E-Mail: schiller@klesec.de  
+Tel.: 0171 6969930  
+
+Beauftragungen bitte an: schiller@klesec.de  
+
+Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinweisen zusammen.`;
+
     const L = (tag, payload) => {
         try { console.log(LOG_NS, tag, payload || ''); } catch (e) { }
     };
@@ -34,23 +49,15 @@ define('custom:views/c-angebot/record/detail', [
             const brutto = this.model.get('betragBrutto') || 0;
             const steuer = Math.round((brutto - netto) * 100) / 100;
 
+            // Берём то, что пользователь ввёл в поле "einleitung".
+            // Если поле пустое – используем старый дефолтный текст.
+            const einleitung =
+                (this.model.get('einleitung') || '').trim() || DEFAULT_EINLEITUNG;
+
             return {
                 id: this.model.id,
                 titel: 'ANGEBOT',
-                einleitung: `Sehr geehrte Damen und Herren,
-wir danken Ihnen für Ihr Interesse an den Leistungen der KleSec GmbH.
-Nachfolgend erhalten Sie das Angebot für Sie.
-
-Haben Sie Fragen zu dem Angebot oder wünschen Sie detailliertere Informationen zu unseren Ausführungen?
-Dann zögern Sie bitte nicht, mit Ihrem persönlichen Ansprechpartner über folgende Kommunikationswege in Verbindung zu treten:
-
-Ihr Ansprechpartner: Tobias Schiller  
-E-Mail: schiller@klesec.de  
-Tel.: 0171 6969930  
-
-Beauftragungen bitte an: schiller@klesec.de  
-
-Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinweisen zusammen.`,
+                einleitung: einleitung,
                 bemerkung: this.model.get('bemerkung'),
 
                 betrag_netto: netto,
@@ -76,6 +83,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 positionen: positions || []
             };
         },
+
 
         // ==== Collection Helpers ====
         getPanelView() {

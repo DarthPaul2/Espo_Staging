@@ -3,5 +3,6 @@
     "inventarnummer",
     "standort",
     "zustand",
-    "kategorie"
+    "kategorie",
+    "assignedUser"
 ]
