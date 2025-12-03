@@ -20,14 +20,14 @@
         "status": {
             "type": "enum",
             "options": [
-                "Planned",
-                "Held",
-                "Not Held"
+                "Geplant",
+                "Durchgeführt",
+                "Nicht durchgeführt"
             ],
-            "default": "Planned",
+            "default": "Geplant",
             "style": {
-                "Held": "success",
-                "Not Held": "info"
+                "Durchgeführt": "success",
+                "Nicht durchgeführt": "info"
             },
             "displayAsLabel": true,
             "labelType": "state",
@@ -242,6 +242,6 @@
             ]
         }
     },
-    "formula": "if (dateStart && dateEnd) {\n    dauer_minuten = datetime\\\\diffMinutes(dateEnd, dateStart);\n} else {\n    dauer_minuten = null;\n}\n\nif (dauer_minuten >= 360 && !pause_minuten) {\n    pause_minuten = 30;\n}\n\nif (dauer_minuten) {\n    netto_minuten = dauer_minuten - (pause_minuten ? pause_minuten : 0);\n} else {\n    netto_minuten = null;\n}\n\nif (netto_minuten > 480) {\n    ueberstunden_minuten = netto_minuten - 480;\n} else {\n    ueberstunden_minuten = 0;\n}\n\nstatus = dateEnd ? \"Held\" : \"Planned\";",
+    "formula": "if (dateStart && dateEnd) {\n    dauer_minuten = datetime\\\\diffMinutes(dateEnd, dateStart);\n} else {\n    dauer_minuten = null;\n}\n\nif (dauer_minuten >= 360 && !pause_minuten) {\n    pause_minuten = 30;\n}\n\nif (dauer_minuten) {\n    netto_minuten = dauer_minuten - (pause_minuten ? pause_minuten : 0);\n} else {\n    netto_minuten = null;\n}\n\nif (netto_minuten > 480) {\n    ueberstunden_minuten = netto_minuten - 480;\n} else {\n    ueberstunden_minuten = 0;\n}\n\nstatus = dateEnd ? \"Durchgeführt\" : \"Geplant\";",
     "optimisticConcurrencyControl": false
 }

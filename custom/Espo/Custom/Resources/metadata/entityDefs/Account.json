@@ -10,7 +10,8 @@
             "type": "varchar",
             "maxLength": 50,
             "options": [],
-            "isCustom": true
+            "isCustom": true,
+            "readOnly": true
         },
         "cFirmenHauptkontakt": {
             "type": "link"
@@ -43,6 +44,9 @@
         },
         "cWerkzeug": {
             "type": "link"
+        },
+        "billingAddressCountry": {
+            "default": "Deutschland"
         }
     },
     "links": {

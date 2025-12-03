@@ -1,0 +1,14 @@
+{
+    "fields": {
+        "cHausnummer": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "cHausnummer"
+                    }
+                ]
+            }
+        }
+    }
+}

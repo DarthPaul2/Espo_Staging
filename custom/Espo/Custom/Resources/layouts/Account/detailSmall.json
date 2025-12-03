@@ -8,15 +8,8 @@
             ],
             [
                 {
-                    "name": "website"
-                }
-            ],
-            [
-                {
                     "name": "emailAddress"
-                }
-            ],
-            [
+                },
                 {
                     "name": "phoneNumber"
                 }
@@ -25,22 +18,16 @@
                 {
                     "name": "cKundennummer"
                 },
-                false
+                {
+                    "name": "type"
+                }
             ],
             [
                 {
                     "name": "billingAddressCity"
                 },
                 {
-                    "name": "billingAddressCountry"
-                }
-            ],
-            [
-                {
-                    "name": "type"
-                },
-                {
-                    "name": "industry"
+                    "name": "billingAddressPostalCode"
                 }
             ],
             [
