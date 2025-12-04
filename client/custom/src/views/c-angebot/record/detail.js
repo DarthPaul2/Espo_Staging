@@ -42,6 +42,37 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             const n = parseInt(digits, 10);
             return Number.isFinite(n) ? n : null;
         },
+        _parsePosNum: function (str) {
+            const s = String(str || '').trim();
+            if (!s) return [];
+            return s.split('.').map(part => {
+                const n = parseInt(part, 10);
+                return Number.isFinite(n) ? n : part;
+            });
+        },
+
+        _comparePosNum: function (a, b) {
+            const aa = this._parsePosNum(a);
+            const bb = this._parsePosNum(b);
+            const len = Math.max(aa.length, bb.length);
+
+            for (let i = 0; i < len; i++) {
+                const va = aa[i];
+                const vb = bb[i];
+
+                if (va === undefined) return -1;
+                if (vb === undefined) return 1;
+
+                if (va === vb) continue;
+
+                if (typeof va === 'number' && typeof vb === 'number') {
+                    return va - vb;
+                }
+                return String(va).localeCompare(String(vb), 'de-DE', { numeric: true });
+            }
+            return 0;
+        },
+
 
         // ==== Payload für Flask ====
         buildPayload: function (positions) {
@@ -100,22 +131,60 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
         },
 
         buildPositionsForPdf(rows) {
-            return (rows || []).map(p => {
-                const namePart = p.materialName || p.name || '';
-                const descPart = p.materialDescription || p.beschreibung || '';
-                let beschreibung = namePart;
-                if (descPart) beschreibung += '\n\n' + descPart;
+            const getSortKey = (p) => {
+                let key = p.positionsNummer || p.name || '';
+                const t = (p.positionType || 'normal').toLowerCase();
+
+                if (key) {
+                    if (t === 'header') {
+                        // заголовок чуть выше своих под-позиций
+                        key = key + '.0';
+                    } else if (t === 'summary') {
+                        // Zwischensumme всегда после всех подпунктов
+                        key = key + '.999';
+                    }
+                }
+                return key;
+            };
+            const sorted = (rows || []).slice().sort((a, b) => {
+                const aKey = getSortKey(a);
+                const bKey = getSortKey(b);
+                return this._comparePosNum(aKey, bKey);
+            });
+
+            return sorted.map(p => {
+                const type = (p.positionType || 'normal').toLowerCase();
+                let beschreibung = '';
+
+                if (type === 'header' || type === 'summary') {
+                    // Для подзаголовков и Zwischensummen описание не нужно.
+                    // Заодно вычищаем бессмысленное "Position".
+                    const raw = (p.beschreibung || '').trim();
+                    beschreibung = (raw.toLowerCase() === 'position') ? '' : raw;
+                } else {
+                    const namePart = p.materialName || p.name || '';
+                    const descPart = p.materialDescription || p.beschreibung || '';
+
+                    beschreibung = namePart;
+                    if (descPart) beschreibung += '\n\n' + descPart;
+                }
 
                 return {
                     id: p.id,
+
                     menge: p.menge,
                     einheit: p.einheit,
                     preis: p.preis,
                     gesamt: p.gesamt,
-                    beschreibung
+                    beschreibung,
+
+                    positionType: p.positionType || 'normal',
+                    titel: p.titel || '',
+                    positionsNummer: p.positionsNummer || ''
                 };
             });
         },
+
 
         loadPositionsFromPanel() {
             const col = this.getPositionsCollection();
@@ -142,7 +211,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             const params = {
                 limit: 200,
                 offset: 0,
-                select: ['id', 'name', 'beschreibung', 'menge', 'einheit', 'preis', 'gesamt', 'materialName', 'materialDescription', 'angebotId'],
+                select: ['id', 'name', 'beschreibung', 'menge', 'einheit', 'preis', 'gesamt', 'materialName', 'materialDescription', 'angebotId', 'positionType', 'titel', 'positionsNummer'],
                 where: [{ type: 'equals', attribute: 'angebotId', value: angebotId }],
                 orderBy: 'sortierung',
                 order: 'asc'

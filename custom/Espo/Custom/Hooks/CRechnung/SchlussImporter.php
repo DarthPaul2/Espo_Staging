@@ -67,6 +67,19 @@ class SchlussImporter
 
             foreach ($auftragsPosList as $ap) {
                 /** @var Entity $ap */
+
+                // 🔹 Тип позиции (normal / header / summary …)
+                $positionType = strtolower((string) $ap->get('positionType'));
+
+                // 🚫 В Schlussrechnung тоже НЕ импортируем подзаголовки и Zwischensummen
+                if ($positionType === 'header' || $positionType === 'summary') {
+                    $this->log->debug('[SchlussImporter] Skip Auftragsposition (header/summary)', [
+                        'auftragspositionId' => (string) $ap->get('id'),
+                        'positionType'       => $positionType,
+                    ]);
+                    continue;
+                }
+
                 $auftragsPosId = (string) $ap->get('id');
 
                 $menge  = (float) ($ap->get('menge')  ?? 0.0);

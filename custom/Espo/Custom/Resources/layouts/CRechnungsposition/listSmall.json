@@ -1,5 +1,10 @@
 [
     {
+        "name": "positionsNummer",
+        "width": 10,
+        "align": "left"
+    },
+    {
         "name": "material",
         "width": 38,
         "align": "left"
@@ -21,7 +26,7 @@
     },
     {
         "name": "rabatt",
-        "width": 13,
+        "width": 8,
         "align": "left"
     },
     {

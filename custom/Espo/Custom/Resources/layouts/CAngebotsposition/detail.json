@@ -5,36 +5,6 @@
                 {
                     "name": "material"
                 }
-            ],
-            [
-                {
-                    "name": "menge"
-                },
-                {
-                    "name": "einheit"
-                },
-                {
-                    "name": "preis"
-                },
-                {
-                    "name": "einkaufspreis"
-                }
-            ],
-            [
-                {
-                    "name": "rabatt"
-                },
-                {
-                    "name": "gesamt"
-                }
-            ],
-            [
-                {
-                    "name": "beschreibung"
-                },
-                {
-                    "name": "netto"
-                }
             ]
         ],
         "style": "default",

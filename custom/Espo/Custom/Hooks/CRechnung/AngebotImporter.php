@@ -25,6 +25,11 @@ class AngebotImporter
      *      Сохраняем БЕЗ skipHooks, чтобы downstream-хуки могли отработать.
      *   4) Если Rechnung — Teilrechnung (и не storniert), ставим в связанных
      *      CAuftragsposition флаг bereitsabgerechnet = true (saveEntity).
+     *
+     *   Дополнительно:
+     *      - В Rechnung копируются accountId/accountName/accountKundenNr из Angebots
+     *      - При импорте позиций в Rechnung игнорируются CAngebotsposition
+     *        с positionType = 'header' или 'summary' (подзаголовки и промежуточные суммы).
      */
     public function afterSave(Entity $entity, array $options = []): void
     {
@@ -56,6 +61,7 @@ class AngebotImporter
         $this->log->debug("➡️ Import von Angebot {$angebotId} in Rechnung {$rechnungId}, Auftrag={$auftragId}");
 
         // === 1) Копируем основные поля из Angebot (без titel/einleitung)
+        // сюда же входит "Аккаунт" счёта: accountId/accountName/accountKundenNr
         $entity->set([
             'accountId'         => $angebot->get('accountId'),
             'accountName'       => $angebot->get('accountName'),
@@ -126,6 +132,19 @@ class AngebotImporter
         $affectedAuftragsPosIds = [];
 
         foreach ($posList as $pos) {
+
+            // 🔹 Тип позиции (normal / header / summary и т.д.)
+            $positionType = strtolower((string) $pos->get('positionType'));
+
+            // 🚫 В Rechnung НЕ импортируем подзаголовки и промежуточные суммы
+            if ($positionType === 'header' || $positionType === 'summary') {
+                $this->log->debug('[AngebotImporter] Skip position (header/summary)', [
+                    'angebotspositionId' => (string) $pos->getId(),
+                    'positionType'       => $positionType,
+                ]);
+                continue;
+            }
+
             $srcAngebotsPosId   = (string) $pos->getId();
             $auftragsPositionId = $apMap[$srcAngebotsPosId] ?? null;
 
@@ -179,6 +198,7 @@ class AngebotImporter
                 json_encode([
                     'srcAngebotspositionId'      => $srcAngebotsPosId,
                     'resolvedAuftragspositionId' => $auftragsPositionId,
+                    'positionType'               => $positionType,
                     'menge' => $menge, 'preis' => $preis, 'netto' => $netto, 'brutto' => $brutto
                 ], JSON_UNESCAPED_UNICODE)
             );

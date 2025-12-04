@@ -1,0 +1,17 @@
+{
+    "fields": {
+        "account": {
+            "required": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "angebotId",
+                        "data": {
+                            "field": "angebot"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

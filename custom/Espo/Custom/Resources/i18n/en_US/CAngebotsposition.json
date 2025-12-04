@@ -16,7 +16,11 @@
         "netto": "Netto",
         "materialPreis": "Material Preis",
         "materialEinheit": "Material Einheit",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "positionsNummer": "Pos-Nr.",
+        "positionType": "Positionstyp",
+        "titel": "Abschnitt",
+        "positionsNummerHinweis": "Hinweis"
     },
     "links": {
         "angebot": "Angebot",
@@ -25,5 +29,15 @@
     },
     "labels": {
         "Create CAngebotsposition": "Create Angebotsposition"
+    },
+    "options": {
+        "positionType": {
+            "normal": "Normale Position",
+            "header": "Abschnitt",
+            "summary": "Zwischensumme"
+        }
+    },
+    "tooltips": {
+        "positionsNummerHinweis": "Für die Zwischensumme eines Abschnitts verwenden Sie bitte folgende Nummerierung:\nAbschnitt 1 → 1Z\nAbschnitt 2 → 2Z\nAbschnitt 3 → 3Z\nusw.“"
     }
 }

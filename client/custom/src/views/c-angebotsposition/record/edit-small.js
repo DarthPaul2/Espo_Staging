@@ -1,4 +1,5 @@
 console.log('[LOAD] custom:views/c-angebotsposition/record/edit-small');
+
 define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-small'], function (Dep) {
 
     return Dep.extend({
@@ -19,7 +20,7 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                     const vatZero = !!this.model.get('angebotOption13b') || !!this.model.get('angebotOption12');
                     const vatRate = vatZero ? 0 : 19;
 
-                    const nettoBase = menge * preis * (1 - rabatt / 100);
+                    const nettoBase = menge * preis * (1 - (rabatt || 0) / 100);
                     const netto = Math.round(nettoBase * 100) / 100;
                     const gesamt = Math.round(netto * (1 + vatRate / 100) * 100) / 100;
 
@@ -35,7 +36,7 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                 recalcPosition();
             });
 
-            // ===== налоги от родителя =====
+            // ===== налоги от родителя (Angebot) =====
             this.taxChangeHandler = (event) => {
                 const { rc, pv } = (event && event.detail) || { rc: false, pv: false };
                 L('taxChangeHandler', { rc, pv });
@@ -75,10 +76,21 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
             const copyFromForeignOnce = () => {
                 const preisForeign = this.model.get('materialPreis');
                 const einheitForeign = this.model.get('materialEinheit');
+                const beschrForeign = this.model.get('materialDescription'); // текст из материала
 
                 const patch = {};
-                if (einheitForeign != null && this.model.get('einheit') !== einheitForeign) patch.einheit = einheitForeign;
-                if (preisForeign != null && this.model.get('preis') !== preisForeign) patch.preis = preisForeign;
+
+                if (einheitForeign != null && this.model.get('einheit') !== einheitForeign) {
+                    patch.einheit = einheitForeign;
+                }
+                if (preisForeign != null && this.model.get('preis') !== preisForeign) {
+                    patch.preis = preisForeign;
+                }
+
+                // Bemerkung: заполняем только если в позиции ещё пусто
+                if (!this.model.get('beschreibung') && beschrForeign) {
+                    patch.beschreibung = beschrForeign;
+                }
 
                 if (Object.keys(patch).length) {
                     this.model.set(patch, { silent: true });
@@ -86,7 +98,13 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                     recalcPosition();
                     return true;
                 }
-                L('copyFromForeign:NOT_READY', { materialPreis: preisForeign, materialEinheit: einheitForeign });
+
+                L('copyFromForeign:NOT_READY', {
+                    materialPreis: preisForeign,
+                    materialEinheit: einheitForeign,
+                    materialDescription: beschrForeign
+                });
+
                 return false;
             };
 
@@ -104,30 +122,60 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                 let tries = 0;
                 const maxTries = 20;
                 const interval = 100;
+
                 const tick = () => {
                     tries += 1;
-                    const ok = copyFromForeignOnce();
+                    const ok = copyFromForeignOnce();  // сначала ждём foreign-поля
+
                     if (!ok && tries < maxTries) {
+                        // ждём, пока Espo подтянет foreign-поля
                         setTimeout(tick, interval);
-                    } else if (!ok) {
-                        fetchMaterialFallback(matId).then(data => {
-                            if (!data) { L('copyFromForeign:FINISH', { ok: false, tries }); return; }
-                            const patch = {};
-                            if (data.hasOwnProperty('einheit') && data.einheit != null) patch.einheit = data.einheit;
-                            if (data.hasOwnProperty('preis') && data.preis != null) patch.preis = data.preis;
-                            if (Object.keys(patch).length) {
-                                this.model.set(patch, { silent: true });
-                                L('fallback:APPLIED', patch);
-                                recalcPosition();
-                                L('copyFromForeign:FINISH', { ok: true, tries, via: 'fallback' });
-                            } else {
-                                L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-empty' });
-                            }
-                        });
-                    } else {
-                        L('copyFromForeign:FINISH', { ok: true, tries });
+                        return;
                     }
+
+                    // сюда попадаем когда foreign уже что-то сделал, либо время вышло
+                    if (this.model.get('beschreibung')) {
+                        L('copyFromForeign:FINISH', { ok, tries, via: ok ? 'foreign' : 'timeout-no-besch' });
+                        return;
+                    }
+
+                    // beschreibung ещё пустой → пробуем один раз через CMaterial/<id>
+                    fetchMaterialFallback(matId).then(data => {
+                        if (!data) {
+                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-null' });
+                            return;
+                        }
+
+                        const patch = {};
+
+                        // Einheit / Preis
+                        if (Object.prototype.hasOwnProperty.call(data, 'einheit') && data.einheit != null) {
+                            patch.einheit = data.einheit;
+                        }
+                        if (Object.prototype.hasOwnProperty.call(data, 'preis') && data.preis != null) {
+                            patch.preis = data.preis;
+                        }
+
+                        // описание материала → в Bemerkung позиции (beschreibung)
+                        if (
+                            !this.model.get('beschreibung') &&
+                            Object.prototype.hasOwnProperty.call(data, 'description') &&
+                            data.description
+                        ) {
+                            patch.beschreibung = data.description;
+                        }
+
+                        if (Object.keys(patch).length) {
+                            this.model.set(patch, { silent: true });
+                            L('fallback:APPLIED', patch);
+                            recalcPosition();
+                            L('copyFromForeign:FINISH', { ok: true, tries, via: 'fallback' });
+                        } else {
+                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-empty' });
+                        }
+                    });
                 };
+
                 tick();
             };
 
@@ -151,7 +199,7 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                     gesamt: this.model.get('gesamt') || 0,
                     einheit: this.model.get('einheit') || null,
                     name: this.model.get('name') || null,
-                    description: this.model.get('description') || null
+                    description: this.model.get('description') || null   // оставляю как было
                 };
                 L('sync -> dispatch saved', { angebotId, payload });
 
@@ -165,6 +213,13 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                     window.dispatchEvent(ev);
                 }
             });
+
+            // ===== initial copy from material on load, if beschreibung is empty =====
+            const initialMatId = this.model.get('materialId');
+            if (initialMatId && !this.model.get('beschreibung')) {
+                L('init -> beschreibung empty, try fill from material', { materialId: initialMatId });
+                scheduleCopyFromForeign();
+            }
         },
 
         onRemove: function () {
@@ -180,7 +235,7 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                     ev.initCustomEvent('c-angebotsposition:removed', true, true, { angebotId, positionId: this.model.id });
                     window.dispatchEvent(ev);
                 }
-                console.log('[CAngebotsposition/edit] onRemove → removed', { angebotId, id: this.model.id });
+                console.log('[CAngebotsposition/edit-small] onRemove → removed', { angebotId, id: this.model.id });
             }
 
             if (this.taxChangeHandler) {
@@ -190,9 +245,8 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
             Dep.prototype.onRemove.call(this);
 
             const DBG = (typeof window !== 'undefined' && window.__DBG_CANPOS === true);
-            if (DBG) try { console.log('[CAngebotsposition/edit]', 'onRemove done'); } catch (e) { }
+            if (DBG) try { console.log('[CAngebotsposition/edit-small]', 'onRemove done'); } catch (e) { }
         }
-
 
     });
 });

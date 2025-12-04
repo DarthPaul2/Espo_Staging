@@ -27,5 +27,8 @@
             "layout": null,
             "selectPrimaryFilterName": null
         }
-    }
+    },
+    "kanbanViewMode": false,
+    "color": null,
+    "iconClass": null
 }

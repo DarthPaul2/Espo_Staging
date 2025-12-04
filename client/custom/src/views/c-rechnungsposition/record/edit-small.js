@@ -77,9 +77,22 @@ define('custom:views/c-rechnungsposition/record/edit-small', ['views/record/edit
                 const preisForeign = this.model.get('materialPreis');
                 const einheitForeign = this.model.get('materialEinheit');
 
+                // 🔹 ВАЖНО: единственное корректное текстовое поле из материала
+                const beschrForeign = this.model.get('materialDescription');
+
                 const patch = {};
-                if (einheitForeign != null && this.model.get('einheit') !== einheitForeign) patch.einheit = einheitForeign;
-                if (preisForeign != null && this.model.get('preis') !== preisForeign) patch.preis = preisForeign;
+
+                if (einheitForeign != null && this.model.get('einheit') !== einheitForeign) {
+                    patch.einheit = einheitForeign;
+                }
+                if (preisForeign != null && this.model.get('preis') !== preisForeign) {
+                    patch.preis = preisForeign;
+                }
+
+                // 🔹 Описание: только если в позиции ещё пусто
+                if (!this.model.get('beschreibung') && beschrForeign) {
+                    patch.beschreibung = beschrForeign;
+                }
 
                 if (Object.keys(patch).length) {
                     this.model.set(patch, { silent: true });
@@ -87,9 +100,16 @@ define('custom:views/c-rechnungsposition/record/edit-small', ['views/record/edit
                     recalcPosition();
                     return true;
                 }
-                L('copyFromForeign:NOT_READY', { materialPreis: preisForeign, materialEinheit: einheitForeign });
+
+                L('copyFromForeign:NOT_READY', {
+                    materialPreis: preisForeign,
+                    materialEinheit: einheitForeign,
+                    materialDescription: beschrForeign
+                });
+
                 return false;
             };
+
 
             const scheduleCopyFromForeign = () => {
                 const matId = this.model.get('materialId');
@@ -105,32 +125,69 @@ define('custom:views/c-rechnungsposition/record/edit-small', ['views/record/edit
                 let tries = 0;
                 const maxTries = 20;
                 const interval = 100;
+
                 const tick = () => {
                     tries += 1;
-                    const ok = copyFromForeignOnce();
+                    const ok = copyFromForeignOnce();   // тянет einheit/preis из foreign
+
                     if (!ok && tries < maxTries) {
+                        // ждём, пока Espo подтянет foreign-поля
                         setTimeout(tick, interval);
-                    } else if (!ok) {
-                        fetchMaterialFallback(matId).then(data => {
-                            if (!data) { L('copyFromForeign:FINISH', { ok: false, tries }); return; }
-                            const patch = {};
-                            if (data.hasOwnProperty('einheit') && data.einheit != null) patch.einheit = data.einheit;
-                            if (data.hasOwnProperty('preis') && data.preis != null) patch.preis = data.preis;
-                            if (Object.keys(patch).length) {
-                                this.model.set(patch, { silent: true });
-                                L('fallback:APPLIED', patch);
-                                recalcPosition();
-                                L('copyFromForeign:FINISH', { ok: true, tries, via: 'fallback' });
-                            } else {
-                                L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-empty' });
-                            }
-                        });
-                    } else {
-                        L('copyFromForeign:FINISH', { ok: true, tries });
+                        return;
                     }
+
+                    // сюда попадаем когда:
+                    //  - либо foreign отработал (ok === true),
+                    //  - либо исчерпали попытки (ok === false, tries >= maxTries)
+
+                    // 🔹 если beschreibung уже есть — ничего больше не делаем
+                    if (this.model.get('beschreibung')) {
+                        L('copyFromForeign:FINISH', { ok, tries, via: ok ? 'foreign' : 'timeout-no-besch' });
+                        return;
+                    }
+
+                    // 🔹 beschreibung пустой → один раз тянем из CMaterial/<id>
+                    fetchMaterialFallback(matId).then(data => {
+                        if (!data) {
+                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-null' });
+                            return;
+                        }
+
+                        const patch = {};
+
+                        // Einheit / Preis – как раньше
+                        if (Object.prototype.hasOwnProperty.call(data, 'einheit') && data.einheit != null) {
+                            patch.einheit = data.einheit;
+                        }
+                        if (Object.prototype.hasOwnProperty.call(data, 'preis') && data.preis != null) {
+                            patch.preis = data.preis;
+                        }
+
+                        // 🔹 ГЛАВНОЕ: описание материала → в beschreibung позиции
+                        if (
+                            !this.model.get('beschreibung') &&                // только если ещё пусто
+                            Object.prototype.hasOwnProperty.call(data, 'description') &&
+                            data.description
+                        ) {
+                            patch.beschreibung = data.description;
+                        }
+
+                        if (Object.keys(patch).length) {
+                            this.model.set(patch, { silent: true });
+                            L('fallback:APPLIED', patch);
+                            recalcPosition();
+                            L('copyFromForeign:FINISH', { ok: true, tries, via: 'fallback' });
+                        } else {
+                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-empty' });
+                        }
+                    });
+
+
                 };
+
                 tick();
             };
+
 
             this.listenTo(this.model, 'change:materialId', scheduleCopyFromForeign);
             this.listenTo(this.model, 'change:materialPreis change:materialEinheit', () => {
@@ -166,6 +223,15 @@ define('custom:views/c-rechnungsposition/record/edit-small', ['views/record/edit
                     window.dispatchEvent(ev);
                 }
             });
+
+            // ===== initial copy from material on load, if beschreibung is empty =====
+            const initialMatId = this.model.get('materialId');
+            if (initialMatId && !this.model.get('beschreibung')) {
+                L('init -> beschreibung empty, try fill from material', { materialId: initialMatId });
+                // используем уже существующую логику
+                scheduleCopyFromForeign();
+            }
+
         },
 
         onRemove: function () {

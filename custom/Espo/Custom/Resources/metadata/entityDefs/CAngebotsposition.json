@@ -4,7 +4,8 @@
             "NameFiller"
         ],
         "afterSave": [
-            "UpdateAngebotTotals"
+            "UpdateAngebotTotals",
+            "AutoZwischensummeOnHeader"
         ],
         "afterRemove": [
             "UpdateAngebotTotals"
@@ -105,7 +106,7 @@
         "beschreibung": {
             "type": "text",
             "rowsMin": 2,
-            "cutHeight": 200,
+            "cutHeight": 90,
             "isCustom": true
         },
         "sortierung": {
@@ -156,6 +157,43 @@
             "field": "einheit",
             "view": "views/fields/foreign-varchar",
             "isCustom": true
+        },
+        "positionsNummer": {
+            "type": "varchar",
+            "maxLength": 20,
+            "options": [],
+            "isCustom": true
+        },
+        "positionType": {
+            "type": "enum",
+            "options": [
+                "normal",
+                "header",
+                "summary"
+            ],
+            "style": {
+                "normal": null,
+                "header": null,
+                "summary": null
+            },
+            "default": "normal",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "titel": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "positionsNummerHinweis": {
+            "type": "varchar",
+            "maxLength": 100,
+            "default": "Beispiel: 1Z, 2Z, 3Z, ...",
+            "readOnly": true,
+            "options": [],
+            "isCustom": true,
+            "tooltip": true
         }
     },
     "links": {
@@ -200,8 +238,8 @@
         }
     },
     "collection": {
-        "orderBy": "createdAt",
-        "order": "desc",
+        "orderBy": "positionsNummer",
+        "order": "asc",
         "textFilterFields": [
             "name"
         ],
@@ -233,6 +271,9 @@
                 "id"
             ]
         }
+    },
+    "dynamicLogic": {
+        "enabled": true
     },
     "optimisticConcurrencyControl": false
 }

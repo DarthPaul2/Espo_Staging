@@ -5,7 +5,7 @@
         "preis": "Preis",
         "einkaufspreis": "Einkaufspreis",
         "steuer": "Steuer",
-        "rabatt": "Rabatt (%)",
+        "rabatt": "Rabatt",
         "gesamt": "Gesamt",
         "sortierung": "Sortierung",
         "netto": "Netto",
@@ -17,7 +17,9 @@
         "rechnungOption13b": "§ 13b UStG",
         "rechnungOption12": "§ 12 Abs. 3 UStG",
         "rechnung": "Rechnung",
-        "auftragsposition": "Auftragsposition"
+        "auftragsposition": "Auftragsposition",
+        "positionsNummer": "Pos-Nr.",
+        "positionType": "Positionstyp"
     },
     "links": {
         "material": "Material",
@@ -26,5 +28,12 @@
     },
     "labels": {
         "Create CRechnungsposition": "Create Rechnungsposition"
+    },
+    "options": {
+        "positionType": {
+            "normal": "Normale Position",
+            "header": "Unterüberschrift",
+            "summary": "Zwischensumme"
+        }
     }
 }

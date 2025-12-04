@@ -219,7 +219,9 @@
             "foreign": "angebot",
             "entity": "CAngebotsposition",
             "audited": false,
-            "isCustom": true
+            "isCustom": true,
+            "orderBy": "positionsNummer",
+            "order": "asc"
         },
         "rechnungs": {
             "type": "hasMany",

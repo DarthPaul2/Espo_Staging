@@ -70,7 +70,8 @@
             "type": "text",
             "rowsMin": 2,
             "cutHeight": 200,
-            "isCustom": true
+            "isCustom": true,
+            "default": "Sehr geehrte Kundin, sehr geehrter Kunde,\nanbei erhalten Sie Ihre Rechnung."
         },
         "bemerkung": {
             "type": "text",
@@ -124,7 +125,7 @@
         },
         "account": {
             "type": "link",
-            "required": true
+            "required": false
         },
         "accountKundenNr": {
             "readOnly": true,

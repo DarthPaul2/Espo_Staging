@@ -1,17 +1,27 @@
 [
     {
+        "name": "positionsNummer",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "titel",
+        "width": 16,
+        "align": "left"
+    },
+    {
         "name": "material",
-        "width": 35,
+        "width": 36,
         "align": "left"
     },
     {
         "name": "menge",
-        "width": 10,
+        "width": 8,
         "align": "left"
     },
     {
         "name": "einheit",
-        "width": 10,
+        "width": 8,
         "align": "left"
     },
     {
@@ -21,7 +31,7 @@
     },
     {
         "name": "rabatt",
-        "width": 10,
+        "width": 8,
         "align": "left"
     },
     {

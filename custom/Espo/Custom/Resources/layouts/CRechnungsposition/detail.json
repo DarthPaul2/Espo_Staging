@@ -3,6 +3,15 @@
         "rows": [
             [
                 {
+                    "name": "positionsNummer"
+                },
+                false,
+                {
+                    "name": "positionType"
+                }
+            ],
+            [
+                {
                     "name": "material"
                 }
             ],

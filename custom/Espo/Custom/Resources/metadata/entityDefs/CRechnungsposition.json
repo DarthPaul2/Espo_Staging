@@ -135,6 +135,28 @@
         },
         "auftragsposition": {
             "type": "link"
+        },
+        "positionsNummer": {
+            "type": "varchar",
+            "maxLength": 20,
+            "options": [],
+            "isCustom": true
+        },
+        "positionType": {
+            "type": "enum",
+            "options": [
+                "normal",
+                "header",
+                "summary"
+            ],
+            "style": {
+                "normal": null,
+                "header": null,
+                "summary": null
+            },
+            "default": "normal",
+            "maxLength": 100,
+            "isCustom": true
         }
     },
     "links": {
@@ -179,7 +201,7 @@
         }
     },
     "collection": {
-        "orderBy": "createdAt",
+        "orderBy": "positionsNummer",
         "order": "asc",
         "textFilterFields": [
             "name"

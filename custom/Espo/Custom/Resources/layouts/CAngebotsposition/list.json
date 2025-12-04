@@ -1,5 +1,10 @@
 [
     {
+        "name": "positionsNummer",
+        "width": 10,
+        "align": "left"
+    },
+    {
         "name": "material",
         "width": 16
     },

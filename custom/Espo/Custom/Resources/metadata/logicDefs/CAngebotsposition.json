@@ -1,0 +1,142 @@
+{
+    "fields": {
+        "titel": {
+            "readOnly": null,
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "or",
+                        "value": [
+                            {
+                                "type": "equals",
+                                "attribute": "positionType",
+                                "value": "header"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "material": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "einheit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "preis": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "rabatt": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "gesamt": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "einkaufspreis": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "description": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "netto": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "beschreibung": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "positionsNummerHinweis": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "summary"
+                    }
+                ]
+            }
+        }
+    }
+}

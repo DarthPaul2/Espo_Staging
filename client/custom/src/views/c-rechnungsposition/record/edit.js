@@ -96,7 +96,7 @@ define('custom:views/c-rechnungsposition/record/edit', ['views/record/edit'], fu
                 const matId = this.model.get('materialId');
                 L('materialId changed', { materialId: matId });
 
-                // Очистили материал — чистим единицу, цену не трогаем (на случай спеццен)
+                // Очистили материал — чистим Einheit, цену не трогаем
                 if (!matId) {
                     this.model.set({ einheit: null }, { silent: true });
                     L('material cleared -> reset einheit');
@@ -104,37 +104,66 @@ define('custom:views/c-rechnungsposition/record/edit', ['views/record/edit'], fu
                     return;
                 }
 
-                // ждём, пока Espo заполнит foreign-поля, затем fallback
                 let tries = 0;
-                const maxTries = 20;   // ~2 секунды
+                const maxTries = 20;    // ~2 сек
                 const interval = 100;
+
                 const tick = () => {
                     tries += 1;
-                    const ok = copyFromForeignOnce();
+                    const ok = copyFromForeignOnce();   // тянем EINHEIT/PREIS из foreign
+
+                    // ждём, пока Espo подложит foreign-поля
                     if (!ok && tries < maxTries) {
                         setTimeout(tick, interval);
-                    } else if (!ok) {
-                        // foreign-поля так и не пришли — последний шанс: API
-                        fetchMaterialFallback(matId).then(data => {
-                            if (!data) { L('copyFromForeign:FINISH', { ok: false, tries }); return; }
-                            const patch = {};
-                            if (data.hasOwnProperty('einheit') && data.einheit != null) patch.einheit = data.einheit;
-                            if (data.hasOwnProperty('preis') && data.preis != null) patch.preis = data.preis;
-                            if (Object.keys(patch).length) {
-                                this.model.set(patch, { silent: true });
-                                L('fallback:APPLIED', patch);
-                                recalcPosition();
-                                L('copyFromForeign:FINISH', { ok: true, tries, via: 'fallback' });
-                            } else {
-                                L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-empty' });
-                            }
-                        });
-                    } else {
-                        L('copyFromForeign:FINISH', { ok: true, tries });
+                        return;
                     }
+
+                    // сюда попадаем, когда:
+                    //  - либо foreign уже отработал (ok === true),
+                    //  - либо попытки закончились (ok === false, tries >= maxTries)
+
+                    // если beschreibung уже чем-то заполнена – дальше не лезем
+                    if (this.model.get('beschreibung')) {
+                        L('copyFromForeign:FINISH', { ok, tries, via: ok ? 'foreign' : 'timeout-no-besch' });
+                        return;
+                    }
+
+                    // 🔹 ТОЛЬКО здесь один раз тянем материал целиком и берём description
+                    fetchMaterialFallback(matId).then(data => {
+                        if (!data) {
+                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-null' });
+                            return;
+                        }
+
+                        const patch = {};
+
+                        // подстрахуемся: если вдруг Einheit/Preis не успели подтянуться
+                        if (data.einheit != null && !this.model.get('einheit')) {
+                            patch.einheit = data.einheit;
+                        }
+                        if (data.preis != null && (this.model.get('preis') == null)) {
+                            patch.preis = data.preis;
+                        }
+
+                        // 🔹 НАШЕ ГЛАВНОЕ: description из CMaterial -> beschreibung позиции
+                        if (!this.model.get('beschreibung') && data.description) {
+                            patch.beschreibung = data.description;
+                        }
+
+                        if (Object.keys(patch).length) {
+                            this.model.set(patch, { silent: true });
+                            L('fallback:APPLIED', patch);
+                            recalcPosition();
+                            L('copyFromForeign:FINISH', { ok: true, tries, via: 'fallback' });
+                        } else {
+                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-empty' });
+                        }
+                    });
                 };
+
                 tick();
             };
+
 
             this.listenTo(this.model, 'change:materialId', scheduleCopyFromForeign);
             this.listenTo(this.model, 'change:materialPreis change:materialEinheit', () => {

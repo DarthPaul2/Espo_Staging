@@ -3,6 +3,22 @@
         "rows": [
             [
                 {
+                    "name": "positionsNummer"
+                },
+                {
+                    "name": "positionsNummerHinweis"
+                },
+                {
+                    "name": "positionType"
+                }
+            ],
+            [
+                {
+                    "name": "titel"
+                }
+            ],
+            [
+                {
                     "name": "material"
                 }
             ],
@@ -30,7 +46,7 @@
             ],
             [
                 {
-                    "name": "description"
+                    "name": "beschreibung"
                 },
                 {
                     "name": "netto"

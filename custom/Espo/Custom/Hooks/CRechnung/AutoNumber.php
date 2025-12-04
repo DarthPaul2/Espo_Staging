@@ -22,45 +22,48 @@ class AutoNumber
             return;
         }
 
-        $year = date('y');                     // '25'
-        $pfx  = self::PREFIX . '-' . $year . '-';  // 'RE-25-'
+        $year = date('y');                         // '25'
+        $pfx  = self::PREFIX . '-' . $year . '-'; // 'RE-25-'
 
         $pdo = $this->em->getPDO();
 
-        // Глобальная блокировка на последовательность (привязываем к году)
+        // Глобальная блокировка на последовательность
         $stmt = $pdo->prepare("SELECT GET_LOCK(:k, 5)");
         $stmt->execute([':k' => self::LOCK . '_' . $year]);
-        $gotLock = (int) $stmt->fetchColumn() === 1;
+        $gotLock = ((int)$stmt->fetchColumn() === 1);
 
         try {
-            // Берём максимальное правое число у номеров текущего года
-            $sql  = "
+            // 🔹 Берём максимум только по не-удалённым счетам
+            $sql = "
                 SELECT MAX(CAST(SUBSTRING_INDEX(rechnungsnummer, '-', -1) AS UNSIGNED))
                 FROM c_rechnung
                 WHERE rechnungsnummer LIKE :like
+                  AND deleted = 0
             ";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([':like' => $pfx . '%']);
             $max = $stmt->fetchColumn();
-            $max = $max !== null ? (int) $max : 0;
+            $max = $max !== null ? (int)$max : 0;
 
-            // Схема у вас 'RE-YY-1xxxx' (стартуем с 10001, как в маршруте next_number)
+            // Нумерация 10001+
             $next = $max >= 10000 ? $max + 1 : 10001;
 
-            $value = $pfx . (string) $next;
+            $value = $pfx . $next;
             $entity->set('rechnungsnummer', $value);
 
-            // Если name пуст — заполняем его (номер · Kunde)
+            // Автозаполнение name
             if (!$entity->get('name')) {
-                $accName = $entity->get('accountName'); // label линка account
+                $accName = $entity->get('accountName');
                 $label = $accName ? ($value . ' · ' . $accName) : $value;
                 $entity->set('name', mb_substr($label, 0, 255));
             }
 
             $this->log->debug('Generated Rechnungsnummer: ' . $value);
-        } finally {
+        }
+        finally {
             if ($gotLock) {
-                $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([':k' => self::LOCK . '_' . $year]);
+                $pdo->prepare("SELECT RELEASE_LOCK(:k)")
+                    ->execute([':k' => self::LOCK . '_' . $year]);
             }
         }
     }
