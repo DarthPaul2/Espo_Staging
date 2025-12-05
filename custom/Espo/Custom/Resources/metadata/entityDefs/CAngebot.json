@@ -253,7 +253,7 @@
         }
     },
     "collection": {
-        "orderBy": "createdAt",
+        "orderBy": "angebotsnummer",
         "order": "desc",
         "textFilterFields": [
             "name"
