@@ -1,0 +1,6 @@
+{
+    "Chart": {
+        "path": "client/custom/lib/Chart.min.js",
+        "exportsTo": "Chart"
+    }
+}

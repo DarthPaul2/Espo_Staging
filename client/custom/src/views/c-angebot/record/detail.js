@@ -85,6 +85,9 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             const einleitung =
                 (this.model.get('einleitung') || '').trim() || DEFAULT_EINLEITUNG;
 
+            // имя ответственного пользователя (assignedUser)
+            const assignedUserName = this.model.get('assignedUserName') || '';
+
             return {
                 id: this.model.id,
                 titel: 'ANGEBOT',
@@ -109,6 +112,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 datum: this.model.get('createdAt'),
                 leistungsdatum_von: this.model.get('leistungsdatumVon'),
                 leistungsdatum_bis: this.model.get('leistungsdatumBis'),
+                assigned_user_name: assignedUserName,
 
                 typ: 'angebot',
                 positionen: positions || []

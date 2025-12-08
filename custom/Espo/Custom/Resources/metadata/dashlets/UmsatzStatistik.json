@@ -1,0 +1,7 @@
+{
+    "view": "custom:views/dashboard/umsatz-statistik",
+    "name": "UmsatzStatistik",
+    "label": "UmsatzStatistik",
+    "aclScope": "CRechnung",
+    "entityType": "CRechnung"
+}

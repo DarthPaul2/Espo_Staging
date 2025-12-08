@@ -29,7 +29,8 @@
         "mahnstufe": "Mahnstufe",
         "letzteMahnungAm": "Letzte Mahnung",
         "mahnungs": "Mahnungen",
-        "rechnungstyp": "Rechnungstyp"
+        "rechnungstyp": "Rechnungstyp",
+        "bezahltAm": "Bezahlt am"
     },
     "links": {
         "account": "Account",

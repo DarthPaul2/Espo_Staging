@@ -92,8 +92,9 @@
                 {
                     "name": "faelligAm"
                 },
+                false,
                 {
-                    "name": "mahnregel"
+                    "name": "bezahltAm"
                 }
             ],
             [
@@ -102,7 +103,9 @@
                 },
                 {
                     "name": "letzteMahnungAm"
-                }
+                },
+                false,
+                false
             ]
         ],
         "dynamicLogicVisible": null,

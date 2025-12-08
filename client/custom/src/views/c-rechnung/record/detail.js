@@ -96,6 +96,8 @@ define('custom:views/c-rechnung/record/detail', [
                 }
             }
 
+            const assignedUserName = this.model.get('assignedUserName') || '';
+
             return {
                 // говорим универсальному рендереру, что это СЧЁТ
                 typ: 'rechnung',
@@ -134,6 +136,7 @@ define('custom:views/c-rechnung/record/detail', [
                 // привязка к Auftrag
                 auftrag_id: this.model.get('auftragId') || null,
                 auftragsnummer: auftragsnummer,
+                assigned_user_name: assignedUserName,
 
                 // позиции
                 positionen: positions || []
@@ -450,7 +453,8 @@ define('custom:views/c-rechnung/record/detail', [
                     sachbearbeiter: this.model.get('sachbearbeiter'),
                     titel: this.model.get('titel') || 'SCHLUSSRECHNUNG',
                     einleitung: this.model.get('einleitung') || '',
-                    bemerkung: this.model.get('bemerkung') || ''
+                    bemerkung: this.model.get('bemerkung') || '',
+                    assigned_user_name: this.model.get('assignedUserName') || ''
                 };
 
                 const url = this.FLASK_BASE + '/schlussrechnungen/preview_pdf';
@@ -603,7 +607,8 @@ define('custom:views/c-rechnung/record/detail', [
                     leistungsdatum_von: this.model.get('leistungsdatumVon'),
                     leistungsdatum_bis: this.model.get('leistungsdatumBis'),
                     einleitung: this.model.get('einleitung'),
-                    sachbearbeiter: this.model.get('sachbearbeiter')
+                    sachbearbeiter: this.model.get('sachbearbeiter'),
+                    assigned_user_name: this.model.get('assignedUserName') || ''
                 };
 
                 $.ajax({

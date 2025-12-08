@@ -3,7 +3,8 @@
         "beforeSave": [
             "AutoNumber",
             "BemerkungVorlage",
-            "RequireAuftragForTypes"
+            "RequireAuftragForTypes",
+            "SetBezahltAm"
         ],
         "afterSave": [
             "AngebotImporter",
@@ -277,6 +278,11 @@
             },
             "default": "einzelrechnung",
             "maxLength": 100,
+            "isCustom": true
+        },
+        "bezahltAm": {
+            "notNull": false,
+            "type": "date",
             "isCustom": true
         }
     },

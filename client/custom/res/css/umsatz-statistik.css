@@ -1,0 +1,113 @@
+.kls-stat-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+}
+
+.kls-stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.kls-stat-title-main {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.kls-stat-title-sub {
+    font-size: 11px;
+    color: #7a7a7a;
+}
+
+.kls-year-select {
+    min-width: 90px;
+}
+
+.kls-stat-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.kls-kpi-card {
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: #f5f7fb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.kls-kpi__label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #6b7280;
+}
+
+.kls-kpi__value {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.kls-kpi__value--small {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.kls-kpi__sub {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.kls-kpi--umsatz {
+    border-left: 4px solid #2563eb;
+}
+
+.kls-kpi--bezahlt {
+    border-left: 4px solid #16a34a;
+}
+
+.kls-kpi--offen {
+    border-left: 4px solid #f97316;
+}
+
+.kls-kpi--gesamt {
+    border-left: 4px solid #6b7280;
+}
+
+.kls-stat-charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    min-height: 260px;
+}
+
+.kls-chart-block {
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    padding: 8px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kls-chart-block--small {
+    min-width: 0;
+}
+
+.kls-chart-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.kls-chart-wrapper {
+    flex: 1;
+    min-height: 180px;
+}

@@ -26,5 +26,6 @@
     "preserveAuditLog": false,
     "duplicateCheckFieldList": [],
     "collaborators": false,
-    "assignedUsers": false
+    "assignedUsers": false,
+    "controller": "Espo\\\\Custom\\\\Controllers\\\\CRechnung"
 }
