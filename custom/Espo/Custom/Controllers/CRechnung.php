@@ -223,10 +223,10 @@ class CRechnung extends Base
                 (
                     SELECT DATE_FORMAT(STR_TO_DATE(CONCAT(:year, '-', m, '-01'), '%Y-%m-%d'), '%Y-%m') AS monat
                     FROM (SELECT 1 AS m UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6
-                          UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) AS months
+                        UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) AS months
                 ) AS m
-            LEFT JOIN c_rechnung r ON 1=1
-            WHERE r.deleted = 0
+            LEFT JOIN c_rechnung r
+                ON r.deleted = 0
             GROUP BY m.monat
             ORDER BY m.monat ASC
         ";

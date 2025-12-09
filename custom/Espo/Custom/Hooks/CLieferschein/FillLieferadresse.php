@@ -14,11 +14,19 @@ class FillLieferadresse
 
     public function beforeSave(Entity $entity, array $options = []): void
     {
-        // Если Account выбран и адрес ещё пустой → подтягиваем
         if ($entity->get('accountId') && !$entity->get('lieferadresseStreet')) {
+
             $account = $this->em->getEntity('Account', $entity->get('accountId'));
             if ($account) {
-                $entity->set('lieferadresseStreet', $account->get('billingAddressStreet'));
+
+                // 🔹 Берём Straße и Hausnummer
+                $street  = (string) $account->get('billingAddressStreet');       // z. B. "Florenweg"
+                $hausnr  = (string) $account->get('cHausnummer');               // z. B. "1"
+
+                // 🔹 Склеиваем с пробелом, если Hausnummer есть
+                $fullStreet = trim($street . ' ' . $hausnr);
+
+                $entity->set('lieferadresseStreet', $fullStreet);
                 $entity->set('lieferadresseCity', $account->get('billingAddressCity'));
                 $entity->set('lieferadressePostalCode', $account->get('billingAddressPostalCode'));
                 $entity->set('lieferadresseCountry', $account->get('billingAddressCountry'));
