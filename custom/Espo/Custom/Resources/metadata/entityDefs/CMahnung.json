@@ -110,6 +110,14 @@
             "type": "currency",
             "view": "custom:views/fields/gesamtbetrag",
             "isCustom": true
+        },
+        "rechnungStatus": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "rechnung",
+            "field": "status",
+            "view": "views/fields/foreign-enum",
+            "isCustom": true
         }
     },
     "links": {

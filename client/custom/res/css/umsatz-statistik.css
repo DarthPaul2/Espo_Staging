@@ -111,3 +111,75 @@
     flex: 1;
     min-height: 180px;
 }
+
+.kls-stat-table-block {
+    margin-top: 10px;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    padding: 8px 10px 10px 10px;
+}
+
+.kls-table-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 6px;
+}
+
+.kls-stat-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.kls-stat-table th,
+.kls-stat-table td {
+    padding: 4px 6px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.kls-stat-table thead tr {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2c3646 !important;
+    /* месяцы жирным */
+}
+
+.kls-stat-table th:first-child,
+.kls-stat-table td:first-child {
+    text-align: left;
+}
+
+
+.kls-stat-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.kls-th-sub {
+    font-weight: normal;
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+/* Цветные строки под графиком */
+
+.kls-stat-table tr[data-row-type="gestellt"] td {
+    background: #2563eb;
+    /* тот же синий, что в графике */
+    color: #ffffff;
+}
+
+.kls-stat-table tr[data-row-type="bezahlt"] td {
+    background: #16a34a;
+    /* зелёный как на графике */
+    color: #ffffff;
+}
+
+.kls-stat-table tr[data-row-type="offen"] td {
+    background: #f97316;
+    /* оранжевый как на графике */
+    color: #ffffff;
+}

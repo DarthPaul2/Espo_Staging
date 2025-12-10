@@ -1,25 +1,24 @@
 [
     {
         "name": "createdAt",
-        "width": 16,
+        "width": 10,
         "link": true,
         "align": "left"
     },
     {
         "name": "rechnung",
-        "width": 16
+        "width": 34,
+        "align": "left"
     },
     {
         "name": "mahnstufe",
-        "width": 16
+        "width": 14,
+        "align": "left"
     },
     {
         "name": "mahngebhr",
-        "width": 16
-    },
-    {
-        "name": "status",
-        "width": 16
+        "width": 9,
+        "align": "left"
     },
     {
         "name": "pdfUrl",
@@ -27,11 +26,17 @@
     },
     {
         "name": "gesendetAm",
-        "width": 16
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "gesamtbetrag",
         "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "rechnungStatus",
+        "width": 8,
         "align": "left"
     }
 ]

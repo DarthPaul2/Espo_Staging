@@ -63,5 +63,27 @@
             </div>
         </div>
     </div>
+<div class="kls-stat-table-block">
+    <div class="kls-table-title">Monatliche Übersicht (Netto & Anzahl)</div>
+
+    <table class="kls-stat-table table table-condensed">
+        <thead>
+            <tr data-name="monthTableHeader">
+                <!-- только месяцы, без первой пустой колонки -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-row-type="gestellt">
+                <!-- сюда JS добавит значения по месяцам -->
+            </tr>
+            <tr data-row-type="bezahlt">
+                <!-- сюда JS добавит значения по месяцам -->
+            </tr>
+            <tr data-row-type="offen">
+                <!-- сюда JS добавит значения по месяцам -->
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 </div>

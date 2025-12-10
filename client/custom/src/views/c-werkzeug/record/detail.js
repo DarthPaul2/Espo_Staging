@@ -1,12 +1,11 @@
-Espo.define('custom:views/c-material/record/detail', 'views/record/detail', function (Dep) {
+Espo.define('custom:views/c-werkzeug/record/detail', 'views/record/detail', function (Dep) {
 
     return Dep.extend({
-
-        FLASK_BASE: 'https://klesec.pagekite.me/api',
 
         setup: function () {
             Dep.prototype.setup.call(this);
 
+            // Кнопка печати этикетки
             this.addButton({
                 name: 'printLabel',
                 label: 'Etikett drucken',
@@ -16,16 +15,17 @@ Espo.define('custom:views/c-material/record/detail', 'views/record/detail', func
         },
 
         actionPrintLabel: function () {
-            var barcode = this.model.get('barcode');
+            var barcode = this.model.get('barcode') || '';
             var name = this.model.get('name') || '';
 
             if (!barcode) {
-                Espo.Ui.error('Kein Barcode im Material.');
+                Espo.Ui.error('Kein Barcode vorhanden.');
                 return;
             }
 
-            var url = this.FLASK_BASE
-                + '/materials/label?barcode=' + encodeURIComponent(barcode)
+            // Тот же Flask-маршрут, что и для материалов
+            var url = 'https://klesec.pagekite.me/api/materials/label'
+                + '?barcode=' + encodeURIComponent(barcode)
                 + '&name=' + encodeURIComponent(name);
 
             window.open(url, '_blank');

@@ -165,91 +165,145 @@ class CRechnung extends Base
     }
 
     public function getActionMonatlicheStatistik($params, $data, $request)
-    {
-        $year = $request->getQueryParam('year');
-        if (!$year || !preg_match('/^\d{4}$/', $year)) {
-            return ['success' => false, 'error' => 'year parameter missing or invalid'];
-        }
+{
+    $year = $request->getQueryParam('year');
+    if (!$year || !preg_match('/^\d{4}$/', $year)) {
+        return ['success' => false, 'error' => 'year parameter missing or invalid'];
+    }
 
-        $em  = $this->getEntityManager();
-        $pdo = $em->getPDO();
+    $em  = $this->getEntityManager();
+    $pdo = $em->getPDO();
 
-        /**
-         * 🇩🇪 ЛОГИКА:
-         * Umsatz       → created_at
-         * Bezahlt      → bezahlt_am
-         * Offene Posten→ faellig_am
-         */
-        $sql = "
-            SELECT
-                m.monat AS month,
+    /**
+     * ЛОГИКА:
+     *  - Umsatz (gestellt) считаем по created_at
+     *  - Bezahlt           считаем по bezahlt_am
+     *  - Offene Posten     считаем по faellig_am
+     *
+     * Каждый блок сначала агрегирует свои данные по месяцам,
+     * потом мы их склеиваем по месяцу через JOIN.
+     */
+    $sql = "
+        SELECT
+            m.monat AS month,
 
-                -- Umsatz (выставлено)
-                SUM(CASE WHEN r.status <> 'storniert'
-                         AND YEAR(r.created_at) = :year
-                         AND DATE_FORMAT(r.created_at, '%Y-%m') = m.monat
-                     THEN r.betrag_netto ELSE 0 END) AS umsatzNetto,
+            -- Umsatz (gestellt)
+            COALESCE(u.umsatzNetto,  0) AS umsatzNetto,
+            COALESCE(u.umsatzBrutto, 0) AS umsatzBrutto,
+            COALESCE(u.umsatzCount,  0) AS umsatzCount,
 
-                SUM(CASE WHEN r.status <> 'storniert'
-                         AND YEAR(r.created_at) = :year
-                         AND DATE_FORMAT(r.created_at, '%Y-%m') = m.monat
-                     THEN r.betrag_brutto ELSE 0 END) AS umsatzBrutto,
+            -- Bezahlt
+            COALESCE(b.bezahltNetto,  0) AS bezahltNetto,
+            COALESCE(b.bezahltBrutto, 0) AS bezahltBrutto,
+            COALESCE(b.bezahltCount,  0) AS bezahltCount,
 
-                -- Оплачено
-                SUM(CASE WHEN r.status = 'bezahlt'
-                         AND YEAR(r.bezahlt_am) = :year
-                         AND DATE_FORMAT(r.bezahlt_am, '%Y-%m') = m.monat
-                     THEN r.betrag_netto ELSE 0 END) AS bezahltNetto,
+            -- Offene Posten
+            COALESCE(o.offenNetto,  0) AS offenNetto,
+            COALESCE(o.offenBrutto, 0) AS offenBrutto,
+            COALESCE(o.offenCount,  0) AS offenCount
 
-                SUM(CASE WHEN r.status = 'bezahlt'
-                         AND YEAR(r.bezahlt_am) = :year
-                         AND DATE_FORMAT(r.bezahlt_am, '%Y-%m') = m.monat
-                     THEN r.betrag_brutto ELSE 0 END) AS bezahltBrutto,
+        FROM
+            (
+                -- 12 месяцев выбранного года
+                SELECT DATE_FORMAT(
+                           STR_TO_DATE(CONCAT(:year, '-', m, '-01'), '%Y-%m-%d'),
+                           '%Y-%m'
+                       ) AS monat
+                FROM (
+                    SELECT 1 AS m UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6
+                    UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12
+                ) AS months
+            ) AS m
 
-                -- Не оплачено (Offene Posten)
-                SUM(CASE WHEN r.status <> 'bezahlt'
-                         AND r.status <> 'storniert'
-                         AND YEAR(r.faellig_am) = :year
-                         AND DATE_FORMAT(r.faellig_am, '%Y-%m') = m.monat
-                     THEN r.betrag_netto ELSE 0 END) AS offenNetto,
+            -- Umsatz (gestellt) по created_at
+            LEFT JOIN (
+                SELECT
+                    DATE_FORMAT(created_at, '%Y-%m') AS monat,
+                    SUM(betrag_netto)               AS umsatzNetto,
+                    SUM(betrag_brutto)              AS umsatzBrutto,
+                    COUNT(*)                        AS umsatzCount
+                FROM c_rechnung
+                WHERE
+                    deleted = 0
+                    AND status <> 'storniert'
+                    AND YEAR(created_at) = :year
+                GROUP BY DATE_FORMAT(created_at, '%Y-%m')
+            ) AS u ON u.monat = m.monat
 
-                SUM(CASE WHEN r.status <> 'bezahlt'
-                         AND r.status <> 'storniert'
-                         AND YEAR(r.faellig_am) = :year
-                         AND DATE_FORMAT(r.faellig_am, '%Y-%m') = m.monat
-                     THEN r.betrag_brutto ELSE 0 END) AS offenBrutto
+            -- Bezahlt по bezahlt_am
+            LEFT JOIN (
+                SELECT
+                    DATE_FORMAT(bezahlt_am, '%Y-%m') AS monat,
+                    SUM(betrag_netto)                AS bezahltNetto,
+                    SUM(betrag_brutto)               AS bezahltBrutto,
+                    COUNT(*)                         AS bezahltCount
+                FROM c_rechnung
+                WHERE
+                    deleted = 0
+                    AND status = 'bezahlt'
+                    AND bezahlt_am IS NOT NULL
+                    AND YEAR(bezahlt_am) = :year
+                GROUP BY DATE_FORMAT(bezahlt_am, '%Y-%m')
+            ) AS b ON b.monat = m.monat
 
-            FROM
-                (
-                    SELECT DATE_FORMAT(STR_TO_DATE(CONCAT(:year, '-', m, '-01'), '%Y-%m-%d'), '%Y-%m') AS monat
-                    FROM (SELECT 1 AS m UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6
-                        UNION SELECT 7 UNION SELECT 8 UNION SELECT 9 UNION SELECT 10 UNION SELECT 11 UNION SELECT 12) AS months
-                ) AS m
-            LEFT JOIN c_rechnung r
-                ON r.deleted = 0
-            GROUP BY m.monat
-            ORDER BY m.monat ASC
-        ";
+            -- Offene Posten по faellig_am
+            LEFT JOIN (
+                SELECT
+                    DATE_FORMAT(faellig_am, '%Y-%m') AS monat,
+                    SUM(betrag_netto)                AS offenNetto,
+                    SUM(betrag_brutto)               AS offenBrutto,
+                    COUNT(*)                         AS offenCount
+                FROM c_rechnung
+                WHERE
+                    deleted = 0
+                    AND status <> 'bezahlt'
+                    AND status <> 'storniert'
+                    AND faellig_am IS NOT NULL
+                    AND YEAR(faellig_am) = :year
+                GROUP BY DATE_FORMAT(faellig_am, '%Y-%m')
+            ) AS o ON o.monat = m.monat
 
-        try {
-            $sth = $pdo->prepare($sql);
-            $sth->execute(['year' => $year]);
-            $rows = $sth->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+        ORDER BY m.monat ASC
+    ";
 
-            foreach ($rows as &$row) {
-                foreach ($row as $k => $v) {
-                    if ($k !== 'month') {
-                        $row[$k] = (float) $v;
-                    }
+    try {
+        $sth = $pdo->prepare($sql);
+        $sth->execute(['year' => (int) $year]);
+        $rows = $sth->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+        foreach ($rows as &$row) {
+            foreach ($row as $k => $v) {
+
+                if ($k === 'month') {
+                    // строка вида "2025-12" – оставляем как есть
+                    continue;
+                }
+
+                // поля с количеством → int
+                if (substr($k, -5) === 'Count') {
+                    $row[$k] = (int) $v;
+                } else {
+                    // суммы → float
+                    $row[$k] = (float) $v;
                 }
             }
-
-            return $rows;
-        } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error("monatlicheStatistik error: " . $e->getMessage());
-            return ['success' => false, 'error' => 'SQL error'];
         }
+
+        // логируем, чтобы точно видеть, что вернула статистика по месяцам
+        $this->getContainer()->get('log')->info(
+            'CRechnung::monatlicheStatistik result: ' . json_encode($rows)
+        );
+
+        return $rows;
+
+
+        return $rows;
+    } catch (\Throwable $e) {
+        $this->getContainer()->get('log')->error("monatlicheStatistik error: " . $e->getMessage());
+        return ['success' => false, 'error' => 'SQL error'];
     }
+}
+
 
     public function getActionJahresStatistik($params, $data, $request)
     {

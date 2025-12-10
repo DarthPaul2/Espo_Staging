@@ -16,7 +16,8 @@
         "bemerkung": "Bemerkung",
         "gesamtbetrag": "Gesamtbetrag",
         "gesamtbetragCurrency": "Gesamtbetrag (Währung)",
-        "gesamtbetragConverted": "Gesamtbetrag (Konvertiert)"
+        "gesamtbetragConverted": "Gesamtbetrag (Konvertiert)",
+        "rechnungStatus": "R-Status"
     },
     "links": {
         "rechnung": "Rechnung",

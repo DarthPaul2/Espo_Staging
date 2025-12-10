@@ -1,7 +1,8 @@
 {
     "hooks": {
         "beforeSave": [
-            "AutoInventarnummer"
+            "AutoInventarnummer",
+            "GenerateBarcode"
         ]
     },
     "fields": {

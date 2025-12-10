@@ -93,9 +93,11 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
                 self.renderKpi(summary);
                 self.renderMonthChart(monatRows);
                 self.renderYearChart(self.jahresData || []);
+                self.renderMonthTable(monatRows);    // ← ДОБАВЛЕНО
             }).catch(function (err) {
                 console.error('Umsatz-Dashlet loadAll error', err);
             });
+
         },
 
 
@@ -196,7 +198,10 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
 
             var self = this;
 
+            // Лейблы по месяцам
             var labels = rows.map(function (r) { return self.formatMonthLabel(r.month); });
+
+            // Суммы Netto
             var umsatzNetto = rows.map(function (r) { return r.umsatzNetto || 0; });
             var bezahltNetto = rows.map(function (r) { return r.bezahltNetto || 0; });
             var offenNetto = rows.map(function (r) { return r.offenNetto || 0; });
@@ -247,19 +252,51 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+
+                    // Для Chart.js 3+ — легенда и tooltip в plugins
                     plugins: {
                         legend: {
                             position: 'bottom'
                         },
                         tooltip: {
                             callbacks: {
-                                label: function (ctx) {
-                                    var v = ctx.parsed.y || 0;
-                                    return ctx.dataset.label + ': ' + self.formatCurrency(v);
+                                label: function (context) {
+                                    // Универсально для v2 и v3
+                                    var index = context.dataIndex != null ? context.dataIndex : context.index;
+                                    var datasetIndex = context.datasetIndex;
+
+                                    var row = rows[index] || {};
+
+                                    // Кол-во счетов по типам
+                                    var countMap = {
+                                        0: row.umsatzCount || 0,   // Gestellt
+                                        1: row.bezahltCount || 0,   // Bezahlt
+                                        2: row.offenCount || 0    // Offen
+                                    };
+                                    var count = countMap[datasetIndex] || 0;
+
+                                    // Значение Y (разные поля для v2/v3)
+                                    var v;
+                                    if (context.parsed && context.parsed.y != null) {
+                                        v = context.parsed.y;
+                                    } else if (context.yLabel != null) {
+                                        v = context.yLabel;
+                                    } else if (context.value != null) {
+                                        v = context.value;
+                                    } else {
+                                        v = 0;
+                                    }
+
+                                    var label = (context.dataset && context.dataset.label) || '';
+                                    var base = label + ': ' + self.formatCurrency(v);
+
+                                    return base + ' (' + count + ' Rechnungen)';
                                 }
                             }
                         }
                     },
+
+                    // Для шкалы Y форматируем как валюту
                     scales: {
                         y: {
                             ticks: {
@@ -271,7 +308,6 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
                     }
                 }
             });
-
         },
 
         // ---------- График по годам ----------
@@ -346,6 +382,67 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
             });
 
         },
+
+        // ---------- Таблица по месяцам: сверху месяцы, 3 цветные строки ----------
+
+        renderMonthTable: function (rows) {
+            var $root = this.$el || $(this.el);
+
+            var $headerRow = $root.find('tr[data-name="monthTableHeader"]');
+            var $rowGestellt = $root.find('tr[data-row-type="gestellt"]');
+            var $rowBezahlt = $root.find('tr[data-row-type="bezahlt"]');
+            var $rowOffen = $root.find('tr[data-row-type="offen"]');
+
+            if (
+                !$headerRow.length ||
+                !$rowGestellt.length ||
+                !$rowBezahlt.length ||
+                !$rowOffen.length
+            ) {
+                return;
+            }
+
+            // Полностью очищаем строки перед перерисовкой
+            $headerRow.empty();
+            $rowGestellt.empty();
+            $rowBezahlt.empty();
+            $rowOffen.empty();
+
+            var self = this;
+
+            (rows || []).forEach(function (r) {
+                var monthLabel = self.formatMonthLabel(r.month);
+
+                var umsatzNetto = r.umsatzNetto || 0;
+                var bezahltNetto = r.bezahltNetto || 0;
+                var offenNetto = r.offenNetto || 0;
+
+                var umsatzCount = r.umsatzCount || 0;
+                var bezahltCount = r.bezahltCount || 0;
+                var offenCount = r.offenCount || 0;
+
+                // Заголовок столбца: месяц (жирный сделаем через CSS)
+                $('<th>')
+                    .text(monthLabel)
+                    .appendTo($headerRow);
+
+                // Строка Gestellt – текст: «123,45 € (7)»
+                $('<td>')
+                    .text(self.formatCurrency(umsatzNetto) + ' (' + umsatzCount + ')')
+                    .appendTo($rowGestellt);
+
+                // Строка Bezahlt
+                $('<td>')
+                    .text(self.formatCurrency(bezahltNetto) + ' (' + bezahltCount + ')')
+                    .appendTo($rowBezahlt);
+
+                // Строка Offen
+                $('<td>')
+                    .text(self.formatCurrency(offenNetto) + ' (' + offenCount + ')')
+                    .appendTo($rowOffen);
+            });
+        },
+
 
         // ---------- Форматирование ----------
 
