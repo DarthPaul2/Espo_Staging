@@ -80,7 +80,6 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
                 { year: year }
             );
 
-            // ВАЖНО: передаём year во второй запрос
             var pSummary = Espo.Ajax.getRequest(
                 'CRechnung/action/rechnungStatusSummary',
                 { year: year }
@@ -90,16 +89,19 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
                 var monatRows = result[0] || [];
                 var summary = result[1] || {};
 
+                console.log('Monatliche Statistik rows (table):', monatRows);
+
                 self.renderKpi(summary);
                 self.renderMonthChart(monatRows);
                 self.renderYearChart(self.jahresData || []);
-                self.renderMonthTable(monatRows);    // ← ДОБАВЛЕНО
+
+                // ВАЖНО: строим таблицу
+                self.renderMonthTable(monatRows);
+
             }).catch(function (err) {
                 console.error('Umsatz-Dashlet loadAll error', err);
             });
-
         },
-
 
         // ---------- Переключатель года ----------
 
@@ -383,66 +385,66 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
 
         },
 
-        // ---------- Таблица по месяцам: сверху месяцы, 3 цветные строки ----------
+        // ---------- Таблица по месяцам ----------
 
         renderMonthTable: function (rows) {
+            var self = this;
             var $root = this.$el || $(this.el);
 
-            var $headerRow = $root.find('tr[data-name="monthTableHeader"]');
+            var $headRow = $root.find('[data-name="monthTableHeader"]');
             var $rowGestellt = $root.find('tr[data-row-type="gestellt"]');
             var $rowBezahlt = $root.find('tr[data-row-type="bezahlt"]');
             var $rowOffen = $root.find('tr[data-row-type="offen"]');
 
+            console.log('renderMonthTable called', {
+                rows: rows,
+                headRow: $headRow.length,
+                gestellt: $rowGestellt.length,
+                bezahlt: $rowBezahlt.length,
+                offen: $rowOffen.length
+            });
+
             if (
-                !$headerRow.length ||
+                !$headRow.length ||
                 !$rowGestellt.length ||
                 !$rowBezahlt.length ||
                 !$rowOffen.length
             ) {
+                console.warn('renderMonthTable: DOM-Elemente nicht gefunden');
                 return;
             }
 
-            // Полностью очищаем строки перед перерисовкой
-            $headerRow.empty();
+            // очищаем
+            $headRow.empty();
             $rowGestellt.empty();
             $rowBezahlt.empty();
             $rowOffen.empty();
 
-            var self = this;
-
-            (rows || []).forEach(function (r) {
-                var monthLabel = self.formatMonthLabel(r.month);
-
-                var umsatzNetto = r.umsatzNetto || 0;
-                var bezahltNetto = r.bezahltNetto || 0;
-                var offenNetto = r.offenNetto || 0;
-
-                var umsatzCount = r.umsatzCount || 0;
-                var bezahltCount = r.bezahltCount || 0;
-                var offenCount = r.offenCount || 0;
-
-                // Заголовок столбца: месяц (жирный сделаем через CSS)
-                $('<th>')
-                    .text(monthLabel)
-                    .appendTo($headerRow);
-
-                // Строка Gestellt – текст: «123,45 € (7)»
-                $('<td>')
-                    .text(self.formatCurrency(umsatzNetto) + ' (' + umsatzCount + ')')
-                    .appendTo($rowGestellt);
-
-                // Строка Bezahlt
-                $('<td>')
-                    .text(self.formatCurrency(bezahltNetto) + ' (' + bezahltCount + ')')
-                    .appendTo($rowBezahlt);
-
-                // Строка Offen
-                $('<td>')
-                    .text(self.formatCurrency(offenNetto) + ' (' + offenCount + ')')
-                    .appendTo($rowOffen);
+            // Шапка: ТОЛЬКО месяцы (без первой колонки "Gestellt/Bezahlt/Offen")
+            rows.forEach(function (r) {
+                var label = self.formatMonthLabel(r.month);
+                $headRow.append($('<th>').text(label));
             });
-        },
 
+            function addRow($tr, keyPrefix) {
+                rows.forEach(function (r) {
+                    var netto = r[keyPrefix + 'Netto'] || 0;
+                    var count = r[keyPrefix + 'Count'] || 0;
+
+                    var text = self.formatCurrency(netto) + ' (' + (count || 0) + ')';
+                    $tr.append($('<td>').text(text));
+                });
+            }
+
+            // Ряд "Gestellt" (сумма выставленных, тот же синий что и на графике)
+            addRow($rowGestellt, 'umsatz');
+
+            // Ряд "Bezahlt" (зелёный)
+            addRow($rowBezahlt, 'bezahlt');
+
+            // Ряд "Offen" (оранжевый)
+            addRow($rowOffen, 'offen');
+        },
 
         // ---------- Форматирование ----------
 

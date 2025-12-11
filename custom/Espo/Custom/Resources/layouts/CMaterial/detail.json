@@ -5,25 +5,20 @@
                 {
                     "name": "name"
                 },
-                false,
                 {
                     "name": "einheit"
-                }
-            ],
-            [
-                {
-                    "name": "kategorie"
                 },
-                false,
                 {
                     "name": "preis"
                 }
             ],
             [
                 {
+                    "name": "kategorie"
+                },
+                {
                     "name": "barcode"
                 },
-                false,
                 {
                     "name": "verwendet"
                 }

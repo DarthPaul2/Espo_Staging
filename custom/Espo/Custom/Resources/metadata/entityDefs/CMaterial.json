@@ -50,12 +50,6 @@
             "options": [],
             "isCustom": true
         },
-        "barcode": {
-            "type": "varchar",
-            "maxLength": 100,
-            "options": [],
-            "isCustom": true
-        },
         "kategorie": {
             "type": "enum",
             "required": true,
@@ -226,6 +220,12 @@
         "barcodeId": {
             "type": "int",
             "readOnly": true,
+            "isCustom": true
+        },
+        "barcode": {
+            "type": "barcode",
+            "len": 255,
+            "codeType": "CODE128",
             "isCustom": true
         }
     },

@@ -5,7 +5,6 @@
     "fields": {
         "appklesecId": "AppklesecId",
         "code": "Code",
-        "barcode": "Barcode",
         "kategorie": "Kategorie",
         "einheit": "Einheit",
         "preis": "Preis",
@@ -25,7 +24,8 @@
         "waehrungConverted": "Währung (Konvertiert)",
         "mwstSatz": "MwSt.-Satz",
         "herstellerKatalogCode": "Hersteller Katalogcode",
-        "barcodeId": "Barcode_id"
+        "barcodeId": "Barcode_id",
+        "barcode": "Barcode"
     },
     "links": {
         "positionen": "Positionen",

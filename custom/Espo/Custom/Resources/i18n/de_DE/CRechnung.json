@@ -30,7 +30,8 @@
         "letzteMahnungAm": "Letzte Mahnung",
         "mahnungs": "Mahnungen",
         "rechnungstyp": "Rechnungstyp",
-        "bezahltAm": "Bezahlt am"
+        "bezahltAm": "Bezahlt am",
+        "description": "Beschreibung (Nur für interne Hinweise – für Kunden nicht sichtbar.)"
     },
     "links": {
         "account": "Account",
