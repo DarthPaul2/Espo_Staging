@@ -1,0 +1,51 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "formType"
+                },
+                {
+                    "name": "datum"
+                }
+            ],
+            [
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "user"
+                }
+            ],
+            [
+                {
+                    "name": "pdfUrl"
+                },
+                {
+                    "name": "appAufgabeId"
+                },
+                {
+                    "name": "appFormularId"
+                }
+            ],
+            [
+                {
+                    "name": "formKey"
+                },
+                {
+                    "name": "parentFormKey"
+                }
+            ],
+            [
+                {
+                    "name": "description"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

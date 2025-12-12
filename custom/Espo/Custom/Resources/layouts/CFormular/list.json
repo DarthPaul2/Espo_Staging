@@ -1,0 +1,26 @@
+[
+    {
+        "name": "datum",
+        "width": 16
+    },
+    {
+        "name": "name",
+        "link": true
+    },
+    {
+        "name": "account",
+        "width": 16
+    },
+    {
+        "name": "formType",
+        "width": 16
+    },
+    {
+        "name": "user",
+        "width": 16
+    },
+    {
+        "name": "pdfUrl",
+        "width": 16
+    }
+]

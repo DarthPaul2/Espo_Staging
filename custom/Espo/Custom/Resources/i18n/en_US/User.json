@@ -4,13 +4,15 @@
         "cAuftrags": "Auftrags",
         "cWartungs": "Wartungs",
         "cArbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
-        "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
+        "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts",
+        "cFormulars": "Formulars"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
         "cAuftrags": "Auftrags",
         "cWartungs": "Wartungs",
         "cArbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
-        "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts"
+        "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts",
+        "cFormulars": "Formulars"
     }
 }

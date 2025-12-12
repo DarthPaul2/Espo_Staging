@@ -34,6 +34,13 @@
             "entity": "CArbeitszeitJahresuebersicht",
             "audited": false,
             "isCustom": true
+        },
+        "cFormulars": {
+            "type": "hasMany",
+            "foreign": "user",
+            "entity": "CFormular",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

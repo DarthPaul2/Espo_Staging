@@ -1,0 +1,29 @@
+{
+    "fields": {
+        "formKey": "FormKey",
+        "appFormularId": "AppFormularId",
+        "appAufgabeId": "AppAufgabeId",
+        "formType": "FormType",
+        "datum": "Datum",
+        "pdfUrl": "Pdf Url",
+        "parentFormKey": "ParentFormKey",
+        "account": "Account",
+        "user": "User"
+    },
+    "links": {
+        "account": "Account",
+        "user": "User"
+    },
+    "labels": {
+        "Create CFormular": "Create Formular"
+    },
+    "options": {
+        "formType": {
+            "1": "Stunden- und Materialverbrauchsnachweis",
+            "2": "Instandhaltungsprotokoll BMA",
+            "3": "Instandhaltungsprotokoll EMA",
+            "4": "Dienstleistungsnachweis",
+            "5": "Melderprüfliste"
+        }
+    }
+}

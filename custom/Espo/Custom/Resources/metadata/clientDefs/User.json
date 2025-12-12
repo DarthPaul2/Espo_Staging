@@ -43,6 +43,10 @@
         "arbeitszeitJahresuebersichts": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "formulars": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

@@ -17,7 +17,8 @@
         "CWartung": "Wartung",
         "CArbeitszeitMonatsuebersicht": "Arbeitszeit Monatsuebersicht",
         "CArbeitszeitJahresuebersicht": "Arbeitszeit Jahresuebersicht",
-        "CWerkzeugausgabe": "Werkzeugausgabe"
+        "CWerkzeugausgabe": "Werkzeugausgabe",
+        "CFormular": "Formular"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -37,7 +38,8 @@
         "CWartung": "Wartungen",
         "CArbeitszeitMonatsuebersicht": "Arbeitszeiten Monatsübersichten",
         "CArbeitszeitJahresuebersicht": "Arbeitszeiten Jahresübersichten",
-        "CWerkzeugausgabe": "Werkzeugausgaben"
+        "CWerkzeugausgabe": "Werkzeugausgaben",
+        "CFormular": "Formulare"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

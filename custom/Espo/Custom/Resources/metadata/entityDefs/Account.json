@@ -98,6 +98,13 @@
             "entity": "CWartung",
             "audited": false,
             "isCustom": true
+        },
+        "cFormulars": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CFormular",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {
