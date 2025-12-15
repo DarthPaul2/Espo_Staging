@@ -2,27 +2,18 @@
     {
         "name": "datum",
         "width": 12,
-        "align": "left"
-    },
-    {
-        "name": "name",
-        "width": 36,
         "link": true,
         "align": "left"
     },
     {
         "name": "account",
-        "width": 16,
+        "width": 36,
         "align": "left"
     },
     {
         "name": "formType",
-        "width": 20,
-        "align": "left"
-    },
-    {
-        "name": "user",
-        "width": 13,
+        "width": 28,
+        "link": true,
         "align": "left"
     },
     {

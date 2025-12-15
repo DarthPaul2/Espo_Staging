@@ -146,10 +146,12 @@ define('custom:views/c-rechnung/record/detail', [
 
         buildPositionsForPdf(rows) {
             return (rows || []).map(p => {
-                const namePart = p.materialName || p.name || '';
-                const descPart = p.materialDescription || p.beschreibung || '';
+                const namePart = p.name || p.materialName || '';
+                const descPart = p.beschreibung || p.materialDescription || '';
+
                 let beschreibung = namePart || '';
                 if (descPart) beschreibung += '\n\n' + descPart;
+
                 return {
                     id: p.id,
                     menge: p.menge,

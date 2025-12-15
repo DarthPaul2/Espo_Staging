@@ -166,8 +166,8 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                     const raw = (p.beschreibung || '').trim();
                     beschreibung = (raw.toLowerCase() === 'position') ? '' : raw;
                 } else {
-                    const namePart = p.materialName || p.name || '';
-                    const descPart = p.materialDescription || p.beschreibung || '';
+                    const namePart = p.name || p.materialName || '';
+                    const descPart = (p.beschreibung || p.materialDescription || '');
 
                     beschreibung = namePart;
                     if (descPart) beschreibung += '\n\n' + descPart;

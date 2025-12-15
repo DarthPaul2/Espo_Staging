@@ -22,25 +22,6 @@
             ],
             [
                 {
-                    "name": "pdfUrl"
-                },
-                {
-                    "name": "appAufgabeId"
-                },
-                {
-                    "name": "appFormularId"
-                }
-            ],
-            [
-                {
-                    "name": "formKey"
-                },
-                {
-                    "name": "parentFormKey"
-                }
-            ],
-            [
-                {
                     "name": "description"
                 }
             ]
