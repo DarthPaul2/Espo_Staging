@@ -7,34 +7,31 @@ class NameFiller
 {
     public function beforeSave(Entity $entity, array $options = []): void
     {
-        // 1) Берём текущее name (может уже быть заполнено где-то ещё)
-        $name = (string) $entity->get('name');
+        $maxLen = 100;
 
-        // 2) Если name пустой – формируем его из полей
-        if ($name === '') {
-            $material = $entity->get('material');
-            $menge    = $entity->get('menge') ? $entity->get('menge') . ' ' : '';
-            $einheit  = $entity->get('einheit') ? $entity->get('einheit') . ' ' : '';
+        $name = trim((string) $entity->get('name'));
 
-            // приоритетно берем наше beschreibung, иначе имя материала
-            $beschreibung = $entity->get('beschreibung') ?: ($material ? $material->get('name') : '');
-
-            // только первая строка beschreibung (до первого переноса)
-            if ($beschreibung) {
-                $teile = preg_split("/\r\n|\n|\r/", $beschreibung);
-                $beschreibung = trim($teile[0] ?? '');
+        // Если name уже задан пользователем/импортом — НЕ трогаем (только режем по длине).
+        if ($name !== '') {
+            if (mb_strlen($name) > $maxLen) {
+                $name = mb_substr($name, 0, $maxLen);
+                $entity->set('name', $name);
             }
-
-            $label = trim($menge . $einheit . $beschreibung);
-            $name = $label !== '' ? $label : 'Position';
+            return;
         }
 
-        // 3) Жёсткий лимит длины name (под размер колонки в БД)
-        $maxLen = 100; // если у тебя name VARCHAR(100); при VARCHAR(255) можно увеличить
-        if (mb_strlen($name) > $maxLen) {
-            $name = mb_substr($name, 0, $maxLen);
+        // name пустой -> берём ТОЛЬКО material.name (без menge/einheit/beschreibung)
+        $material = $entity->get('material');
+        $label = $material ? trim((string) $material->get('name')) : '';
+
+        if ($label === '') {
+            $label = 'Position';
         }
 
-        $entity->set('name', $name);
+        if (mb_strlen($label) > $maxLen) {
+            $label = mb_substr($label, 0, $maxLen);
+        }
+
+        $entity->set('name', $label);
     }
 }

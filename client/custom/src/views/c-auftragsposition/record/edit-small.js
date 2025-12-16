@@ -25,7 +25,7 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
                     const netto = Math.round(nettoBase * 100) / 100;
                     const gesamt = Math.round(netto * 1.19 * 100) / 100; // 19 % USt
 
-                    this.model.set({ netto, gesamt }, { silent: true });
+                    this.model.set({ netto, gesamt, steuer: vatRate }, { silent: true });
                     L('recalc', { menge, preis, rabatt, netto, gesamt });
                 } catch (e) {
                     L('recalc:ERROR', e);

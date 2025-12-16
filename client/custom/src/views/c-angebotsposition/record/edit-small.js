@@ -24,7 +24,10 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                     const netto = Math.round(nettoBase * 100) / 100;
                     const gesamt = Math.round(netto * (1 + vatRate / 100) * 100) / 100;
 
-                    this.model.set({ netto, gesamt }, { silent: true });
+                    this.model.set(
+                        { netto, gesamt, steuer: vatRate },
+                        { silent: true }
+                    );
                     L('recalcPosition', { menge, preis, rabatt, vatRate, netto, gesamt });
                 } catch (err) {
                     L('recalcPosition:ERROR', err);
@@ -199,7 +202,8 @@ define('custom:views/c-angebotsposition/record/edit-small', ['views/record/edit-
                     gesamt: this.model.get('gesamt') || 0,
                     einheit: this.model.get('einheit') || null,
                     name: this.model.get('name') || null,
-                    description: this.model.get('description') || null   // оставляю как было
+                    description: this.model.get('description') || null,   // оставляю как было
+                    steuer: this.model.get('steuer') || 0
                 };
                 L('sync -> dispatch saved', { angebotId, payload });
 
