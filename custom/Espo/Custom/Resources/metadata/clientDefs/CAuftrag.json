@@ -11,7 +11,9 @@
             "rowActionsView": "custom:views/c-auftrag/record/relationship-row-actions-no-delete",
             "create": false,
             "delete": false,
-            "select": true
+            "select": true,
+            "layout": null,
+            "selectPrimaryFilterName": null
         },
         "rechnungs": {
             "view": "views/record/panels/relationship",
@@ -25,7 +27,9 @@
             "rowActionsView": "custom:views/c-auftrag/record/relationship-row-actions-no-delete",
             "create": false,
             "delete": false,
-            "select": true
+            "select": true,
+            "layout": null,
+            "selectPrimaryFilterName": null
         },
         "account": {
             "view": "views/record/panels/relationship"
@@ -45,6 +49,10 @@
             "selectPrimaryFilterName": null,
             "create": false,
             "select": true
+        },
+        "briefs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

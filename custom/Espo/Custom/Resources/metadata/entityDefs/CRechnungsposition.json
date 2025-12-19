@@ -157,6 +157,21 @@
             "default": "normal",
             "maxLength": 100,
             "isCustom": true
+        },
+        "titel": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "positionsNummerHinweis": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true,
+            "readOnly": true,
+            "tooltip": true,
+            "default": "Beispiel: 1Z, 2Z, 3Z, ..."
         }
     },
     "links": {

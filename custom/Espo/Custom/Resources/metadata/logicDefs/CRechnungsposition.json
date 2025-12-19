@@ -1,0 +1,128 @@
+{
+    "fields": {
+        "einkaufspreis": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "beschreibung": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "einheit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "gesamt": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "material": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "titel": {
+            "visible": null
+        },
+        "positionsNummerHinweis": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "summary"
+                    }
+                ]
+            }
+        },
+        "preis": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "rabatt": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "steuer": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        },
+        "netto": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "normal"
+                    }
+                ]
+            }
+        }
+    }
+}

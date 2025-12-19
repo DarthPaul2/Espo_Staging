@@ -48,6 +48,37 @@ define('custom:views/c-rechnung/record/detail', [
             }
         },
 
+        _parsePosNum: function (str) {
+            const s = String(str || '').trim();
+            if (!s) return [];
+            return s.split('.').map(part => {
+                const n = parseInt(part, 10);
+                return Number.isFinite(n) ? n : part;
+            });
+        },
+
+        _comparePosNum: function (a, b) {
+            const aa = this._parsePosNum(a);
+            const bb = this._parsePosNum(b);
+            const len = Math.max(aa.length, bb.length);
+
+            for (let i = 0; i < len; i++) {
+                const va = aa[i];
+                const vb = bb[i];
+
+                if (va === undefined) return -1;
+                if (vb === undefined) return 1;
+
+                if (va === vb) continue;
+
+                if (typeof va === 'number' && typeof vb === 'number') {
+                    return va - vb;
+                }
+                return String(va).localeCompare(String(vb), 'de-DE', { numeric: true });
+            }
+            return 0;
+        },
+
 
         // --- тип счета ---
         getRechnungstyp() {
@@ -145,15 +176,44 @@ define('custom:views/c-rechnung/record/detail', [
 
 
         buildPositionsForPdf(rows) {
-            return (rows || []).map(p => {
-                const namePart = p.name || p.materialName || '';
-                const descPart = p.beschreibung || p.materialDescription || '';
+            const getSortKey = (p) => {
+                let key = p.positionsNummer || p.name || '';
+                const t = (p.positionType || 'normal').toLowerCase();
 
-                let beschreibung = namePart || '';
-                if (descPart) beschreibung += '\n\n' + descPart;
+                if (key) {
+                    if (t === 'header') {
+                        key = key + '.0';
+                    } else if (t === 'summary') {
+                        key = key + '.999';
+                    }
+                }
+                return key;
+            };
+
+            const sorted = (rows || []).slice().sort((a, b) => {
+                const aKey = getSortKey(a);
+                const bKey = getSortKey(b);
+                return this._comparePosNum(aKey, bKey);
+            });
+
+            return sorted.map(p => {
+                const type = (p.positionType || 'normal').toLowerCase();
+                let beschreibung = '';
+
+                if (type === 'header' || type === 'summary') {
+                    const raw = (p.beschreibung || '').trim();
+                    beschreibung = (raw.toLowerCase() === 'position') ? '' : raw;
+                } else {
+                    const namePart = p.name || p.materialName || '';
+                    const descPart = (p.beschreibung || p.materialDescription || '');
+
+                    beschreibung = namePart;
+                    if (descPart) beschreibung += '\n\n' + descPart;
+                }
 
                 return {
                     id: p.id,
+
                     menge: p.menge,
                     einheit: p.einheit,
                     preis: p.preis,
@@ -161,10 +221,15 @@ define('custom:views/c-rechnung/record/detail', [
                     steuer: p.steuer,
                     rabatt: p.rabatt,
                     gesamt: p.gesamt,
-                    beschreibung
+                    beschreibung,
+
+                    positionType: p.positionType || 'normal',
+                    titel: p.titel || '',
+                    positionsNummer: p.positionsNummer || ''
                 };
             });
         },
+
 
         loadPositionsFromPanel() {
             const col = this.getPositionsCollection();
@@ -184,7 +249,8 @@ define('custom:views/c-rechnung/record/detail', [
                 offset: 0,
                 select: [
                     'id', 'name', 'beschreibung', 'menge', 'einheit', 'preis', 'einkaufspreis', 'steuer',
-                    'rabatt', 'gesamt', 'materialName', 'materialDescription', 'rechnungId'
+                    'rabatt', 'gesamt', 'materialName', 'materialDescription', 'rechnungId',
+                    'positionType', 'titel', 'positionsNummer'
                 ],
                 where: [{ type: 'equals', attribute: 'rechnungId', value: rechnungId }],
                 orderBy: 'sortierung',
@@ -260,14 +326,20 @@ define('custom:views/c-rechnung/record/detail', [
 
                 let totalNetto = 0, totalBrutto = 0;
                 col.forEach(m => {
+                    const t = String(m.get('positionType') || 'normal').toLowerCase();
+                    if (t === 'header' || t === 'summary') return;
+
                     const menge = parseFloat(m.get('menge') || 0);
                     const preis = parseFloat(m.get('preis') || 0);
                     const rabatt = parseFloat(m.get('rabatt') || 0);
+
                     const netto = Math.round((menge * preis * (1 - rabatt / 100)) * 100) / 100;
                     const brutto = Math.round(netto * (1 + vatRate / 100) * 100) / 100;
+
                     totalNetto += netto;
                     totalBrutto += brutto;
                 });
+
 
                 bumpTotalsFields(totalNetto, totalBrutto, 'local:' + reason);
             };
@@ -428,58 +500,69 @@ define('custom:views/c-rechnung/record/detail', [
 
             // ===== 1) SCHLUSSRECHNUNG =====
             if (this.isSchluss()) {
+                const rechnungId = this.model.id;
                 const auftragId = this.model.get('auftragId');
+
+                if (!rechnungId) {
+                    this.hideLoader(notifyId);
+                    return this.notify('Rechnung-ID fehlt.', 'error');
+                }
                 if (!auftragId) {
                     this.hideLoader(notifyId);
                     return this.notify('Auftrag-ID fehlt für Schlussrechnung.', 'error');
                 }
 
-                const payload = {
-                    auftrag_id: this.model.get('auftragId'),
+                // 1️⃣ ГРУЗИМ ПОЗИЦИИ ТАК ЖЕ, КАК В ПРОСТОМ СЧЁТЕ
+                const afterRows = (rows) => {
+                    // 2️⃣ ПРОГОНЯЕМ ЧЕРЕЗ buildPositionsForPdf
+                    const pos = this.buildPositionsForPdf(rows);
 
-                    // «шапка»
-                    kunde: this.model.get('accountName'),
-                    strasse: this.model.get('strasse'),
-                    hausnummer: this.model.get('hausnummer'),
-                    plz: this.model.get('plz'),
-                    ort: this.model.get('ort'),
+                    if (!pos.length) {
+                        this.notify('Keine Positionen gefunden.', 'error');
+                        this.hideLoader(notifyId);
+                        return;
+                    }
 
-                    rechnungsnummer: this.model.get('rechnungsnummer'),
-                    kundennummer: this.model.get('accountKundenNr'),
+                    // 3️⃣ СОБИРАЕМ PAYLOAD КАК У ОБЫЧНОЙ RECHNUNG
+                    const payload = this.buildPayload(pos);
 
-                    faellig_am: this.model.get('faelligAm'),
-                    datum: this.model.get('createdAt'),
-                    leistungsdatum_von: this.model.get('leistungsdatumVon'),
-                    leistungsdatum_bis: this.model.get('leistungsdatumBis'),
+                    payload.rechnungstyp = 'schlussrechnung';
+                    payload.auftrag_id = auftragId;
 
-                    sachbearbeiter: this.model.get('sachbearbeiter'),
-                    titel: this.model.get('titel') || 'SCHLUSSRECHNUNG',
-                    einleitung: this.model.get('einleitung') || '',
-                    bemerkung: this.model.get('bemerkung') || '',
-                    assigned_user_name: this.model.get('assignedUserName') || ''
+                    const url = this.FLASK_BASE + '/schlussrechnungen/preview_pdf';
+
+                    $.ajax({
+                        url,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        xhrFields: { responseType: 'blob' },
+                        headers: { 'Authorization': this.BASIC_AUTH },
+                        data: JSON.stringify(payload),
+                        success: (blob) => {
+                            const blobUrl = URL.createObjectURL(blob);
+                            window.open(blobUrl, '_blank');
+                            setTimeout(() => this.hideLoader(notifyId), 500);
+                        },
+                        error: (xhr) => {
+                            const msg = xhr?.responseJSON?.error || 'Fehler bei Schlussrechnung-PDF.';
+                            this.notify(msg, 'error');
+                            this.hideLoader(notifyId);
+                        }
+                    });
                 };
 
-                const url = this.FLASK_BASE + '/schlussrechnungen/preview_pdf';
-                $.ajax({
-                    url,
-                    method: 'POST',
-                    contentType: 'application/json',
-                    xhrFields: { responseType: 'blob' },
-                    headers: { 'Authorization': this.BASIC_AUTH },
-                    data: JSON.stringify(payload),
-                    success: (blob) => {
-                        const blobUrl = URL.createObjectURL(blob);
-                        window.open(blobUrl, '_blank');
-                        setTimeout(() => this.hideLoader(notifyId), 500);
-                    },
-                    error: (xhr) => {
-                        const msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
-                        this.notify(msg, 'error');
+                // 🔁 ТА ЖЕ ЛОГИКА ЗАГРУЗКИ ПОЗИЦИЙ
+                this.loadPositionsFromPanel()
+                    .catch(() => this.loadPositionsViaRest(rechnungId))
+                    .then(afterRows)
+                    .catch(() => {
+                        this.notify('Keine Positionen gefunden.', 'error');
                         this.hideLoader(notifyId);
-                    }
-                });
+                    });
+
                 return;
             }
+
 
             // ===== 2) TEILRECHNUNG =====
             if (this.isTeil()) {

@@ -5,36 +5,106 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
         setup: function () {
             Dep.prototype.setup.call(this);
 
-            // один и тот же флаг для отладки, чтобы не путаться
             const DBG = (typeof window !== 'undefined' && (window.__DBG_CAUF_POS === true || window.__DBG_CREC_POS === true));
             const L = (tag, data) => { if (DBG) try { console.log('[CAuftragsposition/edit-small]', tag, data || ''); } catch (e) { } };
 
-            // --- helper: есть ли уже замечание (любое из двух полей) ---
-            const hasRemark = () => {
-                return !!(this.model.get('beschreibung') || this.model.get('description'));
+            let _recalcLock = false;
+
+            // --- helpers ---
+            const toNum = (v) => {
+                if (v === null || v === undefined) return 0;
+                if (typeof v === 'number') return isFinite(v) ? v : 0;
+                const s = String(v).replace(',', '.').trim();
+                const n = parseFloat(s);
+                return isFinite(n) ? n : 0;
             };
 
-            // === Пересчёт позиции ===
-            const recalc = () => {
+            const round2 = (n) => Math.round((toNum(n) + Number.EPSILON) * 100) / 100;
+
+            // Bemerkung: только это поле учитываем. description НЕ трогаем и не используем.
+            const hasBemerkung = () => {
+                return !!(this.model.get('beschreibung') && String(this.model.get('beschreibung')).trim() !== '');
+            };
+
+            const readFieldValue = (field) => {
                 try {
-                    const menge = parseFloat(this.model.get('menge') || 0);
-                    const preis = parseFloat(this.model.get('preis') || 0);
-                    const rabatt = parseFloat(this.model.get('rabatt') || 0);
+                    const $wrap = this.$el.find('[data-name="' + field + '"]');
+                    const $inp = $wrap.find('input, textarea, select').first();
+                    if ($inp.length) {
+                        const v = $inp.val();
+                        if (v !== null && v !== undefined && String(v).trim() !== '') return v;
+                        // 👇 если UI ещё пустой — берём то, что уже в модели
+                        return this.model.get(field);
+                    }
+                } catch (e) { }
+                return this.model.get(field);
+            };
+
+
+            const getVatRate = () => {
+                // По умолчанию 19, пользователь может поменять вручную
+                const steuerRaw = readFieldValue('steuer');
+                if (steuerRaw === null || steuerRaw === undefined || String(steuerRaw).trim() === '') return 19;
+
+                const v = toNum(steuerRaw);
+                // если ввели 0 -> 0, иначе что ввели (19 / 7 / ...), но не NaN
+                return isFinite(v) ? v : 19;
+            };
+
+            const recalc = () => {
+                if (_recalcLock) return;
+                _recalcLock = true;
+                try {
+                    const menge = toNum(readFieldValue('menge'));
+                    const preis = toNum(readFieldValue('preis'));
+                    const rabatt = toNum(readFieldValue('rabatt'));
+                    const vatRate = getVatRate();
 
                     const nettoBase = menge * preis * (1 - (rabatt || 0) / 100);
-                    const netto = Math.round(nettoBase * 100) / 100;
-                    const gesamt = Math.round(netto * 1.19 * 100) / 100; // 19 % USt
+                    const netto = round2(nettoBase);
+                    const gesamt = round2(netto * (1 + (vatRate || 0) / 100));
 
-                    this.model.set({ netto, gesamt, steuer: vatRate }, { silent: true });
-                    L('recalc', { menge, preis, rabatt, netto, gesamt });
+                    // НЕ silent — чтобы UI обновлялся
+                    this.model.set({ netto, gesamt, steuer: vatRate });
+
+                    L('recalc', { menge, preis, rabatt, vatRate, netto, gesamt });
                 } catch (e) {
                     L('recalc:ERROR', e);
+                } finally {
+                    _recalcLock = false;
                 }
             };
 
-            this.listenTo(this.model, 'change:menge change:preis change:rabatt', recalc);
+            const ensureDefaultTax = () => {
+                const cur = this.model.get('steuer');
+                if (cur === null || cur === undefined || String(cur).trim() === '') {
+                    this.model.set({ steuer: 19 }); // НЕ silent
+                    L('ensureDefaultTax -> 19');
+                }
+            };
 
-            // === fallback к API, как в Rechnung/Angebot ===
+            const bindLiveInputListeners = () => {
+                this.$el.off('.klesecCalc');
+
+                const selector = [
+                    '[data-name="menge"] input',
+                    '[data-name="preis"] input',
+                    '[data-name="rabatt"] input',
+                    '[data-name="steuer"] input',
+                    '[data-name="menge"] select',
+                    '[data-name="preis"] select',
+                    '[data-name="rabatt"] select',
+                    '[data-name="steuer"] select'
+                ].join(',');
+
+                this.$el.on('input.klesecCalc change.klesecCalc blur.klesecCalc', selector, () => recalc());
+                L('bindLiveInputListeners', { ok: true });
+            };
+
+            // model-change тоже оставляем
+            this.listenTo(this.model, 'change:menge change:preis change:rabatt change:steuer', recalc);
+
+            // ===== fallback к API =====
             const fetchMaterialFallback = (id) => {
                 if (!id || !Espo?.Ajax?.getRequest) {
                     L('fallback:SKIP', { id, hasEspoAjax: !!(Espo && Espo.Ajax) });
@@ -52,11 +122,11 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
                     });
             };
 
-            // === копирование из foreign (materialPreis/materialEinheit/materialDescription) ===
+            // ===== копирование из foreign + fallback =====
             const copyFromForeignOnce = () => {
                 const preisForeign = this.model.get('materialPreis');
                 const einheitForeign = this.model.get('materialEinheit');
-                const beschrForeign = this.model.get('materialDescription'); // Fremdbezug на CMaterial.description
+                const matDescForeign = this.model.get('materialDescription'); // CMaterial.description
 
                 const patch = {};
 
@@ -67,24 +137,24 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
                     patch.preis = preisForeign;
                 }
 
-                // Bemerkung: только если ещё пусто в ОДНОМ из полей
-                if (!hasRemark() && beschrForeign) {
-                    patch.beschreibung = beschrForeign;
-                    patch.description = beschrForeign;
+                // Bemerkung: только если пусто, и только в beschreibung
+                if (!hasBemerkung() && matDescForeign) {
+                    patch.beschreibung = matDescForeign;
+                }
+
+                // name: только materialName (без описаний/menge/einheit)
+                const matName = (this.model.get('materialName') || '').trim();
+                if (!this.model.get('name') && matName) {
+                    patch.name = matName;
                 }
 
                 if (Object.keys(patch).length) {
-                    this.model.set(patch, { silent: true });
+                    this.model.set(patch); // НЕ silent
                     L('copyFromForeign:APPLIED', patch);
                     recalc();
                     return true;
                 }
 
-                L('copyFromForeign:NOT_READY', {
-                    materialPreis: preisForeign,
-                    materialEinheit: einheitForeign,
-                    materialDescription: beschrForeign
-                });
                 return false;
             };
 
@@ -93,8 +163,7 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
                 L('materialId changed', { materialId: matId });
 
                 if (!matId) {
-                    this.model.set({ einheit: null }, { silent: true });
-                    L('material cleared -> reset einheit');
+                    this.model.set({ einheit: null });
                     recalc();
                     return;
                 }
@@ -104,30 +173,25 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
 
                 const tick = () => {
                     tries += 1;
-                    const ok = copyFromForeignOnce(); // тянем из foreign-полей
+                    const ok = copyFromForeignOnce();
 
                     if (!ok && tries < maxTries) {
-                        // ждём, пока Espo подцепит foreign-значения
                         setTimeout(tick, 100);
                         return;
                     }
 
-                    // Если какое-то замечание уже появилось — дальше ничего не делаем
-                    if (hasRemark()) {
-                        L('copyFromForeign:FINISH', { ok, tries, via: ok ? 'foreign' : 'timeout-no-besch' });
+                    // Если Bemerkung уже есть — всё, дальше не лезем
+                    if (hasBemerkung()) {
+                        L('copyFromForeign:FINISH', { ok, tries, via: ok ? 'foreign' : 'timeout' });
                         return;
                     }
 
-                    // Bemerkung всё ещё пуст — последний шанс через API
+                    // Bemerkung пустой → один раз тянем CMaterial/<id>
                     fetchMaterialFallback(matId).then(data => {
-                        if (!data) {
-                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-null' });
-                            return;
-                        }
+                        if (!data) return;
 
                         const patch = {};
 
-                        // Einheit / Preis (на всякий случай)
                         if (Object.prototype.hasOwnProperty.call(data, 'einheit') && data.einheit != null) {
                             patch.einheit = data.einheit;
                         }
@@ -135,23 +199,20 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
                             patch.preis = data.preis;
                         }
 
-                        // Описание из материала → в оба поля Bemerkung
-                        if (
-                            !hasRemark() &&
-                            Object.prototype.hasOwnProperty.call(data, 'description') &&
-                            data.description
-                        ) {
+                        // Bemerkung: только если пусто → берем data.description
+                        if (!hasBemerkung() && Object.prototype.hasOwnProperty.call(data, 'description') && data.description) {
                             patch.beschreibung = data.description;
-                            patch.description = data.description;
+                        }
+
+                        // name: только material.name
+                        if (!this.model.get('name') && Object.prototype.hasOwnProperty.call(data, 'name') && data.name) {
+                            patch.name = String(data.name).trim();
                         }
 
                         if (Object.keys(patch).length) {
-                            this.model.set(patch, { silent: true });
+                            this.model.set(patch);
                             L('fallback:APPLIED', patch);
                             recalc();
-                            L('copyFromForeign:FINISH', { ok: true, tries, via: 'fallback' });
-                        } else {
-                            L('copyFromForeign:FINISH', { ok: false, tries, via: 'fallback-empty' });
                         }
                     });
                 };
@@ -159,37 +220,42 @@ define('custom:views/c-auftragsposition/record/edit-small', ['views/record/edit-
                 tick();
             };
 
-            // слушаем изменение материала
             this.listenTo(this.model, 'change:material change:materialId', scheduleCopyFromForeign);
-            this.listenTo(this.model, 'change:materialPreis change:materialEinheit', () => {
-                L('foreign fields changed -> try copy');
+            this.listenTo(this.model, 'change:materialPreis change:materialEinheit change:materialName', () => {
                 copyFromForeignOnce();
             });
 
-            // первичная инициализация при открытии существующей позиции
+            // после рендера: ставим default tax, биндим input-события, считаем
+            this.listenTo(this, 'after:render', () => {
+                ensureDefaultTax();
+                bindLiveInputListeners();
+                recalc();
+            });
+
+            // init
             const initialMatId = this.model.get('materialId');
-            if (initialMatId && !hasRemark()) {
-                L('init -> remark empty, try fill from material', { materialId: initialMatId });
+            if (initialMatId && !hasBemerkung()) {
                 scheduleCopyFromForeign();
             }
 
-            // уведомление родителя (если нужно пересчитать Auftrag)
+            // notify parent
             this.listenTo(this.model, 'sync', () => {
                 const auftragId = this.model.get('auftragId');
                 if (!auftragId) return;
 
-                L('sync -> dispatch updated', { auftragId });
-
                 try {
-                    window.dispatchEvent(new CustomEvent('c-auftragsposition:updated', {
-                        detail: { auftragId }
-                    }));
+                    window.dispatchEvent(new CustomEvent('c-auftragsposition:updated', { detail: { auftragId } }));
                 } catch (e) {
                     const ev = document.createEvent('CustomEvent');
                     ev.initCustomEvent('c-auftragsposition:updated', true, true, { auftragId });
                     window.dispatchEvent(ev);
                 }
             });
+        },
+
+        onRemove: function () {
+            try { this.$el.off('.klesecCalc'); } catch (e) { }
+            Dep.prototype.onRemove.call(this);
         }
     });
 });

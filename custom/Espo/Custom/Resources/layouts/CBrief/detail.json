@@ -1,0 +1,40 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "contact"
+                },
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
+                    "name": "betreff"
+                },
+                {
+                    "name": "datum"
+                }
+            ],
+            [
+                {
+                    "name": "body"
+                }
+            ],
+            [
+                {
+                    "name": "description"
+                },
+                {
+                    "name": "pdfUrl"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

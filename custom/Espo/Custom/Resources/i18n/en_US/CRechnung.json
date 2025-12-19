@@ -27,7 +27,8 @@
         "letzteMahnungAm": "Letzte Mahnung",
         "mahnungs": "Mahnungen",
         "rechnungstyp": "Rechnungstyp",
-        "bezahltAm": "Bezahlt am"
+        "bezahltAm": "Bezahlt am",
+        "briefs": "Briefs"
     },
     "links": {
         "account": "Account",
@@ -36,7 +37,8 @@
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
         "mahnregel": "Mahnregel",
-        "mahnungs": "Mahnungen"
+        "mahnungs": "Mahnungen",
+        "briefs": "Briefs"
     },
     "labels": {
         "Create CRechnung": "Create Rechnung"

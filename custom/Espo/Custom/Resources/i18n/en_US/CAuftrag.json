@@ -4,12 +4,12 @@
         "status": "Status",
         "account": "Account",
         "rechnungs": "Rechnungs",
-        "lieferscheins": "Lieferscheins",
+        "lieferscheins": "Lieferscheine",
         "accountKundenNr": "Kunden-Nr.",
         "bemerkung": "Bemerkung",
         "leistungsdatumVon": "Leistungsdatum von",
         "leistungsdatumBis": "Leistungsdatum bis",
-        "angebots": "Angebots",
+        "angebots": "Angebote",
         "betragNetto": "Nettobetrag",
         "betragBrutto": "Bruttobetrag",
         "verrechnetNetto": "Verrechnet Netto",
@@ -25,16 +25,18 @@
         "bezahltBrutto": "Bezahlt Brutto",
         "labelRestbetrag": "RESTBETRAG:",
         "restbetragNetto": "Restbetrag Netto",
-        "restbetragBrutto": "Restbetrag Brutto"
+        "restbetragBrutto": "Restbetrag Brutto",
+        "briefs": "Briefs"
     },
     "links": {
         "account": "Account",
         "rechnungs": "Rechnungs",
-        "lieferscheins": "Lieferscheins",
-        "angebots": "Angebots",
+        "lieferscheins": "Lieferscheine",
+        "angebots": "Angebote",
         "auftragsbestaetigungGesendetVon": "Gesendet von",
         "auftragspositions": "Auftragspositions",
-        "werkzeugs": "Werkzeugs"
+        "werkzeugs": "Werkzeugs",
+        "briefs": "Briefs"
     },
     "labels": {
         "Create CAuftrag": "Create Auftrag"

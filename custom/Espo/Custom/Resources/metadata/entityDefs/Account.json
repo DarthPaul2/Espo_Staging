@@ -105,6 +105,13 @@
             "entity": "CFormular",
             "audited": false,
             "isCustom": true
+        },
+        "cBriefs": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CBrief",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

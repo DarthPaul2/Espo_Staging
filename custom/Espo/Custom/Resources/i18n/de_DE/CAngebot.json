@@ -23,7 +23,8 @@
         "rechnungs": "Rechnungs",
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "briefs": "Briefs"
     },
     "options": {
         "status": {
@@ -47,6 +48,7 @@
         "rechnungs": "Rechnungs",
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "briefs": "Briefs"
     }
 }

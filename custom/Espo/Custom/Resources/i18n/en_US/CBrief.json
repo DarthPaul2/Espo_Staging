@@ -1,0 +1,31 @@
+{
+    "fields": {
+        "betreff": "Betreff",
+        "body": "MainText",
+        "datum": "Datum",
+        "account": "Account",
+        "contact": "Contact",
+        "angebot": "Angebot",
+        "auftrag": "Auftrag",
+        "rechnung": "Rechnung",
+        "status": "Status",
+        "pdfUrl": "Pdf-Url"
+    },
+    "links": {
+        "account": "Account",
+        "contact": "Contact",
+        "angebot": "Angebot",
+        "auftrag": "Auftrag",
+        "rechnung": "Rechnung"
+    },
+    "labels": {
+        "Create CBrief": "Create Geschäftsbrief"
+    },
+    "options": {
+        "status": {
+            "Entwurf": "Offen",
+            "Final": "Versendet",
+            "Archiv": "Archiviert"
+        }
+    }
+}

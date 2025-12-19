@@ -1,0 +1,30 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#27b9a1",
+    "iconClass": "fas fa-envelope",
+    "relationshipPanels": {
+        "account": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "contact": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "angebot": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "auftrag": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "rechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

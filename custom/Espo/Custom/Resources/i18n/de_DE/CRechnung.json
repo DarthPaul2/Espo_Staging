@@ -31,7 +31,8 @@
         "mahnungs": "Mahnungen",
         "rechnungstyp": "Rechnungstyp",
         "bezahltAm": "Bezahlt am",
-        "description": "Beschreibung (Nur für interne Hinweise – für Kunden nicht sichtbar.)"
+        "description": "Beschreibung (Nur für interne Hinweise – für Kunden nicht sichtbar.)",
+        "briefs": "Briefs"
     },
     "links": {
         "account": "Account",
@@ -40,7 +41,8 @@
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
         "mahnregel": "Mahnregel",
-        "mahnungs": "Mahnungen"
+        "mahnungs": "Mahnungen",
+        "briefs": "Briefs"
     },
     "options": {
         "status": {

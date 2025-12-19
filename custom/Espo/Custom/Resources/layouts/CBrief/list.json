@@ -1,0 +1,29 @@
+[
+    {
+        "name": "datum",
+        "width": 9,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "account",
+        "width": 26,
+        "align": "left"
+    },
+    {
+        "name": "betreff",
+        "width": 26,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "assignedUser",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 7,
+        "align": "left"
+    }
+]

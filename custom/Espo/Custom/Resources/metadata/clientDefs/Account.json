@@ -39,6 +39,10 @@
         "formulars": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "briefs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

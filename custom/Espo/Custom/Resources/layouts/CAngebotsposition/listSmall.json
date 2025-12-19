@@ -30,8 +30,8 @@
         "align": "left"
     },
     {
-        "name": "rabatt",
-        "width": 8,
+        "name": "netto",
+        "width": 10,
         "align": "left"
     },
     {

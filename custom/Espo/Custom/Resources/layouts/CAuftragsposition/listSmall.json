@@ -1,7 +1,7 @@
 [
     {
         "name": "material",
-        "width": 34,
+        "width": 30,
         "align": "left"
     },
     {
@@ -20,6 +20,11 @@
         "align": "left"
     },
     {
+        "name": "netto",
+        "width": 10,
+        "align": "left"
+    },
+    {
         "name": "gesamt",
         "width": 12,
         "align": "left"
@@ -31,7 +36,7 @@
     },
     {
         "name": "bereitsabgerechnet",
-        "width": 18,
+        "width": 14,
         "align": "left"
     }
 ]

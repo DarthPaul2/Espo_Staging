@@ -9,7 +9,8 @@
         "cLieferscheins": "Lieferscheins",
         "cWerkzeug": "Werkzeug",
         "cWartungs": "Wartungs",
-        "cFormulars": "Formulars"
+        "cFormulars": "Formulars",
+        "cBriefs": "Briefs"
     },
     "links": {
         "cFirmenHauptkontakt": "Firmen Hauptkontakt",
@@ -19,6 +20,7 @@
         "cLieferscheins": "Lieferscheins",
         "cWerkzeug": "Werkzeug",
         "cWartungs": "Wartungs",
-        "cFormulars": "Formulars"
+        "cFormulars": "Formulars",
+        "cBriefs": "Briefs"
     }
 }

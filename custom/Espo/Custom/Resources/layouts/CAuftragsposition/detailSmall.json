@@ -27,17 +27,17 @@
                 {
                     "name": "steuer"
                 },
+                false,
                 {
                     "name": "gesamt"
-                }
+                },
+                false
             ],
             [
                 {
-                    "name": "description"
-                },
-                {
                     "name": "beschreibung"
-                }
+                },
+                false
             ],
             [
                 {

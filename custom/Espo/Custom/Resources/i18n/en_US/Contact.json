@@ -2,10 +2,12 @@
     "fields": {
         "cHauptkontakt": "Hauptkontakt",
         "cRecalcFlag": "Recalc-Trigger",
-        "cLieferscheins": "Lieferscheins"
+        "cLieferscheins": "Lieferscheins",
+        "cBriefs": "Briefs"
     },
     "links": {
         "cHauptkontakt": "Hauptkontakt",
-        "cLieferscheins": "Lieferscheins"
+        "cLieferscheins": "Lieferscheins",
+        "cBriefs": "Briefs"
     }
 }

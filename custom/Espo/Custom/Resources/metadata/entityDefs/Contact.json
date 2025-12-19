@@ -24,6 +24,13 @@
             "entity": "CLieferschein",
             "audited": false,
             "isCustom": true
+        },
+        "cBriefs": {
+            "type": "hasMany",
+            "foreign": "contact",
+            "entity": "CBrief",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

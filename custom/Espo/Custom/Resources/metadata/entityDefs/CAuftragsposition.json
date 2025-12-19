@@ -130,7 +130,8 @@
             "type": "varchar",
             "maxLength": 100,
             "options": [],
-            "isCustom": true
+            "isCustom": true,
+            "default": "19"
         },
         "einkaufspreis": {
             "notNull": false,
@@ -158,6 +159,7 @@
             "isCustom": true
         },
         "bereitsabgerechnet": {
+            "notNull": true,
             "type": "bool",
             "default": false,
             "isCustom": true

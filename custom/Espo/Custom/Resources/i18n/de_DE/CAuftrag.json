@@ -7,12 +7,12 @@
         "status": "Status",
         "account": "Account",
         "rechnungs": "Rechnungs",
-        "lieferscheins": "Lieferscheins",
+        "lieferscheins": "Lieferscheine",
         "accountKundenNr": "Kunden-Nr.",
         "bemerkung": "Bemerkung",
         "leistungsdatumVon": "Leistungsdatum von",
         "leistungsdatumBis": "Leistungsdatum bis",
-        "angebots": "Angebots",
+        "angebots": "Angebote",
         "betragNetto": "Nettobetrag",
         "betragBrutto": "Bruttobetrag",
         "verrechnetNetto": "Verrechnet Netto",
@@ -29,7 +29,8 @@
         "bezahltBrutto": "Bezahlt Brutto",
         "labelRestbetrag": "RESTBETRAG:",
         "restbetragNetto": "Restbetrag Netto",
-        "restbetragBrutto": "Restbetrag Brutto"
+        "restbetragBrutto": "Restbetrag Brutto",
+        "briefs": "Briefs"
     },
     "options": {
         "status": {
@@ -51,10 +52,11 @@
     "links": {
         "account": "Account",
         "rechnungs": "Rechnungen",
-        "lieferscheins": "Lieferscheinen",
-        "angebots": "Angeboten",
+        "lieferscheins": "Lieferscheine",
+        "angebots": "Angebote",
         "auftragsbestaetigungGesendetVon": "Gesendet von",
         "auftragspositions": "Auftragspositionen",
-        "werkzeugs": "Werkzeugs"
+        "werkzeugs": "Werkzeugs",
+        "briefs": "Briefs"
     }
 }

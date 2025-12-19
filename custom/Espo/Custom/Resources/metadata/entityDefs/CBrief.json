@@ -1,0 +1,178 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": false,
+            "pattern": "$noBadCharacters",
+            "options": []
+        },
+        "description": {
+            "type": "text"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        },
+        "betreff": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "body": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "datum": {
+            "notNull": false,
+            "type": "date",
+            "default": "javascript: return this.dateTime.getToday();",
+            "isCustom": true
+        },
+        "account": {
+            "type": "link"
+        },
+        "contact": {
+            "type": "link"
+        },
+        "angebot": {
+            "type": "link"
+        },
+        "auftrag": {
+            "type": "link"
+        },
+        "rechnung": {
+            "type": "link"
+        },
+        "status": {
+            "type": "enum",
+            "options": [
+                "Entwurf",
+                "Final",
+                "Archiv"
+            ],
+            "style": {
+                "Entwurf": null,
+                "Final": null,
+                "Archiv": null
+            },
+            "default": "Entwurf",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "pdfUrl": {
+            "type": "url",
+            "isCustom": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "account": {
+            "type": "belongsTo",
+            "foreign": "cBriefs",
+            "entity": "Account",
+            "audited": false,
+            "isCustom": true
+        },
+        "contact": {
+            "type": "belongsTo",
+            "foreign": "cBriefs",
+            "entity": "Contact",
+            "audited": false,
+            "isCustom": true
+        },
+        "angebot": {
+            "type": "belongsTo",
+            "foreign": "briefs",
+            "entity": "CAngebot",
+            "audited": false,
+            "isCustom": true
+        },
+        "auftrag": {
+            "type": "belongsTo",
+            "foreign": "briefs",
+            "entity": "CAuftrag",
+            "audited": false,
+            "isCustom": true
+        },
+        "rechnung": {
+            "type": "belongsTo",
+            "foreign": "briefs",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    }
+}

@@ -250,6 +250,13 @@
             "entity": "CAuftragsposition",
             "audited": false,
             "isCustom": true
+        },
+        "briefs": {
+            "type": "hasMany",
+            "foreign": "angebot",
+            "entity": "CBrief",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {
