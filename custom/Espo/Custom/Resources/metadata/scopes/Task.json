@@ -14,5 +14,6 @@
         "Canceled"
     ],
     "collaborators": true,
-    "assignedUsers": false
+    "assignedUsers": false,
+    "calendarOneDay": false
 }

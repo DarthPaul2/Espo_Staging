@@ -676,50 +676,57 @@ define('custom:views/c-rechnung/record/detail', [
                     return this.notify('Auftrag-ID fehlt für Schlussrechnung.', 'error');
                 }
 
-                const url = `${this.FLASK_BASE}/schlussrechnungen/${encodeURIComponent(nr)}/save_pdf`;
-                const payload = {
-                    rechnungsnummer: nr,
-                    auftrag_id: auftragId,
-                    bemerkung: this.model.get('bemerkung') || '',
-                    kunde: this.model.get('accountName'),
-                    strasse: this.model.get('strasse'),
-                    hausnummer: this.model.get('hausnummer'),
-                    plz: this.model.get('plz'),
-                    ort: this.model.get('ort'),
-                    kundennummer: this.model.get('accountKundenNr') || '',
-                    faellig_am: this.model.get('faelligAm') || '',
-                    datum: this.model.get('createdAt'),
-                    leistungsdatum_von: this.model.get('leistungsdatumVon'),
-                    leistungsdatum_bis: this.model.get('leistungsdatumBis'),
-                    einleitung: this.model.get('einleitung'),
-                    sachbearbeiter: this.model.get('sachbearbeiter'),
-                    assigned_user_name: this.model.get('assignedUserName') || ''
+                const afterRows = (rows) => {
+                    // ⬅️ ВАЖНО: те же позиции, что и в Preview
+                    const pos = this.buildPositionsForPdf(rows);
+                    if (!pos.length) {
+                        this.notify('Keine Positionen gefunden.', 'error');
+                        return this.hideLoader(notifyId);
+                    }
+
+                    // ⬅️ тот же payload, что и у обычной Rechnung
+                    const payload = this.buildPayload(pos);
+                    payload.rechnungstyp = 'schlussrechnung';
+                    payload.auftrag_id = auftragId;
+
+                    const url = `${this.FLASK_BASE}/schlussrechnungen/${encodeURIComponent(nr)}/save_pdf`;
+
+                    $.ajax({
+                        url,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: { 'Authorization': this.BASIC_AUTH },
+                        data: JSON.stringify(payload),
+                        success: (resp) => {
+                            if (resp?.pdfUrl) {
+                                this.model.save({ pdfUrl: resp.pdfUrl }, {
+                                    success: () => { this.reRender(); }
+                                });
+                                window.open(resp.pdfUrl, '_blank');
+                            }
+                            this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                            this.hideLoader(notifyId);
+                        },
+                        error: (xhr) => {
+                            const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
+                            this.notify(msg, 'error');
+                            this.hideLoader(notifyId);
+                        }
+                    });
                 };
 
-                $.ajax({
-                    url,
-                    method: 'POST',
-                    contentType: 'application/json',
-                    headers: { 'Authorization': this.BASIC_AUTH },
-                    data: JSON.stringify(payload),
-                    success: (resp) => {
-                        if (resp?.pdfUrl) {
-                            this.model.save({ pdfUrl: resp.pdfUrl }, {
-                                success: () => { this.reRender(); }
-                            });
-                            window.open(resp.pdfUrl, '_blank');
-                        }
-                        this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                // ⬅️ загрузка позиций ТАК ЖЕ, КАК В PREVIEW
+                this.loadPositionsFromPanel()
+                    .catch(() => this.loadPositionsViaRest(this.model.id))
+                    .then(afterRows)
+                    .catch(() => {
+                        this.notify('Keine Positionen gefunden.', 'error');
                         this.hideLoader(notifyId);
-                    },
-                    error: (xhr) => {
-                        const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
-                        this.notify(msg, 'error');
-                        this.hideLoader(notifyId);
-                    }
-                });
+                    });
+
                 return;
             }
+
 
             // ===== 2) TEILRECHNUNG =====
             if (this.isTeil()) {
