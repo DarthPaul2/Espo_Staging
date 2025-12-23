@@ -17,10 +17,6 @@
         "align": "left"
     },
     {
-        "name": "bemerkung",
-        "width": 16
-    },
-    {
         "name": "leistungsdatumVon",
         "width": 14,
         "align": "left"
@@ -29,6 +25,10 @@
         "name": "leistungsdatumBis",
         "width": 14,
         "align": "left"
+    },
+    {
+        "name": "description",
+        "width": 16
     },
     {
         "name": "status",

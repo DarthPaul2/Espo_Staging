@@ -1,0 +1,5 @@
+{
+    "className": "Espo\\Custom\\Jobs\\TaskRepeatGenerator",
+    "schedule": "0 0 * * *",
+    "status": "Active"
+}

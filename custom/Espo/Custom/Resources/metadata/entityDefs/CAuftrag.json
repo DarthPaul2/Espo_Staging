@@ -102,7 +102,8 @@
             "type": "text",
             "rowsMin": 2,
             "cutHeight": 200,
-            "isCustom": true
+            "isCustom": true,
+            "default": "Wir freuen uns, Ihren Auftrag ausführen zu dürfen und sichern Ihnen eine fachgerechte und zuverlässige Umsetzung zu.  \nFür Rückfragen oder weitere Abstimmungen stehen wir Ihnen selbstverständlich jederzeit gerne zur Verfügung.  \n\nVielen Dank für Ihr Vertrauen – auf eine erfolgreiche Zusammenarbeit!  \n\nIhr KleSec Team"
         },
         "leistungsdatumVon": {
             "notNull": false,
@@ -219,6 +220,13 @@
             "type": "float",
             "default": 0,
             "view": "custom:views/fields/restbetrag-auftrag",
+            "isCustom": true
+        },
+        "einleitung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "default": "Sehr geehrte Damen und Herren,\n\nwir bedanken uns für die Erteilung Ihres Auftrages und bestätigen hiermit den Eingang sowie die Annahme.\nNachfolgend erhalten Sie die Auftragsbestätigung mit den vereinbarten Leistungen und Konditionen.\n\nSollten Sie Rückfragen oder Änderungswünsche haben, steht Ihnen Ihr persönlicher Ansprechpartner jederzeit gerne zur Verfügung:\n\nIhr Ansprechpartner: Tobias Schiller\nE-Mail: schiller@klesec.de\nTel.: 0171 6969930\n\nBitte richten Sie weitere Korrespondenz zu diesem Auftrag ebenfalls an: schiller@klesec.de\n\nDie Auftragsbestätigung umfasst die nachstehenden Positionen sowie die aufgeführten Hinweise.",
             "isCustom": true
         }
     },

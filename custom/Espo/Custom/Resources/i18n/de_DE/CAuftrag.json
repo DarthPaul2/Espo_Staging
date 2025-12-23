@@ -9,7 +9,7 @@
         "rechnungs": "Rechnungs",
         "lieferscheins": "Lieferscheine",
         "accountKundenNr": "Kunden-Nr.",
-        "bemerkung": "Bemerkung",
+        "bemerkung": "Abschlussbemerkung",
         "leistungsdatumVon": "Leistungsdatum von",
         "leistungsdatumBis": "Leistungsdatum bis",
         "angebots": "Angebote",
@@ -30,7 +30,9 @@
         "labelRestbetrag": "RESTBETRAG:",
         "restbetragNetto": "Restbetrag Netto",
         "restbetragBrutto": "Restbetrag Brutto",
-        "briefs": "Briefs"
+        "briefs": "Briefs",
+        "einleitung": "Einleitung",
+        "description": "Beschreibung (dieses Feld ist für den Dienstgebrauch)"
     },
     "options": {
         "status": {

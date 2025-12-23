@@ -1,8 +1,24 @@
 {
     "fields": {
-        "cWartung": "Wartung"
+        "cWartung": "Wartung",
+        "cRepeatEnabled": "Wiederholen",
+        "cRepeatEvery": "Wiederholen: Intervall",
+        "cRepeatUnit": "Wiederholen: Einheit",
+        "cRepeatFrom": "Wiederholen ab",
+        "cRepeatTo": "Wiederholen bis",
+        "cRepeatSeriesId": "Serien-ID"
     },
     "links": {
         "cWartung": "Wartung"
+    },
+    "options": {
+        "cRepeatUnit": {
+            "day": "Tage",
+            "week": "Wochen",
+            "month": "Monate"
+        }
+    },
+    "tooltips": {
+        "cRepeatEvery": "Gibt an, nach wie vielen Tagen, Wochen oder Monaten die Aufgabe erneut erstellt wird.\nBeispiel: Intervall = 1, Einheit = Woche → jede Woche.\nBeispiel: Intervall = 2, Einheit = Tage → jeden zweiten Tag."
     }
 }

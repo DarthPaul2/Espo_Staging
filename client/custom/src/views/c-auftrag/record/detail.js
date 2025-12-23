@@ -245,26 +245,6 @@ define('custom:views/c-auftrag/record/detail', [
             const payload = {
                 id: this.model.id,
                 titel: 'AUFTRAGSBESTÄTIGUNG',
-                einleitung: `Sehr geehrte Damen und Herren,
-
-wir bedanken uns für die Erteilung Ihres Auftrages und bestätigen hiermit den Eingang sowie die Annahme.  
-Nachfolgend erhalten Sie die Auftragsbestätigung mit den vereinbarten Leistungen und Konditionen.  
-
-Sollten Sie Rückfragen oder Änderungswünsche haben, steht Ihnen Ihr persönlicher Ansprechpartner jederzeit gerne zur Verfügung:
-
-Ihr Ansprechpartner: Tobias Schiller  
-E-Mail: schiller@klesec.de  
-Tel.: 0171 6969930  
-
-Bitte richten Sie weitere Korrespondenz zu diesem Auftrag ebenfalls an: schiller@klesec.de  
-
-Die Auftragsbestätigung umfasst die nachstehenden Positionen sowie die aufgeführten Hinweise.`,
-                bemerkung: `Wir freuen uns, Ihren Auftrag ausführen zu dürfen und sichern Ihnen eine fachgerechte und zuverlässige Umsetzung zu.  
-Für Rückfragen oder weitere Abstimmungen stehen wir Ihnen selbstverständlich jederzeit gerne zur Verfügung.  
-
-Vielen Dank für Ihr Vertrauen – auf eine erfolgreiche Zusammenarbeit!  
-
-Ihr KleSec Team`,
                 typ: 'auftrag'
             };
 

@@ -63,6 +63,24 @@
         "rows": [
             [
                 {
+                    "name": "description"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "primary",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "label": ""
+    },
+    {
+        "rows": [
+            [
+                {
                     "name": "labelSummeRechnungen"
                 },
                 {
@@ -109,25 +127,18 @@
         "rows": [
             [
                 {
-                    "name": "bemerkung"
-                },
-                {
-                    "name": "description"
+                    "name": "einleitung"
                 }
-            ]
-        ],
-        "dynamicLogicVisible": null,
-        "style": "primary",
-        "dynamicLogicStyled": null,
-        "tabBreak": false,
-        "tabLabel": null,
-        "hidden": false,
-        "noteText": null,
-        "noteStyle": "info",
-        "customLabel": "Beschreibung"
-    },
-    {
-        "rows": [
+            ],
+            [
+                false,
+                false
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                }
+            ],
             [
                 {
                     "name": "pdfUrl"
@@ -141,7 +152,8 @@
             ]
         ],
         "dynamicLogicVisible": null,
-        "style": "default",
+        "style": "primary",
+        "dynamicLogicStyled": null,
         "tabBreak": false,
         "hidden": false,
         "noteText": null,
