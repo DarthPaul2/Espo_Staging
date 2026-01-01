@@ -22,47 +22,48 @@ class AutoNumber
 
         // === 1) Генерация Auftragsnummer (только при создании и если номера нет)
         if ($isNew && !$entity->get('auftragsnummer')) {
-            $year = date('y');                           // напр. "25"
-            $pfx  = self::PREFIX . '-' . $year . '-';    // "KSA-25-"
 
-            // глобальная блокировка на последовательность по году
+            $year = date('y');                           // напр. "26"
+            $pfx  = self::PREFIX . '-' . $year . '-';    // "KSA-26-"
+
+            // глобальная блокировка на последовательность (БЕЗ привязки к году)
             $stmt = $pdo->prepare("SELECT GET_LOCK(:k, 5)");
-            $stmt->execute([':k' => self::LOCK . '_' . $year]);
+            $stmt->execute([':k' => self::LOCK]);
             $gotLock = (int) $stmt->fetchColumn() === 1;
 
             try {
+                // MAX ПО ВСЕМ ГОДАМ, только по не-удалённым (удалённые "освобождают" номер, если были последними)
                 $sql = "
                     SELECT MAX(CAST(SUBSTRING_INDEX(auftragsnummer, '-', -1) AS UNSIGNED))
                     FROM c_auftrag
                     WHERE auftragsnummer LIKE :like
+                      AND deleted = 0
                 ";
                 $stmt = $pdo->prepare($sql);
-                $stmt->execute([':like' => $pfx . '%']);
+                $stmt->execute([':like' => self::PREFIX . '-%']); // KSA-%
                 $max = $stmt->fetchColumn();
                 $max = $max !== null ? (int) $max : 0;
 
-                // если ещё нет номеров за этот год → начинаем с 1
+                // стартуем с 1, дальше 2,3...
                 $next = $max > 0 ? $max + 1 : 1;
 
                 // форматируем в 4 знака с ведущими нулями: 0001, 0002, 0118, 1234
                 $numberPart = str_pad((string) $next, 4, '0', STR_PAD_LEFT);
 
-                $value = $pfx . $numberPart; // KSA-25-0001, KSA-25-0118 и т.д.
+                $value = $pfx . $numberPart; // KSA-26-0001 ...
 
                 $entity->set('auftragsnummer', $value);
                 $this->log->debug('Generated Auftragsnummer: ' . $value);
 
             } finally {
                 if (!empty($gotLock)) {
-                    $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([
-                        ':k' => self::LOCK . '_' . $year
-                    ]);
+                    $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([':k' => self::LOCK]);
                 }
             }
         }
 
         // === 2) Автозаполнение name (Nr · Firma)
-        $nr       = (string) $entity->get('auftragsnummer');
+        $nr       = (string) ($entity->get('auftragsnummer') ?? '');
         $accName  = (string) ($entity->get('accountName') ?? '');
         $curName  = (string) ($entity->get('name') ?? '');
         $autoName = $nr ? trim($nr . ($accName ? ' · ' . $accName : '')) : '';

@@ -1,15 +1,21 @@
 <div class="kls-stat-dashboard">
-
+    <div class="kls-print-btn-container" style="text-align: right; margin-bottom: 10px;">
+        <button class="btn btn-default btn-sm kls-print-btn">
+            <span class="fas fa-print"></span> Drucken
+        </button>
+    </div>
     <div class="kls-stat-header">
         <div class="kls-stat-title">
             <span class="kls-stat-title-main">Umsatz & Zahlungen</span>
             <span class="kls-stat-title-sub">Rechnungen nach Jahr und Monat</span>
         </div>
+        
         <div class="kls-stat-controls">
             <label>
                 Jahr:
                 <select data-name="yearFilter" class="form-control input-sm kls-year-select"></select>
             </label>
+            
         </div>
     </div>
 

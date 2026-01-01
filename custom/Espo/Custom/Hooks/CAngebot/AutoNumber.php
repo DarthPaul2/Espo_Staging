@@ -23,18 +23,18 @@ class AutoNumber
             return;
         }
 
-        $year = date('y');                             // '25'
-        $pfx  = self::PREFIX . '-' . $year . '-';     // 'AG-25-'
+        $year = date('y');                             // '26'
+        $pfx  = self::PREFIX . '-' . $year . '-';     // 'AG-26-'
 
         $pdo = $this->em->getPDO();
 
-        // Глобальная блокировка на последовательность (привяжем к году)
+        // Глобальная блокировка на последовательность (ПРИВЯЗКА К ТИПУ, НЕ К ГОДУ)
         $stmt = $pdo->prepare("SELECT GET_LOCK(:k, 5)");
-        $stmt->execute([':k' => self::LOCK . '_' . $year]);
+        $stmt->execute([':k' => self::LOCK]);
         $gotLock = (int) $stmt->fetchColumn() === 1;
 
         try {
-            // Берём максимальный правый 6-значный блок для текущего года
+            // Берём максимальный правый 6-значный блок ПО ВСЕМ ГОДАМ (AG-XX-******)
             $sql  = "
                 SELECT MAX(CAST(RIGHT(angebotsnummer, :len) AS UNSIGNED))
                 FROM c_angebot
@@ -43,8 +43,9 @@ class AutoNumber
             $stmt = $pdo->prepare($sql);
             $stmt->execute([
                 ':len'  => self::PAD,
-                ':like' => $pfx . '%',
+                ':like' => self::PREFIX . '-%',   // <-- без привязки к году
             ]);
+
             $max = $stmt->fetchColumn();
             $max = $max !== null ? (int) $max : 0;
 
@@ -65,7 +66,7 @@ class AutoNumber
             $this->log->debug('Generated Angebotsnummer: ' . $value);
         } finally {
             if ($gotLock) {
-                $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([':k' => self::LOCK . '_' . $year]);
+                $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([':k' => self::LOCK]);
             }
         }
     }

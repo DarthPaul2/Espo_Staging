@@ -1,7 +1,8 @@
 {
     "hooks": {
         "beforeSave": [
-            "GenerateBarcode"
+            "GenerateBarcode",
+            "LagerplatzCode"
         ]
     },
     "fields": {
@@ -226,6 +227,44 @@
             "type": "barcode",
             "len": 255,
             "codeType": "CODE128",
+            "isCustom": true
+        },
+        "lagerRaum": {
+            "type": "varchar",
+            "maxLength": 10,
+            "options": [],
+            "isCustom": true,
+            "default": "01",
+            "readOnly": true
+        },
+        "lagerRegal": {
+            "type": "varchar",
+            "maxLength": 10,
+            "options": [],
+            "isCustom": true
+        },
+        "lagerSegment": {
+            "type": "varchar",
+            "maxLength": 10,
+            "options": [],
+            "isCustom": true
+        },
+        "lagerEbene": {
+            "type": "varchar",
+            "maxLength": 10,
+            "options": [],
+            "isCustom": true
+        },
+        "lagerPlatz": {
+            "type": "varchar",
+            "maxLength": 5,
+            "options": [],
+            "isCustom": true
+        },
+        "lagerplatzCode": {
+            "type": "varchar",
+            "maxLength": 30,
+            "options": [],
             "isCustom": true
         }
     },

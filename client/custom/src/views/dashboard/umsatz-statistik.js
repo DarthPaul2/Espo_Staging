@@ -27,9 +27,17 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
 
         // Дашлет ожидает список action-кнопок; нам они не нужны → возвращаем пустой список
         getActionItemDataList: function () {
-            return [];
+            console.log('➡️ Метод getActionItemDataList ВЫЗВАН для дашлета', this.name);
+            return [
+                {
+                    label: 'Print',
+                    action: function () {
+                        console.log('🖨️ Действие "Print" запущено');
+                        window.print();
+                    }
+                }
+            ];
         },
-
         setup: function () {
             Dep.prototype.setup.call(this);
         },
@@ -49,6 +57,17 @@ Espo.define('custom:views/dashboard/umsatz-statistik', [
                 });
 
             this.bindYearChange();
+            // ---------- НАЧАЛО: Обработчик для кнопки печати ----------
+            // Находим наш корневой элемент и кнопку внутри него
+            var $root = this.$el || $(this.el);
+            var $printButton = $root.find('.kls-print-btn');
+
+            // Убираем старые обработчики (если есть) и вешаем новый
+            $printButton.off('click').on('click', function () {
+                console.log('Печать дашборда UmsatzStatistik...');
+                window.print();
+            });
+            // ---------- КОНЕЦ ----------
         },
 
         // ---------- Загрузка данных ----------

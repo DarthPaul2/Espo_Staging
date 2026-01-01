@@ -7,7 +7,7 @@ use Espo\Core\Utils\Log;
 
 class AutoNumber
 {
-    private const PREFIX = 'LS';                     // Префикс для Lieferschein
+    private const PREFIX = 'LS';                      // Префикс для Lieferschein
     private const LOCK   = 'lieferscheinnummer_lock'; // Имя блокировки
 
     public function __construct(
@@ -22,25 +22,26 @@ class AutoNumber
             return;
         }
 
-        $year = date('y');                          // например "25"
-        $pfx  = self::PREFIX . '-' . $year . '-';   // "LS-25-"
+        $year = date('y');                         // например "26"
+        $pfx  = self::PREFIX . '-' . $year . '-';  // "LS-26-"
 
         $pdo = $this->em->getPDO();
 
-        // глобальная блокировка на последовательность по году
+        // Глобальная блокировка на последовательность (без привязки к году)
         $stmt = $pdo->prepare("SELECT GET_LOCK(:k, 5)");
-        $stmt->execute([':k' => self::LOCK . '_' . $year]);
+        $stmt->execute([':k' => self::LOCK]);
         $gotLock = (int) $stmt->fetchColumn() === 1;
 
         try {
-            // Ищем максимальный порядковый номер по текущему году
+            // MAX ПО ВСЕМ ГОДАМ, только по не-удалённым (удалённые "освобождают" номер, если были последними)
             $sql = "
                 SELECT MAX(CAST(SUBSTRING_INDEX(lieferscheinnummer, '-', -1) AS UNSIGNED))
                 FROM c_lieferschein
                 WHERE lieferscheinnummer LIKE :like
+                  AND deleted = 0
             ";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([':like' => $pfx . '%']);
+            $stmt->execute([':like' => self::PREFIX . '-%']); // LS-%
             $max = $stmt->fetchColumn();
             $max = $max !== null ? (int) $max : 0;
 
@@ -60,7 +61,7 @@ class AutoNumber
             $this->log->debug('Generated Lieferscheinnummer: ' . $value);
         } finally {
             if ($gotLock) {
-                $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([':k' => self::LOCK . '_' . $year]);
+                $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([':k' => self::LOCK]);
             }
         }
     }

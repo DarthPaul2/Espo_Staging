@@ -236,6 +236,11 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             this.listenTo(this.model, 'change:pdfUrl', () => {
                 setTimeout(() => this._applyPdfLinkLabel(), 0);
             });
+            this.once('after:render', () => this._applyGaebLinkLabel(), this);
+            this.listenTo(this.model, 'change:gaebUrl', () => {
+                setTimeout(() => this._applyGaebLinkLabel(), 0);
+            });
+
 
             // --- Lokaler Recalc ---
             const bumpTotalsFields = (netto, brutto, src) => {
@@ -467,15 +472,43 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                             L('pdfSave: success', resp);
                             this.notify(resp?.message || 'PDF gespeichert.', 'success');
 
+                            const saveData = {};
+
                             if (resp?.pdfUrl) {
-                                this.model.save({ pdfUrl: resp.pdfUrl }, {
+                                saveData.pdfUrl = resp.pdfUrl;
+                            }
+
+                            if (resp?.gaebUrl) {
+                                saveData.gaebUrl = resp.gaebUrl;
+                            }
+
+                            if (Object.keys(saveData).length) {
+                                this.model.save(saveData, {
                                     success: () => {
-                                        L('pdfSave: pdfUrl saved to CRM', resp.pdfUrl);
-                                        this.reRender();
+                                        L('pdfSave: URLs saved to CRM', saveData);
+
+                                        // Контроль: читаем запись обратно с сервера
+                                        this.model.fetch({
+                                            success: () => {
+                                                L('after fetch urls', {
+                                                    pdfUrl: this.model.get('pdfUrl'),
+                                                    gaebUrl: this.model.get('gaebUrl')
+                                                });
+                                                this.reRender();
+                                            },
+                                            error: (xhr) => {
+                                                L('pdfSave: fetch after save failed', xhr);
+                                                this.reRender();
+                                            }
+                                        });
                                     },
-                                    error: (xhr) => L('pdfSave: failed to save pdfUrl in CRM', xhr)
+                                    error: (xhr) => {
+                                        L('pdfSave: failed to save URLs in CRM', xhr);
+                                    }
                                 });
                             }
+
+
                         },
                         error: (xhr) => {
                             L('pdfSave: AJAX error', {
@@ -600,7 +633,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
 
         // ==== PDF-Link anpassen ====
         _applyPdfLinkLabel: function () {
-            const url = this.model.get('pdfUrl');
+            const nr = this.model.get('angebotsnummer');
             const $field = this.$el.find('[data-name="pdfUrl"]');
             if (!$field.length) return;
 
@@ -608,19 +641,45 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 ? $field.find('.value, .link-container').first()
                 : $field;
 
-            if (!url) {
+            if (!nr) {
                 $value.text('Keine PDF gespeichert');
                 return;
             }
 
-            const label = '📄 Gespeicherte Datei anzeigen';
+            const downloadUrl = `${this.FLASK_BASE}/angebote/download_pdf/${encodeURIComponent(nr)}`;
+            const label = '📄 PDF herunterladen';
+
             let $a = $value.find('a[href]');
             if ($a.length) {
-                $a.attr({ href: url, target: '_blank', rel: 'noopener' }).text(label);
+                $a.attr({ href: downloadUrl, target: '_self', rel: 'noopener' }).text(label);
             } else {
-                $value.empty().append(
-                    $('<a>').attr({ href: url, target: '_blank', rel: 'noopener' }).text(label)
-                );
+                $value.empty().append($('<a>').attr({ href: downloadUrl, target: '_self', rel: 'noopener' }).text(label));
+            }
+        },
+
+
+        _applyGaebLinkLabel: function () {
+            const nr = this.model.get('angebotsnummer');
+            const $field = this.$el.find('[data-name="gaebUrl"]');
+            if (!$field.length) return;
+
+            const $value = $field.find('.value, .link-container').first().length
+                ? $field.find('.value, .link-container').first()
+                : $field;
+
+            if (!nr) {
+                $value.text('Keine GAEB gespeichert');
+                return;
+            }
+
+            const downloadGaebUrl = `${this.FLASK_BASE}/angebote/download_gaeb/${encodeURIComponent(nr)}`;
+            const label = '🧾 GAEB X84 herunterladen';
+
+            let $a = $value.find('a[href]');
+            if ($a.length) {
+                $a.attr({ href: downloadGaebUrl, target: '_self', rel: 'noopener' }).text(label);
+            } else {
+                $value.empty().append($('<a>').attr({ href: downloadGaebUrl, target: '_self', rel: 'noopener' }).text(label));
             }
         }
 

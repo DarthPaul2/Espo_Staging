@@ -1,0 +1,7 @@
+{
+  "html2canvas": {
+    "files": [
+      "../../lib/html2canvas.min.js"
+    ]
+  }
+}

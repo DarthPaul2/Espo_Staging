@@ -24,7 +24,8 @@
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
         "auftragspositions": "Auftragspositions",
-        "briefs": "Briefs"
+        "briefs": "Briefs",
+        "gaebUrl": "GAEB-Datei"
     },
     "options": {
         "status": {

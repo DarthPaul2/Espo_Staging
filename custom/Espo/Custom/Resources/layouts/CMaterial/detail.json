@@ -74,5 +74,41 @@
         "noteText": null,
         "noteStyle": "info",
         "customLabel": "Informationen zum Hersteller"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "lagerRaum"
+                },
+                {
+                    "name": "lagerRegal"
+                },
+                {
+                    "name": "lagerSegment"
+                },
+                {
+                    "name": "lagerEbene"
+                }
+            ],
+            [
+                {
+                    "name": "lagerPlatz"
+                },
+                false,
+                false,
+                {
+                    "name": "lagerplatzCode"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "info",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "LAGER"
     }
 ]

@@ -22,18 +22,18 @@ class AutoNumber
             return;
         }
 
-        $year = date('y');                         // '25'
-        $pfx  = self::PREFIX . '-' . $year . '-'; // 'RE-25-'
+        $year = date('y');                         // '26'
+        $pfx  = self::PREFIX . '-' . $year . '-'; // 'RE-26-'
 
         $pdo = $this->em->getPDO();
 
-        // Глобальная блокировка на последовательность
+        // Глобальная блокировка на последовательность (без привязки к году)
         $stmt = $pdo->prepare("SELECT GET_LOCK(:k, 5)");
-        $stmt->execute([':k' => self::LOCK . '_' . $year]);
-        $gotLock = ((int)$stmt->fetchColumn() === 1);
+        $stmt->execute([':k' => self::LOCK]);
+        $gotLock = ((int) $stmt->fetchColumn() === 1);
 
         try {
-            // 🔹 Берём максимум только по не-удалённым счетам
+            // MAX по всем годам, но ТОЛЬКО по не-удалённым (удалённые "освобождают" номера)
             $sql = "
                 SELECT MAX(CAST(SUBSTRING_INDEX(rechnungsnummer, '-', -1) AS UNSIGNED))
                 FROM c_rechnung
@@ -41,9 +41,9 @@ class AutoNumber
                   AND deleted = 0
             ";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([':like' => $pfx . '%']);
+            $stmt->execute([':like' => self::PREFIX . '-%']); // RE-%
             $max = $stmt->fetchColumn();
-            $max = $max !== null ? (int)$max : 0;
+            $max = $max !== null ? (int) $max : 0;
 
             // Нумерация 10001+
             $next = $max >= 10000 ? $max + 1 : 10001;
@@ -59,11 +59,9 @@ class AutoNumber
             }
 
             $this->log->debug('Generated Rechnungsnummer: ' . $value);
-        }
-        finally {
+        } finally {
             if ($gotLock) {
-                $pdo->prepare("SELECT RELEASE_LOCK(:k)")
-                    ->execute([':k' => self::LOCK . '_' . $year]);
+                $pdo->prepare("SELECT RELEASE_LOCK(:k)")->execute([':k' => self::LOCK]);
             }
         }
     }

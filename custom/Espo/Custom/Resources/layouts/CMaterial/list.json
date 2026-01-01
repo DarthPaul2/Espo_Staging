@@ -26,18 +26,12 @@
         "align": "left"
     },
     {
-        "name": "barcode",
-        "width": 14,
-        "align": "left"
-    },
-    {
         "name": "description",
-        "width": 29,
+        "width": 37,
         "align": "left"
     },
     {
-        "name": "verwendet",
-        "width": 10,
-        "align": "left"
+        "name": "lagerplatzCode",
+        "width": 16
     }
 ]

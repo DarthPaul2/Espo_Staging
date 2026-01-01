@@ -186,6 +186,10 @@
         },
         "auftrag": {
             "type": "link"
+        },
+        "gaebUrl": {
+            "type": "url",
+            "isCustom": true
         }
     },
     "links": {

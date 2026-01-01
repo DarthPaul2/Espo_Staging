@@ -183,3 +183,11 @@
     /* оранжевый как на графике */
     color: #ffffff;
 }
+
+/* Пример стиля для кнопки печати */
+.kls-print-btn-container {
+    width: 100%;
+    padding-right: 15px;
+    /* Опционально: небольшой отступ от края */
+    box-sizing: border-box;
+}

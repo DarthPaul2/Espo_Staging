@@ -25,7 +25,13 @@
         "mwstSatz": "MwSt.-Satz",
         "herstellerKatalogCode": "Hersteller Katalogcode",
         "barcodeId": "Barcode_id",
-        "barcode": "Barcode"
+        "barcode": "Barcode",
+        "lagerRaum": "LagerRaum",
+        "lagerRegal": "LagerRegal",
+        "lagerSegment": "LagerSegment",
+        "lagerEbene": "LagerEbene",
+        "lagerPlatz": "LagerPlatz",
+        "lagerplatzCode": "LagerplatzCode"
     },
     "links": {
         "positionen": "Positionen",
