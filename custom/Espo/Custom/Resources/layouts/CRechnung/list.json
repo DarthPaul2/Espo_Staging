@@ -17,6 +17,11 @@
         "align": "left"
     },
     {
+        "name": "createdAt",
+        "width": 8,
+        "align": "left"
+    },
+    {
         "name": "faelligAm",
         "width": 9,
         "align": "left"

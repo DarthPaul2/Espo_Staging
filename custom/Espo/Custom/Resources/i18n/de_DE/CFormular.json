@@ -1,6 +1,6 @@
 {
     "labels": {
-        "Create CFormular": "Formular erstellen"
+        "Create CFormular": "Erstellen Formularbericht"
     },
     "fields": {
         "formKey": "FormKey",
@@ -11,7 +11,8 @@
         "pdfUrl": "Pdf Url",
         "parentFormKey": "ParentFormKey",
         "account": "Account",
-        "user": "User"
+        "user": "User",
+        "formularberichte": "Formularberichte"
     },
     "options": {
         "formType": {
@@ -24,6 +25,7 @@
     },
     "links": {
         "account": "Account",
-        "user": "User"
+        "user": "User",
+        "formularberichte": "Formularberichte"
     }
 }

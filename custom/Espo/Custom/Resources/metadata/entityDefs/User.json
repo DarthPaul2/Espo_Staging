@@ -41,6 +41,41 @@
             "entity": "CFormular",
             "audited": false,
             "isCustom": true
+        },
+        "cTechniker1": {
+            "type": "hasMany",
+            "foreign": "stundenberichteTechniker1",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
+        },
+        "cTechniker2": {
+            "type": "hasMany",
+            "foreign": "stundenberichteTechniker2",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
+        },
+        "cTechniker3": {
+            "type": "hasMany",
+            "foreign": "stundenberichteTechniker3",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
+        },
+        "cTechniker4": {
+            "type": "hasMany",
+            "foreign": "stundenberichteTechniker4",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
+        },
+        "cTechniker5": {
+            "type": "hasMany",
+            "foreign": "stundenberichteTechniker5",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

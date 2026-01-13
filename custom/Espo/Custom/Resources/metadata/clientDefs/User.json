@@ -47,6 +47,26 @@
         "formulars": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "techniker1": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "techniker2": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "techniker3": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "techniker4": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "techniker5": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

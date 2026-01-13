@@ -43,6 +43,10 @@
         "briefs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "stundenberichts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

@@ -1,0 +1,41 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "detail": "custom:views/c-stundenbericht/record/detail"
+    },
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#2fc0b7",
+    "iconClass": "fas fa-square-h",
+    "relationshipPanels": {
+        "account": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "stundenberichteTechniker1": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "stundenberichteTechniker2": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "stundenberichteTechniker3": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "stundenberichteTechniker4": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "stundenberichteTechniker5": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "stundenbericht": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

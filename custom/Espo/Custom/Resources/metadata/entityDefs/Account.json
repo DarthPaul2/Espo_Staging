@@ -112,6 +112,13 @@
             "entity": "CBrief",
             "audited": false,
             "isCustom": true
+        },
+        "cStundenberichts": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

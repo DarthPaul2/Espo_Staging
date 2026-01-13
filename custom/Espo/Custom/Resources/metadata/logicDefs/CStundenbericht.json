@@ -1,0 +1,114 @@
+{
+    "fields": {
+        "notdienstAnruferName": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "notdienstAnruferTelefon": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "tagDienstag": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "tagDonnerstag": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "tagFreitag": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "tagMittwoch": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "tagMontag": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "tagSamstag": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "tagSonntag": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        },
+        "einsatzbeginn": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "notdienst",
+                        "value": "ja"
+                    }
+                ]
+            }
+        }
+    }
+}

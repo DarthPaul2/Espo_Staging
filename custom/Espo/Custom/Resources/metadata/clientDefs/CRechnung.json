@@ -4,6 +4,17 @@
         "edit": "custom:views/c-rechnung/record/edit",
         "detail": "custom:views/c-rechnung/record/detail"
     },
+    "massActionList": [
+        "downloadPdfZip"
+    ],
+    "massActionDefs": {
+        "downloadPdfZip": {
+            "label": "PDF speichern (ZIP)",
+            "handler": "custom:handlers/c-rechnung/mass-download-pdf-zip",
+            "acl": "read",
+            "groupIndex": 9
+        }
+    },
     "modalViews": [],
     "boolFilterList": [
         "onlyMy"

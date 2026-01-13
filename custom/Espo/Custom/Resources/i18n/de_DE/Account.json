@@ -10,7 +10,8 @@
         "cWerkzeug": "Werkzeug",
         "cWartungs": "Wartungs",
         "cFormulars": "Formulars",
-        "cBriefs": "Briefs"
+        "cBriefs": "Briefs",
+        "cStundenberichts": "Stundenberichts"
     },
     "links": {
         "cFirmenHauptkontakt": "Firmen Hauptkontakt",
@@ -21,7 +22,8 @@
         "cWerkzeug": "Werkzeug",
         "cWartungs": "Wartungs",
         "cFormulars": "Formulars",
-        "cBriefs": "Briefs"
+        "cBriefs": "Briefs",
+        "cStundenberichts": "Stundenberichts"
     },
     "options": {
         "type": {

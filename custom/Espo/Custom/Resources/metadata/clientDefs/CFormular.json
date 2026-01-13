@@ -13,6 +13,11 @@
         "user": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "formularberichte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
-    }
+    },
+    "kanbanViewMode": false
 }

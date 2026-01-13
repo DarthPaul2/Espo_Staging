@@ -5,7 +5,12 @@
         "cWartungs": "Wartungs",
         "cArbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
         "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts",
-        "cFormulars": "Formulars"
+        "cFormulars": "Formulars",
+        "cTechniker1": "Techniker 1",
+        "cTechniker2": "Techniker 2",
+        "cTechniker3": "Techniker 3",
+        "cTechniker4": "Techniker 4",
+        "cTechniker5": "Techniker 5"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -13,6 +18,11 @@
         "cWartungs": "Wartungs",
         "cArbeitszeitMonatsuebersichts": "Arbeitszeit Monatsuebersichts",
         "cArbeitszeitJahresuebersichts": "Arbeitszeit Jahresuebersichts",
-        "cFormulars": "Formulars"
+        "cFormulars": "Formulars",
+        "cTechniker1": "Techniker 1",
+        "cTechniker2": "Techniker 2",
+        "cTechniker3": "Techniker 3",
+        "cTechniker4": "Techniker 4",
+        "cTechniker5": "Techniker 5"
     }
 }

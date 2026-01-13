@@ -1,0 +1,482 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                },
+                false,
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                {
+                    "name": "kundeStrasse"
+                },
+                false,
+                false,
+                false
+            ],
+            [
+                {
+                    "name": "kundeOrt"
+                },
+                false,
+                false,
+                false
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "customLabel": "Kunde"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "objektName"
+                },
+                {
+                    "name": "objektStrasse"
+                },
+                {
+                    "name": "objektOrt"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Objekt"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "auftrag"
+                },
+                {
+                    "name": "zusatzlicheArbeiten"
+                },
+                {
+                    "name": "vorgangsnummer"
+                },
+                {
+                    "name": "anlagennummer"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Auftrag \/ Zusatzarbeiten"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "anlageBma"
+                },
+                {
+                    "name": "anlageEma"
+                },
+                {
+                    "name": "anlageUma"
+                }
+            ],
+            [
+                {
+                    "name": "anlageVideo"
+                },
+                {
+                    "name": "anlageZk"
+                },
+                {
+                    "name": "anlageFunk"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Art der Anlage"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "ausgefuhrteArbeiten"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Ausgeführte Arbeiten"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "material1Menge"
+                },
+                {
+                    "name": "material1Name"
+                },
+                {
+                    "name": "material1Bestellnr"
+                }
+            ],
+            [
+                {
+                    "name": "material2Menge"
+                },
+                {
+                    "name": "material2Name"
+                },
+                {
+                    "name": "material2Bestellnr"
+                }
+            ],
+            [
+                {
+                    "name": "material3Menge"
+                },
+                {
+                    "name": "material3Name"
+                },
+                {
+                    "name": "material3Bestellnr"
+                }
+            ],
+            [
+                {
+                    "name": "material4Menge"
+                },
+                {
+                    "name": "material4Name"
+                },
+                {
+                    "name": "material4Bestellnr"
+                }
+            ],
+            [
+                {
+                    "name": "material5Menge"
+                },
+                {
+                    "name": "material5Name"
+                },
+                {
+                    "name": "material5Bestellnr"
+                }
+            ],
+            [
+                {
+                    "name": "material6Menge"
+                },
+                {
+                    "name": "material6Name"
+                },
+                {
+                    "name": "material6Bestellnr"
+                }
+            ],
+            [
+                {
+                    "name": "material7Menge"
+                },
+                {
+                    "name": "material7Name"
+                },
+                {
+                    "name": "material7Bestellnr"
+                }
+            ],
+            [
+                {
+                    "name": "material8Menge"
+                },
+                {
+                    "name": "material8Name"
+                },
+                {
+                    "name": "material8Bestellnr"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Materialverbrauch"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "stundenberichteTechniker1"
+                }
+            ],
+            [
+                {
+                    "name": "techniker1Datum"
+                },
+                {
+                    "name": "techniker1Fahrzeit"
+                },
+                {
+                    "name": "techniker1Arbeitszeit"
+                },
+                {
+                    "name": "techniker1Kilometer"
+                }
+            ],
+            [
+                {
+                    "name": "stundenberichteTechniker2"
+                }
+            ],
+            [
+                {
+                    "name": "techniker2Datum"
+                },
+                {
+                    "name": "techniker2Fahrzeit"
+                },
+                {
+                    "name": "techniker2Arbeitszeit"
+                },
+                {
+                    "name": "techniker2Kilometer"
+                }
+            ],
+            [
+                {
+                    "name": "stundenberichteTechniker3"
+                }
+            ],
+            [
+                {
+                    "name": "techniker3Datum"
+                },
+                {
+                    "name": "techniker3Fahrzeit"
+                },
+                {
+                    "name": "techniker3Arbeitszeit"
+                },
+                {
+                    "name": "techniker3Kilometer"
+                }
+            ],
+            [
+                {
+                    "name": "stundenberichteTechniker4"
+                }
+            ],
+            [
+                {
+                    "name": "techniker4Datum"
+                },
+                {
+                    "name": "techniker4Fahrzeit"
+                },
+                {
+                    "name": "techniker4Arbeitszeit"
+                },
+                {
+                    "name": "techniker4Kilometer"
+                }
+            ],
+            [
+                {
+                    "name": "stundenberichteTechniker5"
+                }
+            ],
+            [
+                {
+                    "name": "techniker5Datum"
+                },
+                {
+                    "name": "techniker5Fahrzeit"
+                },
+                {
+                    "name": "techniker5Arbeitszeit"
+                },
+                {
+                    "name": "techniker5Kilometer"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Techniker \/ Zeiten"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "notdienst"
+                },
+                false,
+                false,
+                false
+            ],
+            [
+                {
+                    "name": "einsatzbeginn"
+                },
+                {
+                    "name": "notdienstAnruferName"
+                },
+                {
+                    "name": "notdienstAnruferTelefon"
+                }
+            ],
+            [
+                {
+                    "name": "tagMontag"
+                },
+                {
+                    "name": "tagDienstag"
+                },
+                {
+                    "name": "tagMittwoch"
+                },
+                {
+                    "name": "tagDonnerstag"
+                }
+            ],
+            [
+                {
+                    "name": "tagFreitag"
+                },
+                {
+                    "name": "tagSamstag"
+                },
+                {
+                    "name": "tagSonntag"
+                },
+                false
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Notdienst"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "auftragAbgeschlossen"
+                },
+                {
+                    "name": "restarbeiten"
+                },
+                {
+                    "name": "neuerTermin"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Abschluss"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Bemerkung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "datumUnterschrift"
+                },
+                {
+                    "name": "unterschriftTechniker"
+                },
+                {
+                    "name": "unterschriftKunde"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Unterschriften"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "pdfFile"
+                },
+                {
+                    "name": "pdfGeneratedAt"
+                }
+            ],
+            [
+                {
+                    "name": "formDataJson"
+                }
+            ]
+        ],
+        "style": "default",
+        "noteStyle": "info",
+        "label": ""
+    }
+]

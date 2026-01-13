@@ -8,14 +8,16 @@
         "pdfUrl": "Pdf Url",
         "parentFormKey": "ParentFormKey",
         "account": "Account",
-        "user": "User"
+        "user": "User",
+        "formularberichte": "Formularberichte"
     },
     "links": {
         "account": "Account",
-        "user": "User"
+        "user": "User",
+        "formularberichte": "Formularberichte"
     },
     "labels": {
-        "Create CFormular": "Create Formular"
+        "Create CFormular": "Erstellen Formularbericht"
     },
     "options": {
         "formType": {

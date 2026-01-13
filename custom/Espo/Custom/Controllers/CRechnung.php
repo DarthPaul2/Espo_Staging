@@ -456,4 +456,93 @@ class CRechnung extends Base
             ];
         }
     }
+
+    public function postActionDownloadPdfZip($params, $data, $request)
+{
+    // права: чтение счетов
+    $this->getAcl()->check('CRechnung', 'read');
+
+    $ids = null;
+
+// 1) обычный JSON: { "ids": [...] }
+if (isset($data->ids)) {
+    $ids = $data->ids;
+}
+
+// 2) если вдруг пришло строкой JSON: { "ids": "[...]" }
+if (is_string($ids)) {
+    $decoded = json_decode($ids, true);
+    if (is_array($decoded)) {
+        $ids = $decoded;
+    }
+}
+
+// 3) финальная проверка
+if (!is_array($ids) || !count($ids)) {
+    return ['success' => false, 'error' => 'ids is required'];
+}
+
+
+    $em = $this->getEntityManager();
+
+    $baseDir = '/var/www/espocrm/public/pdf/rechnungen';
+
+    $zipName = 'rechnungen_' . date('Y-m-d_His') . '.zip';
+    $tmpZip  = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $zipName;
+
+    $zip = new \ZipArchive();
+    if ($zip->open($tmpZip, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+        return ['success' => false, 'error' => 'Cannot create zip'];
+    }
+
+    $missing = [];
+
+    foreach ($ids as $id) {
+        $e = $em->getEntity('CRechnung', $id);
+        if (!$e) {
+            $missing[] = "NOT_FOUND_ENTITY_ID_$id";
+            continue;
+        }
+
+        $nr = trim((string) ($e->get('rechnungsnummer') ?? ''));
+        if ($nr === '') {
+            $missing[] = "NO_RECHNUNGSNUMMER_ID_$id";
+            continue;
+        }
+
+        // основной вариант по вашей текущей логике
+        $fn1 = $nr . '_zugferd.pdf';
+        $p1  = $baseDir . DIRECTORY_SEPARATOR . $fn1;
+
+        // fallback на старый формат без суффикса (если есть такие файлы)
+        $fn2 = $nr . '.pdf';
+        $p2  = $baseDir . DIRECTORY_SEPARATOR . $fn2;
+
+        if (is_file($p1)) {
+            $zip->addFile($p1, $fn1);
+        } elseif (is_file($p2)) {
+            $zip->addFile($p2, $fn2);
+        } else {
+            $missing[] = $fn1;
+        }
+    }
+
+    if ($missing) {
+        $zip->addFromString('MISSING.txt', implode("\n", $missing) . "\n");
+    }
+
+    $zip->close();
+
+    // Отдаём zip как файл
+    header('Content-Type: application/zip');
+    header('Content-Disposition: attachment; filename="' . $zipName . '"');
+    header('Content-Length: ' . filesize($tmpZip));
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Pragma: no-cache');
+
+    readfile($tmpZip);
+    @unlink($tmpZip);
+    exit;
+}
+
 }

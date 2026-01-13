@@ -1,0 +1,28 @@
+[
+    {
+        "name": "createdAt",
+        "width": 9,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "account",
+        "width": 26,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "stundenberichteTechniker1",
+        "width": 16
+    },
+    {
+        "name": "status",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "pdfFile",
+        "width": 36,
+        "align": "left"
+    }
+]

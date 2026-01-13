@@ -91,6 +91,9 @@
         },
         "user": {
             "type": "link"
+        },
+        "formularberichte": {
+            "type": "link"
         }
     },
     "links": {
@@ -125,11 +128,23 @@
             "entity": "User",
             "audited": false,
             "isCustom": true
+        },
+        "formularberichte": {
+            "type": "belongsTo",
+            "foreign": "stundenbericht",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {
         "orderBy": "createdAt",
-        "order": "desc"
+        "order": "desc",
+        "textFilterFields": [
+            "name"
+        ],
+        "fullTextSearch": false,
+        "countDisabled": false
     },
     "indexes": {
         "name": {
@@ -156,5 +171,6 @@
                 "id"
             ]
         }
-    }
+    },
+    "optimisticConcurrencyControl": false
 }

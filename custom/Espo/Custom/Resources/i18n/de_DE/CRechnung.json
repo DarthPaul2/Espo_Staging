@@ -70,5 +70,8 @@
             "einzelrechnung": "Einzelrechnung",
             "abschlagsrechnung": "Abschlagsrechnung"
         }
+    },
+    "massActions": {
+        "downloadPdfZip": "PDF speichern (ZIP)"
     }
 }

@@ -1,5 +1,6 @@
 [
     "account",
     "rechnungsnummer",
-    "status"
+    "status",
+    "createdAt"
 ]

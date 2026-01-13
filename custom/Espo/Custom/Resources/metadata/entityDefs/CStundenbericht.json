@@ -1,0 +1,654 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": false,
+            "pattern": "$noBadCharacters",
+            "options": []
+        },
+        "description": {
+            "type": "text"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        },
+        "formKey": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "parentFormKey": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "status": {
+            "type": "enum",
+            "options": [
+                "Entwurf",
+                "PDFerzeugt",
+                "Gesendet",
+                "Archiviert"
+            ],
+            "style": {
+                "Entwurf": null,
+                "PDFerzeugt": null,
+                "Gesendet": null,
+                "Archiviert": null
+            },
+            "default": "Entwurf",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "formDataJson": {
+            "type": "wysiwyg",
+            "isCustom": true
+        },
+        "pdfFile": {
+            "type": "file",
+            "maxFileSize": 20,
+            "accept": [
+                "application/pdf"
+            ],
+            "sourceList": [],
+            "tooltip": true,
+            "isCustom": true
+        },
+        "pdfGeneratedAt": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "sentAt": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "kundeStrasse": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "tooltip": true,
+            "isCustom": true
+        },
+        "kundeOrt": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "tooltip": true,
+            "isCustom": true
+        },
+        "objektStrasse": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "objektName": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "objektOrt": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "auftrag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "zusatzlicheArbeiten": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "vorgangsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "anlagennummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "anlageBma": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "anlageEma": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "anlageUma": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "anlageVideo": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "anlageZk": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "anlageFunk": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "material1Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "material1Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material1Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material3Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "material3Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material3Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material2Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "material2Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material2Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material4Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "material4Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material4Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material5Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material5Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material5Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "material6Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "material6Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material6Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material7Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "material7Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material7Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material8Bestellnr": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material8Name": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "material8Menge": {
+            "type": "int",
+            "isCustom": true
+        },
+        "techniker1Datum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "account": {
+            "type": "link"
+        },
+        "stundenberichteTechniker1": {
+            "type": "link"
+        },
+        "stundenberichteTechniker2": {
+            "type": "link"
+        },
+        "stundenberichteTechniker3": {
+            "type": "link"
+        },
+        "stundenberichteTechniker4": {
+            "type": "link"
+        },
+        "stundenberichteTechniker5": {
+            "type": "link"
+        },
+        "techniker1Fahrzeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker1Arbeitszeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker1Kilometer": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker2Datum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "techniker2Fahrzeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker2Arbeitszeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker2Kilometer": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker3Datum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "techniker3Fahrzeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker3Arbeitszeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker3Kilometer": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker4Datum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "techniker4Fahrzeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker4Arbeitszeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker4Kilometer": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker5Datum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "techniker5Fahrzeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker5Arbeitszeit": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "techniker5Kilometer": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "notdienst": {
+            "type": "enum",
+            "options": [
+                "ja",
+                "nein"
+            ],
+            "style": {
+                "ja": null,
+                "nein": null
+            },
+            "default": "nein",
+            "maxLength": 100,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "einsatzbeginn": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "notdienstAnruferName": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "notdienstAnruferTelefon": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "tagMontag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "tagDienstag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "tagMittwoch": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "tagDonnerstag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "tagFreitag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "tagSamstag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "tagSonntag": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "auftragAbgeschlossen": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "restarbeiten": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "neuerTermin": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "bemerkung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "datumUnterschrift": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "unterschriftTechniker": {
+            "type": "image",
+            "previewSize": "small",
+            "isCustom": true
+        },
+        "unterschriftKunde": {
+            "type": "image",
+            "previewSize": "small",
+            "isCustom": true
+        },
+        "ausgefuhrteArbeiten": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "pdfFile": {
+            "type": "belongsTo",
+            "entity": "Attachment",
+            "skipOrmDefs": true,
+            "utility": true
+        },
+        "account": {
+            "type": "belongsTo",
+            "foreign": "cStundenberichts",
+            "entity": "Account",
+            "audited": false,
+            "isCustom": true
+        },
+        "stundenberichteTechniker1": {
+            "type": "belongsTo",
+            "foreign": "cTechniker1",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "stundenberichteTechniker2": {
+            "type": "belongsTo",
+            "foreign": "cTechniker2",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "stundenberichteTechniker3": {
+            "type": "belongsTo",
+            "foreign": "cTechniker3",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "stundenberichteTechniker4": {
+            "type": "belongsTo",
+            "foreign": "cTechniker4",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "stundenberichteTechniker5": {
+            "type": "belongsTo",
+            "foreign": "cTechniker5",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "stundenbericht": {
+            "type": "hasMany",
+            "foreign": "formularberichte",
+            "entity": "CFormular",
+            "audited": false,
+            "isCustom": true
+        },
+        "unterschriftTechniker": {
+            "type": "belongsTo",
+            "entity": "Attachment",
+            "skipOrmDefs": true,
+            "utility": true
+        },
+        "unterschriftKunde": {
+            "type": "belongsTo",
+            "entity": "Attachment",
+            "skipOrmDefs": true,
+            "utility": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    }
+}

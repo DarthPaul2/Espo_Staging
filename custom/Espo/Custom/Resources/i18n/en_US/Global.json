@@ -18,8 +18,9 @@
         "CArbeitszeitMonatsuebersicht": "Arbeitszeit Monatsuebersicht",
         "CArbeitszeitJahresuebersicht": "Arbeitszeit Jahresuebersicht",
         "CWerkzeugausgabe": "Werkzeugausgabe",
-        "CFormular": "Formular",
-        "CBrief": "Geschäftsbrief"
+        "CFormular": "Formularbericht",
+        "CBrief": "Geschäftsbrief",
+        "CStundenbericht": "Stundenbericht"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -40,8 +41,9 @@
         "CArbeitszeitMonatsuebersicht": "Arbeitszeiten Monatsübersichten",
         "CArbeitszeitJahresuebersicht": "Arbeitszeiten Jahresübersichten",
         "CWerkzeugausgabe": "Werkzeugausgaben",
-        "CFormular": "Formulare",
-        "CBrief": "Geschäftsbriefe"
+        "CFormular": "Formularberichte",
+        "CBrief": "Geschäftsbriefe",
+        "CStundenbericht": "Stundenberichte"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",
