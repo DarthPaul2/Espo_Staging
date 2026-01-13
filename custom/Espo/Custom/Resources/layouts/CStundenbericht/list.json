@@ -16,13 +16,13 @@
         "width": 16
     },
     {
-        "name": "status",
-        "width": 10,
+        "name": "pdfUrl",
+        "width": 26,
         "align": "left"
     },
     {
-        "name": "pdfFile",
-        "width": 36,
+        "name": "status",
+        "width": 10,
         "align": "left"
     }
 ]

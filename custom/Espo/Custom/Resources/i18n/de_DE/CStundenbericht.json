@@ -94,7 +94,8 @@
         "datumUnterschrift": "Datum Unterschrift",
         "unterschriftTechniker": "Techniker Unterschrift",
         "unterschriftKunde": "Kunde Unterschrift",
-        "ausgefuhrteArbeiten": "Ausgefuhrte Arbeiten"
+        "ausgefuhrteArbeiten": "Ausgefuhrte Arbeiten",
+        "pdfUrl": "Pdf-Url"
     },
     "options": {
         "status": {

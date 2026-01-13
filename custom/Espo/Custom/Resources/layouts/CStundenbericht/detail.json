@@ -463,7 +463,7 @@
         "rows": [
             [
                 {
-                    "name": "pdfFile"
+                    "name": "pdfUrl"
                 },
                 {
                     "name": "pdfGeneratedAt"

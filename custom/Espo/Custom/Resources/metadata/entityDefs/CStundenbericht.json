@@ -532,6 +532,10 @@
             "rowsMin": 2,
             "cutHeight": 200,
             "isCustom": true
+        },
+        "pdfUrl": {
+            "type": "url",
+            "isCustom": true
         }
     },
     "links": {
@@ -555,9 +559,7 @@
         },
         "pdfFile": {
             "type": "belongsTo",
-            "entity": "Attachment",
-            "skipOrmDefs": true,
-            "utility": true
+            "entity": "Attachment"
         },
         "account": {
             "type": "belongsTo",
