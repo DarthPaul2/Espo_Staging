@@ -2,6 +2,9 @@
     "labels": {
         "Create CBrief": "Geschäftsbrief erstellen"
     },
+    "actions": {
+        "createPdf": "Brief als PDF erstellen"
+    },
     "fields": {
         "betreff": "Betreff",
         "body": "MainText",

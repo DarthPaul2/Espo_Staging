@@ -109,6 +109,680 @@
                     }
                 ]
             }
+        },
+        "material2Bestellnr": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Menge"
+                    }
+                ]
+            }
+        },
+        "material2Menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Menge"
+                    }
+                ]
+            }
+        },
+        "material2Name": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material1Menge"
+                    }
+                ]
+            }
+        },
+        "material3Bestellnr": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Menge"
+                    }
+                ]
+            }
+        },
+        "material3Menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Menge"
+                    }
+                ]
+            }
+        },
+        "material3Name": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material2Menge"
+                    }
+                ]
+            }
+        },
+        "material4Bestellnr": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Menge"
+                    }
+                ]
+            }
+        },
+        "material4Menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Menge"
+                    }
+                ]
+            }
+        },
+        "material4Name": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material3Menge"
+                    }
+                ]
+            }
+        },
+        "material5Bestellnr": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Menge"
+                    }
+                ]
+            }
+        },
+        "material5Menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Menge"
+                    }
+                ]
+            }
+        },
+        "material5Name": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material4Menge"
+                    }
+                ]
+            }
+        },
+        "material6Bestellnr": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Menge"
+                    }
+                ]
+            }
+        },
+        "material6Menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Menge"
+                    }
+                ]
+            }
+        },
+        "material6Name": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material5Menge"
+                    }
+                ]
+            }
+        },
+        "material7Bestellnr": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Menge"
+                    }
+                ]
+            }
+        },
+        "material7Menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Menge"
+                    }
+                ]
+            }
+        },
+        "material7Name": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material6Menge"
+                    }
+                ]
+            }
+        },
+        "material8Bestellnr": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Menge"
+                    }
+                ]
+            }
+        },
+        "material8Menge": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Menge"
+                    }
+                ]
+            }
+        },
+        "material8Name": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Bestellnr"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Name"
+                    },
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "material7Menge"
+                    }
+                ]
+            }
+        },
+        "stundenberichteTechniker2": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "or",
+                        "value": [
+                            {
+                                "type": "isNotEmpty",
+                                "attribute": "stundenberichteTechniker1Id",
+                                "data": {
+                                    "field": "stundenberichteTechniker1"
+                                }
+                            },
+                            {
+                                "type": "isNotEmpty",
+                                "attribute": "stundenberichteTechniker2Id",
+                                "data": {
+                                    "field": "stundenberichteTechniker2"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "techniker1Arbeitszeit": {
+            "visible": null
+        },
+        "techniker1Datum": {
+            "visible": null
+        },
+        "techniker1Fahrzeit": {
+            "visible": null
+        },
+        "techniker1Kilometer": {
+            "visible": null
+        },
+        "techniker2Arbeitszeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker1Id",
+                        "data": {
+                            "field": "stundenberichteTechniker1"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker2Datum": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker1Id",
+                        "data": {
+                            "field": "stundenberichteTechniker1"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker2Fahrzeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker1Id",
+                        "data": {
+                            "field": "stundenberichteTechniker1"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker2Kilometer": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker1Id",
+                        "data": {
+                            "field": "stundenberichteTechniker1"
+                        }
+                    }
+                ]
+            }
+        },
+        "stundenberichteTechniker3": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "or",
+                        "value": [
+                            {
+                                "type": "isNotEmpty",
+                                "attribute": "stundenberichteTechniker2Id",
+                                "data": {
+                                    "field": "stundenberichteTechniker2"
+                                }
+                            },
+                            {
+                                "type": "isNotEmpty",
+                                "attribute": "stundenberichteTechniker3Id",
+                                "data": {
+                                    "field": "stundenberichteTechniker3"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "techniker3Arbeitszeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker2Id",
+                        "data": {
+                            "field": "stundenberichteTechniker2"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker3Datum": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker2Id",
+                        "data": {
+                            "field": "stundenberichteTechniker2"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker3Fahrzeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker2Id",
+                        "data": {
+                            "field": "stundenberichteTechniker2"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker3Kilometer": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker2Id",
+                        "data": {
+                            "field": "stundenberichteTechniker2"
+                        }
+                    }
+                ]
+            }
+        },
+        "stundenberichteTechniker4": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker3Id",
+                        "data": {
+                            "field": "stundenberichteTechniker3"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker4Arbeitszeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker3Id",
+                        "data": {
+                            "field": "stundenberichteTechniker3"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker4Datum": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker3Id",
+                        "data": {
+                            "field": "stundenberichteTechniker3"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker4Fahrzeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker3Id",
+                        "data": {
+                            "field": "stundenberichteTechniker3"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker4Kilometer": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker3Id",
+                        "data": {
+                            "field": "stundenberichteTechniker3"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker5Arbeitszeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker4Id",
+                        "data": {
+                            "field": "stundenberichteTechniker4"
+                        }
+                    }
+                ]
+            }
+        },
+        "stundenberichteTechniker5": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker4Id",
+                        "data": {
+                            "field": "stundenberichteTechniker4"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker5Datum": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker4Id",
+                        "data": {
+                            "field": "stundenberichteTechniker4"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker5Fahrzeit": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker4Id",
+                        "data": {
+                            "field": "stundenberichteTechniker4"
+                        }
+                    }
+                ]
+            }
+        },
+        "techniker5Kilometer": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "stundenberichteTechniker4Id",
+                        "data": {
+                            "field": "stundenberichteTechniker4"
+                        }
+                    }
+                ]
+            }
         }
     }
 }

@@ -1,4 +1,12 @@
 {
+    "hooks": {
+        "beforeSave": [
+            "AutoName"
+        ],
+        "afterRemove": [
+            "DeleteRelatedCFormular"
+        ]
+    },
     "fields": {
         "name": {
             "type": "varchar",
@@ -510,7 +518,8 @@
             "type": "text",
             "rowsMin": 2,
             "cutHeight": 200,
-            "isCustom": true
+            "isCustom": true,
+            "maxLength": 100
         },
         "datumUnterschrift": {
             "notNull": false,
