@@ -1,4 +1,5 @@
 <?php
+
 namespace Espo\Custom\Hooks\CStundenbericht;
 
 use Espo\ORM\Entity;
@@ -7,30 +8,18 @@ class TechnikerUnterschriftAutoFill
 {
     public function beforeSave(Entity $entity, array $options = [])
     {
-        // Если уже задано вручную — не трогаем
-        $current = (string) ($entity->get('technikerUnterschrift') ?? '');
-        if (trim($current) !== '') {
+        // если уже заполнено — не трогаем
+        $current = trim((string) ($entity->get('technikerUnterschrift') ?? ''));
+        if ($current !== '') {
             return;
         }
 
-        // ID техника 1 (link на User)
-        $techId = $entity->get('stundenberichteTechniker1Id');
-        if (!$techId) {
-            return;
+        // берём имя техника 1 прямо из поля linkName (обычно оно есть)
+        $techName = trim((string) ($entity->get('stundenberichteTechniker1Name') ?? ''));
+        if ($techName === '') {
+            return; // имени нет — нечего подставлять
         }
 
-        // Берём имя из связанного User
-        $em = $entity->getEntityManager();
-        $user = $em->getEntity('User', $techId);
-        if (!$user) {
-            return;
-        }
-
-        $name = (string) ($user->get('name') ?? '');
-        $name = trim($name);
-
-        if ($name !== '') {
-            $entity->set('technikerUnterschrift', $name);
-        }
+        $entity->set('technikerUnterschrift', $techName);
     }
 }
