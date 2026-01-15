@@ -12,12 +12,16 @@
         "align": "left"
     },
     {
+        "name": "objektName",
+        "width": 16
+    },
+    {
         "name": "stundenberichteTechniker1",
         "width": 16
     },
     {
         "name": "pdfUrl",
-        "width": 26,
+        "width": 16,
         "align": "left"
     },
     {

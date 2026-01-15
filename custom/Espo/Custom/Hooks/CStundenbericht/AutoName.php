@@ -8,13 +8,21 @@ class AutoName
 {
     public function beforeSave(Entity $entity, array $options = []): void
     {
-        $name = (string) ($entity->get('name') ?? '');
-        if (trim($name) !== '') {
+        $name = trim((string) ($entity->get('name') ?? ''));
+
+        // Если name уже нормальный — не трогаем.
+        // Но если там "Unbekannter Kunde – ..." — разрешаем пересчитать.
+        if ($name !== '' && strpos($name, 'Unbekannter Kunde') !== 0) {
             return;
         }
 
-        $kunde = (string) ($entity->get('accountName') ?? '');
-        $kunde = trim($kunde) !== '' ? trim($kunde) : 'Unbekannter Kunde';
+        $kunde = trim((string) ($entity->get('accountName') ?? ''));
+        if ($kunde === '') {
+            $kunde = trim((string) ($entity->get('objektName') ?? ''));
+        }
+        if ($kunde === '') {
+            $kunde = 'Unbekannter Kunde';
+        }
 
         $createdAt = (string) ($entity->get('createdAt') ?? '');
         $datum = '';
