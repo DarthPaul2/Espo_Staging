@@ -443,10 +443,10 @@
                     "name": "datumUnterschrift"
                 },
                 {
-                    "name": "unterschriftTechniker"
+                    "name": "kundeUnterschrift"
                 },
                 {
-                    "name": "unterschriftKunde"
+                    "name": "technikerUnterschrift"
                 }
             ]
         ],

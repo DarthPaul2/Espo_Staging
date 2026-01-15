@@ -74,10 +74,6 @@
             "maxLength": 100,
             "isCustom": true
         },
-        "formDataJson": {
-            "type": "wysiwyg",
-            "isCustom": true
-        },
         "pdfFile": {
             "type": "file",
             "maxFileSize": 20,
@@ -340,11 +336,6 @@
             "type": "float",
             "isCustom": true
         },
-        "techniker1Arbeitszeit": {
-            "notNull": false,
-            "type": "float",
-            "isCustom": true
-        },
         "techniker1Kilometer": {
             "notNull": false,
             "type": "float",
@@ -356,11 +347,6 @@
             "isCustom": true
         },
         "techniker2Fahrzeit": {
-            "notNull": false,
-            "type": "float",
-            "isCustom": true
-        },
-        "techniker2Arbeitszeit": {
             "notNull": false,
             "type": "float",
             "isCustom": true
@@ -380,11 +366,6 @@
             "type": "float",
             "isCustom": true
         },
-        "techniker3Arbeitszeit": {
-            "notNull": false,
-            "type": "float",
-            "isCustom": true
-        },
         "techniker3Kilometer": {
             "notNull": false,
             "type": "float",
@@ -400,11 +381,6 @@
             "type": "float",
             "isCustom": true
         },
-        "techniker4Arbeitszeit": {
-            "notNull": false,
-            "type": "float",
-            "isCustom": true
-        },
         "techniker4Kilometer": {
             "notNull": false,
             "type": "float",
@@ -416,11 +392,6 @@
             "isCustom": true
         },
         "techniker5Fahrzeit": {
-            "notNull": false,
-            "type": "float",
-            "isCustom": true
-        },
-        "techniker5Arbeitszeit": {
             "notNull": false,
             "type": "float",
             "isCustom": true
@@ -526,16 +497,6 @@
             "type": "date",
             "isCustom": true
         },
-        "unterschriftTechniker": {
-            "type": "image",
-            "previewSize": "small",
-            "isCustom": true
-        },
-        "unterschriftKunde": {
-            "type": "image",
-            "previewSize": "small",
-            "isCustom": true
-        },
         "ausgefuhrteArbeiten": {
             "type": "text",
             "rowsMin": 2,
@@ -544,6 +505,48 @@
         },
         "pdfUrl": {
             "type": "url",
+            "isCustom": true
+        },
+        "techniker1Arbeitszeit": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "techniker2Arbeitszeit": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "techniker3Arbeitszeit": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "techniker4Arbeitszeit": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "techniker5Arbeitszeit": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "technikerUnterschrift": {
+            "type": "varchar",
+            "maxLength": 30,
+            "options": [],
+            "isCustom": true
+        },
+        "kundeUnterschrift": {
+            "type": "varchar",
+            "maxLength": 30,
+            "options": [],
             "isCustom": true
         }
     },
@@ -618,18 +621,6 @@
             "entity": "CFormular",
             "audited": false,
             "isCustom": true
-        },
-        "unterschriftTechniker": {
-            "type": "belongsTo",
-            "entity": "Attachment",
-            "skipOrmDefs": true,
-            "utility": true
-        },
-        "unterschriftKunde": {
-            "type": "belongsTo",
-            "entity": "Attachment",
-            "skipOrmDefs": true,
-            "utility": true
         }
     },
     "collection": {
