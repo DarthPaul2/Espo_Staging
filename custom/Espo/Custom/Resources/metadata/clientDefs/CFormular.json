@@ -3,7 +3,7 @@
     "boolFilterList": [
         "onlyMy"
     ],
-    "color": "#1b2efd",
+    "color": "#5d1bfd",
     "iconClass": "fas fa-table-list",
     "relationshipPanels": {
         "account": {

@@ -1,7 +1,8 @@
 {
     "hooks": {
         "beforeSave": [
-            "AutoName"
+            "AutoName",
+            "TechnikerUnterschriftAutoFill"
         ],
         "afterRemove": [
             "DeleteRelatedCFormular"
