@@ -20,6 +20,6 @@ class TechnikerUnterschriftAutoFill
             return; // имени нет — нечего подставлять
         }
 
-        $entity->set('technikerUnterschrift', $techName);
+        $entity->set('technikerUnterschrift', 'gez. ' . $techName);
     }
 }

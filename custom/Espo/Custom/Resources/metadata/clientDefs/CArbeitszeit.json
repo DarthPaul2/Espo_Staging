@@ -3,6 +3,9 @@
     "boolFilterList": [
         "onlyMy"
     ],
+    "recordViews": {
+        "edit": "custom:views/c-arbeitszeit/record/edit"
+    },
     "color": "#1e90ff",
     "iconClass": "far fa-clock",
     "views": {

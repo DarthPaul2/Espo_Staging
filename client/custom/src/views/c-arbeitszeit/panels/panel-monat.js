@@ -2,7 +2,7 @@ define('custom:views/c-arbeitszeit/panels/panel-monat', ['view'], function (Dep)
 
     return Dep.extend({
 
-        template: false,
+        template: '',
 
         setup: function () {
             Dep.prototype.setup.call(this);

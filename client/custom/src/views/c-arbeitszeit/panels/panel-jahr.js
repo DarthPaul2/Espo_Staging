@@ -2,7 +2,7 @@ define('custom:views/c-arbeitszeit/panels/panel-jahr', ['view'], function (Dep) 
 
     return Dep.extend({
 
-        template: false,
+        template: '',
 
         render: function () {
             const html = `

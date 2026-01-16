@@ -1,4 +1,4 @@
-Espo.define('controllers/whatsapp-admin', 'controller', function (Dep) {
+Espo.define('custom:whatsapp-admin', ['controllers/base'], function (Dep) {
 
     return Dep.extend({
 
@@ -7,5 +7,4 @@ Espo.define('controllers/whatsapp-admin', 'controller', function (Dep) {
         }
 
     });
-
 });
