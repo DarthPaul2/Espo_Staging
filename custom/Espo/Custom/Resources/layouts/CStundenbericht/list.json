@@ -6,14 +6,15 @@
         "align": "left"
     },
     {
-        "name": "account",
+        "name": "objektName",
         "width": 26,
-        "link": true,
         "align": "left"
     },
     {
-        "name": "objektName",
-        "width": 16
+        "name": "account",
+        "width": 20,
+        "link": true,
+        "align": "left"
     },
     {
         "name": "stundenberichteTechniker1",

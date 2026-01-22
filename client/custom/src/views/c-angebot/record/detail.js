@@ -32,6 +32,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
         // ==== API-Konfiguration ====
         FLASK_BASE: 'https://klesec.pagekite.me/api',
         BASIC_AUTH: 'Basic ' + btoa('admin:test123'),
+        USE_PDF_V2: true,
 
         // ==== Hilfsfunktion: Angebotsnummer → int-ID ====
         _extractIntIdFromNumber(str) {
@@ -382,11 +383,20 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 L('pdfPreview: positions prepared', pos);
 
                 const payload = this.buildPayload(pos);
-                const url = this.FLASK_BASE + '/angebote/preview_pdf';
-                L('pdfPreview: POST', { url });
+                const urlV2 = this.FLASK_BASE + '/angebote_v2/preview_pdf';
+
+                // ⚠️ ALTER PDF-WEG (V1)
+                // Dieser Endpunkt nutzt die bestehende Logik aus
+                // routes_angebote_rechnung.py und erzeugt Angebote
+                // MIT Einzelpreisen und Summen pro Position.
+                // Wird nur als Fallback verwendet, falls V2 fehlschlägt.
+                const urlV1 = this.FLASK_BASE + '/angebote/preview_pdf';
+
+                L('pdfPreview: POST', { url: this.USE_PDF_V2 ? urlV2 : urlV1 });
+
 
                 $.ajax({
-                    url,
+                    url: this.USE_PDF_V2 ? urlV2 : urlV1,
                     method: 'POST',
                     contentType: 'application/json',
                     xhrFields: { responseType: 'blob' },
@@ -405,6 +415,22 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                         });
                         const msg = xhr?.responseJSON?.error || 'Fehler beim Erzeugen der PDF-Vorschau.';
                         this.notify(msg, 'error');
+                        if (this.USE_PDF_V2) {
+                            L('pdfPreview: retry v1 after v2 fail');
+                            $.ajax({
+                                url: urlV1,
+                                method: 'POST',
+                                contentType: 'application/json',
+                                xhrFields: { responseType: 'blob' },
+                                headers: { 'Authorization': this.BASIC_AUTH },
+                                data: JSON.stringify(payload),
+                                success: (blob) => {
+                                    const blobUrl = URL.createObjectURL(blob);
+                                    window.open(blobUrl, '_blank');
+                                }
+                            });
+                        }
+
                     },
                     complete: () => {
                         // всегда убираем лоадер и loading-уведомление
@@ -458,7 +484,14 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
 
                     const payload = this.buildPayload(pos);
                     const angebotKey = encodeURIComponent(this.model.get('angebotsnummer') || espoId);
-                    const url = `${this.FLASK_BASE}/angebote/${angebotKey}/save_pdf`;
+                    const urlV2 = `${this.FLASK_BASE}/angebote_v2/${angebotKey}/save_pdf`;
+
+                    // ⚠️ ALTER SPEICHER-WEG (V1)
+                    // Erzeugt und speichert das Angebots-PDF nach dem alten Schema
+                    // (Preise je Position sichtbar).
+                    // Implementiert in routes_angebote_rechnung.py.
+                    const urlV1 = `${this.FLASK_BASE}/angebote/${angebotKey}/save_pdf`;
+                    const url = this.USE_PDF_V2 ? urlV2 : urlV1;
 
                     L('pdfSave: POST', { url });
 
@@ -518,6 +551,24 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                             });
                             const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF.';
                             this.notify(msg, 'error');
+                            if (this.USE_PDF_V2) {
+                                L('pdfSave: retry v1 after v2 fail');
+                                $.ajax({
+                                    url: urlV1,
+                                    method: 'POST',
+                                    contentType: 'application/json',
+                                    headers: { 'Authorization': this.BASIC_AUTH },
+                                    data: JSON.stringify(payload),
+                                    success: (resp) => {
+                                        this.notify(resp?.message || 'PDF gespeichert.', 'success');
+                                        const saveData = {};
+                                        if (resp?.pdfUrl) saveData.pdfUrl = resp.pdfUrl;
+                                        if (resp?.gaebUrl) saveData.gaebUrl = resp.gaebUrl;
+                                        if (Object.keys(saveData).length) this.model.save(saveData);
+                                    }
+                                });
+                            }
+
                         },
                         complete: () => {
                             // всегда снимаем лоадер и loading-уведомление
@@ -646,7 +697,15 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 return;
             }
 
-            const downloadUrl = `${this.FLASK_BASE}/angebote/download_pdf/${encodeURIComponent(nr)}`;
+            const downloadUrl = this.USE_PDF_V2
+                ? `${this.FLASK_BASE}/angebote_v2/download_pdf/${encodeURIComponent(nr)}`
+
+                // ℹ️ Download erfolgt weiterhin über den alten Endpunkt.
+                // Das PDF liegt unabhängig vom Erzeugungsweg (V1/V2)
+                // im gleichen Zielverzeichnis.
+                // Der Download-Endpunkt stammt aus routes_angebote_rechnung.py.
+                : `${this.FLASK_BASE}/angebote/download_pdf/${encodeURIComponent(nr)}`;
+
             const label = '📄 PDF herunterladen';
 
             let $a = $value.find('a[href]');
@@ -672,7 +731,13 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 return;
             }
 
-            const downloadGaebUrl = `${this.FLASK_BASE}/angebote/download_gaeb/${encodeURIComponent(nr)}`;
+            const downloadGaebUrl = this.USE_PDF_V2
+                ? `${this.FLASK_BASE}/angebote_v2/download_gaeb/${encodeURIComponent(nr)}`
+
+                // ℹ️ GAEB-Download nutzt weiterhin den bestehenden V1-Endpunkt.
+                // Einheitliche GAEB-Logik aus routes_angebote_rechnung.py.
+                : `${this.FLASK_BASE}/angebote/download_gaeb/${encodeURIComponent(nr)}`;
+
             const label = '🧾 GAEB X84 herunterladen';
 
             let $a = $value.find('a[href]');
