@@ -682,6 +682,60 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             Dep.prototype.onRemove.call(this);
         },
 
+
+        // ==== Два следующих метода для создания и функционирования кнопки "Paket hinzufügen" ====
+        afterRender: function () {
+            Dep.prototype.afterRender.call(this);
+
+            setTimeout(() => {
+                const $panel = this.$el.find('div.panel[data-name="positionen"], div.panel[data-link="positionen"]').first();
+                console.log('[CAngebot/detail] positions panel found?', $panel.length);
+
+                if (!$panel.length) {
+                    setTimeout(() => this.afterRender(), 300);
+                    return;
+                }
+
+                if (this.$el.find('div[data-name="angebotspaket-actions"]').length) return;
+
+                const $actions = $(`
+            <div data-name="angebotspaket-actions"
+                 style="display: inline-flex; gap: 6px; padding: 5px 8px; margin-bottom: 6px; margin-top: -5px; background: #efda97; border-radius: 6px; border: 1px solid #e5e5e5;">
+                <button class="btn btn-default" data-action="addPackage">
+                    Paket hinzufügen
+                </button>
+            </div>
+        `);
+
+                $actions.insertBefore($panel);
+                $actions.on('click', '[data-action="addPackage"]', () => this._openPackageWizard());
+
+            }, 500);
+        },
+
+        _openPackageWizard: function () {
+            const angebotId = this.model && this.model.id;
+            if (!angebotId) {
+                this.notify('Angebot ist nicht gespeichert.', 'error');
+                return;
+            }
+
+            // Диагностика — один раз посмотри в консоль
+            console.log('[CAngebot/detail] open package wizard', {
+                angebotId,
+                flaskBase: this.FLASK_BASE,
+                basicAuth: this.BASIC_AUTH
+            });
+
+            this.createView('packageWizard', 'custom:views/c-angebot/modals/package-wizard', {
+                angebotId: angebotId,
+                flaskBase: this.FLASK_BASE,
+                basicAuth: this.BASIC_AUTH,
+                parentView: this
+            }, (view) => view.render());
+        },
+
+
         // ==== PDF-Link anpassen ====
         _applyPdfLinkLabel: function () {
             const nr = this.model.get('angebotsnummer');

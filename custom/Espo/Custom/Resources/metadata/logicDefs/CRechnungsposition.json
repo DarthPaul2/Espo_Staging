@@ -67,7 +67,15 @@
             }
         },
         "titel": {
-            "visible": null
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "positionType",
+                        "value": "header"
+                    }
+                ]
+            }
         },
         "positionsNummerHinweis": {
             "visible": {

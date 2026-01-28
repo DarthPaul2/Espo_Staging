@@ -220,7 +220,7 @@
 <style>
 /* ===== WhatsApp Admin – Green Theme ===== */
 :root{
-  --klesec-green: #16b900;
+  --klesec-green: #bcffb3;
   --klesec-green-dark: #095000;
   --border: #d9d9d9;
   --bg-soft: #f6fff6;
