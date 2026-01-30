@@ -165,12 +165,14 @@
         "verwendet": {
             "notNull": true,
             "type": "bool",
-            "isCustom": true
+            "isCustom": true,
+            "default": true
         },
         "aktiv": {
             "notNull": true,
             "type": "bool",
-            "isCustom": true
+            "isCustom": true,
+            "default": true
         },
         "hersteller": {
             "type": "varchar",

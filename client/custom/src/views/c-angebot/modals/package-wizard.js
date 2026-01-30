@@ -220,10 +220,9 @@ define('custom:views/c-angebot/modals/package-wizard', [
                 select: ['id', 'name', 'code', 'kategorie', 'einheit', 'preis', 'description', 'aktiv', 'verwendet'],
                 limit: limit,
                 offset: offset,
+                boolFilterList: [],
                 where: [
-                    { type: 'equals', attribute: 'kategorie', value: c },
-                    { type: 'equals', attribute: 'aktiv', value: true },
-                    { type: 'equals', attribute: 'verwendet', value: true }
+                    { type: 'equals', attribute: 'kategorie', value: c }
                 ],
                 orderBy: 'name',
                 order: 'asc'

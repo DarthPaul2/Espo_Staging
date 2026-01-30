@@ -31,6 +31,10 @@
         "align": "left"
     },
     {
+        "name": "aktiv",
+        "width": 16
+    },
+    {
         "name": "lagerplatzCode",
         "width": 16
     }
