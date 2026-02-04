@@ -1,0 +1,29 @@
+{
+    "labels": {
+        "Create CMelderQuartal": "Melder Quartal erstellen"
+    },
+    "fields": {
+        "account": "Account",
+        "user": "User",
+        "year": "Jahr",
+        "quarter": "Quarter",
+        "filledAt": "Filled At",
+        "updatedAtServer": "Updated At Server",
+        "technikerId": "Techniker Id",
+        "pdfPath": "Pdf Path",
+        "pdfUrl": "Pdf Url",
+        "sourceId": "Source Id"
+    },
+    "links": {
+        "account": "Account",
+        "user": "User"
+    },
+    "options": {
+        "quarter": {
+            "Q1": "Q1",
+            "Q2": "Q2",
+            "Q3": "Q3",
+            "Q4": "Q4"
+        }
+    }
+}

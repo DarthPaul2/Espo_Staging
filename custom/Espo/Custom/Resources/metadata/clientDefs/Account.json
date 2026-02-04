@@ -47,6 +47,14 @@
         "stundenberichts": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "melderQuartals": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "melderGesamtPdfs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

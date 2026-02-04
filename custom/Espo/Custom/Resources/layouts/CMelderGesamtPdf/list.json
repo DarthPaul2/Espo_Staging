@@ -1,0 +1,22 @@
+[
+    {
+        "name": "account",
+        "width": 16
+    },
+    {
+        "name": "year",
+        "width": 16
+    },
+    {
+        "name": "finalPdfUrl",
+        "width": 16
+    },
+    {
+        "name": "finalPdfPath",
+        "width": 16
+    },
+    {
+        "name": "updatedAtServer",
+        "width": 16
+    }
+]

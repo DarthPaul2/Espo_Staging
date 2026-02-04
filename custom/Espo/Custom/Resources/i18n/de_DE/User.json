@@ -10,7 +10,9 @@
         "cTechniker2": "Techniker 2",
         "cTechniker3": "Techniker 3",
         "cTechniker4": "Techniker 4",
-        "cTechniker5": "Techniker 5"
+        "cTechniker5": "Techniker 5",
+        "cMelderQuartals": "Melder Quartals",
+        "cMelderGesamtPdfs": "Melder Gesamt Pdfs"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -23,6 +25,8 @@
         "cTechniker2": "Techniker 2",
         "cTechniker3": "Techniker 3",
         "cTechniker4": "Techniker 4",
-        "cTechniker5": "Techniker 5"
+        "cTechniker5": "Techniker 5",
+        "cMelderQuartals": "Melder Quartals",
+        "cMelderGesamtPdfs": "Melder Gesamt Pdfs"
     }
 }

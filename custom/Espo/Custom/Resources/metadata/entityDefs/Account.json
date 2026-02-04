@@ -119,6 +119,20 @@
             "entity": "CStundenbericht",
             "audited": false,
             "isCustom": true
+        },
+        "cMelderQuartals": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CMelderQuartal",
+            "audited": false,
+            "isCustom": true
+        },
+        "cMelderGesamtPdfs": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CMelderGesamtPdf",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

@@ -1,0 +1,18 @@
+{
+    "labels": {
+        "Create CMelderGesamtPdf": "Melderprüfliste Gesamt PDF erstellen"
+    },
+    "fields": {
+        "account": "Account",
+        "user": "User",
+        "year": "Jahr",
+        "finalPdfPath": "Gesamt Pdf",
+        "finalPdfUrl": "Gesamt Pdf Url",
+        "updatedAtServer": "Updated At Server",
+        "sourceId": "Source Id"
+    },
+    "links": {
+        "account": "Account",
+        "user": "User"
+    }
+}

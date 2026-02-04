@@ -11,7 +11,9 @@
         "cWartungs": "Wartungs",
         "cFormulars": "Formulars",
         "cBriefs": "Briefs",
-        "cStundenberichts": "Stundenberichts"
+        "cStundenberichts": "Stundenberichts",
+        "cMelderQuartals": "Melder Quartals",
+        "cMelderGesamtPdfs": "Melder Gesamt Pdfs"
     },
     "links": {
         "cFirmenHauptkontakt": "Firmen Hauptkontakt",
@@ -23,7 +25,9 @@
         "cWartungs": "Wartungs",
         "cFormulars": "Formulars",
         "cBriefs": "Briefs",
-        "cStundenberichts": "Stundenberichts"
+        "cStundenberichts": "Stundenberichts",
+        "cMelderQuartals": "Melder Quartals",
+        "cMelderGesamtPdfs": "Melder Gesamt Pdfs"
     },
     "options": {
         "type": {

@@ -233,7 +233,12 @@
             "required": false
         },
         "mahnregel": {
-            "type": "link"
+            "type": "link",
+            "defaultAttributes": {
+                "mahnregelId": "68d52410a7be239de",
+                "mahnregelName": "Standard Mahnregel"
+            },
+            "required": true
         },
         "mahnstufe": {
             "type": "enum",

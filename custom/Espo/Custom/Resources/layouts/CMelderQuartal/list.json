@@ -1,0 +1,26 @@
+[
+    {
+        "name": "account",
+        "width": 16
+    },
+    {
+        "name": "year",
+        "width": 16
+    },
+    {
+        "name": "quarter",
+        "width": 16
+    },
+    {
+        "name": "user",
+        "width": 16
+    },
+    {
+        "name": "updatedAtServer",
+        "width": 16
+    },
+    {
+        "name": "pdfUrl",
+        "width": 16
+    }
+]

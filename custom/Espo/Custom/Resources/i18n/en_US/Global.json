@@ -20,7 +20,9 @@
         "CWerkzeugausgabe": "Werkzeugausgabe",
         "CFormular": "Formularbericht",
         "CBrief": "Geschäftsbrief",
-        "CStundenbericht": "Stundenbericht"
+        "CStundenbericht": "Stundenbericht",
+        "CMelderQuartal": "Melder Quartal",
+        "CMelderGesamtPdf": "Melderprüfliste Gesamt PDF"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -43,7 +45,9 @@
         "CWerkzeugausgabe": "Werkzeugausgaben",
         "CFormular": "Formularberichte",
         "CBrief": "Geschäftsbriefe",
-        "CStundenbericht": "Stundenberichte"
+        "CStundenbericht": "Stundenberichte",
+        "CMelderQuartal": "Melder Quartale",
+        "CMelderGesamtPdf": "Melder Gesamt Pdf"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

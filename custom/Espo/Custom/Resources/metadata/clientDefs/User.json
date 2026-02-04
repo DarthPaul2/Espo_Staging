@@ -67,6 +67,14 @@
         "techniker5": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "melderQuartals": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "melderGesamtPdfs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

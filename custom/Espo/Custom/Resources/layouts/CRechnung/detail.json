@@ -105,7 +105,9 @@
                     "name": "letzteMahnungAm"
                 },
                 false,
-                false
+                {
+                    "name": "mahnregel"
+                }
             ]
         ],
         "dynamicLogicVisible": null,

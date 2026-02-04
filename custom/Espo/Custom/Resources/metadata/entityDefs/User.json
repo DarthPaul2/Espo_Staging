@@ -76,6 +76,20 @@
             "entity": "CStundenbericht",
             "audited": false,
             "isCustom": true
+        },
+        "cMelderQuartals": {
+            "type": "hasMany",
+            "foreign": "user",
+            "entity": "CMelderQuartal",
+            "audited": false,
+            "isCustom": true
+        },
+        "cMelderGesamtPdfs": {
+            "type": "hasMany",
+            "foreign": "user",
+            "entity": "CMelderGesamtPdf",
+            "audited": false,
+            "isCustom": true
         }
     }
 }
