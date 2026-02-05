@@ -21,7 +21,7 @@
         "CFormular": "Formularbericht",
         "CBrief": "Geschäftsbrief",
         "CStundenbericht": "Stundenbericht",
-        "CMelderQuartal": "Melder Quartal",
+        "CMelderQuartal": "Melderprüfliste Quartal",
         "CMelderGesamtPdf": "Melderprüfliste Gesamt PDF"
     },
     "scopeNamesPlural": {
@@ -46,8 +46,8 @@
         "CFormular": "Formularberichte",
         "CBrief": "Geschäftsbriefe",
         "CStundenbericht": "Stundenberichte",
-        "CMelderQuartal": "Melder Quartale",
-        "CMelderGesamtPdf": "Melder Gesamt Pdf"
+        "CMelderQuartal": "Melderprüflisten Quartale",
+        "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

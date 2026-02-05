@@ -6,6 +6,10 @@
         "align": "left"
     },
     {
+        "name": "einsatzbeginn",
+        "width": 16
+    },
+    {
         "name": "objektName",
         "width": 26,
         "align": "left"

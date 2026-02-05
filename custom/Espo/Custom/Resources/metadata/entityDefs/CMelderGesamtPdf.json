@@ -1,4 +1,9 @@
 {
+    "hooks": {
+        "afterRemove": {
+            "className": "Espo\\Custom\\Hooks\\CMelderGesamtPdf\\SyncDelete"
+        }
+    },
     "fields": {
         "name": {
             "type": "varchar",
@@ -104,7 +109,12 @@
     },
     "collection": {
         "orderBy": "createdAt",
-        "order": "desc"
+        "order": "desc",
+        "textFilterFields": [
+            "name"
+        ],
+        "fullTextSearch": false,
+        "countDisabled": false
     },
     "indexes": {
         "name": {
@@ -138,5 +148,6 @@
                 "deleted"
             ]
         }
-    }
+    },
+    "optimisticConcurrencyControl": false
 }

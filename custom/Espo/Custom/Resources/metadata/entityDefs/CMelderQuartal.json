@@ -1,4 +1,9 @@
 {
+    "hooks": {
+        "afterRemove": {
+            "className": "Espo\\Custom\\Hooks\\CMelderQuartal\\SyncDelete"
+        }
+    },
     "fields": {
         "name": {
             "type": "varchar",
