@@ -3,6 +3,17 @@
     "recordViews": {
         "detail": "custom:views/c-stundenbericht/record/detail"
     },
+    "massActionList": [
+        "downloadPdfZip"
+    ],
+    "massActionDefs": {
+        "downloadPdfZip": {
+            "label": "PDF speichern (ZIP)",
+            "handler": "custom:handlers/c-stundenbericht/mass-download-pdf-zip",
+            "acl": "read",
+            "groupIndex": 9
+        }
+    },
     "boolFilterList": [
         "onlyMy"
     ],

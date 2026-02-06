@@ -2,6 +2,9 @@
     "labels": {
         "Create CStundenbericht": "Stundenbericht erstellen"
     },
+    "massActions": {
+        "downloadPdfZip": "PDF speichern (ZIP)"
+    },
     "fields": {
         "formKey": "FormKey",
         "parentFormKey": "Parent Form Key",
