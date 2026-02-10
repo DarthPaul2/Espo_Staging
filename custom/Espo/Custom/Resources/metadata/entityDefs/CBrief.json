@@ -1,4 +1,9 @@
 {
+    "hooks": {
+        "beforeSave": [
+            "AutoName"
+        ]
+    },
     "fields": {
         "name": {
             "type": "varchar",

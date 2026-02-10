@@ -11,6 +11,10 @@
         "align": "left"
     },
     {
+        "name": "contact",
+        "width": 16
+    },
+    {
         "name": "betreff",
         "width": 26,
         "link": true,
