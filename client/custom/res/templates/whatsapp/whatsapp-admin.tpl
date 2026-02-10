@@ -25,19 +25,37 @@
     </div>
 
     <hr>
+    <!-- Sammelbericht Aktionen -->
+    <div id="sammelberichtBar" style="margin: 10px 0; display:flex; gap:10px; align-items:center;">
+        <button
+            id="btnCreateSammelbericht"
+            class="wa-btn wa-btn-green"
+            disabled
+            title="Mehrere Einträge auswählen"
+        >
+            📄 Sammelbericht erstellen
+        </button>
+
+        <span id="sammelHint" style="font-size:12px; color:#666;">
+            Mehrere Einträge auswählen, um einen Sammelbericht zu erstellen.
+        </span>
+    </div>
 
     <!-- Table -->
     <div class="table-container">
         <table id="whatsappTable" style="width:100%; border-collapse:collapse;">
             <thead>
-                <tr>
-                    <th>Datum</th>
-                    <th>Techniker</th>
-                    <th>Nachricht</th>
-                    <th>Medien</th>
-                    <th>Aktion</th>
-                </tr>
+              <tr>
+                <th style="width:70px; text-align:center;">Auswahl</th>
+                <th>Datum</th>
+                <th>Techniker</th>
+                <th>Nachricht</th>
+                <th>Medien</th>
+                <th>PDF Bericht</th>
+                <th>Aktion</th>
+              </tr>
             </thead>
+
             <tbody></tbody>
         </table>
     </div>
@@ -53,7 +71,36 @@
     </div>
 </div>
 
-<!-- Заглушки модалок (пока пустые, чтобы JS не падал, если вы их откроете) -->
+<!-- Sammelbericht Modal -->
+<div id="sammelModal" class="wa-modal" style="display:none;">
+  <div class="wa-modal-content" style="max-width:520px;">
+    <span class="wa-close" id="btnCloseSammel">&times;</span>
+
+    <h3 style="margin-top:0;">Sammelbericht erstellen</h3>
+
+    <div class="wa-card">
+      <label for="sammelKundenSelect" class="wa-label">🧑‍💼 Kunde auswählen:</label>
+      <select id="sammelKundenSelect" class="wa-input">
+        <option value="">Bitte wählen...</option>
+      </select>
+      <div id="sammelKundenHint" class="wa-hint">
+        Hinweis: Kunde ist Pflicht (ID wird gespeichert).
+      </div>
+    </div>
+
+    <div class="wa-card">
+      <label for="sammelObjektInput" class="wa-label">🏷️ Objekt / Projekt (optional):</label>
+      <input id="sammelObjektInput" class="wa-input" type="text" placeholder="z. B. Objekt: Wäscherei Holterbosch" />
+      <div class="wa-hint">Wenn leer, wird wie bisher automatisch aus Text / Kunde abgeleitet.</div>
+    </div>
+
+    <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+      <button id="btnCancelSammel" class="wa-btn wa-btn-grey">Abbrechen</button>
+      <button id="btnConfirmSammel" class="wa-btn wa-btn-green">📄 Erstellen</button>
+    </div>
+  </div>
+</div>
+
 <!-- Report Modal -->
 <div id="reportModal" class="wa-modal" style="display:none;">
   <div class="wa-modal-content">
@@ -264,7 +311,7 @@
 /* Кнопки (только внутри WhatsApp страницы) */
 #btnApplyFilter{
   background: var(--klesec-green);
-  color: #fff;
+  color: #141414;
   padding: 7px 14px;
   border: none;
   border-radius: 999px;
@@ -317,11 +364,16 @@
   top: 0;
   z-index: 2;
   background: var(--klesec-green) !important;
-  color: #fff;
+  color: #202020;
   padding: 10px 8px;
   text-align: left;
   border-bottom: 2px solid rgba(255,255,255,.35);
 }
+#whatsappTable thead th:first-child,
+#whatsappTable td:first-child{
+  text-align: center !important;
+}
+
 
 #whatsappTable td{
   padding: 8px;

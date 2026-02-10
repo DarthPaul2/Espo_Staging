@@ -233,6 +233,12 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
         setup: function () {
             Dep.prototype.setup.call(this);
 
+            // --- PDF-Modus persistent merken (über Page-Reload) ---
+            const storageKey = 'cangebot_pdf_mode'; // общий для пользователя/браузера
+            const savedMode = localStorage.getItem(storageKey) || 'v2';
+            this.USE_PDF_V2 = (savedMode !== 'v1');
+
+
             this.once('after:render', () => this._applyPdfLinkLabel(), this);
             this.listenTo(this.model, 'change:pdfUrl', () => {
                 setTimeout(() => this._applyPdfLinkLabel(), 0);
@@ -359,6 +365,13 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 style: 'primary',
                 title: 'PDF erzeugen und speichern'
             });
+            this.buttonList.push({
+                name: 'pdfSaveWithPrice',
+                label: 'PDF erzeugen mit Preis',
+                style: 'info',
+                title: 'PDF nach altem Schema (mit Einzelpreisen) erzeugen und speichern'
+            });
+
             this.buttonList.push({
                 name: 'sendOffer',
                 label: 'Angebot senden',
@@ -502,6 +515,10 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                         headers: { 'Authorization': this.BASIC_AUTH },
                         data: JSON.stringify(payload),
                         success: (resp) => {
+                            localStorage.setItem('cangebot_pdf_mode', 'v2');
+                            this.USE_PDF_V2 = true;
+                            setTimeout(() => this._applyPdfLinkLabel(), 0);
+
                             L('pdfSave: success', resp);
                             this.notify(resp?.message || 'PDF gespeichert.', 'success');
 
@@ -589,6 +606,104 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                     }
                 });
         },
+
+
+        // ==== PDF Save (V1 mit Preis) ====
+        actionPdfSaveWithPrice: function () {
+            const espoId = this.model.id;
+            if (!espoId) return;
+
+            Loader.showFor(this, 'PDF (mit Preis) wird erzeugt und gespeichert…');
+            const notifyId = this.notify('PDF (mit Preis) wird erzeugt und gespeichert…', 'loading');
+
+            this.loadPositionsFromPanel()
+                .catch(() => this.loadPositionsViaRest(espoId))
+                .then(rows => {
+                    const pos = this.buildPositionsForPdf(rows);
+                    if (!pos.length) {
+                        this.notify('Keine Positionen gefunden.', 'error');
+
+                        Loader.hideFor(this);
+                        if (notifyId) this.notify(false, 'loading', notifyId);
+                        return;
+                    }
+
+                    const payload = this.buildPayload(pos);
+                    const angebotKey = encodeURIComponent(this.model.get('angebotsnummer') || espoId);
+
+                    // ✅ ВАЖНО: тут ЖЁСТКО V1
+                    const urlV1 = `${this.FLASK_BASE}/angebote/${angebotKey}/save_pdf`;
+
+                    L('pdfSaveWithPrice: POST', { url: urlV1 });
+
+                    $.ajax({
+                        url: urlV1,
+                        method: 'POST',
+                        contentType: 'application/json',
+                        headers: { 'Authorization': this.BASIC_AUTH },
+                        data: JSON.stringify(payload),
+                        success: (resp) => {
+                            localStorage.setItem('cangebot_pdf_mode', 'v1');
+                            this.USE_PDF_V2 = false;
+                            setTimeout(() => this._applyPdfLinkLabel(), 0);
+
+                            L('pdfSaveWithPrice: success', resp);
+                            this.notify(resp?.message || 'PDF gespeichert (mit Preis).', 'success');
+
+                            // ✅ Вы просили: перетирать ссылку — делаем так же как в actionPdfSave
+                            const saveData = {};
+                            if (resp?.pdfUrl) saveData.pdfUrl = resp.pdfUrl;
+                            if (resp?.gaebUrl) saveData.gaebUrl = resp.gaebUrl;
+
+                            if (Object.keys(saveData).length) {
+                                this.model.save(saveData, {
+                                    success: () => {
+                                        L('pdfSaveWithPrice: URLs saved to CRM', saveData);
+
+                                        this.model.fetch({
+                                            success: () => {
+                                                L('pdfSaveWithPrice: after fetch urls', {
+                                                    pdfUrl: this.model.get('pdfUrl'),
+                                                    gaebUrl: this.model.get('gaebUrl')
+                                                });
+                                                this.reRender();
+                                            },
+                                            error: (xhr) => {
+                                                L('pdfSaveWithPrice: fetch after save failed', xhr);
+                                                this.reRender();
+                                            }
+                                        });
+                                    },
+                                    error: (xhr) => {
+                                        L('pdfSaveWithPrice: failed to save URLs in CRM', xhr);
+                                    }
+                                });
+                            }
+                        },
+                        error: (xhr) => {
+                            L('pdfSaveWithPrice: AJAX error', {
+                                status: xhr?.status,
+                                statusText: xhr?.statusText,
+                                responseText: xhr?.responseText
+                            });
+                            const msg = xhr?.responseJSON?.error || 'Fehler beim Speichern der PDF (mit Preis).';
+                            this.notify(msg, 'error');
+                        },
+                        complete: () => {
+                            Loader.hideFor(this);
+                            if (notifyId) this.notify(false, 'loading', notifyId);
+                        }
+                    });
+                })
+                .catch(err => {
+                    L('pdfSaveWithPrice: positions load failed', err?.message || err);
+                    this.notify('Keine Positionen gefunden.', 'error');
+
+                    Loader.hideFor(this);
+                    if (notifyId) this.notify(false, 'loading', notifyId);
+                });
+        },
+
 
         // --- helpers: открываем штатный композер с предзаполнением ---
         _openEspoEmailCompose: function (attrs) {

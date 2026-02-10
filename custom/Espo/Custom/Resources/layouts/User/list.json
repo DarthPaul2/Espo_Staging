@@ -1,0 +1,33 @@
+[
+    {
+        "name": "name",
+        "width": 18,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "userName",
+        "width": 18,
+        "align": "left"
+    },
+    {
+        "name": "title",
+        "width": 20,
+        "align": "left"
+    },
+    {
+        "name": "emailAddress",
+        "width": 20,
+        "align": "left"
+    },
+    {
+        "name": "phoneNumber",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "isActive",
+        "width": 5,
+        "align": "left"
+    }
+]

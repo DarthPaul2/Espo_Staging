@@ -2,12 +2,13 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
 
     function $(id) { return document.getElementById(id); }
 
-    // !!! ВАЖНО: ваш Flask API базовый URL
     const BASE_URL = 'https://klesec.pagekite.me';
 
     let _loaderCount = 0;
-    let _currentReportMsgId = null;   // id сообщения (группы) для модалки
-    let _currentReportMeta = null;    // {techniker, datum, bilder[]}
+
+    let _currentReportMsgId = null;
+    let _currentReportMeta = null;
+
     // ===== Annotieren (fabric.js) =====
     let _fabricCanvas = null;
     let _undoStack = [];
@@ -58,6 +59,13 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         return BASE_URL + '/' + u;
     }
 
+    // ---------- PDF CELL ----------
+    function buildPdfCell(msg) {
+        if (!msg || !msg.bericht_in_db || !msg.pdf_url) return '-';
+        const href = String(msg.pdf_url).startsWith('http') ? msg.pdf_url : (BASE_URL + String(msg.pdf_url));
+        return '<a href="' + escapeHtml(href) + '" target="_blank" class="button-link-green">Bericht (PDF)</a>';
+    }
+
     // ---------- MEDIA CELL ----------
     function buildMediaCell(msg) {
         const urls = Array.isArray(msg.media_urls) ? msg.media_urls : [];
@@ -86,7 +94,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
                     '</div>'
                 );
             }
-            // audio / sonstiges
             return (
                 '<audio controls preload="none" style="height:32px; min-width:220px;">' +
                 '<source src="' + safeUrl + '">' +
@@ -114,11 +121,41 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             const groupKey = msg.whatsapp_group_key || '';
             const msgId = msg.id;
 
+            const einzelUrl = msg.pdf_url ? absUrl(msg.pdf_url) : '';
+            const sammelUrl = msg.sammel_pdf_url ? absUrl(msg.sammel_pdf_url) : '';
+            const sammelLabel = msg.sammel_label || 'Sammelbericht (PDF)';
+
+            const pdfCellHtml = (function () {
+                const parts = [];
+
+                if (einzelUrl) {
+                    parts.push(
+                        '<a href="' + escapeHtml(einzelUrl) + '" target="_blank" style="font-weight:700; color:#0275d8; text-decoration:none;">Bericht (PDF)</a>'
+                    );
+                } else {
+                    parts.push('<span style="color:#888;">-</span>');
+                }
+
+                if (sammelUrl) {
+                    parts.push(
+                        '<a href="' + escapeHtml(sammelUrl) + '" target="_blank" style="font-weight:800; color:#16b900; text-decoration:none;">' +
+                        escapeHtml(sammelLabel) +
+                        '</a>'
+                    );
+                }
+
+                return '<div style="display:flex; flex-direction:column; gap:6px;">' + parts.join('') + '</div>';
+            })();
+
             tr.innerHTML =
+                '<td style="padding:8px; border-bottom:1px solid #eee; text-align:center;">' +
+                '<input type="checkbox" class="rowChk" data-key="' + escapeHtml(groupKey) + '" data-id="' + escapeHtml(String(msgId)) + '">' +
+                '</td>' +
                 '<td style="padding:8px; border-bottom:1px solid #eee; white-space:nowrap;">' + escapeHtml(date) + '</td>' +
                 '<td style="padding:8px; border-bottom:1px solid #eee; white-space:nowrap;">' + escapeHtml(technikerName) + '</td>' +
                 '<td style="padding:8px; border-bottom:1px solid #eee; word-break:break-word; white-space:pre-wrap;">' + escapeHtml(text) + '</td>' +
                 '<td style="padding:8px; border-bottom:1px solid #eee;">' + buildMediaCell(msg) + '</td>' +
+                '<td style="padding:8px; border-bottom:1px solid #eee; white-space:nowrap;">' + pdfCellHtml + '</td>' +
                 '<td style="padding:8px; border-bottom:1px solid #eee; white-space:nowrap;">' +
                 '<div style="display:flex; flex-direction:column; gap:8px; align-items:flex-start;">' +
                 '<button data-action="delete" data-key="' + escapeHtml(groupKey) + '" style="padding:6px 10px; cursor:pointer;">🗑️ Löschen</button>' +
@@ -126,18 +163,18 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
                 '</div>' +
                 '</td>';
 
+
             tbody.appendChild(tr);
         });
     }
 
-    // ---------- LOAD TECHNICIANS (from messages, no extra API) ----------
+    // ---------- LOAD TECHNICIANS ----------
     function fillTechniciansFromRows(rows) {
         const sel = $('searchTechnician');
         if (!sel) return;
 
         const currentVal = sel.value || 'alle';
 
-        // собрать уникальных техников
         const map = {};
         rows.forEach(function (r) {
             if (r && r.techniker_id) {
@@ -145,7 +182,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             }
         });
 
-        // перерисовать
         sel.innerHTML = '<option value="alle">Alle Techniker</option>';
         Object.keys(map).sort().forEach(function (id) {
             const opt = document.createElement('option');
@@ -154,7 +190,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             sel.appendChild(opt);
         });
 
-        // восстановить выбор если возможно
         if (currentVal && currentVal !== 'alle') sel.value = currentVal;
     }
 
@@ -183,12 +218,10 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         }
     }
 
-    // ---------- ESPo: load clients into kundenSelect ----------
+    // ---------- CLIENTS INTO SELECT ----------
     async function loadClientsIntoSelect() {
         const sel = $('kundenSelect');
         if (!sel) return;
-
-        // уже загружали — не дублируем
         if (sel.dataset && sel.dataset.loaded === '1') return;
 
         showLoader('Kundenliste wird geladen…');
@@ -201,22 +234,17 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
                 .filter(x => x && x.id != null && x.name)
                 .forEach(function (c) {
                     const opt = document.createElement('option');
-                    opt.value = String(c.id);      // <-- ВАЖНО: int-id как строка
+                    opt.value = String(c.id);
                     opt.textContent = c.name;
                     sel.appendChild(opt);
                 });
 
             if (sel.dataset) sel.dataset.loaded = '1';
-        } catch (e) {
-            console.error(e);
-            alert('Fehler beim Laden der Kunden: ' + e.message);
         } finally {
             hideLoader();
         }
     }
 
-
-    // ---------- MODAL OPEN/CLOSE ----------
     function openReportModal() {
         const m = $('reportModal');
         if (!m) return;
@@ -230,7 +258,59 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         m.style.display = 'none';
     }
 
-    // ---------- KI REPORT FLOW ----------
+    // ---------- SAMMELBERICHT MODAL ----------
+    function openSammelModal() {
+        const m = $('sammelModal');
+        if (m) m.style.display = 'block';
+    }
+    function closeSammelModal() {
+        const m = $('sammelModal');
+        if (m) m.style.display = 'none';
+    }
+
+    async function loadClientsIntoSammelSelect() {
+        const sel = $('sammelKundenSelect');
+        if (!sel) return;
+        if (sel.dataset && sel.dataset.loaded === '1') return;
+
+        showLoader('Kundenliste wird geladen…');
+        try {
+            const list = await fetchJson(BASE_URL + '/api/whatsapp/clients');
+
+            sel.innerHTML = '<option value="">Bitte wählen...</option>';
+
+            (Array.isArray(list) ? list : [])
+                .filter(x => x && x.id != null && x.name)
+                .forEach(function (c) {
+                    const opt = document.createElement('option');
+                    opt.value = String(c.id);
+                    opt.textContent = c.name;
+                    sel.appendChild(opt);
+                });
+
+            if (sel.dataset) sel.dataset.loaded = '1';
+        } finally {
+            hideLoader();
+        }
+    }
+
+    function bindSammelModalUiOnce() {
+        const x = $('btnCloseSammel');
+        if (x) x.addEventListener('click', closeSammelModal);
+
+        const c = $('btnCancelSammel');
+        if (c) c.addEventListener('click', closeSammelModal);
+
+        const ok = $('btnConfirmSammel');
+        if (ok) {
+            ok.addEventListener('click', function () {
+                // подтверждение запускаем внутри createSammelberichtFlow через флаг
+                // здесь ничего не делаем — обработчик будет в createSammelberichtFlow
+            });
+        }
+    }
+
+    // ---------- KI REPORT ----------
     async function openKiReportForMessage(msgId) {
         _currentReportMsgId = msgId;
         _currentReportMeta = null;
@@ -239,7 +319,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         try {
             const data = await fetchJson(BASE_URL + '/api/whatsapp/' + msgId + '/bericht_text');
 
-            // speichern meta
             _currentReportMeta = {
                 techniker: data.techniker || 'Unbekannt',
                 datum: data.datum || '',
@@ -252,9 +331,7 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             const editor = $('berichtEditor');
             if (editor) editor.value = data.bericht_text || '';
 
-            // Bilder anzeigen (Preview + Kommentar + Button "Annotieren" оставим на потом)
             renderReportImages(_currentReportMeta.bilder);
-
             openReportModal();
         } finally {
             hideLoader();
@@ -285,7 +362,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             card.style.padding = '8px';
             card.style.background = '#fff';
 
-            // msg_id и index приходят с сервера (в вашем get_bericht_text)
             const msgId = b.msg_id;
             const idx = b.index;
 
@@ -308,8 +384,39 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         wrap.appendChild(grid);
     }
 
+    // ---------- PDF HELPERS ----------
+    async function fetchAsDataUrl(url) {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Media download failed: ' + res.status);
+        const blob = await res.blob();
+        return await new Promise(function (resolve, reject) {
+            const r = new FileReader();
+            r.onload = function () { resolve(String(r.result)); };
+            r.onerror = reject;
+            r.readAsDataURL(blob);
+        });
+    }
 
-    // ---------- PDF PREVIEW (report_custom) ----------
+    async function buildBase64ImagesForReport() {
+        const bilder = (_currentReportMeta && Array.isArray(_currentReportMeta.bilder)) ? _currentReportMeta.bilder : [];
+        if (!bilder.length) return [];
+
+        const out = [];
+        for (let i = 0; i < bilder.length; i++) {
+            const b = bilder[i];
+            if (!b || !b.url) continue;
+
+            try {
+                const dataUrl = await fetchAsDataUrl(absUrl(b.url));
+                out.push({ base64: dataUrl, kommentar: b.comment || '' });
+            } catch (e) {
+                console.warn('Bild konnte nicht als base64 geladen werden:', b.url, e);
+            }
+        }
+        return out;
+    }
+
+    // ---------- PREVIEW / SAVE ----------
     async function previewPdf() {
         if (!_currentReportMsgId) return;
 
@@ -321,9 +428,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
 
         const payload = {
             bericht_text: berichtText,
-            // ВАЖНО: здесь фронт должен прислать base64, иначе Flask превью не вставит изображения.
-            // На старом сайте вы подкачивали изображения и отправляли base64.
-            // Сейчас сделаем так же: подтянуть картинки и отправить base64.
             bilder: await buildBase64ImagesForReport(),
             techniker: _currentReportMeta ? _currentReportMeta.techniker : 'Unbekannt',
             datum: (_currentReportMeta && _currentReportMeta.datum) ? _currentReportMeta.datum.split(' ')[0] : '',
@@ -351,7 +455,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         }
     }
 
-    // ---------- SAVE REPORT (save_report) ----------
     async function savePdf() {
         if (!_currentReportMsgId) return;
 
@@ -382,222 +485,109 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
 
             alert('Gespeichert: ' + (data.pdf_url || 'OK'));
             closeReportModal();
-
-            // обновим таблицу (чтобы подтянуть bericht_in_db/pdf_url)
             await loadWhatsappMessages();
         } finally {
             hideLoader();
         }
     }
 
-    // ---------- HELPERS: fetch image -> base64 ----------
-    async function fetchAsDataUrl(url) {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('Media download failed: ' + res.status);
-        const blob = await res.blob();
-        return await new Promise(function (resolve, reject) {
-            const r = new FileReader();
-            r.onload = function () { resolve(String(r.result)); };
-            r.onerror = reject;
-            r.readAsDataURL(blob);
-        });
-    }
+    async function createSammelberichtFlow() {
+        const keys = getSelectedGroupKeys();
+        if (keys.length < 2) {
+            alert('Bitte mindestens 2 Zeilen auswählen (Checkbox).');
+            return;
+        }
 
-    async function buildBase64ImagesForReport() {
-        // берём список картинок из _currentReportMeta.bilder (там url/comment)
-        const bilder = (_currentReportMeta && Array.isArray(_currentReportMeta.bilder)) ? _currentReportMeta.bilder : [];
-        if (!bilder.length) return [];
+        // 1) Открываем модалку + грузим клиентов
+        openSammelModal();
+        await loadClientsIntoSammelSelect();
 
-        const out = [];
-        for (let i = 0; i < bilder.length; i++) {
-            const b = bilder[i];
-            if (!b || !b.url) continue;
+        // 2) Пробуем предложить клиента автоматически
+        try {
+            const resp = await fetchJson(BASE_URL + '/api/whatsapp/sammelbericht/suggest_client', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ group_keys: keys })
+            });
 
+            const sel = $('sammelKundenSelect');
+            const hint = $('sammelKundenHint');
+
+            if (resp && Array.isArray(resp.suggestions) && resp.suggestions.length) {
+                const best = resp.suggestions[0];
+                if (sel) sel.value = String(best.id);
+                if (hint) hint.textContent = 'Vorschlag erkannt: ' + best.name;
+            } else {
+                if (hint) hint.textContent = 'Kein sicherer Vorschlag gefunden – bitte Kunde auswählen.';
+            }
+        } catch (e) {
+            console.warn('suggest_client failed:', e);
+        }
+
+        // 3) Ждём подтверждения в модалке (одноразово)
+        const okBtn = $('btnConfirmSammel');
+        if (!okBtn) return;
+
+        const handler = async function () {
+            okBtn.removeEventListener('click', handler);
+
+            const kundenId = $('sammelKundenSelect') ? ($('sammelKundenSelect').value || '') : '';
+            const objektName = $('sammelObjektInput') ? ($('sammelObjektInput').value || '').trim() : '';
+
+            if (!kundenId) {
+                alert('Bitte Kunde auswählen.');
+                okBtn.addEventListener('click', handler);
+                return;
+            }
+
+            closeSammelModal();
+
+            // 4) check conflicts
+            showLoader('Prüfe bestehende Sammelberichte…');
+            let check;
             try {
-                const dataUrl = await fetchAsDataUrl(absUrl(b.url));
-                out.push({
-                    base64: dataUrl,
-                    kommentar: b.comment || ''
+                check = await fetchJson(BASE_URL + '/api/whatsapp/sammelbericht/check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ group_keys: keys })
                 });
-            } catch (e) {
-                console.warn('Bild konnte nicht als base64 geladen werden:', b.url, e);
+            } finally {
+                hideLoader();
             }
-        }
-        return out;
-    }
 
-    // ---------- BIND UI ----------
-    function bindUi() {
-        const btnApply = $('btnApplyFilter');
-        if (btnApply) {
-            btnApply.addEventListener('click', function () {
-                loadWhatsappMessages().catch(function (e) {
-                    console.error(e);
-                    alert('Fehler: ' + e.message);
-                });
-            });
-        }
+            let replaceFlag = false;
+            if (check && check.conflicts && check.conflicts > 0) {
+                replaceFlag = confirm('Sammelbericht existiert bereits. Möchten Sie ihn ersetzen?');
+                if (!replaceFlag) return;
+            }
 
-        // Report modal buttons
-        const btnClose = $('btnCloseReport');
-        if (btnClose) btnClose.addEventListener('click', closeReportModal);
-
-        const btnCancel = $('btnCancelReport');
-        if (btnCancel) btnCancel.addEventListener('click', closeReportModal);
-
-        const btnPreview = $('btnPreviewPdf');
-        if (btnPreview) btnPreview.addEventListener('click', function () {
-            previewPdf().catch(function (e) {
-                console.error(e);
-                alert('Fehler: ' + e.message);
-            });
-        });
-
-        const btnSave = $('btnSaveReport');
-        if (btnSave) btnSave.addEventListener('click', function () {
-            savePdf().catch(function (e) {
-                console.error(e);
-                alert('Fehler: ' + e.message);
-            });
-        });
-
-        // === Klicks in Report-Modal (Bilder/Annotieren) ===
-        const berichtImages = $('berichtImages');
-        if (berichtImages) {
-            berichtImages.addEventListener('click', function (e) {
-                const btn = e.target && e.target.closest ? e.target.closest('button[data-action]') : null;
-                if (!btn || !btn.dataset) return;
-
-                if (btn.dataset.action === 'annotate') {
-                    const mid = btn.dataset.msgId;   // data-msg-id
-                    const idx = btn.dataset.index;   // data-index
-                    const url = btn.dataset.url;     // data-url
-
-                    // Диагностика (оставьте на время проверки)
-                    console.log('ANNOTATE CLICK', { mid, idx, url });
-
-                    openAnnotateEditor(mid, idx, url).catch(function (err) {
-                        console.error(err);
-                        alert('Fehler: ' + err.message);
-                    });
-                }
-            });
-        }
-
-
-        // Annotation modal buttons
-        const btnCloseAnn = $('btnCloseAnnotation');
-        if (btnCloseAnn) btnCloseAnn.addEventListener('click', closeAnnotationModal);
-
-        const btnCancelAnn = $('btnCancelAnnotation');
-        if (btnCancelAnn) btnCancelAnn.addEventListener('click', closeAnnotationModal);
-
-        const btnSaveAnn = $('btnSaveAnnotated');
-        if (btnSaveAnn) btnSaveAnn.addEventListener('click', function () {
-            saveAnnotatedImage().catch(function (e) {
-                console.error(e);
-                alert('Fehler: ' + e.message);
-            });
-        });
-
-        // Toolbar tools
-        const toolbar = document.getElementById('annotationToolbar');
-        if (toolbar) {
-            toolbar.addEventListener('click', function (ev) {
-                const t = ev.target;
-                if (!t || !t.dataset || !t.dataset.tool) return;
-                // снять eraser handler если переключаемся
-                activateTool(t.dataset.tool);
-            });
-        }
-
-        const undoBtn = $('undoBtn');
-        if (undoBtn) undoBtn.addEventListener('click', function () {
-            undoLast();
-        });
-
-        const delSelBtn = $('deleteSelectedBtn');
-        if (delSelBtn) delSelBtn.addEventListener('click', function () {
-            deleteSelected();
-        });
-
-
-        // делегирование клика по кнопкам в таблице
-        const table = $('whatsappTable');
-        if (table) {
-            table.addEventListener('click', function (e) {
-                const t = e.target;
-                if (!t) return;
-
-                // DELETE GROUP
-                if (t.dataset && t.dataset.action === 'delete') {
-                    const key = t.dataset.key || '';
-                    if (!key) return;
-
-                    if (!confirm('Gruppe wirklich löschen?')) return;
-
-                    showLoader('Gruppe wird gelöscht…');
-                    fetchJson(BASE_URL + '/api/whatsapp/delete_group', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ whatsapp_group_key: key })
+            // 5) save
+            showLoader(replaceFlag ? 'Sammelbericht wird ersetzt…' : 'Sammelbericht wird erstellt…');
+            try {
+                const saved = await fetchJson(BASE_URL + '/api/whatsapp/sammelbericht/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        group_keys: keys,
+                        kunden_id: kundenId,
+                        objekt_name: objektName,
+                        replace: replaceFlag
                     })
-                        .then(function () { return loadWhatsappMessages(); })
-                        .catch(function (err) {
-                            console.error(err);
-                            alert('Fehler: ' + err.message);
-                        })
-                        .finally(function () { hideLoader(); });
-                }
+                });
 
-                // ANNOTATE
-                if (t.dataset && t.dataset.action === 'annotate') {
-                    const mid = t.dataset.msgId;
-                    const idx = t.dataset.index;
-                    const url = t.dataset.url;
-
-                    openAnnotateEditor(mid, idx, url).catch(function (err) {
-                        console.error(err);
-                        alert('Fehler: ' + err.message);
-                    });
-                }
-
-                // KI REPORT
-                if (t.dataset && t.dataset.action === 'ki-report') {
-                    const id = t.dataset.id;
-                    if (!id) return;
-
-                    openKiReportForMessage(id).catch(function (err) {
-                        console.error(err);
-                        alert('Fehler: ' + err.message);
-                    });
-                }
-            });
-        }
-
-        // ESC closes modal
-        document.addEventListener('keydown', function (ev) {
-            if (ev.key === 'Escape') {
-                const m = $('reportModal');
-                if (m && m.style.display === 'block') closeReportModal();
+                alert('Gespeichert: ' + (saved.sammel_pdf_url || 'OK'));
+                await loadWhatsappMessages();
+            } finally {
+                hideLoader();
             }
-        });
+        };
 
-        // первая загрузка при открытии страницы
-        loadWhatsappMessages().catch(function (e) {
-            console.error(e);
-            alert('Fehler: ' + e.message);
-        });
+        okBtn.addEventListener('click', handler);
     }
 
-    return {
-        init: function () {
-            // важный момент: init вызывается из afterRender view
-            setTimeout(bindUi, 0);
-            console.log('WHATSAPP ADMIN PAGE: init OK');
-        }
-    };
 
+
+    // ===== Annotieren =====
     function openAnnotationModal() {
         const m = $('annotationModal');
         if (m) m.style.display = 'block';
@@ -628,17 +618,12 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             if (window.fabric && window.fabric.Canvas) return resolve();
 
             const s = document.createElement('script');
-
-            // ВАЖНО: грузим с self, иначе CSP блокирует
-            s.src = '/client/custom/lib/fabric.min.js';
-
+            s.src = '/client/custom/lib/fabric.min.js'; // CSP-safe
             s.onload = function () { resolve(); };
             s.onerror = function () { reject(new Error('fabric.js konnte nicht geladen werden (self)')); };
-
             document.head.appendChild(s);
         });
     }
-
 
     async function openAnnotateEditor(msgId, imageIndex, imageUrl) {
         await ensureFabricLoaded();
@@ -649,28 +634,26 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             image_url: String(imageUrl || '')
         };
 
-        // комментарий в поле
         const commentField = $('annotationComment');
         if (commentField) commentField.value = '';
 
         openAnnotationModal();
 
-        // Canvas размер под картинку
         const canvasEl = $('annotationCanvas');
         if (!canvasEl) throw new Error('annotationCanvas nicht gefunden');
 
-        // создаём fabric canvas
         _fabricCanvas = new fabric.Canvas('annotationCanvas', {
             selection: true,
             preserveObjectStacking: true
         });
 
         _undoStack = [];
+        pushUndoSnapshot(); // базовый снимок
+
         _fabricCanvas.on('object:added', pushUndoSnapshot);
         _fabricCanvas.on('object:modified', pushUndoSnapshot);
         _fabricCanvas.on('object:removed', pushUndoSnapshot);
 
-        // загрузить фоновое изображение
         showLoader('Bild wird geladen…');
         try {
             await new Promise(function (resolve, reject) {
@@ -708,13 +691,11 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             hideLoader();
         }
 
-        // стандартный tool
         activateTool('select');
     }
 
     function pushUndoSnapshot() {
         if (!_fabricCanvas) return;
-        // чтобы не заспамить: сохраняем только если уже есть фон
         const json = _fabricCanvas.toJSON();
         _undoStack.push(json);
         if (_undoStack.length > 30) _undoStack.shift();
@@ -722,7 +703,7 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
 
     function undoLast() {
         if (!_fabricCanvas) return;
-        if (_undoStack.length < 2) return; // нечего откатывать
+        if (_undoStack.length < 2) return;
         _undoStack.pop();
         const prev = _undoStack[_undoStack.length - 1];
         _fabricCanvas.loadFromJSON(prev, function () {
@@ -736,23 +717,30 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         if (obj) _fabricCanvas.remove(obj);
     }
 
+    function _eraserHandler(opt) {
+        if (!_fabricCanvas) return;
+        const t = opt.target;
+        if (t && t.evented !== false && t.selectable !== false) {
+            _fabricCanvas.remove(t);
+        }
+    }
+
     function activateTool(tool) {
         if (!_fabricCanvas) return;
 
         setActiveToolButton(tool);
 
-        // reset
         _fabricCanvas.isDrawingMode = false;
         _fabricCanvas.selection = true;
         _fabricCanvas.defaultCursor = 'default';
 
+        // снять eraser
+        _fabricCanvas.off('mouse:down', _eraserHandler);
+
         const color = ($('toolColor') && $('toolColor').value) ? $('toolColor').value : '#ff0000';
         const size = ($('toolSize') && $('toolSize').value) ? Number($('toolSize').value) : 4;
 
-        if (tool === 'select') {
-            _fabricCanvas.selection = true;
-            return;
-        }
+        if (tool === 'select') return;
 
         if (tool === 'pen') {
             _fabricCanvas.isDrawingMode = true;
@@ -762,26 +750,15 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         }
 
         if (tool === 'eraser') {
-            // “как было” — удаляем объект кликом
             _fabricCanvas.defaultCursor = 'not-allowed';
             _fabricCanvas.on('mouse:down', _eraserHandler);
             return;
-        } else {
-            _fabricCanvas.off('mouse:down', _eraserHandler);
         }
 
         if (tool === 'arrow') {
             _fabricCanvas.defaultCursor = 'crosshair';
             enableArrowDrawing(color, size);
             return;
-        }
-    }
-
-    function _eraserHandler(opt) {
-        if (!_fabricCanvas) return;
-        const t = opt.target;
-        if (t && t.evented !== false && t.selectable !== false) {
-            _fabricCanvas.remove(t);
         }
     }
 
@@ -821,7 +798,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             const p = _fabricCanvas.getPointer(o.e);
             line.set({ x2: p.x, y2: p.y });
 
-            // наконечник
             if (head1) _fabricCanvas.remove(head1);
             if (head2) _fabricCanvas.remove(head2);
 
@@ -846,7 +822,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             if (!isDown) return;
             isDown = false;
 
-            // группируем стрелку в один объект, чтобы её можно было двигать
             if (line && head1 && head2) {
                 const g = new fabric.Group([line, head1, head2], { selectable: true });
                 _fabricCanvas.remove(line);
@@ -867,8 +842,6 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         if (!_annotationCtx || !_fabricCanvas) return;
 
         const comment = ($('annotationComment') && $('annotationComment').value) ? $('annotationComment').value.trim() : '';
-
-        // canvas -> dataURL (jpeg)
         const dataUrl = _fabricCanvas.toDataURL({ format: 'jpeg', quality: 0.9 });
 
         showLoader('Speichern…');
@@ -884,10 +857,8 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
                 })
             });
 
-            // После сохранения: обновим текущий Bericht и картинки (чтобы сразу видеть результат)
             closeAnnotationModal();
 
-            // Перезагрузить bericht_text заново (это подтянет и обновлённые комментарии)
             if (_currentReportMsgId) {
                 await openKiReportForMessage(_currentReportMsgId);
             }
@@ -895,8 +866,212 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             hideLoader();
         }
     }
-    // ===== /Annotieren =====
+
+    function getSelectedGroupKeys() {
+        const boxes = document.querySelectorAll('#whatsappTable tbody .rowChk:checked');
+        const keys = [];
+        boxes.forEach(function (b) {
+            const k = b.dataset ? (b.dataset.key || '') : '';
+            if (k) keys.push(k);
+        });
+        return keys;
+    }
+
+    function setAllRowCheckboxes(checked) {
+        const boxes = document.querySelectorAll('#whatsappTable tbody .rowChk');
+        boxes.forEach(function (b) { b.checked = !!checked; });
+    }
 
 
+
+    // ---------- BIND UI ----------
+    function bindUi() {
+        ensureTableHeader();
+        bindSammelModalUiOnce();
+
+        const btnApply = $('btnApplyFilter');
+        if (btnApply) btnApply.addEventListener('click', function () {
+            loadWhatsappMessages().catch(function (e) { console.error(e); alert('Fehler: ' + e.message); });
+        });
+
+        const chkAll = $('chkAllRows');
+        if (chkAll) {
+            chkAll.addEventListener('change', function () {
+                setAllRowCheckboxes(chkAll.checked);
+            });
+        }
+
+        const btnSammel = $('btnCreateSammelbericht');
+        if (btnSammel) {
+            btnSammel.addEventListener('click', function () {
+                createSammelberichtFlow().catch(function (e) {
+                    console.error(e);
+                    alert('Fehler: ' + e.message);
+                });
+            });
+        }
+
+        const btnClose = $('btnCloseReport');
+        if (btnClose) btnClose.addEventListener('click', closeReportModal);
+
+        const btnCancel = $('btnCancelReport');
+        if (btnCancel) btnCancel.addEventListener('click', closeReportModal);
+
+        const btnPreview = $('btnPreviewPdf');
+        if (btnPreview) btnPreview.addEventListener('click', function () {
+            previewPdf().catch(function (e) { console.error(e); alert('Fehler: ' + e.message); });
+        });
+
+        const btnSave = $('btnSaveReport');
+        if (btnSave) btnSave.addEventListener('click', function () {
+            savePdf().catch(function (e) { console.error(e); alert('Fehler: ' + e.message); });
+        });
+
+        const berichtImages = $('berichtImages');
+        if (berichtImages) {
+            berichtImages.addEventListener('click', function (e) {
+                const btn = e.target && e.target.closest ? e.target.closest('button[data-action]') : null;
+                if (!btn || !btn.dataset) return;
+
+                if (btn.dataset.action === 'annotate') {
+                    const mid = btn.dataset.msgId;
+                    const idx = btn.dataset.index;
+                    const url = btn.dataset.url;
+                    console.log('ANNOTATE CLICK', { mid, idx, url });
+
+                    openAnnotateEditor(mid, idx, url).catch(function (err) {
+                        console.error(err);
+                        alert('Fehler: ' + err.message);
+                    });
+                }
+            });
+        }
+
+        const btnCloseAnn = $('btnCloseAnnotation');
+        if (btnCloseAnn) btnCloseAnn.addEventListener('click', closeAnnotationModal);
+
+        const btnCancelAnn = $('btnCancelAnnotation');
+        if (btnCancelAnn) btnCancelAnn.addEventListener('click', closeAnnotationModal);
+
+        const btnSaveAnn = $('btnSaveAnnotated');
+        if (btnSaveAnn) btnSaveAnn.addEventListener('click', function () {
+            saveAnnotatedImage().catch(function (e) { console.error(e); alert('Fehler: ' + e.message); });
+        });
+
+        const toolbar = document.getElementById('annotationToolbar');
+        if (toolbar) {
+            toolbar.addEventListener('click', function (ev) {
+                const t = ev.target;
+                if (!t || !t.dataset || !t.dataset.tool) return;
+                activateTool(t.dataset.tool);
+            });
+        }
+
+        const undoBtn = $('undoBtn');
+        if (undoBtn) undoBtn.addEventListener('click', undoLast);
+
+        const delSelBtn = $('deleteSelectedBtn');
+        if (delSelBtn) delSelBtn.addEventListener('click', deleteSelected);
+
+        const table = $('whatsappTable');
+        if (table) {
+            table.addEventListener('click', function (e) {
+                const t = e.target;
+                if (!t || !t.dataset) return;
+
+                if (t.dataset.action === 'delete') {
+                    const key = t.dataset.key || '';
+                    if (!key) return;
+                    if (!confirm('Gruppe wirklich löschen?')) return;
+
+                    showLoader('Gruppe wird gelöscht…');
+                    fetchJson(BASE_URL + '/api/whatsapp/delete_group', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ whatsapp_group_key: key })
+                    })
+                        .then(function () { return loadWhatsappMessages(); })
+                        .catch(function (err) { console.error(err); alert('Fehler: ' + err.message); })
+                        .finally(function () { hideLoader(); });
+                }
+
+                if (t.dataset.action === 'ki-report') {
+                    const id = t.dataset.id;
+                    if (!id) return;
+                    openKiReportForMessage(id).catch(function (err) {
+                        console.error(err);
+                        alert('Fehler: ' + err.message);
+                    });
+                }
+            });
+        }
+
+        loadWhatsappMessages().catch(function (e) {
+            console.error(e);
+            alert('Fehler: ' + e.message);
+        });
+    }
+
+    function ensureTableHeader() {
+        const table = document.getElementById('whatsappTable');
+        if (!table) return;
+
+        let thead = table.querySelector('thead');
+        if (!thead) {
+            thead = document.createElement('thead');
+            table.insertBefore(thead, table.firstChild);
+        }
+
+        // если th уже есть — ничего не делаем
+        if (thead.querySelector('th')) return;
+
+        thead.innerHTML =
+            '<tr>' +
+            '<th>Datum</th>' +
+            '<th>Techniker</th>' +
+            '<th>Nachricht</th>' +
+            '<th>Medien</th>' +
+            '<th>PDF Bericht</th>' +
+            '<th>Aktion</th>' +
+            '</tr>';
+    }
+
+    function updateSammelButtonState() {
+        const checked = document.querySelectorAll('.rowChk:checked').length;
+        const btn = document.getElementById('btnCreateSammelbericht');
+        const hint = document.getElementById('sammelHint');
+        if (!btn) return;
+
+        btn.disabled = checked < 2;
+        if (hint) {
+            hint.textContent = checked < 2
+                ? 'Mehrere Einträge auswählen, um einen Sammelbericht zu erstellen.'
+                : `Ausgewählt: ${checked} – Sammelbericht kann erstellt werden.`;
+        }
+    }
+
+    // реагируем на клики по чекбоксам (включая динамически созданные строки)
+    document.addEventListener('change', (e) => {
+        if (e.target && e.target.classList.contains('rowChk')) {
+            updateSammelButtonState();
+        }
+    });
+
+    // "Alle auswählen"
+    const chkAll = document.getElementById('chkAllRows');
+    if (chkAll) {
+        chkAll.addEventListener('change', () => {
+            document.querySelectorAll('.rowChk').forEach(chk => chk.checked = chkAll.checked);
+            updateSammelButtonState();
+        });
+    }
+
+    // ===== ВОТ ЭТО ДОЛЖНО БЫТЬ В САМОМ КОНЦЕ =====
+    return {
+        init: function () {
+            setTimeout(bindUi, 0);
+            console.log('WHATSAPP ADMIN PAGE: init OK');
+        }
+    };
 
 });
