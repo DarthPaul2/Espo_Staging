@@ -4,7 +4,8 @@
             "AutoNumber",
             "BemerkungVorlage",
             "RequireAuftragForTypes",
-            "SetBezahltAm"
+            "SetBezahltAm",
+            "SyncKontaktFromAccount"
         ],
         "afterSave": [
             "AngebotImporter",
@@ -289,6 +290,13 @@
             "notNull": false,
             "type": "date",
             "isCustom": true
+        },
+        "objekt": {
+            "type": "link",
+            "view": "custom:views/c-rechnung/fields/objekt"
+        },
+        "contact": {
+            "type": "link"
         }
     },
     "links": {
@@ -363,6 +371,20 @@
             "type": "hasMany",
             "foreign": "rechnung",
             "entity": "CBrief",
+            "audited": false,
+            "isCustom": true
+        },
+        "objekt": {
+            "type": "belongsTo",
+            "foreign": "rechnungs",
+            "entity": "CObjekt",
+            "audited": false,
+            "isCustom": true
+        },
+        "contact": {
+            "type": "belongsTo",
+            "foreign": "cRechnungs",
+            "entity": "Contact",
             "audited": false,
             "isCustom": true
         }

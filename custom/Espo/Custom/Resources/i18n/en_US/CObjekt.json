@@ -1,0 +1,26 @@
+{
+    "fields": {
+        "cObjektnummer": "Objektnummer",
+        "cStrasseHausnum": "Straße, Hausnummer",
+        "cPLZ": "PLZ",
+        "cOrt": "Ort",
+        "cLand": "Land",
+        "cBezeichnungZusatz": "Bezeichnung Zusatz",
+        "account": "Account",
+        "angebots": "Angebots",
+        "rechnungs": "Rechnungs",
+        "contact": "Contact"
+    },
+    "links": {
+        "account": "Account",
+        "angebots": "Angebots",
+        "rechnungs": "Rechnungs",
+        "contact": "Contact"
+    },
+    "labels": {
+        "Create CObjekt": "Create Objekt"
+    },
+    "tooltips": {
+        "cBezeichnungZusatz": "z.B. “Halle 2 / Gebäudeteil B / Etage 3”"
+    }
+}

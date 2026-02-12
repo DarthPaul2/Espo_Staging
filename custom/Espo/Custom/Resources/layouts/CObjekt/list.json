@@ -1,0 +1,26 @@
+[
+    {
+        "name": "name",
+        "link": true
+    },
+    {
+        "name": "cStrasseHausnum",
+        "width": 16
+    },
+    {
+        "name": "cPLZ",
+        "width": 16
+    },
+    {
+        "name": "cOrt",
+        "width": 16
+    },
+    {
+        "name": "cLand",
+        "width": 16
+    },
+    {
+        "name": "contact",
+        "width": 16
+    }
+]

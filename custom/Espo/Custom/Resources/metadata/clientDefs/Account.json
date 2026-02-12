@@ -55,6 +55,10 @@
         "melderGesamtPdfs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "objekts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

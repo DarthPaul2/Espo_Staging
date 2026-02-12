@@ -22,7 +22,8 @@
         "CBrief": "Geschäftsbrief",
         "CStundenbericht": "Stundenbericht",
         "CMelderQuartal": "Melderprüfliste Quartal",
-        "CMelderGesamtPdf": "Melderprüfliste Gesamt PDF"
+        "CMelderGesamtPdf": "Melderprüfliste Gesamt PDF",
+        "CObjekt": "Objekt"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -47,7 +48,8 @@
         "CBrief": "Geschäftsbriefe",
         "CStundenbericht": "Stundenberichte",
         "CMelderQuartal": "Melderprüflisten Quartale",
-        "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs"
+        "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs",
+        "CObjekt": "Objekte"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

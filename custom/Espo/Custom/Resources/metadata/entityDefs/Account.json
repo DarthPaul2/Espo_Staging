@@ -133,6 +133,13 @@
             "entity": "CMelderGesamtPdf",
             "audited": false,
             "isCustom": true
+        },
+        "cObjekts": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CObjekt",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

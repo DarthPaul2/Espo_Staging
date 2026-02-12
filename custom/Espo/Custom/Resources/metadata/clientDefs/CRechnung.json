@@ -55,6 +55,14 @@
         "briefs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "objekt": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "contact": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

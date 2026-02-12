@@ -194,6 +194,41 @@ define('custom:views/c-angebot/record/edit', ['views/record/edit'], function (De
                 quickLocalRecalc('tax-change');
             });
 
+            // ===== автоподстановка Kontakt (Contact) из Account.cFirmenHauptkontakt при выборе клиента =====
+            const syncContactFromAccount = () => {
+                const accountId = this.model.get('accountId');
+                if (!accountId) return;
+
+                // если контакт уже выбран вручную — не перетирать
+                if (this.model.get('contactId')) return;
+
+                Espo.Ajax.getRequest('Account/' + accountId, { _t: Date.now() })  // анти-кэш
+                    .then((acc) => {
+                        const cid = acc && acc.cFirmenHauptkontaktId;
+                        const cname = acc && acc.cFirmenHauptkontaktName;
+
+                        if (cid) {
+                            this.model.set({
+                                contactId: cid,
+                                contactName: cname || ''
+                            });
+                        }
+                    })
+                    .catch((e) => {
+                        if (e === 'notModified' || e?.message === 'notModified') return;
+                        try { console.warn('[CAngebot/edit] syncContactFromAccount failed', e); } catch (x) { }
+                    });
+            };
+
+            // при смене клиента
+            this.listenTo(this.model, 'change:accountId', () => {
+                syncContactFromAccount();
+            });
+
+            // при открытии формы, если клиент уже выбран
+            setTimeout(() => syncContactFromAccount(), 0);
+
+
             // Из модалок позиций
             this._onPositionSaved = (e) => {
                 const { angebotId } = (e && e.detail) || {};

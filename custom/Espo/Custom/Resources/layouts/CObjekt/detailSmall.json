@@ -1,0 +1,33 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "contact"
+                }
+            ],
+            [
+                {
+                    "name": "cStrasseHausnum"
+                },
+                {
+                    "name": "cOrt"
+                },
+                {
+                    "name": "cPLZ"
+                }
+            ],
+            [
+                {
+                    "name": "cLand"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

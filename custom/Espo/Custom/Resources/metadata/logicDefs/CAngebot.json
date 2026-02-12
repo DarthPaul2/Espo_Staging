@@ -1,0 +1,17 @@
+{
+    "fields": {
+        "objekt": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isNotEmpty",
+                        "attribute": "accountId",
+                        "data": {
+                            "field": "account"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

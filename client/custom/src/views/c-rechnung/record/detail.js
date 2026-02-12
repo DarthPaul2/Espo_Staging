@@ -132,6 +132,12 @@ define('custom:views/c-rechnung/record/detail', [
             return {
                 // говорим универсальному рендереру, что это СЧЁТ
                 typ: 'rechnung',
+                // Kontakt (aus Espo): contactId + contactName
+                contact_id: this.model.get('contactId') || '',
+                contactId: this.model.get('contactId') || '',
+                contactName: this.model.get('contactName') || '',
+                contact: this.model.get('contactName') || '',
+
 
                 // чтобы на бэке можно было отличить Gutschrift от обычной Rechnung
                 rechnungstyp: this.model.get('rechnungstyp') || '',
@@ -168,6 +174,10 @@ define('custom:views/c-rechnung/record/detail', [
                 auftrag_id: this.model.get('auftragId') || null,
                 auftragsnummer: auftragsnummer,
                 assigned_user_name: assignedUserName,
+
+                contactId: this.model.get('contactId') || null,
+                contactName: this.model.get('contactName') || '',
+
 
                 // позиции
                 positionen: positions || []

@@ -32,7 +32,9 @@
         "rechnungstyp": "Rechnungstyp",
         "bezahltAm": "Bezahlt am",
         "description": "Beschreibung (Nur für interne Hinweise – für Kunden nicht sichtbar.)",
-        "briefs": "Briefs"
+        "briefs": "Briefs",
+        "objekt": "Objekt",
+        "contact": "Contact"
     },
     "links": {
         "account": "Account",
@@ -42,7 +44,9 @@
         "lieferscheins": "Lieferscheins",
         "mahnregel": "Mahnregel",
         "mahnungs": "Mahnungen",
-        "briefs": "Briefs"
+        "briefs": "Briefs",
+        "objekt": "Objekt",
+        "contact": "Contact"
     },
     "options": {
         "status": {

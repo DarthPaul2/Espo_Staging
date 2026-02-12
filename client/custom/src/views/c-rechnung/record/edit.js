@@ -163,6 +163,44 @@ define('custom:views/c-rechnung/record/edit', ['views/record/edit'], function (D
                 quickLocalRecalc('tax-change');
             });
 
+            // — автоподстановка Contact из Account.cFirmenHauptkontakt при выборе клиента —
+            const syncContactFromAccount = () => {
+                const accountId = this.model.get('accountId');
+                if (!accountId) return;
+
+                // если контакт уже выбран вручную — не перетирать
+                if (this.model.get('contactId')) return;
+
+                Espo.Ajax.getRequest('Account/' + accountId, { _t: Date.now() })   // анти-кэш
+                    .then((acc) => {
+                        const cid = acc && acc.cFirmenHauptkontaktId;
+                        const cname = acc && acc.cFirmenHauptkontaktName;
+
+                        if (cid) {
+                            this.model.set({
+                                contactId: cid,
+                                contactName: cname || ''
+                            });
+                        }
+                    })
+                    .catch((e) => {
+                        // не даём падать из-за notModified/кэша
+                        if (e === 'notModified' || e?.message === 'notModified') return;
+                        try { console.warn('[CRechnung/edit] syncContactFromAccount failed', e); } catch (x) { }
+                    });
+            };
+
+            // при смене клиента
+            this.listenTo(this.model, 'change:accountId', () => {
+                // если клиент поменяли — и контакт пустой, подтянем
+                // (контакт не очищаем, чтобы не убить ручной выбор; если хотите — скажете)
+                syncContactFromAccount();
+            });
+
+            // на первом рендере, если клиент уже выбран
+            setTimeout(() => syncContactFromAccount(), 0);
+
+
             // — из модалки позиции (если она эмитит событие) —
             this._onPositionSaved = (e) => {
                 const { rechnungId } = (e && e.detail) || {};

@@ -20,7 +20,9 @@
         "lieferscheins": "Lieferscheins",
         "auftragspositions": "Auftragspositions",
         "briefs": "Briefs",
-        "gaebUrl": "GAEB-Datei"
+        "gaebUrl": "GAEB-Datei",
+        "objekt": "Objekt",
+        "contact": "Contact"
     },
     "links": {
         "account": "Account",
@@ -29,7 +31,9 @@
         "auftrag": "Auftrag",
         "lieferscheins": "Lieferscheins",
         "auftragspositions": "Auftragspositions",
-        "briefs": "Briefs"
+        "briefs": "Briefs",
+        "objekt": "Objekt",
+        "contact": "Contact"
     },
     "labels": {
         "Create CAngebot": "Create Angebot"

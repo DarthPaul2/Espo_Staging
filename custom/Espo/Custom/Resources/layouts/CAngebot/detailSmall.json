@@ -4,6 +4,12 @@
             [
                 {
                     "name": "account"
+                },
+                {
+                    "name": "objekt"
+                },
+                {
+                    "name": "contact"
                 }
             ],
             [

@@ -3,11 +3,17 @@
         "cHauptkontakt": "Hauptkontakt",
         "cRecalcFlag": "Recalc-Trigger",
         "cLieferscheins": "Lieferscheins",
-        "cBriefs": "Briefs"
+        "cBriefs": "Briefs",
+        "cObjekts": "Objekts",
+        "cRechnungs": "Rechnungs",
+        "cAngebots": "Angebots"
     },
     "links": {
         "cHauptkontakt": "Hauptkontakt",
         "cLieferscheins": "Lieferscheins",
-        "cBriefs": "Briefs"
+        "cBriefs": "Briefs",
+        "cObjekts": "Objekts",
+        "cRechnungs": "Rechnungs",
+        "cAngebots": "Angebots"
     }
 }

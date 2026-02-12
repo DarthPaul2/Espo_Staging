@@ -190,6 +190,13 @@
         "gaebUrl": {
             "type": "url",
             "isCustom": true
+        },
+        "objekt": {
+            "type": "link",
+            "view": "custom:views/c-angebot/fields/objekt"
+        },
+        "contact": {
+            "type": "link"
         }
     },
     "links": {
@@ -259,6 +266,20 @@
             "type": "hasMany",
             "foreign": "angebot",
             "entity": "CBrief",
+            "audited": false,
+            "isCustom": true
+        },
+        "objekt": {
+            "type": "belongsTo",
+            "foreign": "angebots",
+            "entity": "CObjekt",
+            "audited": false,
+            "isCustom": true
+        },
+        "contact": {
+            "type": "belongsTo",
+            "foreign": "cAngebots",
+            "entity": "Contact",
             "audited": false,
             "isCustom": true
         }

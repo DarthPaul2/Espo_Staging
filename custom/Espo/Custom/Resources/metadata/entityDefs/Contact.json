@@ -31,6 +31,27 @@
             "entity": "CBrief",
             "audited": false,
             "isCustom": true
+        },
+        "cObjekts": {
+            "type": "hasMany",
+            "foreign": "contact",
+            "entity": "CObjekt",
+            "audited": false,
+            "isCustom": true
+        },
+        "cRechnungs": {
+            "type": "hasMany",
+            "foreign": "contact",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cAngebots": {
+            "type": "hasMany",
+            "foreign": "contact",
+            "entity": "CAngebot",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

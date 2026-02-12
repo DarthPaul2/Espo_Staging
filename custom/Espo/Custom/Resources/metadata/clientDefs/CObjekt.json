@@ -1,0 +1,24 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "account": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "angebots": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "rechnungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "contact": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

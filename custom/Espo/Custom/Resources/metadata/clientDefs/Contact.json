@@ -11,6 +11,18 @@
         "briefs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "objekts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "rechnungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "angebots": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }
