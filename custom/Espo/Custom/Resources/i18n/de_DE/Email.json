@@ -1,0 +1,55 @@
+{
+    "fields": {
+        "cEmailKategorie": "Kategorie",
+        "cCAiConfidence": "KI-Sicherheit (0–1)",
+        "cCAiReason": "KI-Begründung",
+        "cCAiModel": "KI-Modell",
+        "cCAiOldKategorie": "Kategorie vor KI",
+        "cCAiStatus": "KI-Status",
+        "cAiCheckedAt": "KI geprüft am",
+        "cAiConfidence": "KI Confidence",
+        "cAiReason": "KI Begründung",
+        "cAiModel": "KI Modell",
+        "cAiOldKategorie": "Alte Kategorie (vor KI)",
+        "cAiStatus": "KI Status"
+    },
+    "options": {
+        "cEmailKategorie": {
+            "angebot": "Angebot",
+            "service": "Service",
+            "buchhaltung": "Buchhaltung",
+            "intern": "Intern / Hersteller-Info",
+            "spam": "SPAM",
+            "": "",
+            "bericht": "Bericht"
+        },
+        "cCAiOldKategorie": {
+            "angebot": "angebot",
+            "service": "service",
+            "buchhaltung": "buchhaltung",
+            "intern": "intern",
+            "spam": "spam",
+            "bericht": "bericht"
+        },
+        "cCAiStatus": {
+            "ok": "ok",
+            "changed": "changed",
+            "skipped": "skipped",
+            "error": "error"
+        },
+        "cAiOldKategorie": {
+            "angebot": "angebot",
+            "service": "service",
+            "buchhaltung": "buchhaltung",
+            "intern": "intern",
+            "spam": "spam",
+            "bericht": "bericht"
+        },
+        "cAiStatus": {
+            "ok": "ok",
+            "changed": "changed",
+            "skipped": "skipped",
+            "error": "error"
+        }
+    }
+}

@@ -1,0 +1,52 @@
+[
+    {
+        "name": "personStringData",
+        "width": 18,
+        "notSortable": true,
+        "noLabel": true
+    },
+    {
+        "name": "subject",
+        "width": 19,
+        "link": true,
+        "notSortable": true,
+        "align": "left"
+    },
+    {
+        "name": "parent",
+        "width": 15,
+        "notSortable": true,
+        "align": "left"
+    },
+    {
+        "name": "dateSent",
+        "width": 8,
+        "notSortable": true,
+        "align": "right"
+    },
+    {
+        "name": "cEmailKategorie",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "cAiOldKategorie",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "cAiCheckedAt",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "cAiStatus",
+        "width": 8,
+        "align": "left"
+    },
+    {
+        "name": "cAiReason",
+        "width": 26,
+        "align": "left"
+    }
+]

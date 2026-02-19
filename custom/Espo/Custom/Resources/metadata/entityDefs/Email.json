@@ -1,0 +1,93 @@
+{
+    "hooks": [
+        "AutoKategorie"
+    ],
+    "fields": {
+        "cEmailKategorie": {
+            "type": "enum",
+            "options": [
+                "angebot",
+                "service",
+                "buchhaltung",
+                "intern",
+                "spam",
+                "bericht"
+            ],
+            "style": {
+                "angebot": null,
+                "service": "success",
+                "buchhaltung": "primary",
+                "intern": "info",
+                "spam": "danger",
+                "bericht": "warning"
+            },
+            "default": "angebot",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "cAiCheckedAt": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "cAiConfidence": {
+            "notNull": false,
+            "type": "float",
+            "decimalPlaces": 2,
+            "isCustom": true
+        },
+        "cAiReason": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "cAiModel": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "cAiOldKategorie": {
+            "type": "enum",
+            "options": [
+                "angebot",
+                "service",
+                "buchhaltung",
+                "intern",
+                "spam",
+                "bericht"
+            ],
+            "style": {
+                "angebot": null,
+                "service": null,
+                "buchhaltung": null,
+                "intern": null,
+                "spam": null,
+                "bericht": null
+            },
+            "default": null,
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "cAiStatus": {
+            "type": "enum",
+            "style": {
+                "ok": null,
+                "changed": null,
+                "skipped": null,
+                "error": null
+            },
+            "maxLength": 100,
+            "isCustom": true,
+            "options": [
+                "ok",
+                "changed",
+                "skipped",
+                "error"
+            ],
+            "default": null
+        }
+    }
+}

@@ -1,0 +1,23 @@
+[
+    {
+        "name": "personStringData",
+        "width": 20,
+        "notSortable": true,
+        "noLabel": true
+    },
+    {
+        "name": "subject",
+        "link": true,
+        "notSortable": true
+    },
+    {
+        "name": "dateSent",
+        "width": 16,
+        "notSortable": true,
+        "align": "right"
+    },
+    {
+        "name": "cEmailKategorie",
+        "width": 20
+    }
+]

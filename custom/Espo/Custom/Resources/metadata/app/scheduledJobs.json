@@ -1,0 +1,14 @@
+{
+    "EmailAutoKategorie": {
+        "name": "Email: Auto-Kategorie setzen",
+        "isSystem": false,
+        "scheduling": "*/5 * * * *",
+        "jobClassName": "Espo\\Custom\\Jobs\\EmailAutoKategorie"
+    },
+    "EmailKiKategoriePruf": {
+        "name": "Email: KI Kategorie Prüfung (neu)",
+        "isSystem": false,
+        "scheduling": "*/30 * * * *",
+        "jobClassName": "Espo\\Custom\\Jobs\\EmailKiKategoriePruf"
+    }
+}
