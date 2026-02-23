@@ -19,5 +19,6 @@
     "type": "Base",
     "module": "Custom",
     "object": true,
-    "isCustom": true
+    "isCustom": true,
+    "controller": "controllers/record"
 }
