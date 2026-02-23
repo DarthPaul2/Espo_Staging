@@ -1,52 +1,42 @@
 [
     {
         "name": "personStringData",
-        "width": 18,
+        "width": 16,
         "notSortable": true,
-        "noLabel": true
+        "noLabel": true,
+        "align": "left"
     },
     {
         "name": "subject",
-        "width": 19,
+        "width": 17,
         "link": true,
         "notSortable": true,
         "align": "left"
     },
     {
-        "name": "parent",
-        "width": 15,
+        "name": "dateSent",
+        "width": 9,
         "notSortable": true,
         "align": "left"
-    },
-    {
-        "name": "dateSent",
-        "width": 8,
-        "notSortable": true,
-        "align": "right"
     },
     {
         "name": "cEmailKategorie",
-        "width": 10,
-        "align": "left"
-    },
-    {
-        "name": "cAiOldKategorie",
-        "width": 10,
-        "align": "left"
-    },
-    {
-        "name": "cAiCheckedAt",
-        "width": 11,
-        "align": "left"
-    },
-    {
-        "name": "cAiStatus",
-        "width": 8,
+        "width": 9,
         "align": "left"
     },
     {
         "name": "cAiReason",
         "width": 26,
+        "align": "left"
+    },
+    {
+        "name": "cEmailPrioritaet",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "cPrioAiReason",
+        "width": 22,
         "align": "left"
     }
 ]

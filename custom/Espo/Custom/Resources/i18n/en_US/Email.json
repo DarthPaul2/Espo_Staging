@@ -1,6 +1,6 @@
 {
     "fields": {
-        "cEmailKategorie": "Kategorie",
+        "cEmailKategorie": "KI Kategorie",
         "cCAiConfidence": "KI-Sicherheit (0–1)",
         "cCAiReason": "KI-Begründung",
         "cCAiModel": "KI-Modell",
@@ -10,8 +10,15 @@
         "cAiConfidence": "KI Confidence",
         "cAiReason": "KI Begründung",
         "cAiModel": "KI Modell",
-        "cAiOldKategorie": "Alte Kategorie (vor KI)",
-        "cAiStatus": "KI Status"
+        "cAiOldKategorie": "Vorläufige Kategorie",
+        "cAiStatus": "KI Status",
+        "cEmailPrioritaet": "KI Priorität",
+        "cPrioAiCheckedAt": "Prioritaet Ki Checked At",
+        "cPrioAiStatus": "Prioritaet Ki Status",
+        "cPrioAiConfidence": "Prioritaet Ki Confidence",
+        "cPrioAiReason": "Prioritaet Ki Erklearung",
+        "cPrioAiModel": "Prio Ki Model",
+        "cPrioAiOldPrioritaet": "Vorläufige Prioritaet"
     },
     "options": {
         "cEmailKategorie": {
@@ -50,6 +57,27 @@
             "changed": "changed",
             "skipped": "skipped",
             "error": "error"
+        },
+        "cEmailPrioritaet": {
+            "sofort": "Sofort",
+            "hoch": "Hoch",
+            "normal": "Normal",
+            "niedrig": "Niedrig",
+            "keineReaktion": "Keine Reaktion"
+        },
+        "cPrioAiStatus": {
+            "running": "läuft",
+            "ok": "ok",
+            "changed": "geändert",
+            "skipped": "übersprungen",
+            "error": "Fehler"
+        },
+        "cPrioAiOldPrioritaet": {
+            "sofort": "Sofort",
+            "hoch": "Hoch",
+            "normal": "Normal",
+            "niedrig": "Niedrig",
+            "keineReaktion": "Keine Reaktion"
         }
     }
 }

@@ -12,6 +12,9 @@
         "name": "cEmailKategorie"
     },
     {
+        "name": "cEmailPrioritaet"
+    },
+    {
         "name": "replied"
     },
     {

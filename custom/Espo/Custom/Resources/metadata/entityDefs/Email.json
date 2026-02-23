@@ -67,7 +67,7 @@
                 "spam": null,
                 "bericht": null
             },
-            "default": null,
+            "default": "angebot",
             "maxLength": 100,
             "isCustom": true
         },
@@ -88,6 +88,90 @@
                 "error"
             ],
             "default": null
+        },
+        "cEmailPrioritaet": {
+            "type": "enum",
+            "options": [
+                "sofort",
+                "hoch",
+                "normal",
+                "niedrig",
+                "keineReaktion"
+            ],
+            "style": {
+                "sofort": "danger",
+                "hoch": "warning",
+                "normal": "success",
+                "niedrig": "primary",
+                "keineReaktion": "info"
+            },
+            "default": "sofort",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "cPrioAiCheckedAt": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "cPrioAiStatus": {
+            "type": "enum",
+            "options": [
+                "running",
+                "ok",
+                "changed",
+                "skipped",
+                "error"
+            ],
+            "style": {
+                "running": null,
+                "ok": null,
+                "changed": null,
+                "skipped": null,
+                "error": null
+            },
+            "default": null,
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "cPrioAiConfidence": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true,
+            "decimalPlaces": 2
+        },
+        "cPrioAiReason": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "cPrioAiModel": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "cPrioAiOldPrioritaet": {
+            "type": "enum",
+            "options": [
+                "sofort",
+                "hoch",
+                "normal",
+                "niedrig",
+                "keineReaktion"
+            ],
+            "style": {
+                "sofort": null,
+                "hoch": null,
+                "normal": null,
+                "niedrig": null,
+                "keineReaktion": null
+            },
+            "default": null,
+            "maxLength": 100,
+            "isCustom": true
         }
     }
 }

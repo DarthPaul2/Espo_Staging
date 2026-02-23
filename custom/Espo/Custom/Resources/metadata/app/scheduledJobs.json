@@ -6,9 +6,21 @@
         "jobClassName": "Espo\\Custom\\Jobs\\EmailAutoKategorie"
     },
     "EmailKiKategoriePruf": {
-        "name": "Email: KI Kategorie Prüfung (neu)",
+        "name": "Email: KI Kategorie Prüfung",
         "isSystem": false,
-        "scheduling": "*/30 * * * *",
+        "scheduling": "*/5 * * * *",
         "jobClassName": "Espo\\Custom\\Jobs\\EmailKiKategoriePruf"
+    },
+    "EmailAutoPrioritaet": {
+        "name": "Email: Auto-Priorität setzen",
+        "isSystem": false,
+        "scheduling": "*/5 * * * *",
+        "jobClassName": "Espo\\Custom\\Jobs\\EmailAutoPrioritaet"
+    },
+    "EmailKiPrioritaetPruf": {
+        "name": "Email: KI Priorität Prüfung",
+        "isSystem": false,
+        "scheduling": "*/5 * * * *",
+        "jobClassName": "Espo\\Custom\\Jobs\\EmailKiPrioritaetPruf"
     }
 }
