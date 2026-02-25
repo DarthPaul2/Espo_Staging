@@ -1,8 +1,18 @@
 [
     {
         "name": "account",
-        "width": 26,
+        "width": 20,
         "link": true,
+        "align": "left"
+    },
+    {
+        "name": "objekt",
+        "width": 22,
+        "align": "left"
+    },
+    {
+        "name": "objektOrt",
+        "width": 10,
         "align": "left"
     },
     {
@@ -18,18 +28,17 @@
         "align": "left"
     },
     {
+        "name": "letzteWartung",
+        "width": 10,
+        "align": "left"
+    },
+    {
         "name": "naechsteWartung",
         "width": 16
     },
     {
         "name": "assignedUser",
         "width": 16,
-        "align": "left"
-    },
-    {
-        "name": "teams",
-        "width": 8,
-        "notSortable": true,
         "align": "left"
     },
     {

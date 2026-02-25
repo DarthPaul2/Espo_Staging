@@ -21,14 +21,17 @@
         "tasks": "Tasks",
         "documents": "Documents",
         "werkzeugs": "Werkzeugs",
-        "user": "User"
+        "user": "User",
+        "objekt": "Objekt",
+        "objektOrt": "Ort"
     },
     "links": {
         "account": "Account",
         "tasks": "Tasks",
         "documents": "Documents",
         "werkzeugs": "Werkzeugs",
-        "user": "User"
+        "user": "User",
+        "objekt": "Objekt"
     },
     "labels": {
         "Create CWartung": "Create Wartung"

@@ -1,7 +1,8 @@
 {
     "hooks": {
         "beforeSave": [
-            "NameFiller"
+            "NameFiller",
+            "SetAssignedUserFromAngebotOnCreate"
         ],
         "afterSave": [
             "UpdateAngebotTotals",

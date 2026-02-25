@@ -126,6 +126,13 @@
             "entity": "Contact",
             "audited": false,
             "isCustom": true
+        },
+        "wartungs": {
+            "type": "hasMany",
+            "foreign": "objekt",
+            "entity": "CWartung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

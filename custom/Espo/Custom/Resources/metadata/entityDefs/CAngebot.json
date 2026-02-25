@@ -2,7 +2,8 @@
     "hooks": {
         "beforeSave": [
             "AutoNumber",
-            "BemerkungVorlage"
+            "BemerkungVorlage",
+            "SetAssignedUserOnCreate"
         ]
     },
     "fields": {

@@ -220,6 +220,17 @@
         },
         "user": {
             "type": "link"
+        },
+        "objekt": {
+            "type": "link",
+            "view": "custom:views/c-wartung/fields/objekt"
+        },
+        "objektOrt": {
+            "type": "varchar",
+            "maxLength": 100,
+            "readOnly": false,
+            "options": [],
+            "isCustom": true
         }
     },
     "links": {
@@ -274,6 +285,13 @@
             "type": "belongsTo",
             "foreign": "cWartungs",
             "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "objekt": {
+            "type": "belongsTo",
+            "foreign": "wartungs",
+            "entity": "CObjekt",
             "audited": false,
             "isCustom": true
         }

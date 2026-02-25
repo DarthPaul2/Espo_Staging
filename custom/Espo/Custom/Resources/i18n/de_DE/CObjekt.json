@@ -12,7 +12,8 @@
         "account": "Account",
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
-        "contact": "Contact"
+        "contact": "Contact",
+        "wartungs": "Wartungs"
     },
     "tooltips": {
         "cBezeichnungZusatz": "z.B. “Halle 2 / Gebäudeteil B / Etage 3”"
@@ -21,6 +22,7 @@
         "account": "Account",
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
-        "contact": "Contact"
+        "contact": "Contact",
+        "wartungs": "Wartungs"
     }
 }

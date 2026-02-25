@@ -9,13 +9,15 @@
         "account": "Account",
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
-        "contact": "Contact"
+        "contact": "Contact",
+        "wartungs": "Wartungs"
     },
     "links": {
         "account": "Account",
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
-        "contact": "Contact"
+        "contact": "Contact",
+        "wartungs": "Wartungs"
     },
     "labels": {
         "Create CObjekt": "Create Objekt"

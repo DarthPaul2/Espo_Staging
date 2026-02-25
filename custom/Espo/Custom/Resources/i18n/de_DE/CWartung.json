@@ -24,7 +24,9 @@
         "tasks": "Tasks",
         "documents": "Documents",
         "werkzeugs": "Werkzeugs",
-        "user": "User"
+        "user": "User",
+        "objekt": "Objekt",
+        "objektOrt": "Ort"
     },
     "options": {
         "anlageTyp": {
@@ -77,6 +79,7 @@
         "tasks": "Tasks",
         "documents": "Documents",
         "werkzeugs": "Werkzeugs",
-        "user": "User"
+        "user": "User",
+        "objekt": "Objekt"
     }
 }

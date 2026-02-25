@@ -1,0 +1,13 @@
+[
+    {
+        "name": "name",
+        "width": 40,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "cOrt",
+        "width": 20,
+        "align": "left"
+    }
+]
