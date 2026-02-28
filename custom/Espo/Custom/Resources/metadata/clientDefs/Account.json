@@ -18,7 +18,8 @@
         },
         "rechnungs": {
             "layout": null,
-            "selectPrimaryFilterName": null
+            "selectPrimaryFilterName": null,
+            "limit": 10
         },
         "auftrags": {
             "layout": null,
@@ -58,7 +59,8 @@
         },
         "objekts": {
             "layout": null,
-            "selectPrimaryFilterName": null
+            "selectPrimaryFilterName": null,
+            "limit": 10
         }
     },
     "kanbanViewMode": false,

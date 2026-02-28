@@ -11,38 +11,41 @@
     "cObjekts": {
         "index": 0
     },
-    "cFormulars": {
+    "cRechnungs": {
         "index": 1
     },
+    "cFormulars": {
+        "index": 2
+    },
     "_tabBreak_0": {
-        "index": 2,
+        "index": 3,
         "tabBreak": true,
         "tabLabel": "$Stream"
     },
     "documents": {
-        "index": 3
+        "index": 4
     },
     "_tabBreak_1": {
-        "index": 4,
+        "index": 5,
         "tabBreak": true,
         "tabLabel": "$Account"
     },
     "stream": {
         "sticked": false,
-        "index": 5
-    },
-    "opportunities": {
         "index": 6
     },
+    "opportunities": {
+        "index": 7
+    },
     "_tabBreak_2": {
-        "index": 7,
+        "index": 8,
         "tabBreak": true,
         "tabLabel": "$Support"
     },
     "contacts": {
-        "index": 8
+        "index": 9
     },
     "cases": {
-        "index": 9
+        "index": 10
     }
 }
