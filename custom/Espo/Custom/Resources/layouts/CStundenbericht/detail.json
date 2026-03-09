@@ -39,6 +39,12 @@
         "rows": [
             [
                 {
+                    "name": "objektAuswahl"
+                },
+                false
+            ],
+            [
+                {
                     "name": "objektName"
                 },
                 {

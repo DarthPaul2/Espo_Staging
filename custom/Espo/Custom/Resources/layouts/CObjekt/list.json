@@ -1,7 +1,14 @@
 [
     {
         "name": "name",
-        "link": true
+        "width": 20,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "account",
+        "width": 16,
+        "align": "left"
     },
     {
         "name": "cStrasseHausnum",

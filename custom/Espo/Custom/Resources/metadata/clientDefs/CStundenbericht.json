@@ -1,7 +1,8 @@
 {
     "controller": "controllers/record",
     "recordViews": {
-        "detail": "custom:views/c-stundenbericht/record/detail"
+        "detail": "custom:views/c-stundenbericht/record/detail",
+        "edit": "custom:views/c-stundenbericht/record/edit"
     },
     "massActionList": [
         "downloadPdfZip"
@@ -45,6 +46,10 @@
             "selectPrimaryFilterName": null
         },
         "stundenbericht": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "objektAuswahl": {
             "layout": null,
             "selectPrimaryFilterName": null
         }

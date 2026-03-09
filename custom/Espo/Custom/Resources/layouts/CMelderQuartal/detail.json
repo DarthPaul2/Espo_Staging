@@ -1,0 +1,28 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "objekt"
+                },
+                {
+                    "name": "year"
+                },
+                {
+                    "name": "quarter"
+                }
+            ],
+            [
+                {
+                    "name": "pdfUrl"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

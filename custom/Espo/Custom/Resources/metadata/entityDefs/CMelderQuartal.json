@@ -101,6 +101,9 @@
             "maxLength": 100,
             "options": [],
             "isCustom": true
+        },
+        "objekt": {
+            "type": "link"
         }
     },
     "links": {
@@ -133,6 +136,13 @@
             "type": "belongsTo",
             "foreign": "cMelderQuartals",
             "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "objekt": {
+            "type": "belongsTo",
+            "foreign": "melderQuartals",
+            "entity": "CObjekt",
             "audited": false,
             "isCustom": true
         }

@@ -12,11 +12,13 @@
         "technikerId": "Techniker Id",
         "pdfPath": "Pdf Path",
         "pdfUrl": "Pdf Url",
-        "sourceId": "Source Id"
+        "sourceId": "Source Id",
+        "objekt": "Objekt"
     },
     "links": {
         "account": "Account",
-        "user": "User"
+        "user": "User",
+        "objekt": "Objekt"
     },
     "options": {
         "quarter": {

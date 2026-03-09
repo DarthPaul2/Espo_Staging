@@ -23,10 +23,17 @@ define('custom:views/c-stundenbericht/record/detail', ['views/record/detail'], f
             this.listenTo(this.model, 'change:accountId', this.onAccountChanged, this);
             this.listenTo(this.model, 'change:accountName', this.onAccountChanged, this);
 
+            this.listenTo(this.model, 'change:objektAuswahlId', this.onObjektChanged, this);
+            this.listenTo(this.model, 'change:objektAuswahlName', this.onObjektChanged, this);
+
             // 2) если запись уже открылась и account уже выбран — подтянем сразу
             this.once('after:render', function () {
                 if (this.model.get('accountId')) {
                     this.onAccountChanged();
+                }
+
+                if (this.model.get('objektAuswahlId')) {
+                    this.onObjektChanged();
                 }
             }, this);
         },
@@ -62,6 +69,44 @@ define('custom:views/c-stundenbericht/record/detail', ['views/record/detail'], f
                 .catch((e) => {
                     console.error('[CStundenbericht/detail] Account fetch FAILED', e);
                     Espo.Ui.error('Account-Adresse konnte nicht geladen werden (siehe Konsole).');
+                });
+        },
+
+
+        onObjektChanged: function () {
+            const objektId = this.model.get('objektAuswahlId');
+
+            console.log('[CStundenbericht/detail] objekt changed →', objektId);
+
+            if (!objektId) {
+                return;
+            }
+
+            Espo.Ajax.getRequest('CObjekt/' + encodeURIComponent(objektId))
+                .then((obj) => {
+                    if (!obj) return;
+
+                    const objektName = (obj.name || '').trim();
+                    const street = (obj.cStrasseHausnum || '').trim();
+                    const postal = (obj.cPLZ || '').trim();
+                    const city = (obj.cOrt || '').trim();
+                    const ort = [postal, city].filter(Boolean).join(', ');
+
+                    console.log('[CStundenbericht/detail] objekt fetched:', {
+                        objektName,
+                        street,
+                        ort
+                    });
+
+                    this.model.set({
+                        objektName: objektName,
+                        objektStrasse: street,
+                        objektOrt: ort
+                    });
+                })
+                .catch((e) => {
+                    console.error('[CStundenbericht/detail] Objekt fetch FAILED', e);
+                    Espo.Ui.error('Objektdaten konnten nicht geladen werden.');
                 });
         },
 

@@ -1,0 +1,25 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "objekt"
+                },
+                {
+                    "name": "year"
+                }
+            ],
+            [
+                {
+                    "name": "finalPdfUrl"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

@@ -10,14 +10,20 @@
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
         "contact": "Contact",
-        "wartungs": "Wartungs"
+        "wartungs": "Wartungs",
+        "melderQuartals": "Melder Quartals",
+        "melderGesamtPdfs": "Melder Gesamt Pdfs",
+        "stundenberichts": "Stundenberichts"
     },
     "links": {
         "account": "Account",
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
         "contact": "Contact",
-        "wartungs": "Wartungs"
+        "wartungs": "Wartungs",
+        "melderQuartals": "Melder Quartals",
+        "melderGesamtPdfs": "Melder Gesamt Pdfs",
+        "stundenberichts": "Stundenberichts"
     },
     "labels": {
         "Create CObjekt": "Create Objekt"

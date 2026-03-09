@@ -71,6 +71,9 @@
             "maxLength": 100,
             "options": [],
             "isCustom": true
+        },
+        "objekt": {
+            "type": "link"
         }
     },
     "links": {
@@ -103,6 +106,13 @@
             "type": "belongsTo",
             "foreign": "cMelderGesamtPdfs",
             "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "objekt": {
+            "type": "belongsTo",
+            "foreign": "melderGesamtPdfs",
+            "entity": "CObjekt",
             "audited": false,
             "isCustom": true
         }

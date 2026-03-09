@@ -13,7 +13,10 @@
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
         "contact": "Contact",
-        "wartungs": "Wartungs"
+        "wartungs": "Wartungs",
+        "melderQuartals": "Melder Quartals",
+        "melderGesamtPdfs": "Melder Gesamt Pdfs",
+        "stundenberichts": "Stundenberichts"
     },
     "tooltips": {
         "cBezeichnungZusatz": "z.B. “Halle 2 / Gebäudeteil B / Etage 3”"
@@ -23,6 +26,9 @@
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
         "contact": "Contact",
-        "wartungs": "Wartungs"
+        "wartungs": "Wartungs",
+        "melderQuartals": "Melder Quartals",
+        "melderGesamtPdfs": "Melder Gesamt Pdfs",
+        "stundenberichts": "Stundenberichts"
     }
 }

@@ -549,6 +549,9 @@
             "maxLength": 30,
             "options": [],
             "isCustom": true
+        },
+        "objektAuswahl": {
+            "type": "link"
         }
     },
     "links": {
@@ -620,6 +623,13 @@
             "type": "hasMany",
             "foreign": "formularberichte",
             "entity": "CFormular",
+            "audited": false,
+            "isCustom": true
+        },
+        "objektAuswahl": {
+            "type": "belongsTo",
+            "foreign": "stundenberichts",
+            "entity": "CObjekt",
             "audited": false,
             "isCustom": true
         }

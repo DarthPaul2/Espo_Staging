@@ -11,41 +11,63 @@
     "cObjekts": {
         "index": 0
     },
-    "cRechnungs": {
-        "index": 1
+    "_tabBreak_4": {
+        "index": 1,
+        "tabBreak": true,
+        "tabLabel": "Geschäftsdokumente"
     },
-    "cFormulars": {
+    "cRechnungs": {
         "index": 2
     },
+    "cAngebots": {
+        "index": 3
+    },
+    "cLieferscheins": {
+        "index": 4
+    },
+    "cFormulars": {
+        "index": 5
+    },
+    "_tabBreak_3": {
+        "index": 6,
+        "tabBreak": true,
+        "tabLabel": "Melderprüflisten"
+    },
+    "cMelderQuartals": {
+        "index": 7
+    },
+    "cMelderGesamtPdfs": {
+        "index": 8
+    },
     "_tabBreak_0": {
-        "index": 3,
+        "index": 9,
         "tabBreak": true,
         "tabLabel": "$Stream"
     },
     "documents": {
-        "index": 4
+        "index": 10
     },
     "_tabBreak_1": {
-        "index": 5,
+        "index": 11,
         "tabBreak": true,
         "tabLabel": "$Account"
     },
     "stream": {
         "sticked": false,
-        "index": 6
+        "index": 12
     },
     "opportunities": {
-        "index": 7
+        "index": 13
     },
     "_tabBreak_2": {
-        "index": 8,
+        "index": 14,
         "tabBreak": true,
         "tabLabel": "$Support"
     },
     "contacts": {
-        "index": 9
+        "index": 15
     },
     "cases": {
-        "index": 10
+        "index": 16
     }
 }

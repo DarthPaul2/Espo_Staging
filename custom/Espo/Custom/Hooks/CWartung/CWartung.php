@@ -11,25 +11,23 @@ class CWartung
      */
     public function beforeSave(Entity $entity, array $options = [])
     {
+        // --- 0. Автогенерация Name, если пусто
+        if (!$entity->get('name')) {
+            $accountName = trim((string) $entity->get('accountName'));
+            $anlage      = (string) $entity->get('anlageTyp');
 
-         // --- 0. Автогенерация Name, если пусто
-    if (!$entity->get('name')) {
-        $accountName = trim((string) $entity->get('accountName'));
-        $anlage      = (string) $entity->get('anlageTyp');
+            $labels = [
+                'bma'     => 'BMA',
+                'ema'     => 'EMA',
+                'video'   => 'Video',
+                'zutritt' => 'Zutritt',
+                'other'   => 'Sonstiges',
+            ];
+            $anlageLabel = $labels[$anlage] ?? ucfirst($anlage ?: 'Wartung');
 
-        // Небольшая карта для красивого лейбла без обращения к Language
-        $labels = [
-            'bma'     => 'BMA',
-            'ema'     => 'EMA',
-            'video'   => 'Video',
-            'zutritt' => 'Zutritt',
-            'other'   => 'Sonstiges',
-        ];
-        $anlageLabel = $labels[$anlage] ?? ucfirst($anlage ?: 'Wartung');
-
-        $title = trim(($accountName ?: 'Ohne Firma') . " - " . $anlageLabel . " - Wartung");
-        $entity->set('name', $title);
-    }
+            $title = trim(($accountName ?: 'Ohne Firma') . " - " . $anlageLabel . " - Wartung");
+            $entity->set('name', $title);
+        }
 
         // --- 1. Если статус "beendet" — ничего не пересчитываем
         if ($entity->get('status') === 'beendet') {
@@ -38,55 +36,69 @@ class CWartung
         }
 
         // --- 2. Проверяем наличие базовых полей
-        $intervall = $entity->get('intervall');
-        $regelModus = $entity->get('regelModus') ?? 'abLetzterWartung';
-        $startDatum = $entity->get('startDatum');
+        $intervall     = $entity->get('intervall');
+        $regelModus    = $entity->get('regelModus') ?? 'abLetzterWartung';
+        $startDatum    = $entity->get('startDatum');
         $letzteWartung = $entity->get('letzteWartung');
 
         if (!$intervall || (!$startDatum && !$letzteWartung)) {
             return; // нечего считать
         }
 
-        // --- 3. Рассчитываем следующую дату обслуживания
-        $naechste = null;
-        switch ($regelModus) {
-            case 'abStartdatum':
-                $basis = new \DateTime($startDatum);
-                break;
-            case 'abLetzterWartung':
-            default:
-                $basis = $letzteWartung ? new \DateTime($letzteWartung) : new \DateTime($startDatum);
-                break;
+        // --- 3. Рассчитываем следующую дату обслуживания ТОЛЬКО если она ещё не задана вручную
+        $naechste = $entity->get('naechsteWartung');
+
+        if (empty($naechste)) {
+            switch ($regelModus) {
+                case 'abStartdatum':
+                    $basis = new \DateTime($startDatum);
+                    break;
+
+                case 'abLetzterWartung':
+                default:
+                    $basis = $letzteWartung
+                        ? new \DateTime($letzteWartung)
+                        : new \DateTime($startDatum);
+                    break;
+            }
+
+            switch ($intervall) {
+                case 'monatlich':
+                    $basis->modify('+1 month');
+                    break;
+                case 'quartal':
+                    $basis->modify('+3 months');
+                    break;
+                case 'halbjaehrlich':
+                    $basis->modify('+6 months');
+                    break;
+                case 'jaehrlich':
+                    $basis->modify('+1 year');
+                    break;
+            }
+
+            $naechste = $basis->format('Y-m-d');
+            $entity->set('naechsteWartung', $naechste);
         }
 
-        switch ($intervall) {
-            case 'monatlich':
-                $basis->modify('+1 month');
-                break;
-            case 'quartal':
-                $basis->modify('+3 months');
-                break;
-            case 'halbjaehrlich':
-                $basis->modify('+6 months');
-                break;
-            case 'jaehrlich':
-                $basis->modify('+1 year');
-                break;
+        // --- 4. Определяем статус фаличности (по фактической naechsteWartung)
+        if (empty($naechste)) {
+            return;
         }
 
-        $naechste = $basis->format('Y-m-d');
-        $entity->set('naechsteWartung', $naechste);
-
-        // --- 4. Определяем статус фаличности
-        $today = new \DateTime();
-        $due = new \DateTime($naechste);
-        $warnDays = (int)($entity->get('vorwarnTage') ?? 30);
+        $today    = new \DateTime();
+        $due      = new \DateTime($naechste);
+        $warnDays = (int) ($entity->get('vorwarnTage') ?? 30);
 
         $status = 'nichtFaellig';
+
         if ($today > $due) {
             $status = 'faellig';
-        } elseif ($today->modify("+{$warnDays} days") >= $due) {
-            $status = 'baldFaellig';
+        } else {
+            $todayPlus = new \DateTime(); // ✅ отдельный объект, чтобы не менять $today
+            if ($todayPlus->modify("+{$warnDays} days") >= $due) {
+                $status = 'baldFaellig';
+            }
         }
 
         $entity->set('faelligkeitsStatus', $status);

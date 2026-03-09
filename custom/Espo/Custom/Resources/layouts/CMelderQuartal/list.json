@@ -1,11 +1,21 @@
 [
     {
         "name": "account",
-        "width": 16
+        "width": 16,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "objekt",
+        "width": 16,
+        "link": true,
+        "align": "left"
     },
     {
         "name": "year",
-        "width": 16
+        "width": 16,
+        "link": true,
+        "align": "left"
     },
     {
         "name": "quarter",

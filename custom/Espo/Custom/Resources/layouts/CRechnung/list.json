@@ -13,7 +13,7 @@
     },
     {
         "name": "betragBrutto",
-        "width": 11,
+        "width": 10,
         "align": "left"
     },
     {
@@ -23,22 +23,22 @@
     },
     {
         "name": "faelligAm",
-        "width": 9,
+        "width": 8,
         "align": "left"
     },
     {
         "name": "rechnungstyp",
-        "width": 13,
+        "width": 10,
         "align": "left"
     },
     {
         "name": "mahnstufe",
-        "width": 14,
+        "width": 10,
         "align": "left"
     },
     {
         "name": "letzteMahnungAm",
-        "width": 12,
+        "width": 10,
         "align": "left"
     },
     {
@@ -49,6 +49,11 @@
     {
         "name": "status",
         "width": 6,
+        "align": "left"
+    },
+    {
+        "name": "objekt",
+        "width": 12,
         "align": "left"
     }
 ]

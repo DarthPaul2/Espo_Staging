@@ -1,0 +1,23 @@
+[
+    {
+        "name": "name",
+        "width": 20,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "account",
+        "width": 26,
+        "align": "left"
+    },
+    {
+        "name": "quarter",
+        "width": 8,
+        "align": "left"
+    },
+    {
+        "name": "pdfUrl",
+        "width": 26,
+        "align": "left"
+    }
+]

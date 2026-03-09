@@ -1,33 +1,27 @@
 [
     {
         "name": "createdAt",
-        "width": 16
+        "width": 20,
+        "link": true,
+        "align": "left"
     },
     {
         "name": "account",
-        "width": 26,
-        "link": true,
-        "align": "left"
+        "width": 20
     },
     {
         "name": "objekt",
-        "width": 26,
-        "link": true,
-        "align": "left"
+        "width": 20
     },
     {
         "name": "year",
-        "width": 6,
+        "width": 10,
         "link": true,
         "align": "left"
     },
     {
         "name": "finalPdfUrl",
-        "width": 36,
+        "width": 26,
         "align": "left"
-    },
-    {
-        "name": "updatedAtServer",
-        "width": 16
     }
 ]

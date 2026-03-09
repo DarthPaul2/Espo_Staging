@@ -1,0 +1,1511 @@
+]633;E;echo "===== CUSTOM: ОБЩАЯ СТРУКТУРА ПАПОК =====";a6d1a57a-0379-48f7-af73-aa6c83f80f65]633;C===== CUSTOM: ОБЩАЯ СТРУКТУРА ПАПОК =====
+custom/Espo/Custom
+(0tqq (BControllers
+(0tqq (BHooks
+(0x   tqq (BAccount
+(0x   tqq (BCAngebot
+(0x   tqq (BCAngebotsposition
+(0x   tqq (BCArbeitszeit
+(0x   tqq (BCAuftrag
+(0x   tqq (BCAuftragsposition
+(0x   tqq (BCBrief
+(0x   tqq (BCLieferschein
+(0x   tqq (BCMaterial
+(0x   tqq (BCMelderGesamtPdf
+(0x   tqq (BCMelderQuartal
+(0x   tqq (BCRechnung
+(0x   tqq (BCRechnungsposition
+(0x   tqq (BCStundenbericht
+(0x   tqq (BCWartung
+(0x   tqq (BCWerkzeug
+(0x   tqq (BCWerkzeugausgabe
+(0x   tqq (BEmail
+(0x   mqq (BTask
+(0tqq (BJobs
+(0tqq (BResources
+(0x   tqq (BentityDefs
+(0x   tqq (Bi18n
+(0x   x   tqq (Bar_AR
+(0x   x   tqq (Bbg_BG
+(0x   x   tqq (Bcs_CZ
+(0x   x   tqq (Bda_DK
+(0x   x   tqq (Bde_DE
+(0x   x   tqq (Bel_GR
+(0x   x   tqq (Ben_GB
+(0x   x   tqq (Ben_US
+(0x   x   tqq (Bes_ES
+(0x   x   tqq (Bes_MX
+(0x   x   tqq (Bfa_IR
+(0x   x   tqq (Bfr_FR
+(0x   x   tqq (Bhr_HR
+(0x   x   tqq (Bhu_HU
+(0x   x   tqq (Bid_ID
+(0x   x   tqq (Bit_IT
+(0x   x   tqq (Bja_JP
+(0x   x   tqq (Blt_LT
+(0x   x   tqq (Blv_LV
+(0x   x   tqq (Bnb_NO
+(0x   x   tqq (Bnl_NL
+(0x   x   tqq (Bpl_PL
+(0x   x   tqq (Bpt_BR
+(0x   x   tqq (Bpt_PT
+(0x   x   tqq (Bro_RO
+(0x   x   tqq (Bru_RU
+(0x   x   tqq (Bsk_SK
+(0x   x   tqq (Bsl_SI
+(0x   x   tqq (Bsr_RS
+(0x   x   tqq (Bsv_SE
+(0x   x   tqq (Bth_TH
+(0x   x   tqq (Btr_TR
+(0x   x   tqq (Buk_UA
+(0x   x   tqq (Bur_IN
+(0x   x   tqq (Bvi_VN
+(0x   x   tqq (Bzh_CN
+(0x   x   mqq (Bzh_TW
+(0x   tqq (Blayouts
+(0x   x   tqq (BAccount
+(0x   x   tqq (BCAbwesenheit
+(0x   x   tqq (BCAngebot
+(0x   x   tqq (BCAngebotsposition
+(0x   x   tqq (BCArbeitszeit
+(0x   x   tqq (BCArbeitszeitJahresuebersicht
+(0x   x   tqq (BCArbeitszeitMonatsuebersicht
+(0x   x   tqq (BCAuftrag
+(0x   x   tqq (BCAuftragsposition
+(0x   x   tqq (BCBrief
+(0x   x   tqq (BCFormular
+(0x   x   tqq (BCLieferschein
+(0x   x   tqq (BCLieferscheinposition
+(0x   x   tqq (BCMahnregel
+(0x   x   tqq (BCMahnung
+(0x   x   tqq (BCMaterial
+(0x   x   tqq (BCMelderGesamtPdf
+(0x   x   tqq (BCMelderQuartal
+(0x   x   tqq (BCObjekt
+(0x   x   tqq (BCRechnung
+(0x   x   tqq (BCRechnungsposition
+(0x   x   tqq (BCStundenbericht
+(0x   x   tqq (BCWartung
+(0x   x   tqq (BCWerkzeug
+(0x   x   tqq (BCWerkzeugausgabe
+(0x   x   tqq (BEmail
+(0x   x   tqq (BTask
+(0x   x   mqq (BUser
+(0x   tqq (Bmetadata
+(0x   x   tqq (BaclDefs
+(0x   x   tqq (Bapp
+(0x   x   tqq (BclientDefs
+(0x   x   tqq (Bdashlets
+(0x   x   tqq (BentityAcl
+(0x   x   tqq (BentityDefs
+(0x   x   tqq (Bfields
+(0x   x   tqq (Bformula
+(0x   x   tqq (Bjobs
+(0x   x   tqq (BlogicDefs
+(0x   x   tqq (BrecordDefs
+(0x   x   tqq (Bscopes
+(0x   x   mqq (BselectDefs
+(0x   mqq (Bpdf
+(0x       mqq (Bassets
+(0mqq (BServices
+
+109 directories
+
+===== ENTITY DEFS =====
+custom/Espo/Custom/Resources/metadata/entityDefs
+(0tqq (BAccount.json
+(0tqq (BCAbwesenheit.json
+(0tqq (BCAngebot.json
+(0tqq (BCAngebotsposition.json
+(0tqq (BCArbeitszeitJahresuebersicht.json
+(0tqq (BCArbeitszeit.json
+(0tqq (BCArbeitszeitMonatsuebersicht.json
+(0tqq (BCAuftrag.json
+(0tqq (BCAuftragsposition.json
+(0tqq (BCBrief.json
+(0tqq (BCFormular.json
+(0tqq (BCLieferschein.json
+(0tqq (BCLieferscheinposition.json
+(0tqq (BCMahnregel.json
+(0tqq (BCMahnung.json
+(0tqq (BCMaterial.json
+(0tqq (BCMelderGesamtPdf.json
+(0tqq (BCMelderQuartal.json
+(0tqq (BCObjekt.json
+(0tqq (BContact.json
+(0tqq (BCRechnung.json
+(0tqq (BCRechnungsposition.json
+(0tqq (BCStundenbericht.json
+(0tqq (BCWartung.json
+(0tqq (BCWerkzeugausgabe.json
+(0tqq (BCWerkzeug.json
+(0tqq (BDocument.json
+(0tqq (BEmail.json
+(0tqq (BTask.json
+(0mqq (BUser.json
+
+1 directory, 30 files
+
+===== CLIENT DEFS =====
+custom/Espo/Custom/Resources/metadata/clientDefs
+(0tqq (BAccount.json
+(0tqq (BCAbwesenheit.json
+(0tqq (BCalendar.json
+(0tqq (BCAngebot.json
+(0tqq (BCAngebotsposition.json
+(0tqq (BCArbeitszeitJahresuebersicht.json
+(0tqq (BCArbeitszeit.json
+(0tqq (BCArbeitszeitMonatsuebersicht.json
+(0tqq (BCAuftrag.json
+(0tqq (BCAuftragsposition.json
+(0tqq (BCBrief.json
+(0tqq (BCFormular.json
+(0tqq (BCLieferschein.json
+(0tqq (BCLieferscheinposition.json
+(0tqq (BCMahnregel.json
+(0tqq (BCMahnung.json
+(0tqq (BCMaterial.json
+(0tqq (BCMelderGesamtPdf.json
+(0tqq (BCMelderQuartal.json
+(0tqq (BCObjekt.json
+(0tqq (BContact.json
+(0tqq (BCRechnung.json
+(0tqq (BCRechnungsposition.json
+(0tqq (BCStundenbericht.json
+(0tqq (BCWartung.json
+(0tqq (BCWerkzeugausgabe.json
+(0tqq (BCWerkzeug.json
+(0tqq (BDocument.json
+(0tqq (BTask.json
+(0mqq (BUser.json
+
+1 directory, 30 files
+
+===== SCOPES =====
+custom/Espo/Custom/Resources/metadata/scopes
+(0tqq (BAccount.json
+(0tqq (BCAbwesenheit.json
+(0tqq (BCAbwesenheit.jsoу
+(0tqq (BCAngebot.json
+(0tqq (BCAngebotsposition.json
+(0tqq (BCArbeitszeitJahresuebersicht.json
+(0tqq (BCArbeitszeit.json
+(0tqq (BCArbeitszeitMonatsuebersicht.json
+(0tqq (BCAuftrag.json
+(0tqq (BCAuftragsposition.json
+(0tqq (BCBrief.json
+(0tqq (BCFormular.json
+(0tqq (BCLieferschein.json
+(0tqq (BCLieferscheinposition.json
+(0tqq (BCMahnregel.json
+(0tqq (BCMahnung.json
+(0tqq (BCMaterial.json
+(0tqq (BCMelderGesamtPdf.json
+(0tqq (BCMelderQuartal.json
+(0tqq (BCObjekt.json
+(0tqq (BCRechnung.json
+(0tqq (BCRechnungsposition.json
+(0tqq (BCStundenbericht.json
+(0tqq (BCWartung.json
+(0tqq (BCWerkzeugausgabe.json
+(0tqq (BCWerkzeug.json
+(0mqq (BTask.json
+
+1 directory, 27 files
+
+===== HOOKS =====
+custom/Espo/Custom/Hooks
+(0tqq (BAccount
+(0x   tqq (BFillShippingAdresse.php
+(0x   mqq (BKundennummer.php
+(0tqq (BCAngebot
+(0x   tqq (BAutoNumber.php
+(0x   tqq (BBemerkungVorlage.php
+(0x   mqq (BSetAssignedUserOnCreate.php
+(0tqq (BCAngebotsposition
+(0x   tqq (BAutoZwischensummeOnHeader.php
+(0x   tqq (BNameFiller.php
+(0x   tqq (BSetAssignedUserFromAngebotOnCreate.php
+(0x   mqq (BUpdateAngebotTotals.php
+(0tqq (BCArbeitszeit
+(0x   tqq (BCalcFields.php
+(0x   tqq (BDeleteSyncToApp.php
+(0x   mqq (BSyncToApp.php
+(0tqq (BCAuftrag
+(0x   tqq (BAutoNumber.php
+(0x   tqq (BSyncAngebotspositionen.php
+(0x   mqq (BUpdateAuftragTotals.php
+(0tqq (BCAuftragsposition
+(0x   mqq (BTriggerServerRecalc.php
+(0tqq (BCBrief
+(0x   mqq (BAutoName.php
+(0tqq (BCLieferschein
+(0x   tqq (BAutoNumber.php
+(0x   tqq (BCleanPositions.php
+(0x   tqq (BDeleteCascade.php
+(0x   tqq (BFillLieferadresse.php
+(0x   tqq (BImportFromAngebot.php
+(0x   mqq (BImportFromAuftrag.php
+(0tqq (BCMaterial
+(0x   tqq (BGenerateBarcode.php
+(0x   mqq (BLagerplatzCode.php
+(0tqq (BCMelderGesamtPdf
+(0x   mqq (BSyncDelete.php
+(0tqq (BCMelderQuartal
+(0x   mqq (BSyncDelete.php
+(0tqq (BCRechnung
+(0x   tqq (BAngebotImporter.php
+(0x   tqq (BAutoNumber.php
+(0x   tqq (BBemerkungVorlage.php
+(0x   tqq (BMarkAuftragspositionAbgerechnet.php
+(0x   tqq (BRequireAuftragForTypes.php
+(0x   tqq (BResetBereitsabgerechnetOnDelete.php
+(0x   tqq (BSchlussImporter.php
+(0x   tqq (BSetBezahltAm.php
+(0x   tqq (BSyncKontaktFromAccount.php
+(0x   mqq (BTriggerAuftragRecalc.php
+(0tqq (BCRechnungsposition
+(0x   tqq (BNameFiller.php
+(0x   mqq (BUpdateRechnungTotals.php
+(0tqq (BCStundenbericht
+(0x   tqq (BAutoName.php
+(0x   tqq (BDeleteRelatedCFormular.php
+(0x   mqq (BTechnikerUnterschriftAutoFill.php
+(0tqq (BCWartung
+(0x   mqq (BCWartung.php
+(0tqq (BCWerkzeug
+(0x   tqq (BAutoInventarnummer.php
+(0x   mqq (BGenerateBarcode.php
+(0tqq (BCWerkzeugausgabe
+(0x   mqq (BSyncToWerkzeug.php
+(0tqq (BEmail
+(0x   mqq (BAutoKategorie.php
+(0mqq (BTask
+(0    tqq (BOutlookSync.php
+(0    tqq (BSyncTask.php
+(0    tqq (BTestLog.php
+(0    mqq (BWartungUpdate.php
+
+20 directories, 51 files
+
+===== SERVICES =====
+custom/Espo/Custom/Services
+(0mqq (BCAbwesenheit.php
+
+1 directory, 1 file
+
+===== REPOSITORIES =====
+custom/Espo/Custom/Repositories  [error opening dir]
+
+0 directories, 0 files
+
+===== CONTROLLERS =====
+custom/Espo/Custom/Controllers
+(0tqq (BCAbwesenheit.php
+(0tqq (BCAngebot.php
+(0tqq (BCAngebotsposition.php
+(0tqq (BCArbeitszeitJahresuebersicht.php
+(0tqq (BCArbeitszeitMonatsuebersicht.php
+(0tqq (BCArbeitszeit.php
+(0tqq (BCAuftrag.php
+(0tqq (BCAuftragsposition.php
+(0tqq (BCBrief.php
+(0tqq (BCFormular.php
+(0tqq (BCLieferschein.php
+(0tqq (BCLieferscheinposition.php
+(0tqq (BCMahnregel.php
+(0tqq (BCMahnung.php
+(0tqq (BCMaterial.php
+(0tqq (BCMelderGesamtPdf.php
+(0tqq (BCMelderQuartal.php
+(0tqq (BCObjekt.php
+(0tqq (BCRechnung.php
+(0tqq (BCRechnungsposition.php
+(0tqq (BCStundenbericht.php
+(0tqq (BCWartung.php
+(0tqq (BCWerkzeugausgabe.php
+(0mqq (BCWerkzeug.php
+
+1 directory, 24 files
+
+===== SELECT MANAGERS =====
+custom/Espo/Custom/SelectManagers  [error opening dir]
+
+0 directories, 0 files
+
+===== ENTRY POINTS =====
+custom/Espo/Custom/EntryPoints  [error opening dir]
+
+0 directories, 0 files
+
+===== FORMULAS =====
+custom/Espo/Custom/Resources/formula  [error opening dir]
+
+0 directories, 0 files
+
+===== I18N / LABELS =====
+custom/Espo/Custom/Resources/i18n
+(0tqq (Bar_AR
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bbg_BG
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bcs_CZ
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bda_DK
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bde_DE
+(0x   tqq (BAccount.json
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BContact.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   tqq (BCWerkzeug.json
+(0x   tqq (BDashlet.json
+(0x   tqq (BDocument.json
+(0x   tqq (BEmail.json
+(0x   tqq (BGlobal.json
+(0x   tqq (BTask.json
+(0x   tqq (BTest.json
+(0x   mqq (BUser.json
+(0tqq (Bel_GR
+(0x   mqq (BCObjekt.json
+(0tqq (Ben_GB
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Ben_US
+(0x   tqq (BAccount.json
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BContact.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   tqq (BCWerkzeug.json
+(0x   tqq (BDocument.json
+(0x   tqq (BEmail.json
+(0x   tqq (BGlobal.json
+(0x   tqq (BTask.json
+(0x   mqq (BUser.json
+(0tqq (Bes_ES
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bes_MX
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bfa_IR
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bfr_FR
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bhr_HR
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bhu_HU
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bid_ID
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bit_IT
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bja_JP
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Blt_LT
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Blv_LV
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bnb_NO
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bnl_NL
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bpl_PL
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bpt_BR
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bpt_PT
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bro_RO
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bru_RU
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bsk_SK
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bsl_SI
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bsr_RS
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bsv_SE
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bth_TH
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Btr_TR
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Buk_UA
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bur_IN
+(0x   mqq (BCObjekt.json
+(0tqq (Bvi_VN
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0tqq (Bzh_CN
+(0x   tqq (BCAbwesenheit.json
+(0x   tqq (BCAngebot.json
+(0x   tqq (BCAngebotsposition.json
+(0x   tqq (BCArbeitszeitJahresuebersicht.json
+(0x   tqq (BCArbeitszeit.json
+(0x   tqq (BCArbeitszeitMonatsuebersicht.json
+(0x   tqq (BCAuftrag.json
+(0x   tqq (BCAuftragsposition.json
+(0x   tqq (BCBrief.json
+(0x   tqq (BCFormular.json
+(0x   tqq (BCLieferschein.json
+(0x   tqq (BCLieferscheinposition.json
+(0x   tqq (BCMahnregel.json
+(0x   tqq (BCMahnung.json
+(0x   tqq (BCMaterial.json
+(0x   tqq (BCMelderGesamtPdf.json
+(0x   tqq (BCMelderQuartal.json
+(0x   tqq (BCObjekt.json
+(0x   tqq (BCRechnung.json
+(0x   tqq (BCRechnungsposition.json
+(0x   tqq (BCStundenbericht.json
+(0x   tqq (BCWartung.json
+(0x   tqq (BCWerkzeugausgabe.json
+(0x   mqq (BCWerkzeug.json
+(0mqq (Bzh_TW
+(0    tqq (BCAbwesenheit.json
+(0    tqq (BCAngebot.json
+(0    tqq (BCAngebotsposition.json
+(0    tqq (BCArbeitszeitJahresuebersicht.json
+(0    tqq (BCArbeitszeit.json
+(0    tqq (BCArbeitszeitMonatsuebersicht.json
+(0    tqq (BCAuftrag.json
+(0    tqq (BCAuftragsposition.json
+(0    tqq (BCBrief.json
+(0    tqq (BCFormular.json
+(0    tqq (BCLieferschein.json
+(0    tqq (BCLieferscheinposition.json
+(0    tqq (BCMahnregel.json
+(0    tqq (BCMahnung.json
+(0    tqq (BCMaterial.json
+(0    tqq (BCMelderGesamtPdf.json
+(0    tqq (BCMelderQuartal.json
+(0    tqq (BCObjekt.json
+(0    tqq (BCRechnung.json
+(0    tqq (BCRechnungsposition.json
+(0    tqq (BCStundenbericht.json
+(0    tqq (BCWartung.json
+(0    tqq (BCWerkzeugausgabe.json
+(0    mqq (BCWerkzeug.json
+
+38 directories, 858 files
+
+===== LAYOUTS =====
+custom/Espo/Custom/Resources/layouts
+(0tqq (BAccount
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Bfilters.json
+(0x   mqq (Blist.json
+(0tqq (BCAbwesenheit
+(0x   tqq (Bcalendar.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCAngebot
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Bfilters.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCAngebotsposition
+(0x   tqq (BdefaultSidePanel.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCArbeitszeit
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Bfilters.json
+(0x   mqq (Blist.json
+(0tqq (BCArbeitszeitJahresuebersicht
+(0x   tqq (Bdetail.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCArbeitszeitMonatsuebersicht
+(0x   mqq (Blist.json
+(0tqq (BCAuftrag
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (BdetailActions.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Bfilters.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCAuftragsposition
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCBrief
+(0x   tqq (Bdetail.json
+(0x   mqq (Blist.json
+(0tqq (BCFormular
+(0x   tqq (Bdetail.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCLieferschein
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCLieferscheinposition
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCMahnregel
+(0x   tqq (Bdetail.json
+(0x   mqq (Blist.json
+(0tqq (BCMahnung
+(0x   tqq (Bdetail.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCMaterial
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Bfilters.json
+(0x   mqq (Blist.json
+(0tqq (BCMelderGesamtPdf
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCMelderQuartal
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCObjekt
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCRechnung
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Bfilters.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCRechnungsposition
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCStundenbericht
+(0x   tqq (Bdetail.json
+(0x   mqq (Blist.json
+(0tqq (BCWartung
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Bfilters.json
+(0x   mqq (Blist.json
+(0tqq (BCWerkzeug
+(0x   tqq (BbottomPanelsDetail.json
+(0x   tqq (BdefaultSidePanel.json
+(0x   tqq (Bdetail.json
+(0x   tqq (Bfilters.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BCWerkzeugausgabe
+(0x   tqq (Bdetail.json
+(0x   tqq (BdetailSmall.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BEmail
+(0x   tqq (BdefaultSidePanel.json
+(0x   tqq (Blist.json
+(0x   mqq (BlistSmall.json
+(0tqq (BTask
+(0x   mqq (Bdetail.json
+(0mqq (BUser
+(0    tqq (BbottomPanelsDetail.json
+(0    mqq (Blist.json
+
+29 directories, 110 files
+
+===== TEMPLATES =====
+custom/Espo/Custom/Resources/templates  [error opening dir]
+
+0 directories, 0 files
+
+===== CLIENT JS =====
+client/custom
+(0tqq (Bcss
+(0x   tqq (Barbeitszeit.css
+(0x   mqq (Bcustomstyle.css
+(0tqq (Bcustom.css
+(0tqq (Bimg
+(0x   mqq (Bweb.png
+(0tqq (Blib
+(0x   tqq (BChart.min.js
+(0x   mqq (Bfabric.min.js
+(0tqq (Bmanifest.json
+(0tqq (Bmodules
+(0x   mqq (Bdummy.txt
+(0tqq (Bpdf
+(0tqq (Bres
+(0x   tqq (Bcss
+(0x   x   mqq (Bumsatz-statistik.css
+(0x   mqq (Btemplates
+(0x       tqq (Bc-angebot
+(0x       x   mqq (Bmodals
+(0x       x       mqq (Bpackage-wizard.tpl
+(0x       tqq (Bdashboard
+(0x       x   mqq (Bumsatz-statistik.tpl
+(0x       mqq (Bwhatsapp
+(0x           mqq (Bwhatsapp-admin.tpl
+(0mqq (Bsrc
+(0    tqq (Bdebug
+(0    tqq (Bglobal
+(0    x   mqq (Bloader.js
+(0    tqq (Bhandlers
+(0    x   tqq (Bc-rechnung
+(0    x   x   mqq (Bmass-download-pdf-zip.js
+(0    x   mqq (Bc-stundenbericht
+(0    x       mqq (Bmass-download-pdf-zip.js
+(0    tqq (Blibs.json
+(0    tqq (Bviews
+(0    x   tqq (Bapp.js
+(0    x   tqq (Bc-abwesenheit
+(0    x   x   mqq (Bcalendar
+(0    x   x       mqq (Bcalendar.js
+(0    x   tqq (Bcalendar
+(0    x   x   mqq (Bcalendar.js
+(0    x   tqq (Bc-angebot
+(0    x   x   tqq (Bfields
+(0    x   x   x   mqq (Bobjekt.js
+(0    x   x   tqq (Bmodals
+(0    x   x   x   mqq (Bpackage-wizard.js
+(0    x   x   mqq (Brecord
+(0    x   x       tqq (Bdetail.js
+(0    x   x       mqq (Bedit.js
+(0    x   tqq (Bc-angebotsposition
+(0    x   x   mqq (Brecord
+(0    x   x       tqq (Bedit.js
+(0    x   x       mqq (Bedit-small.js
+(0    x   tqq (Bc-arbeitszeit
+(0    x   x   tqq (Blist.js
+(0    x   x   tqq (Bpanels
+(0    x   x   x   tqq (Bpanel-jahr.js
+(0    x   x   x   mqq (Bpanel-monat.js
+(0    x   x   mqq (Brecord
+(0    x   x       mqq (Bedit.js
+(0    x   tqq (Bc-auftrag
+(0    x   x   mqq (Brecord
+(0    x   x       tqq (Bdetail-actions.js
+(0    x   x       tqq (Bdetail.js
+(0    x   x       tqq (Bedit.js
+(0    x   x       mqq (Brelationship-row-actions-no-delete.js
+(0    x   tqq (Bc-auftragsposition
+(0    x   x   mqq (Brecord
+(0    x   x       mqq (Bedit-small.js
+(0    x   tqq (Bc-brief
+(0    x   x   mqq (Brecord
+(0    x   x       mqq (Bdetail.js
+(0    x   tqq (Bc-lieferschein
+(0    x   x   mqq (Brecord
+(0    x   x       tqq (Bdetail.js
+(0    x   x       mqq (Bedit.js
+(0    x   tqq (Bc-material
+(0    x   x   mqq (Brecord
+(0    x   x       mqq (Bdetail.js
+(0    x   tqq (Bc-rechnung
+(0    x   x   tqq (Bfields
+(0    x   x   x   mqq (Bobjekt.js
+(0    x   x   mqq (Brecord
+(0    x   x       tqq (Bdetail.js
+(0    x   x       mqq (Bedit.js
+(0    x   tqq (Bc-rechnungsposition
+(0    x   x   mqq (Brecord
+(0    x   x       tqq (Bedit.js
+(0    x   x       mqq (Bedit-small.js
+(0    x   tqq (Bc-stundenbericht
+(0    x   x   mqq (Brecord
+(0    x   x       mqq (Bdetail.js
+(0    x   tqq (Bc-wartung
+(0    x   x   mqq (Bfields
+(0    x   x       mqq (Bobjekt.js
+(0    x   tqq (Bc-werkzeug
+(0    x   x   mqq (Brecord
+(0    x   x       mqq (Bdetail.js
+(0    x   tqq (Bdashboard
+(0    x   x   mqq (Bumsatz-statistik.js
+(0    x   tqq (Bfields
+(0    x   x   tqq (Bbetrag-auftrag.js
+(0    x   x   tqq (Bdate.js
+(0    x   x   tqq (Bdatetime.js
+(0    x   x   tqq (Bgesamtbetrag.js
+(0    x   x   tqq (Bgesamt.js
+(0    x   x   tqq (Bnetto.js
+(0    x   x   tqq (Brestbetrag-auftrag.js
+(0    x   x   mqq (Bverrechnet-auftrag.js
+(0    x   tqq (Bpanels
+(0    x   mqq (Bwhatsapp
+(0    x       mqq (Bwhatsapp-admin.js
+(0    tqq (Bwhatsapp-admin.js
+(0    mqq (Bwhatsapp-admin-page.js
+
+57 directories, 58 files

@@ -133,6 +133,27 @@
             "entity": "CWartung",
             "audited": false,
             "isCustom": true
+        },
+        "melderQuartals": {
+            "type": "hasMany",
+            "foreign": "objekt",
+            "entity": "CMelderQuartal",
+            "audited": false,
+            "isCustom": true
+        },
+        "melderGesamtPdfs": {
+            "type": "hasMany",
+            "foreign": "objekt",
+            "entity": "CMelderGesamtPdf",
+            "audited": false,
+            "isCustom": true
+        },
+        "stundenberichts": {
+            "type": "hasMany",
+            "foreign": "objektAuswahl",
+            "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

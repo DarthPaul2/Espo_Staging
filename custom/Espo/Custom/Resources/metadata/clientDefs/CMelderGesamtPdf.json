@@ -13,6 +13,10 @@
         "user": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "objekt": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false

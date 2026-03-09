@@ -1,0 +1,11 @@
+{
+    "_delimiter_": {
+        "disabled": true
+    },
+    "melderQuartals": {
+        "index": 0
+    },
+    "melderGesamtPdfs": {
+        "index": 1
+    }
+}
