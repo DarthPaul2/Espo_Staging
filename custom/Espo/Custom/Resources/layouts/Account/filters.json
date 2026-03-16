@@ -1,4 +1,5 @@
 [
     "name",
-    "industry"
+    "industry",
+    "billingAddressStreet"
 ]

@@ -6,14 +6,18 @@
                     "name": "account"
                 },
                 {
-                    "name": "objekt"
+                    "name": "objektTextName"
+                }
+            ],
+            [
+                {
+                    "name": "quarter"
                 },
                 {
                     "name": "year"
                 },
-                {
-                    "name": "quarter"
-                }
+                false,
+                false
             ],
             [
                 {

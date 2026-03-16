@@ -104,6 +104,12 @@
         },
         "objekt": {
             "type": "link"
+        },
+        "objektTextName": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
         }
     },
     "links": {

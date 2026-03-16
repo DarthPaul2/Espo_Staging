@@ -278,6 +278,24 @@ define('custom:views/c-rechnung/record/detail', [
         setup: function () {
             Dep.prototype.setup.call(this);
 
+            this._blockCreateRelatedIfUnsaved = (e) => {
+                const btn = e.target.closest('button.action[data-action="createRelated"][data-panel="rechnungspositions"]');
+                if (!btn) return;
+
+                const hasVisibleSaveButton = Array
+                    .from(document.querySelectorAll('.action[data-action="save"]'))
+                    .some(el => el.offsetParent !== null);
+
+                if (!hasVisibleSaveButton) return;
+
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+
+                this.notify('Bitte zuerst die Rechnung speichern.', 'warning');
+                return false;
+            };
+
             // === Поведение выбора Angebot как во «втором» коде ===
             this.once('after:render', () => {
                 const fvAngebot = this.getFieldView && (this.getFieldView('angebot') || this.getFieldView('angebotId'));
@@ -499,6 +517,7 @@ define('custom:views/c-rechnung/record/detail', [
                 style: 'danger',
                 title: 'Mahnung als PDF erzeugen'
             });
+            document.addEventListener('click', this._blockCreateRelatedIfUnsaved, true);
         },
 
         // ==== PDF Preview ====
@@ -1038,6 +1057,11 @@ define('custom:views/c-rechnung/record/detail', [
         onRemove: function () {
             this.$el.off('.crecSave');
             window.removeEventListener('c-rechnungsposition:saved', this._onPositionSaved);
+
+            if (this._blockCreateRelatedIfUnsaved) {
+                document.removeEventListener('click', this._blockCreateRelatedIfUnsaved, true);
+            }
+
             Dep.prototype.onRemove.call(this);
         },
 

@@ -6,20 +6,19 @@
         "align": "left"
     },
     {
-        "name": "objekt",
-        "width": 16,
-        "link": true,
-        "align": "left"
+        "name": "objektTextName",
+        "width": 16
     },
     {
         "name": "year",
-        "width": 16,
+        "width": 7,
         "link": true,
         "align": "left"
     },
     {
         "name": "quarter",
-        "width": 16
+        "width": 6,
+        "align": "left"
     },
     {
         "name": "user",
@@ -27,10 +26,12 @@
     },
     {
         "name": "updatedAtServer",
-        "width": 16
+        "width": 12,
+        "align": "left"
     },
     {
         "name": "pdfUrl",
-        "width": 16
+        "width": 26,
+        "align": "left"
     }
 ]

@@ -10,7 +10,8 @@
         "pdfPath": "Pdf Path",
         "pdfUrl": "Pdf Url",
         "sourceId": "Source Id",
-        "objekt": "Objekt"
+        "objekt": "Objekt",
+        "objektTextName": "Objekt Name"
     },
     "links": {
         "account": "Account",
