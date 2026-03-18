@@ -1,0 +1,47 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "aktiv"
+                },
+                {
+                    "name": "phase1Verwendet"
+                }
+            ],
+            [
+                {
+                    "name": "quelleTyp"
+                },
+                {
+                    "name": "dokumentTyp"
+                },
+                {
+                    "name": "steuerFall"
+                }
+            ],
+            [
+                {
+                    "name": "buchungsregelnDebit"
+                },
+                {
+                    "name": "buchungsregelnErloes"
+                },
+                {
+                    "name": "buchungsregelnSteuer"
+                }
+            ],
+            [
+                {
+                    "name": "beschreibung"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

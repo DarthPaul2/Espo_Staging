@@ -63,6 +63,18 @@
         "contact": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "freigegebeneRechnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "festgeschriebeneRechnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "buchungsjournale": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

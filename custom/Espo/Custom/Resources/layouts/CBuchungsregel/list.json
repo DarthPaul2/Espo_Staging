@@ -1,0 +1,44 @@
+[
+    {
+        "name": "name",
+        "width": 20,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "aktiv",
+        "width": 5,
+        "align": "left"
+    },
+    {
+        "name": "quelleTyp",
+        "width": 13,
+        "align": "left"
+    },
+    {
+        "name": "dokumentTyp",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "steuerFall",
+        "width": 16
+    },
+    {
+        "name": "buchungsregelnDebit",
+        "width": 16
+    },
+    {
+        "name": "buchungsregelnErloes",
+        "width": 16
+    },
+    {
+        "name": "buchungsregelnSteuer",
+        "width": 16
+    },
+    {
+        "name": "phase1Verwendet",
+        "width": 10,
+        "align": "left"
+    }
+]

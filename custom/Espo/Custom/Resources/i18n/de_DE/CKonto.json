@@ -1,0 +1,21 @@
+{
+    "labels": {
+        "Create CKonto": "Konto erstellen"
+    },
+    "fields": {
+        "kontonummer": "Kontonummer",
+        "bezeichnung": "Bezeichnung",
+        "aktiv": "Aktiv",
+        "phase1Verwendet": "In Phase 1 verwendet",
+        "beschreibung": "Beschreibung",
+        "description": "Description",
+        "debitKonto": "Debitkonto",
+        "creditKontoNetto": "Erlöskonto",
+        "creditKontoSteuer": "Steuerkonto"
+    },
+    "links": {
+        "debitKonto": "Debitkonto",
+        "creditKontoNetto": "Erlöskonto",
+        "creditKontoSteuer": "Steuerkonto"
+    }
+}

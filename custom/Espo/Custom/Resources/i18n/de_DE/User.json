@@ -12,7 +12,9 @@
         "cTechniker4": "Techniker 4",
         "cTechniker5": "Techniker 5",
         "cMelderQuartals": "Melder Quartals",
-        "cMelderGesamtPdfs": "Melder Gesamt Pdfs"
+        "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
+        "cFreigabeDurch": "Freigabe durch",
+        "cFestgeschriebenDurch": "Festgeschrieben durch"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -27,6 +29,8 @@
         "cTechniker4": "Techniker 4",
         "cTechniker5": "Techniker 5",
         "cMelderQuartals": "Melder Quartals",
-        "cMelderGesamtPdfs": "Melder Gesamt Pdfs"
+        "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
+        "cFreigabeDurch": "Freigabe durch",
+        "cFestgeschriebenDurch": "Festgeschrieben durch"
     }
 }

@@ -1,0 +1,40 @@
+[
+    {
+        "name": "name",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "buchungsart",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "betrag",
+        "width": 16
+    },
+    {
+        "name": "kontoNummer",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "kontoBezeichnung",
+        "width": 16
+    },
+    {
+        "name": "belegdatum",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "quelleNummer",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "steuerFall",
+        "width": 12,
+        "align": "left"
+    }
+]

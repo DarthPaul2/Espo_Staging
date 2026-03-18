@@ -1,0 +1,39 @@
+{
+    "fields": {
+        "buchungsart": "Buchungsart",
+        "betrag": "Betrag",
+        "kontoNummer": "Konto Nummer",
+        "kontoBezeichnung": "Konto Bezeichnung",
+        "buchungstext": "Buchungstext",
+        "belegdatum": "Belegdatum",
+        "quelleTyp": "Quelle Typ",
+        "quelleIdExtern": "Quelle Id Extern",
+        "quelleNummer": "Quelle Nummer",
+        "steuerFall": "SteuerFall",
+        "phase1Verwendet": "In Phase 1 verwendet",
+        "beschreibung": "Beschreibung",
+        "buchungsjournal": "Buchungsjournal",
+        "buchungsregel": "Buchungsregel"
+    },
+    "links": {
+        "buchungsjournal": "Buchungsjournal",
+        "buchungsregel": "Buchungsregel"
+    },
+    "labels": {
+        "Create CBuchung": "Create Buchung"
+    },
+    "options": {
+        "buchungsart": {
+            "debit": "Debit",
+            "credit": "Credit"
+        },
+        "quelleTyp": {
+            "CRechnung": "Ausgangsrechnung"
+        },
+        "steuerFall": {
+            "normal": "Normale Umsatzsteuer",
+            "ermaessigt": "Ermäßigte Umsatzsteuer",
+            "13b": "§ 13b UStG"
+        }
+    }
+}

@@ -1,0 +1,32 @@
+[
+    {
+        "name": "journalNummer",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "quelleNummer",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "belegdatum",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "buchungstext",
+        "width": 36,
+        "align": "left"
+    },
+    {
+        "name": "buchhaltungStatus",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "phase1Verwendet",
+        "width": 12,
+        "align": "left"
+    }
+]

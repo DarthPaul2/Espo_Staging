@@ -1,0 +1,65 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "buchungsart"
+                },
+                {
+                    "name": "betrag"
+                },
+                {
+                    "name": "buchungstext"
+                }
+            ],
+            [
+                {
+                    "name": "kontoNummer"
+                },
+                {
+                    "name": "kontoBezeichnung"
+                },
+                false,
+                {
+                    "name": "belegdatum"
+                }
+            ],
+            [
+                {
+                    "name": "quelleTyp"
+                },
+                {
+                    "name": "quelleIdExtern"
+                },
+                {
+                    "name": "quelleNummer"
+                },
+                {
+                    "name": "steuerFall"
+                }
+            ],
+            [
+                {
+                    "name": "buchungsjournal"
+                },
+                {
+                    "name": "buchungsregel"
+                }
+            ],
+            [
+                {
+                    "name": "phase1Verwendet"
+                },
+                false,
+                {
+                    "name": "beschreibung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

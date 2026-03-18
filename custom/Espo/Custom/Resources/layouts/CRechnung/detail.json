@@ -126,5 +126,33 @@
         "noteText": null,
         "noteStyle": "info",
         "customLabel": "Zahlungsinformationen"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "buchhaltungStatus"
+                },
+                {
+                    "name": "belegdatum"
+                },
+                false,
+                false
+            ],
+            [
+                {
+                    "name": "istFestgeschrieben"
+                },
+                {
+                    "name": "freigabeAm"
+                },
+                {
+                    "name": "festgeschriebenAm"
+                }
+            ]
+        ],
+        "style": "default",
+        "noteStyle": "info",
+        "label": ""
     }
 ]

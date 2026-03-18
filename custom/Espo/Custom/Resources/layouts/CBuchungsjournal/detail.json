@@ -1,0 +1,50 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "journalNummer"
+                },
+                {
+                    "name": "name"
+                }
+            ],
+            [
+                {
+                    "name": "buchungstext"
+                },
+                {
+                    "name": "buchhaltungStatus"
+                }
+            ],
+            [
+                {
+                    "name": "belegdatum"
+                },
+                {
+                    "name": "quelleTyp"
+                },
+                {
+                    "name": "quelleIdExtern"
+                },
+                {
+                    "name": "quelleNummer"
+                }
+            ],
+            [
+                {
+                    "name": "rechnung"
+                },
+                false,
+                {
+                    "name": "beschreibung"
+                },
+                {
+                    "name": "phase1Verwendet"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

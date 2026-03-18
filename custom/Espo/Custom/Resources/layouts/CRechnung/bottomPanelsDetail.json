@@ -15,5 +15,12 @@
         "dynamicLogicStyled": null,
         "sticked": false,
         "index": 1
+    },
+    "buchungsjournale": {
+        "dynamicLogicVisible": null,
+        "style": "info",
+        "dynamicLogicStyled": null,
+        "sticked": false,
+        "index": 2
     }
 }

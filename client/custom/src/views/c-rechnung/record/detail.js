@@ -27,11 +27,6 @@ define('custom:views/c-rechnung/record/detail', [
             return pv.collection;
         },
 
-        getRechnungTyp() {
-            return String(this.model.get('rechnungstyp') || '').toLowerCase();
-        },
-
-
         showLoader(msg = 'Bitte warten…') {
             // глобальный спиннер + блокировка кнопок
             Loader.showFor(this, msg);
@@ -518,6 +513,71 @@ define('custom:views/c-rechnung/record/detail', [
                 title: 'Mahnung als PDF erzeugen'
             });
             document.addEventListener('click', this._blockCreateRelatedIfUnsaved, true);
+        },
+
+        afterRender: function () {
+            Dep.prototype.afterRender.call(this);
+            this._renderBuchhaltungWorkflowButtons();
+        },
+
+        _renderBuchhaltungWorkflowButtons: function () {
+            setTimeout(() => {
+                const $actionBar = this.$el.find('.detail-button-container, .header-button-container, .record-button-container').first();
+                console.log('[CRechnung/detail] action bar found?', $actionBar.length);
+
+                if (!$actionBar.length) {
+                    setTimeout(() => this._renderBuchhaltungWorkflowButtons(), 300);
+                    return;
+                }
+
+                if (this.$el.find('div[data-name="buchhaltung-workflow-actions"]').length) return;
+
+                const $workflow = $(`
+            <div data-name="buchhaltung-workflow-actions"
+                 style="display: inline-flex; gap: 6px; padding: 5px 8px; margin-top: 8px; margin-bottom: 8px; background: #d9edf7; border-radius: 6px; border: 1px solid #bce8f1;">
+                <button class="btn btn-default" data-action="workflowEntwurf">Entwurf</button>
+                <button class="btn btn-default" data-action="workflowFreigabe">Freigabe</button>
+                <button class="btn btn-default" data-action="workflowFestgeschrieben">Festgeschrieben</button>
+            </div>
+        `);
+
+                $workflow.insertAfter($actionBar);
+
+                const status = String(this.model.get('buchhaltungStatus') || 'entwurf').toLowerCase();
+
+                const $btnEntwurf = $workflow.find('[data-action="workflowEntwurf"]');
+                const $btnFreigabe = $workflow.find('[data-action="workflowFreigabe"]');
+                const $btnFest = $workflow.find('[data-action="workflowFestgeschrieben"]');
+
+                if (status === 'entwurf') {
+                    $btnEntwurf.removeClass('btn-default').addClass('btn-info');
+                } else if (status === 'freigabe') {
+                    $btnFreigabe.removeClass('btn-default').addClass('btn-success');
+                } else if (status === 'festgeschrieben') {
+                    $btnEntwurf.prop('disabled', true).css({ opacity: 0.65 });
+                    $btnFreigabe.prop('disabled', true).css({ opacity: 0.65 });
+                    $btnFest
+                        .removeClass('btn-default')
+                        .addClass('btn-primary')
+                        .prop('disabled', true)
+                        .css({
+                            opacity: 1,
+                            fontWeight: '600'
+                        });
+                }
+
+                $workflow.on('click', '[data-action="workflowEntwurf"]', () => {
+                    this.notify('Der Buchhaltungs-Workflow wird vorbereitet. Der Status „Entwurf“ ist derzeit noch nicht manuell umschaltbar.', 'info');
+                });
+
+                $workflow.on('click', '[data-action="workflowFreigabe"]', () => {
+                    this.notify('Der Buchhaltungs-Workflow wird vorbereitet. Die fachliche Freigabe ist derzeit noch nicht aktiv.', 'info');
+                });
+
+                $workflow.on('click', '[data-action="workflowFestgeschrieben"]', () => {
+                    this.notify('Der Buchhaltungs-Workflow wird vorbereitet. Die Festschreibung ist derzeit noch nicht aktiv.', 'info');
+                });
+            }, 500);
         },
 
         // ==== PDF Preview ====

@@ -90,6 +90,20 @@
             "entity": "CMelderGesamtPdf",
             "audited": false,
             "isCustom": true
+        },
+        "cFreigabeDurch": {
+            "type": "hasMany",
+            "foreign": "freigegebeneRechnungen",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cFestgeschriebenDurch": {
+            "type": "hasMany",
+            "foreign": "festgeschriebeneRechnungen",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

@@ -1,0 +1,32 @@
+{
+    "labels": {
+        "Create CBuchungsjournal": "Buchungsjournal erstellen"
+    },
+    "fields": {
+        "journalNummer": "Journal Nummer",
+        "belegdatum": "Belegdatum",
+        "buchungstext": "Buchungstext",
+        "quelleTyp": "Quelle Typ",
+        "quelleIdExtern": "Quelle Id Extern",
+        "quelleNummer": "Quelle Nummer",
+        "buchhaltungStatus": "Buchhaltung Status",
+        "phase1Verwendet": "In Phase 1 verwendet",
+        "beschreibung": "Beschreibung",
+        "description": "Description",
+        "buchungen": "Buchungen",
+        "rechnung": "Rechnung"
+    },
+    "options": {
+        "quelleTyp": {
+            "CRechnung": "Ausgangsrechnung"
+        },
+        "buchhaltungStatus": {
+            "entwurf": "Entwurf",
+            "festgeschrieben": "Festgeschrieben"
+        }
+    },
+    "links": {
+        "buchungen": "Buchungen",
+        "rechnung": "Rechnung"
+    }
+}

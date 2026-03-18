@@ -1,0 +1,34 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "kontonummer"
+                },
+                false,
+                {
+                    "name": "phase1Verwendet"
+                },
+                {
+                    "name": "aktiv"
+                }
+            ],
+            [
+                {
+                    "name": "bezeichnung"
+                },
+                {
+                    "name": "beschreibung"
+                }
+            ],
+            [
+                {
+                    "name": "name"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

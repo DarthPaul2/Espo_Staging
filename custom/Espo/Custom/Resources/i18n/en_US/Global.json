@@ -23,7 +23,11 @@
         "CStundenbericht": "Stundenbericht",
         "CMelderQuartal": "Melderprüfliste Quartal",
         "CMelderGesamtPdf": "Melderprüfliste Gesamt PDF",
-        "CObjekt": "Objekt"
+        "CObjekt": "Objekt",
+        "CKonto": "Konto",
+        "CBuchungsregel": "Buchungsregel",
+        "CBuchungsjournal": "Buchungsjournal",
+        "CBuchung": "Buchung"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -49,7 +53,11 @@
         "CStundenbericht": "Stundenberichte",
         "CMelderQuartal": "Melderprüflisten Quartale",
         "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs",
-        "CObjekt": "Objekte"
+        "CObjekt": "Objekte",
+        "CKonto": "Konten",
+        "CBuchungsregel": "Buchungsregeln",
+        "CBuchungsjournal": "Buchungsjournale",
+        "CBuchung": "Buchungen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

@@ -30,7 +30,16 @@
         "bezahltAm": "Bezahlt am",
         "briefs": "Briefs",
         "objekt": "Objekt",
-        "contact": "Contact"
+        "contact": "Contact",
+        "belegdatum": "Belegdatum",
+        "buchhaltungStatus": "Buchhaltungsstatus",
+        "freigabeAm": "Freigabe am",
+        "festgeschriebenAm": "Festgeschrieben am",
+        "istFestgeschrieben": "Ist festgeschrieben",
+        "festschreibungHinweis": "Festschreibung Hinweis",
+        "freigegebeneRechnungen": "Freigegebene Rechnungen",
+        "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
+        "buchungsjournale": "Buchungsjournale"
     },
     "links": {
         "account": "Account",
@@ -42,7 +51,10 @@
         "mahnungs": "Mahnungen",
         "briefs": "Briefs",
         "objekt": "Objekt",
-        "contact": "Contact"
+        "contact": "Contact",
+        "freigegebeneRechnungen": "Freigegebene Rechnungen",
+        "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
+        "buchungsjournale": "Buchungsjournale"
     },
     "labels": {
         "Create CRechnung": "Create Rechnung"
@@ -72,6 +84,11 @@
             "gutschrift": "Gutschrift",
             "einzelrechnung": "Einzelrechnung",
             "abschlagsrechnung": "Abschlagsrechnung"
+        },
+        "buchhaltungStatus": {
+            "entwurf": "Entwurf",
+            "freigabe": "Freigabe",
+            "festgeschrieben": "Festgeschrieben"
         }
     }
 }

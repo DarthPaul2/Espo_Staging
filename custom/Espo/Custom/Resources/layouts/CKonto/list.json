@@ -1,0 +1,23 @@
+[
+    {
+        "name": "kontonummer",
+        "width": 8,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "bezeichnung",
+        "width": 76,
+        "align": "left"
+    },
+    {
+        "name": "phase1Verwendet",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "aktiv",
+        "width": 6,
+        "align": "left"
+    }
+]

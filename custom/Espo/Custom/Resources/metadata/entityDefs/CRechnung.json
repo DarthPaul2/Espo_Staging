@@ -297,6 +297,57 @@
         },
         "contact": {
             "type": "link"
+        },
+        "belegdatum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "buchhaltungStatus": {
+            "type": "enum",
+            "options": [
+                "entwurf",
+                "freigabe",
+                "festgeschrieben"
+            ],
+            "style": {
+                "entwurf": null,
+                "freigabe": null,
+                "festgeschrieben": null
+            },
+            "default": "entwurf",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "freigabeAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "festgeschriebenAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "istFestgeschrieben": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true,
+            "default": false
+        },
+        "festschreibungHinweis": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "freigegebeneRechnungen": {
+            "type": "link"
+        },
+        "festgeschriebeneRechnungen": {
+            "type": "link"
         }
     },
     "links": {
@@ -385,6 +436,27 @@
             "type": "belongsTo",
             "foreign": "cRechnungs",
             "entity": "Contact",
+            "audited": false,
+            "isCustom": true
+        },
+        "freigegebeneRechnungen": {
+            "type": "belongsTo",
+            "foreign": "cFreigabeDurch",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "festgeschriebeneRechnungen": {
+            "type": "belongsTo",
+            "foreign": "cFestgeschriebenDurch",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "buchungsjournale": {
+            "type": "hasMany",
+            "foreign": "rechnung",
+            "entity": "CBuchungsjournal",
             "audited": false,
             "isCustom": true
         }

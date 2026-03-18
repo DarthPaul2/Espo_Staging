@@ -75,6 +75,14 @@
         "melderGesamtPdfs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "freigabeDurch": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "festgeschriebenDurch": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

@@ -1,0 +1,36 @@
+{
+    "fields": {
+        "aktiv": "Aktiv",
+        "quelleTyp": "Quelle Typ",
+        "dokumentTyp": "Dokument Typ",
+        "steuerFall": "Steuer Fall",
+        "buchungsregelnDebit": "Buchungsregeln (Debitkonto)",
+        "buchungsregelnErloes": "Buchungsregeln (Erlöskonto)",
+        "buchungsregelnSteuer": "Buchungsregeln (Steuerkonto)",
+        "beschreibung": "Beschreibung",
+        "phase1Verwendet": "In Phase 1 verwendet",
+        "buchungen": "Buchungen"
+    },
+    "labels": {
+        "Create CBuchungsregel": "Create Buchungsregel"
+    },
+    "options": {
+        "quelleTyp": {
+            "CRechnung": "Ausgangsrechnung"
+        },
+        "dokumentTyp": {
+            "einzelrechnung": "Einzelrechnung"
+        },
+        "steuerFall": {
+            "normal": "Normale Umsatzsteuer",
+            "ermaessigt": "Ermäßigte Umsatzsteuer",
+            "13b": "§ 13b UStG"
+        }
+    },
+    "links": {
+        "buchungsregelnDebit": "Buchungsregeln (Debitkonto)",
+        "buchungsregelnErloes": "Buchungsregeln (Erlöskonto)",
+        "buchungsregelnSteuer": "Buchungsregeln (Steuerkonto)",
+        "buchungen": "Buchungen"
+    }
+}

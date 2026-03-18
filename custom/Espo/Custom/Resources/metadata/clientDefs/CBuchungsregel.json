@@ -1,0 +1,24 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "buchungsregelnDebit": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "buchungsregelnErloes": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "buchungsregelnSteuer": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "buchungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}
