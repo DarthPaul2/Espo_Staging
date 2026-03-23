@@ -1,0 +1,27 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "journalNummer"
+                },
+                {
+                    "name": "quelleNummer"
+                }
+            ],
+            [
+                {
+                    "name": "belegdatum"
+                },
+                {
+                    "name": "buchungstext"
+                },
+                {
+                    "name": "buchhaltungStatus"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

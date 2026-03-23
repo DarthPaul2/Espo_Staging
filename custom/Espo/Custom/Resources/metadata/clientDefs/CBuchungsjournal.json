@@ -11,6 +11,10 @@
         "rechnung": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "buchhaltungAuswertungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

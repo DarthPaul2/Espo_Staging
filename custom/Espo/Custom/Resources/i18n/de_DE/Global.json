@@ -11,7 +11,8 @@
         "Account": "Kunden",
         "CFormular": "Formularberichte",
         "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs",
-        "CMelderQuartal": "Melderprüflisten Quartale"
+        "CMelderQuartal": "Melderprüflisten Quartale",
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertungen"
     },
     "Global": {
         "Today": "",
@@ -21,6 +22,7 @@
         "CMaterial": "Material/Serviceleistung",
         "Account": "Kunde",
         "CFormular": "Formularbericht",
-        "CMelderQuartal": "Melderprüfliste Quartal"
+        "CMelderQuartal": "Melderprüfliste Quartal",
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertung"
     }
 }

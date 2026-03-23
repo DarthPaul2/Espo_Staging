@@ -1,0 +1,72 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "auswertungTyp"
+                },
+                {
+                    "name": "aktiv"
+                }
+            ],
+            [
+                {
+                    "name": "phase1Verwendet"
+                },
+                {
+                    "name": "sortierung"
+                },
+                {
+                    "name": "standardZeitraum"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "customLabel": "Grunddaten"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "beschreibung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Beschreibung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "hinweisGeschaeftsfuehrung"
+                },
+                {
+                    "name": "hinweisBuchhaltung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Hinweise"
+    }
+]

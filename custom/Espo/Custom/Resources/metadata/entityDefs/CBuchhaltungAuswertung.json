@@ -2,9 +2,8 @@
     "fields": {
         "name": {
             "type": "varchar",
-            "required": false,
-            "pattern": "$noBadCharacters",
-            "options": []
+            "required": true,
+            "pattern": "$noBadCharacters"
         },
         "description": {
             "type": "text"
@@ -36,65 +35,24 @@
             "type": "linkMultiple",
             "view": "views/fields/teams"
         },
-        "journalNummer": {
-            "type": "varchar",
-            "maxLength": 100,
-            "options": [],
-            "isCustom": true
-        },
-        "belegdatum": {
-            "notNull": false,
-            "type": "date",
-            "isCustom": true
-        },
-        "buchungstext": {
-            "type": "varchar",
-            "maxLength": 100,
-            "options": [],
-            "isCustom": true
-        },
-        "quelleTyp": {
+        "auswertungTyp": {
             "type": "enum",
             "options": [
-                "CRechnung"
+                "festgeschriebene_rechnungen",
+                "umsatzuebersicht",
+                "umsatzsteuer_uebersicht",
+                "offene_forderungen",
+                "kontenbewegungen"
             ],
             "style": {
-                "CRechnung": null
+                "festgeschriebene_rechnungen": null,
+                "umsatzuebersicht": null,
+                "umsatzsteuer_uebersicht": null,
+                "offene_forderungen": null,
+                "kontenbewegungen": null
             },
-            "default": "CRechnung",
+            "default": "festgeschriebene_rechnungen",
             "maxLength": 100,
-            "isCustom": true
-        },
-        "quelleIdExtern": {
-            "type": "varchar",
-            "maxLength": 100,
-            "options": [],
-            "isCustom": true
-        },
-        "quelleNummer": {
-            "type": "varchar",
-            "maxLength": 100,
-            "options": [],
-            "isCustom": true
-        },
-        "buchhaltungStatus": {
-            "type": "enum",
-            "options": [
-                "entwurf",
-                "festgeschrieben"
-            ],
-            "style": {
-                "entwurf": null,
-                "festgeschrieben": null
-            },
-            "default": "festgeschrieben",
-            "maxLength": 100,
-            "isCustom": true
-        },
-        "phase1Verwendet": {
-            "notNull": true,
-            "type": "bool",
-            "default": true,
             "isCustom": true
         },
         "beschreibung": {
@@ -103,8 +61,51 @@
             "cutHeight": 200,
             "isCustom": true
         },
-        "rechnung": {
-            "type": "link"
+        "aktiv": {
+            "notNull": true,
+            "type": "bool",
+            "default": true,
+            "isCustom": true
+        },
+        "phase1Verwendet": {
+            "notNull": true,
+            "type": "bool",
+            "default": true,
+            "isCustom": true
+        },
+        "sortierung": {
+            "type": "int",
+            "isCustom": true
+        },
+        "standardZeitraum": {
+            "type": "enum",
+            "options": [
+                "monat",
+                "quartal",
+                "jahr",
+                "frei"
+            ],
+            "style": {
+                "monat": null,
+                "quartal": null,
+                "jahr": null,
+                "frei": null
+            },
+            "default": "monat",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "hinweisGeschaeftsfuehrung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "hinweisBuchhaltung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
         }
     },
     "links": {
@@ -126,32 +127,23 @@
             "relationName": "entityTeam",
             "layoutRelationshipsDisabled": true
         },
-        "buchungen": {
-            "type": "hasMany",
-            "foreign": "buchungsjournal",
-            "entity": "CBuchung",
-            "audited": false,
-            "isCustom": true
-        },
-        "rechnung": {
-            "type": "belongsTo",
-            "foreign": "buchungsjournale",
-            "entity": "CRechnung",
-            "audited": false,
-            "isCustom": true
-        },
-        "buchhaltungAuswertungen": {
+        "buchungsjournale": {
             "type": "hasMany",
             "relationName": "cBuchhaltungAuswertungBuchungsjournal",
-            "foreign": "buchungsjournale",
-            "entity": "CBuchhaltungAuswertung",
+            "foreign": "buchhaltungAuswertungen",
+            "entity": "CBuchungsjournal",
             "audited": false,
             "isCustom": true
         }
     },
     "collection": {
         "orderBy": "createdAt",
-        "order": "desc"
+        "order": "desc",
+        "textFilterFields": [
+            "name"
+        ],
+        "fullTextSearch": false,
+        "countDisabled": false
     },
     "indexes": {
         "name": {
@@ -178,5 +170,6 @@
                 "id"
             ]
         }
-    }
+    },
+    "optimisticConcurrencyControl": false
 }

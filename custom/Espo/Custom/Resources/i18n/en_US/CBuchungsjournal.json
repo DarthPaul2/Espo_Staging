@@ -10,11 +10,13 @@
         "phase1Verwendet": "In Phase 1 verwendet",
         "beschreibung": "Beschreibung",
         "buchungen": "Buchungen",
-        "rechnung": "Rechnung"
+        "rechnung": "Rechnung",
+        "buchhaltungAuswertungen": "Buchhaltungsauswertungen"
     },
     "links": {
         "buchungen": "Buchungen",
-        "rechnung": "Rechnung"
+        "rechnung": "Rechnung",
+        "buchhaltungAuswertungen": "Buchhaltungsauswertungen"
     },
     "labels": {
         "Create CBuchungsjournal": "Create Buchungsjournal"

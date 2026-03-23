@@ -1,0 +1,26 @@
+[
+    {
+        "name": "name",
+        "link": true
+    },
+    {
+        "name": "auswertungTyp",
+        "width": 16
+    },
+    {
+        "name": "aktiv",
+        "width": 16
+    },
+    {
+        "name": "phase1Verwendet",
+        "width": 16
+    },
+    {
+        "name": "sortierung",
+        "width": 16
+    },
+    {
+        "name": "standardZeitraum",
+        "width": 16
+    }
+]

@@ -14,7 +14,8 @@
         "beschreibung": "Beschreibung",
         "description": "Description",
         "buchungen": "Buchungen",
-        "rechnung": "Rechnung"
+        "rechnung": "Rechnung",
+        "buchhaltungAuswertungen": "Buchhaltungsauswertungen"
     },
     "options": {
         "quelleTyp": {
@@ -27,6 +28,7 @@
     },
     "links": {
         "buchungen": "Buchungen",
-        "rechnung": "Rechnung"
+        "rechnung": "Rechnung",
+        "buchhaltungAuswertungen": "Buchhaltungsauswertungen"
     }
 }

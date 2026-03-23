@@ -1,0 +1,34 @@
+{
+    "fields": {
+        "auswertungTyp": "Auswertungstyp",
+        "beschreibung": "Beschreibung",
+        "aktiv": "Aktiv",
+        "phase1Verwendet": "In Phase 1 verwendet",
+        "sortierung": "Sortierung",
+        "standardZeitraum": "Standardzeitraum",
+        "hinweisGeschaeftsfuehrung": "Hinweis Geschäftsführung",
+        "hinweisBuchhaltung": "Hinweis Buchhaltung",
+        "buchungsjournale": "Buchungsjournale"
+    },
+    "labels": {
+        "Create CBuchhaltungAuswertung": "Erstellen Buchhaltung Auswertung"
+    },
+    "options": {
+        "auswertungTyp": {
+            "festgeschriebene_rechnungen": "Festgeschriebene Rechnungen",
+            "umsatzuebersicht": "Umsatzübersicht",
+            "umsatzsteuer_uebersicht": "Umsatzsteuer-Übersicht",
+            "offene_forderungen": "Offene Forderungen",
+            "kontenbewegungen": "Kontenbewegungen"
+        },
+        "standardZeitraum": {
+            "monat": "Monat",
+            "quartal": "Quartal",
+            "jahr": "Jahr",
+            "frei": "Frei"
+        }
+    },
+    "links": {
+        "buchungsjournale": "Buchungsjournale"
+    }
+}

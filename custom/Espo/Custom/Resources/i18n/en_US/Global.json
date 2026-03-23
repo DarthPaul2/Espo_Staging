@@ -27,7 +27,8 @@
         "CKonto": "Konto",
         "CBuchungsregel": "Buchungsregel",
         "CBuchungsjournal": "Buchungsjournal",
-        "CBuchung": "Buchung"
+        "CBuchung": "Buchung",
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertung"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -57,7 +58,8 @@
         "CKonto": "Konten",
         "CBuchungsregel": "Buchungsregeln",
         "CBuchungsjournal": "Buchungsjournale",
-        "CBuchung": "Buchungen"
+        "CBuchung": "Buchungen",
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertungen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

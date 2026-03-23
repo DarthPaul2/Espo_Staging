@@ -1,0 +1,43 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "auswertungTyp"
+                },
+                {
+                    "name": "aktiv"
+                },
+                {
+                    "name": "phase1Verwendet"
+                }
+            ],
+            [
+                {
+                    "name": "sortierung"
+                },
+                {
+                    "name": "standardZeitraum"
+                }
+            ],
+            [
+                {
+                    "name": "beschreibung"
+                }
+            ],
+            [
+                {
+                    "name": "hinweisBuchhaltung"
+                },
+                {
+                    "name": "hinweisGeschaeftsfuehrung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

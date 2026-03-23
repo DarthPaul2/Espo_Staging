@@ -1,13 +1,17 @@
 {
     "hooks": {
         "beforeSave": [
-            "NameFiller"
+            "NameFiller",
+            "PreventEditAfterFestschreibung"
         ],
         "afterSave": [
             "UpdateRechnungTotals"
         ],
         "afterRemove": [
             "UpdateRechnungTotals"
+        ],
+        "beforeRemove": [
+            "PreventRemoveAfterFestschreibung"
         ]
     },
     "fields": {

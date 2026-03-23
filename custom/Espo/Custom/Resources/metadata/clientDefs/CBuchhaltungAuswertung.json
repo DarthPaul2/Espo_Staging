@@ -1,0 +1,15 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#d0c839",
+    "iconClass": "fas fa-book",
+    "kanbanViewMode": false,
+    "relationshipPanels": {
+        "buchungsjournale": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

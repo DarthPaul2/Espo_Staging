@@ -273,9 +273,24 @@ define('custom:views/c-rechnung/record/detail', [
         setup: function () {
             Dep.prototype.setup.call(this);
 
+            // Это блокирует кнопку "+" для позиций,
+            // если Rechnung ещё не сохранена или уже festgeschrieben.
             this._blockCreateRelatedIfUnsaved = (e) => {
                 const btn = e.target.closest('button.action[data-action="createRelated"][data-panel="rechnungspositions"]');
                 if (!btn) return;
+
+                const isFestgeschrieben =
+                    !!this.model.get('istFestgeschrieben') ||
+                    String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+                if (isFestgeschrieben) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+
+                    this.notify('Positionen einer festgeschriebenen Rechnung dürfen nicht mehr bearbeitet werden.', 'warning');
+                    return false;
+                }
 
                 const hasVisibleSaveButton = Array
                     .from(document.querySelectorAll('.action[data-action="save"]'))
@@ -515,9 +530,12 @@ define('custom:views/c-rechnung/record/detail', [
             document.addEventListener('click', this._blockCreateRelatedIfUnsaved, true);
         },
 
+        // Это выполняется после отрисовки detail view.
         afterRender: function () {
             Dep.prototype.afterRender.call(this);
+
             this._renderBuchhaltungWorkflowButtons();
+            this._applyActionLocksDeferred();
         },
 
         _renderBuchhaltungWorkflowButtons: function () {
@@ -567,17 +585,199 @@ define('custom:views/c-rechnung/record/detail', [
                 }
 
                 $workflow.on('click', '[data-action="workflowEntwurf"]', () => {
-                    this.notify('Der Buchhaltungs-Workflow wird vorbereitet. Der Status „Entwurf“ ist derzeit noch nicht manuell umschaltbar.', 'info');
+                    this.actionWorkflowEntwurf();
                 });
 
                 $workflow.on('click', '[data-action="workflowFreigabe"]', () => {
-                    this.notify('Der Buchhaltungs-Workflow wird vorbereitet. Die fachliche Freigabe ist derzeit noch nicht aktiv.', 'info');
+                    this.actionWorkflowFreigabe();
                 });
 
+                // Это реальный вызов Festschreibung вместо временной заглушки.
                 $workflow.on('click', '[data-action="workflowFestgeschrieben"]', () => {
-                    this.notify('Der Buchhaltungs-Workflow wird vorbereitet. Die Festschreibung ist derzeit noch nicht aktiv.', 'info');
+                    this.actionWorkflowFestgeschrieben();
                 });
             }, 500);
+        },
+
+        // Это action кнопки "Freigabe" в detail view счета.
+        // Он вызывает server-side action и после успеха обновляет карточку.
+        actionWorkflowFreigabe: function () {
+            const id =
+                this.model.id ||
+                this.model.get('id') ||
+                this.options?.id ||
+                this.options?.model?.id ||
+                null;
+
+            if (!id) {
+                console.error('[CRechnung/detail] Freigabe: Rechnung-ID fehlt', {
+                    modelId: this.model && this.model.id,
+                    modelGetId: this.model && this.model.get && this.model.get('id'),
+                    optionsId: this.options && this.options.id,
+                    optionsModelId: this.options && this.options.model && this.options.model.id
+                });
+                this.notify('Rechnung-ID fehlt.', 'error');
+                return;
+            }
+
+            const notifyId = this.showLoader('Rechnung wird fachlich freigegeben…');
+
+            Espo.Ajax.postRequest(`CRechnung/action/freigeben`, {
+                id: id
+            }).then((resp) => {
+                this.hideLoader(notifyId);
+
+                if (!resp || resp.success === false) {
+                    this.notify((resp && resp.message) || 'Freigabe konnte nicht abgeschlossen werden.', 'error');
+                    return;
+                }
+
+                this.notify(resp.message || 'Rechnung wurde fachlich freigegeben.', 'success');
+
+                this.model.fetch({
+                    success: () => {
+                        this.reRender();
+                    },
+                    error: () => {
+                        window.location.reload();
+                    }
+                });
+            }).catch((xhr) => {
+                this.hideLoader(notifyId);
+
+                let msg = 'Freigabe konnte nicht abgeschlossen werden.';
+                try {
+                    msg =
+                        xhr?.responseJSON?.message ||
+                        xhr?.responseJSON?.error ||
+                        msg;
+                } catch (e) { }
+
+                this.notify(msg, 'error');
+                console.error('[CRechnung/detail] actionWorkflowFreigabe error', xhr);
+            });
+        },
+
+        // Это action для кнопки "Entwurf".
+        // Он возвращает счет из Freigabe обратно в Entwurf.
+        actionWorkflowEntwurf: function () {
+            const id =
+                this.model.id ||
+                this.model.get('id') ||
+                this.options?.id ||
+                this.options?.model?.id ||
+                null;
+
+            if (!id) {
+                console.error('[CRechnung/detail] Entwurf: Rechnung-ID fehlt', {
+                    modelId: this.model && this.model.id,
+                    modelGetId: this.model && this.model.get && this.model.get('id'),
+                    optionsId: this.options && this.options.id,
+                    optionsModelId: this.options && this.options.model && this.options.model.id
+                });
+                this.notify('Rechnung-ID fehlt.', 'error');
+                return;
+            }
+
+            // Это loader, чтобы пользователь видел, что идет обработка.
+            const notifyId = this.showLoader('Rechnung wird in den Entwurf zurückgesetzt…');
+
+            Espo.Ajax.postRequest(`CRechnung/action/zurueckZuEntwurf`, {
+                id: id
+            }).then((resp) => {
+                this.hideLoader(notifyId);
+
+                if (!resp || resp.success === false) {
+                    this.notify((resp && resp.message) || 'Der Status konnte nicht auf Entwurf zurückgesetzt werden.', 'error');
+                    return;
+                }
+
+                this.notify(resp.message || 'Rechnung wurde zurück in den Entwurf gesetzt.', 'success');
+
+                // Это обновление карточки после успешного изменения статуса.
+                this.model.fetch({
+                    success: () => {
+                        this.reRender();
+                    },
+                    error: () => {
+                        window.location.reload();
+                    }
+                });
+            }).catch((xhr) => {
+                this.hideLoader(notifyId);
+
+                let msg = 'Der Status konnte nicht auf Entwurf zurückgesetzt werden.';
+                try {
+                    msg =
+                        xhr?.responseJSON?.message ||
+                        xhr?.responseJSON?.error ||
+                        msg;
+                } catch (e) { }
+
+                this.notify(msg, 'error');
+                console.error('[CRechnung/detail] actionWorkflowEntwurf error', xhr);
+            });
+        },
+
+        // Это action для кнопки "Festgeschrieben".
+        // Он вызывает server-side Festschreibung и потом обновляет карточку.
+        actionWorkflowFestgeschrieben: function () {
+            const id =
+                this.model.id ||
+                this.model.get('id') ||
+                this.options?.id ||
+                this.options?.model?.id ||
+                null;
+
+            if (!id) {
+                console.error('[CRechnung/detail] Festschreiben: Rechnung-ID fehlt', {
+                    modelId: this.model && this.model.id,
+                    modelGetId: this.model && this.model.get && this.model.get('id'),
+                    optionsId: this.options && this.options.id,
+                    optionsModelId: this.options && this.options.model && this.options.model.id
+                });
+                this.notify('Rechnung-ID fehlt.', 'error');
+                return;
+            }
+
+            // Это loader, чтобы пользователь видел, что идет бухгалтерическая фиксация.
+            const notifyId = this.showLoader('Rechnung wird festgeschrieben…');
+
+            Espo.Ajax.postRequest('CRechnung/action/festschreiben', {
+                id: id
+            }).then((resp) => {
+                this.hideLoader(notifyId);
+
+                if (!resp || resp.success === false) {
+                    this.notify((resp && resp.message) || 'Festschreibung konnte nicht abgeschlossen werden.', 'error');
+                    return;
+                }
+
+                this.notify(resp.message || 'Rechnung wurde festgeschrieben.', 'success');
+
+                // Это обновление модели и интерфейса после успешной Festschreibung.
+                this.model.fetch({
+                    success: () => {
+                        this.reRender();
+                    },
+                    error: () => {
+                        window.location.reload();
+                    }
+                });
+            }).catch((xhr) => {
+                this.hideLoader(notifyId);
+
+                let msg = 'Festschreibung konnte nicht abgeschlossen werden.';
+                try {
+                    msg =
+                        xhr?.responseJSON?.message ||
+                        xhr?.responseJSON?.error ||
+                        msg;
+                } catch (e) { }
+
+                this.notify(msg, 'error');
+                console.error('[CRechnung/detail] actionWorkflowFestgeschrieben error', xhr);
+            });
         },
 
         // ==== PDF Preview ====
@@ -946,6 +1146,21 @@ define('custom:views/c-rechnung/record/detail', [
         // --- action: Rechnung senden ---
         actionSendInvoice: function () {
             const pdfUrl = this.model.get('pdfUrl');
+
+            // Это проверка: отправка разрешена только после Festschreibung.
+            const isFestgeschrieben =
+                !!this.model.get('istFestgeschrieben') ||
+                String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+            if (!isFestgeschrieben) {
+                this.notify(
+                    'Die Rechnung ist noch nicht festgeschrieben. Bitte zuerst fachlich prüfen und festschreiben.',
+                    'warning'
+                );
+                return;
+            }
+
+
             if (!pdfUrl) {
                 this.notify('Kein PDF vorhanden.', 'error');
                 return;
@@ -1149,7 +1364,166 @@ define('custom:views/c-rechnung/record/detail', [
                     $('<a>').attr({ href: url, target: '_blank', rel: 'noopener' }).text(label)
                 );
             }
-        }
+        },
 
+        // Это делает кнопку "Bearbeiten" неактивной у festgeschriebene Rechnung.
+        _applyEditButtonLock: function () {
+            const isFestgeschrieben =
+                !!this.model.get('istFestgeschrieben') ||
+                String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+            const $editBtn = this.$el.find('.action[data-action="edit"]');
+
+            if (!$editBtn.length) {
+                return;
+            }
+
+            if (!isFestgeschrieben) {
+                $editBtn
+                    .prop('disabled', false)
+                    .removeClass('disabled')
+                    .css({
+                        pointerEvents: '',
+                        opacity: ''
+                    })
+                    .attr('title', 'Bearbeiten');
+                return;
+            }
+
+            $editBtn
+                .prop('disabled', true)
+                .addClass('disabled')
+                .css({
+                    pointerEvents: 'none',
+                    opacity: 0.5
+                })
+                .attr('title', 'Festgeschriebene Rechnungen dürfen nicht mehr bearbeitet werden.');
+        },
+
+        // Это делает кнопку "Löschen" неактивной у festgeschriebene Rechnung.
+        _applyDeleteButtonLock: function () {
+            const isFestgeschrieben =
+                !!this.model.get('istFestgeschrieben') ||
+                String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+            if (!isFestgeschrieben) {
+                return;
+            }
+
+            // Это ищет стандартную кнопку удаления в detail view Espo.
+            const $deleteBtn = this.$el.find('.action[data-action="delete"]');
+
+            if ($deleteBtn.length) {
+                $deleteBtn
+                    .prop('disabled', true)
+                    .addClass('disabled')
+                    .css({
+                        pointerEvents: 'none',
+                        opacity: 0.5
+                    })
+                    .attr('title', 'Festgeschriebene Rechnungen dürfen nicht gelöscht werden.');
+            }
+        },
+
+        // Это делает кнопку "Rechnung senden" неактивной,
+        // пока счет не festgeschrieben.
+        _applySendButtonLock: function () {
+            const isFestgeschrieben =
+                !!this.model.get('istFestgeschrieben') ||
+                String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+            const $sendBtn = this.$el.find('.action[data-action="sendInvoice"]');
+
+            if (!$sendBtn.length) {
+                return;
+            }
+
+            if (isFestgeschrieben) {
+                // Это возвращает кнопку в нормальное состояние.
+                $sendBtn
+                    .prop('disabled', false)
+                    .removeClass('disabled')
+                    .css({
+                        pointerEvents: '',
+                        opacity: ''
+                    })
+                    .attr('title', 'Rechnung senden');
+                return;
+            }
+
+            // Это делает кнопку серой и неактивной до Festschreibung.
+            $sendBtn
+                .prop('disabled', true)
+                .addClass('disabled')
+                .css({
+                    pointerEvents: 'none',
+                    opacity: 0.5
+                })
+                .attr('title', 'Rechnung senden ist erst nach der Festschreibung zulässig.');
+        },
+
+        // Это повторно применяет блокировки, пока Espo дорисовывает кнопки.
+        _applyActionLocksDeferred: function (attempt = 0) {
+            const maxAttempts = 20;
+
+            setTimeout(() => {
+                this._applyEditButtonLock();
+                this._applyDeleteButtonLock();
+                this._applySendButtonLock();
+                this._applyPositionsPanelLock();
+
+                if (attempt < maxAttempts) {
+                    this._applyActionLocksDeferred(attempt + 1);
+                }
+            }, 250);
+        },
+
+        // Это скрывает панельные и строковые действия у Positionen
+        // для festgeschriebene Rechnung.
+        _applyPositionsPanelLock: function () {
+            const isFestgeschrieben =
+                !!this.model.get('istFestgeschrieben') ||
+                String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+            if (!isFestgeschrieben) {
+                return;
+            }
+
+            const $panel = this.$el.find('[data-panel="rechnungspositions"], .panel[data-name="rechnungspositions"]').first();
+            if (!$panel.length) {
+                return;
+            }
+
+            // Кнопки в заголовке панели
+            $panel.find('button.action[data-action="createRelated"][data-panel="rechnungspositions"]').hide();
+            $panel.find('button.action[data-action="selectRelated"][data-panel="rechnungspositions"]').hide();
+            $panel.find('.panel-heading .dropdown-toggle').hide();
+            $panel.find('.panel-heading .btn-group').hide();
+            $panel.find('.panel-heading .actions').hide();
+
+            // Типовые колонки/контейнеры действий у строк
+            $panel.find('.list-row-buttons').hide();
+            $panel.find('.row-actions').hide();
+            $panel.find('td.cell[data-name="buttons"]').hide();
+            $panel.find('.cell[data-name="buttons"]').hide();
+
+            // Стандартные action-кнопки и dropdown у строк
+            $panel.find('button.action').hide();
+            $panel.find('button.dropdown-toggle').hide();
+            $panel.find('.dropdown-toggle').hide();
+            $panel.find('.dropdown').hide();
+            $panel.find('.btn-group').hide();
+
+            // Ссылки действий
+            $panel.find('a[data-action="editRelated"]').hide();
+            $panel.find('a[data-action="removeRelated"]').hide();
+            $panel.find('a[data-action="unlinkRelated"]').hide();
+            $panel.find('a[data-action="deleteRelated"]').hide();
+
+            // Добивка по последней колонке строк
+            $panel.find('tbody tr').each(function () {
+                $(this).find('td:last-child .btn, td:last-child .dropdown, td:last-child .dropdown-toggle, td:last-child .btn-group, td:last-child a, td:last-child button').hide();
+            });
+        },
     });
 });
