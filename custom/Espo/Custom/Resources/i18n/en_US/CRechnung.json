@@ -39,7 +39,8 @@
         "festschreibungHinweis": "Festschreibung Hinweis",
         "freigegebeneRechnungen": "Freigegebene Rechnungen",
         "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
-        "buchungsjournale": "Buchungsjournale"
+        "buchungsjournale": "Buchungsjournale",
+        "istTest": "Nur für TEST !!!"
     },
     "links": {
         "account": "Account",

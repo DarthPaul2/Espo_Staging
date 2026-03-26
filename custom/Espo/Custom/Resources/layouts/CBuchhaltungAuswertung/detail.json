@@ -10,18 +10,29 @@
                 },
                 {
                     "name": "aktiv"
+                },
+                {
+                    "name": "phase1Verwendet"
                 }
             ],
             [
-                {
-                    "name": "phase1Verwendet"
-                },
                 {
                     "name": "sortierung"
                 },
                 {
                     "name": "standardZeitraum"
+                },
+                {
+                    "name": "beschreibung"
                 }
+            ],
+            [
+                {
+                    "name": "renderModus"
+                },
+                false,
+                false,
+                false
             ]
         ],
         "dynamicLogicVisible": null,
@@ -33,21 +44,10 @@
         "customLabel": "Grunddaten"
     },
     {
-        "rows": [
-            [
-                {
-                    "name": "beschreibung"
-                }
-            ]
-        ],
-        "dynamicLogicVisible": null,
+        "rows": [],
         "style": "default",
-        "tabBreak": false,
-        "tabLabel": null,
-        "hidden": false,
-        "noteText": null,
         "noteStyle": "info",
-        "customLabel": "Beschreibung"
+        "label": ""
     },
     {
         "rows": [

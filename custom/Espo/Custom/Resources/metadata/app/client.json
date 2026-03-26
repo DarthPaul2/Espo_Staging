@@ -4,6 +4,7 @@
     "client/custom/css/arbeitszeit.css",
     "client/custom/css/customstyle.css",
     "client/custom/custom.css",
-    "client/custom/res/css/umsatz-statistik.css"
+    "client/custom/res/css/umsatz-statistik.css",
+    "client/custom/css/kb-buchhaltung-auswertung.css"
   ]
 }

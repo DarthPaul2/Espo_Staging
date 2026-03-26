@@ -1,4 +1,9 @@
 {
+    "recordViews": {
+        "detail": "custom:views/c-buchhaltung-auswertung/record/detail",
+        "list": "custom:views/c-buchhaltung-auswertung/record/list",
+        "detailSmall": "custom:views/c-buchhaltung-auswertung/record/detail-small"
+    },
     "controller": "controllers/record",
     "boolFilterList": [
         "onlyMy"

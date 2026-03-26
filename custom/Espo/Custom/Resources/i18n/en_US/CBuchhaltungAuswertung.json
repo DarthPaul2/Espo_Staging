@@ -8,7 +8,10 @@
         "standardZeitraum": "Standardzeitraum",
         "hinweisGeschaeftsfuehrung": "Hinweis Geschäftsführung",
         "hinweisBuchhaltung": "Hinweis Buchhaltung",
-        "buchungsjournale": "Buchungsjournale"
+        "buchungsjournale": "Buchungsjournale",
+        "zeitraumVon": "Zeitraum von",
+        "zeitraumBis": "Zeitraum bis",
+        "renderModus": "Render-Modus"
     },
     "labels": {
         "Create CBuchhaltungAuswertung": "Erstellen Buchhaltung Auswertung"
@@ -26,6 +29,10 @@
             "quartal": "Quartal",
             "jahr": "Jahr",
             "frei": "Frei"
+        },
+        "renderModus": {
+            "standard": "Standard",
+            "bericht": "Bericht"
         }
     },
     "links": {

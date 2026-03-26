@@ -1,0 +1,14 @@
+/* Активная Zeitraum-кнопка: бледно-зелёная, не такая как Hauptaktion */
+.btn.kb-zeitraum-active {
+    background-color: #dff0d8;
+    border-color: #c3e6cb;
+    color: #2f5d34;
+}
+
+.btn.kb-zeitraum-active:hover,
+.btn.kb-zeitraum-active:focus,
+.btn.kb-zeitraum-active:active {
+    background-color: #d0e9c6;
+    border-color: #b1dfbb;
+    color: #24492a;
+}

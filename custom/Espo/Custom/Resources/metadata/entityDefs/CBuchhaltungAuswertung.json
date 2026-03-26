@@ -106,6 +106,30 @@
             "rowsMin": 2,
             "cutHeight": 200,
             "isCustom": true
+        },
+        "zeitraumVon": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "zeitraumBis": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "renderModus": {
+            "type": "enum",
+            "options": [
+                "standard",
+                "bericht"
+            ],
+            "style": {
+                "standard": null,
+                "bericht": null
+            },
+            "default": "bericht",
+            "maxLength": 100,
+            "isCustom": true
         }
     },
     "links": {

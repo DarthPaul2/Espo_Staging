@@ -12,7 +12,10 @@
         "standardZeitraum": "Standardzeitraum",
         "hinweisGeschaeftsfuehrung": "Hinweis Geschäftsführung",
         "hinweisBuchhaltung": "Hinweis Buchhaltung",
-        "buchungsjournale": "Buchungsjournale"
+        "buchungsjournale": "Buchungsjournale",
+        "zeitraumVon": "Zeitraum von",
+        "zeitraumBis": "Zeitraum bis",
+        "renderModus": "Render-Modus"
     },
     "options": {
         "auswertungTyp": {
@@ -27,6 +30,10 @@
             "quartal": "Quartal",
             "jahr": "Jahr",
             "frei": "Frei"
+        },
+        "renderModus": {
+            "standard": "Standard",
+            "bericht": "Bericht"
         }
     },
     "links": {

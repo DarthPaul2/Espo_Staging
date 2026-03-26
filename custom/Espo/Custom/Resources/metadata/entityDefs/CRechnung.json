@@ -350,6 +350,11 @@
         },
         "festgeschriebeneRechnungen": {
             "type": "link"
+        },
+        "istTest": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
         }
     },
     "links": {
