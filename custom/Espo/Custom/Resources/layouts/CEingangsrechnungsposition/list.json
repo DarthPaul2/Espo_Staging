@@ -1,0 +1,33 @@
+[
+    {
+        "name": "positionsnummer",
+        "width": 6,
+        "align": "left"
+    },
+    {
+        "name": "name",
+        "width": 26,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "menge",
+        "width": 8,
+        "align": "left"
+    },
+    {
+        "name": "einheit",
+        "width": 8,
+        "align": "left"
+    },
+    {
+        "name": "einzelpreisNetto",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "gesamtNetto",
+        "width": 11,
+        "align": "left"
+    }
+]

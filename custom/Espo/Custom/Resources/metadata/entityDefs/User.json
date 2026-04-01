@@ -104,6 +104,13 @@
             "entity": "CRechnung",
             "audited": false,
             "isCustom": true
+        },
+        "cEingangsrechnungs": {
+            "type": "hasMany",
+            "foreign": "festgeschriebenVon",
+            "entity": "CEingangsrechnung",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

@@ -19,6 +19,18 @@
         "buchungen": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "aufwandKontoRegeln": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "vorsteuerKontoRegeln": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "verbindlichkeitKontoRegeln": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

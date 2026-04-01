@@ -1,0 +1,9 @@
+[
+    "buchungsart",
+    "kontoNummer",
+    "kontoBezeichnung",
+    "quelleTyp",
+    "steuerFall",
+    "quelleNummer",
+    "belegdatum"
+]

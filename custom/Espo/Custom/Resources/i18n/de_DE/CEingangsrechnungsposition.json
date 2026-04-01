@@ -1,0 +1,38 @@
+{
+    "labels": {
+        "Create CEingangsrechnungsposition": "Eingangsrechnungsposition erstellen"
+    },
+    "fields": {
+        "positionsnummer": "Pos.Nr",
+        "bezeichnung": "Bezeichnung",
+        "description": "Description",
+        "menge": "Menge",
+        "einheit": "Einheit",
+        "einzelpreisNetto": "Preis (Netto)",
+        "gesamtNetto": "Gesamt",
+        "kostenart": "Kostenart",
+        "beschreibung": "Beschreibung",
+        "eingangsrechnung": "Eingangsrechnung",
+        "material": "Material"
+    },
+    "options": {
+        "einheit": {
+            "stk": "Stk.",
+            "m": "m",
+            "kg": "kg",
+            "std": "Std."
+        },
+        "kostenart": {
+            "material": "Material",
+            "dienstleistung": "Dienstleistung",
+            "fahrzeug": "Fahrzeug",
+            "werkzeug": "Werkzeug",
+            "buero": "Büro",
+            "sonstiges": "Sonstiges"
+        }
+    },
+    "links": {
+        "eingangsrechnung": "Eingangsrechnung",
+        "material": "Material"
+    }
+}

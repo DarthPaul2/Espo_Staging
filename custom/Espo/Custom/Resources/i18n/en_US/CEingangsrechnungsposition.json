@@ -1,0 +1,37 @@
+{
+    "fields": {
+        "positionsnummer": "Pos.Nr",
+        "bezeichnung": "Bezeichnung",
+        "menge": "Menge",
+        "einheit": "Einheit",
+        "einzelpreisNetto": "Preis (Netto)",
+        "gesamtNetto": "Gesamt",
+        "kostenart": "Kostenart",
+        "beschreibung": "Beschreibung",
+        "eingangsrechnung": "Eingangsrechnung",
+        "material": "Material"
+    },
+    "links": {
+        "eingangsrechnung": "Eingangsrechnung",
+        "material": "Material"
+    },
+    "labels": {
+        "Create CEingangsrechnungsposition": "Create Eingangsrechnungsposition"
+    },
+    "options": {
+        "einheit": {
+            "stk": "Stk.",
+            "m": "m",
+            "kg": "kg",
+            "std": "Std."
+        },
+        "kostenart": {
+            "material": "Material",
+            "dienstleistung": "Dienstleistung",
+            "fahrzeug": "Fahrzeug",
+            "werkzeug": "Werkzeug",
+            "buero": "Büro",
+            "sonstiges": "Sonstiges"
+        }
+    }
+}

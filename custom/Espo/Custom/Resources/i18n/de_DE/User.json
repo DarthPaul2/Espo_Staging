@@ -14,7 +14,8 @@
         "cMelderQuartals": "Melder Quartals",
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
         "cFreigabeDurch": "Freigabe durch",
-        "cFestgeschriebenDurch": "Festgeschrieben durch"
+        "cFestgeschriebenDurch": "Festgeschrieben durch",
+        "cEingangsrechnungs": "Eingangsrechnungs"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -31,6 +32,7 @@
         "cMelderQuartals": "Melder Quartals",
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
         "cFreigabeDurch": "Freigabe durch",
-        "cFestgeschriebenDurch": "Festgeschrieben durch"
+        "cFestgeschriebenDurch": "Festgeschrieben durch",
+        "cEingangsrechnungs": "Eingangsrechnungs"
     }
 }

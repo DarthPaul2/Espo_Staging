@@ -1,0 +1,14 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#6b3f02",
+    "iconClass": "fas fa-cart-flatbed",
+    "relationshipPanels": {
+        "eingangsrechnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

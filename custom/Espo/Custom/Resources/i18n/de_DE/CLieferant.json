@@ -1,0 +1,23 @@
+{
+    "labels": {
+        "Create CLieferant": "Lieferant erstellen"
+    },
+    "fields": {
+        "lieferantennummer": "Lieferantennummer",
+        "ansprechpartner": "Ansprechpartner",
+        "email": "E-Mail",
+        "telefon": "Telefon",
+        "strasse": "Straße / Hausnummer",
+        "plz": "PLZ",
+        "ort": "Ort",
+        "land": "Land",
+        "ustIdNr": "USt-IdNr",
+        "steuernummer": "Steuernummer",
+        "aktiv": "Aktiv",
+        "bemerkung": "Bemerkung",
+        "eingangsrechnungen": "Eingangsrechnungen"
+    },
+    "links": {
+        "eingangsrechnungen": "Eingangsrechnungen"
+    }
+}

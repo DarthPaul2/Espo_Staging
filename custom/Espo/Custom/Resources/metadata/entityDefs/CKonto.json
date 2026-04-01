@@ -105,6 +105,27 @@
             "entity": "CBuchungsregel",
             "audited": false,
             "isCustom": true
+        },
+        "debitKontoAufwand": {
+            "type": "hasMany",
+            "foreign": "aufwandKontoRegeln",
+            "entity": "CBuchungsregel",
+            "audited": false,
+            "isCustom": true
+        },
+        "debitKontoVorsteuer": {
+            "type": "hasMany",
+            "foreign": "vorsteuerKontoRegeln",
+            "entity": "CBuchungsregel",
+            "audited": false,
+            "isCustom": true
+        },
+        "creditKontoVerbindlichkeit": {
+            "type": "hasMany",
+            "foreign": "verbindlichkeitKontoRegeln",
+            "entity": "CBuchungsregel",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

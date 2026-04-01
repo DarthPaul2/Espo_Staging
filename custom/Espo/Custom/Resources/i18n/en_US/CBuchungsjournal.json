@@ -11,19 +11,22 @@
         "beschreibung": "Beschreibung",
         "buchungen": "Buchungen",
         "rechnung": "Rechnung",
-        "buchhaltungAuswertungen": "Buchhaltungsauswertungen"
+        "buchhaltungAuswertungen": "Buchhaltungsauswertungen",
+        "eingangsrechnungs": "Eingangsrechnungen"
     },
     "links": {
         "buchungen": "Buchungen",
         "rechnung": "Rechnung",
-        "buchhaltungAuswertungen": "Buchhaltungsauswertungen"
+        "buchhaltungAuswertungen": "Buchhaltungsauswertungen",
+        "eingangsrechnungs": "Eingangsrechnungen"
     },
     "labels": {
         "Create CBuchungsjournal": "Create Buchungsjournal"
     },
     "options": {
         "quelleTyp": {
-            "CRechnung": "Ausgangsrechnung"
+            "CRechnung": "Ausgangsrechnung",
+            "CEingangsrechnung": "Eingangsrechnung"
         },
         "buchhaltungStatus": {
             "entwurf": "Entwurf",

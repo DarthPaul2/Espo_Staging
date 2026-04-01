@@ -81,10 +81,12 @@
         "quelleTyp": {
             "type": "enum",
             "options": [
-                "CRechnung"
+                "CRechnung",
+                "CEingangsrechnung"
             ],
             "style": {
-                "CRechnung": null
+                "CRechnung": null,
+                "CEingangsrechnung": null
             },
             "default": "CRechnung",
             "maxLength": 100,
@@ -107,12 +109,14 @@
             "options": [
                 "normal",
                 "ermaessigt",
-                "13b"
+                "13b",
+                "steuerfrei"
             ],
             "style": {
                 "normal": null,
                 "ermaessigt": null,
-                "13b": null
+                "13b": null,
+                "steuerfrei": null
             },
             "default": "normal",
             "maxLength": 100,

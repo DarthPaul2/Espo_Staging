@@ -1,0 +1,241 @@
+{
+    "hooks": {
+        "beforeSave": [
+            "AutoNumber",
+            "PreventEditIfFestgeschrieben"
+        ],
+        "beforeRemove": [
+            "PreventDeleteIfFestgeschrieben"
+        ]
+    },
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": false,
+            "pattern": "$noBadCharacters",
+            "options": []
+        },
+        "description": {
+            "type": "text"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        },
+        "eingangsrechnungsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true,
+            "readOnly": true
+        },
+        "lieferantenRechnungsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "belegdatum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "eingangsdatum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "faelligAm": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "betragBrutto": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "betragNetto": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "steuerBetrag": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "steuerfall": {
+            "type": "enum",
+            "options": [
+                "ust19",
+                "ust7",
+                "steuerfrei"
+            ],
+            "style": {
+                "ust19": null,
+                "ust7": null,
+                "steuerfrei": null
+            },
+            "default": "ust19",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "status": {
+            "type": "enum",
+            "options": [
+                "entwurf",
+                "freigabe",
+                "festgeschrieben"
+            ],
+            "style": {
+                "entwurf": null,
+                "freigabe": null,
+                "festgeschrieben": null
+            },
+            "default": "entwurf",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "festgeschriebenAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "aktiv": {
+            "notNull": true,
+            "type": "bool",
+            "default": true,
+            "isCustom": true
+        },
+        "bemerkung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "pruefhinweis": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "lieferant": {
+            "type": "link"
+        },
+        "buchungsjournal": {
+            "type": "link"
+        },
+        "festgeschriebenVon": {
+            "type": "link"
+        },
+        "freigabeAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "lieferant": {
+            "type": "belongsTo",
+            "foreign": "eingangsrechnungen",
+            "entity": "CLieferant",
+            "audited": false,
+            "isCustom": true
+        },
+        "buchungsjournal": {
+            "type": "belongsTo",
+            "foreign": "eingangsrechnungs",
+            "entity": "CBuchungsjournal",
+            "audited": false,
+            "isCustom": true
+        },
+        "festgeschriebenVon": {
+            "type": "belongsTo",
+            "foreign": "cEingangsrechnungs",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "eingangsrechnungspositionen": {
+            "type": "hasMany",
+            "foreign": "eingangsrechnung",
+            "entity": "CEingangsrechnungsposition",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    }
+}

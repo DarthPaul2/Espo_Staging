@@ -8,6 +8,11 @@ define(
     [
         'views/record/detail',
         'custom:views/c-buchhaltung-auswertung/report/festgeschriebene-rechnungen',
+        'custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsrechnungen',
+        'custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten',
+        'custom:views/c-buchhaltung-auswertung/report/aufwand',
+        'custom:views/c-buchhaltung-auswertung/report/vorsteuer',
+        'custom:views/c-buchhaltung-auswertung/report/kontenbewegungen-eingang',
         'custom:views/c-buchhaltung-auswertung/report/umsatzuebersicht',
         'custom:views/c-buchhaltung-auswertung/report/umsatzsteuer-uebersicht',
         'custom:views/c-buchhaltung-auswertung/report/offene-forderungen',
@@ -16,6 +21,11 @@ define(
     function (
         Dep,
         FestgeschriebeneRechnungenReport,
+        FestgeschriebeneEingangsrechnungenReport,
+        VerbindlichkeitenReport,
+        AufwandReport,
+        VorsteuerReport,
+        KontenbewegungenEingangReport,
         UmsatzuebersichtReport,
         UmsatzsteuerUebersichtReport,
         OffeneForderungenReport,
@@ -63,10 +73,6 @@ define(
                         return;
                     }
 
-                    // Даже если поля уже есть, делаем ещё один контрольный проход.
-                    if (this._applyRenderModeAttempts < 3) {
-                        this._applyRenderModeTimer = setTimeout(run, 100);
-                    }
                 };
 
                 run();
@@ -93,11 +99,9 @@ define(
             applyRenderMode_() {
                 const renderModus = this.model.get('renderModus');
                 const auswertungTyp = this.model.get('auswertungTyp');
+                console.log('[CBuchhaltungAuswertung] renderModus =', renderModus, 'auswertungTyp =', auswertungTyp);
 
                 this.$el.removeClass('kb-bericht-mode');
-                this.$el.find('.kb-auswertung-summary').remove();
-                this.$el.find('.kb-auswertung-filter').remove();
-                this.$el.find('.kb-auswertung-tabs').remove();
                 this.$el.find('.kb-berichtmodus-button').remove();
 
                 // Что это: если модель ещё не подгрузилась, просто выходим и ждём следующий retry.
@@ -124,6 +128,62 @@ define(
 
                     if (this.shouldLoadReport_(auswertungTyp)) {
                         FestgeschriebeneRechnungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'festgeschriebene_eingangsrechnungen') {
+                    console.log('[CBuchhaltungAuswertung] entering festgeschriebene_eingangsrechnungen branch');
+                    FestgeschriebeneEingangsrechnungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    FestgeschriebeneEingangsrechnungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        FestgeschriebeneEingangsrechnungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'verbindlichkeiten') {
+                    VerbindlichkeitenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    VerbindlichkeitenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        VerbindlichkeitenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'aufwand') {
+                    AufwandReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    AufwandReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        AufwandReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'vorsteuer') {
+                    VorsteuerReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    VorsteuerReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        VorsteuerReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'kontenbewegungen_eingang') {
+                    KontenbewegungenEingangReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    KontenbewegungenEingangReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        KontenbewegungenEingangReport.load(this);
                     }
                 }
 
@@ -490,6 +550,31 @@ define(
                                 FestgeschriebeneRechnungenReport.load(this);
                             }
 
+                            if (auswertungTyp === 'festgeschriebene_eingangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                FestgeschriebeneEingangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'verbindlichkeiten') {
+                                this._lastReportLoadSignature = null;
+                                VerbindlichkeitenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'aufwand') {
+                                this._lastReportLoadSignature = null;
+                                AufwandReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'vorsteuer') {
+                                this._lastReportLoadSignature = null;
+                                VorsteuerReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'kontenbewegungen_eingang') {
+                                this._lastReportLoadSignature = null;
+                                KontenbewegungenEingangReport.load(this);
+                            }
+
                             if (auswertungTyp === 'umsatzuebersicht') {
                                 this._lastReportLoadSignature = null;
                                 UmsatzuebersichtReport.load(this);
@@ -540,6 +625,31 @@ define(
                             if (auswertungTyp === 'festgeschriebene_rechnungen') {
                                 this._lastReportLoadSignature = null;
                                 FestgeschriebeneRechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'festgeschriebene_eingangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                FestgeschriebeneEingangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'verbindlichkeiten') {
+                                this._lastReportLoadSignature = null;
+                                VerbindlichkeitenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'aufwand') {
+                                this._lastReportLoadSignature = null;
+                                AufwandReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'vorsteuer') {
+                                this._lastReportLoadSignature = null;
+                                VorsteuerReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'kontenbewegungen_eingang') {
+                                this._lastReportLoadSignature = null;
+                                KontenbewegungenEingangReport.load(this);
                             }
 
                             if (auswertungTyp === 'umsatzuebersicht') {

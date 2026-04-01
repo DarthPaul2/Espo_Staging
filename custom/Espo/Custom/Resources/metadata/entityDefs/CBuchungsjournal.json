@@ -56,10 +56,12 @@
         "quelleTyp": {
             "type": "enum",
             "options": [
-                "CRechnung"
+                "CRechnung",
+                "CEingangsrechnung"
             ],
             "style": {
-                "CRechnung": null
+                "CRechnung": null,
+                "CEingangsrechnung": null
             },
             "default": "CRechnung",
             "maxLength": 100,
@@ -145,6 +147,13 @@
             "relationName": "cBuchhaltungAuswertungBuchungsjournal",
             "foreign": "buchungsjournale",
             "entity": "CBuchhaltungAuswertung",
+            "audited": false,
+            "isCustom": true
+        },
+        "eingangsrechnungs": {
+            "type": "hasMany",
+            "foreign": "buchungsjournal",
+            "entity": "CEingangsrechnung",
             "audited": false,
             "isCustom": true
         }

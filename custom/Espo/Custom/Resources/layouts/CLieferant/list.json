@@ -1,0 +1,37 @@
+[
+    {
+        "name": "name",
+        "width": 26,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "lieferantennummer",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "ansprechpartner",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "email",
+        "width": 16
+    },
+    {
+        "name": "telefon",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "ort",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "aktiv",
+        "width": 6,
+        "align": "left"
+    }
+]

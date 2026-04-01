@@ -4,5 +4,8 @@
     },
     "buchungen": {
         "index": 0
+    },
+    "eingangsrechnungs": {
+        "index": 1
     }
 }

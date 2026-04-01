@@ -316,6 +316,13 @@
             "entity": "CAuftragsposition",
             "audited": false,
             "isCustom": true
+        },
+        "eingangsrechnungspositionen": {
+            "type": "hasMany",
+            "foreign": "material",
+            "entity": "CEingangsrechnungsposition",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

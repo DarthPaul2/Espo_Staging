@@ -25,6 +25,18 @@
             ],
             [
                 {
+                    "name": "beschreibung"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
                     "name": "buchungsregelnDebit"
                 },
                 {
@@ -33,15 +45,36 @@
                 {
                     "name": "buchungsregelnSteuer"
                 }
-            ],
-            [
-                {
-                    "name": "beschreibung"
-                },
-                false
             ]
         ],
+        "dynamicLogicVisible": null,
         "style": "default",
-        "label": "Overview"
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Konten für Ausgangsrechnung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "aufwandKontoRegeln"
+                },
+                {
+                    "name": "vorsteuerKontoRegeln"
+                },
+                {
+                    "name": "verbindlichkeitKontoRegeln"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Konten für Eingangsrechnung"
     }
 ]

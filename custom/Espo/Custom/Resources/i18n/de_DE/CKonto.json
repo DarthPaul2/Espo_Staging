@@ -11,11 +11,17 @@
         "description": "Description",
         "debitKonto": "Debitkonto",
         "creditKontoNetto": "Erlöskonto",
-        "creditKontoSteuer": "Steuerkonto"
+        "creditKontoSteuer": "Steuerkonto",
+        "debitKontoAufwand": "Aufwand-Konto",
+        "debitKontoVorsteuer": "Vorsteuer-Konto",
+        "creditKontoVerbindlichkeit": "Verbindlichkeits-Konto"
     },
     "links": {
         "debitKonto": "Debitkonto",
         "creditKontoNetto": "Erlöskonto",
-        "creditKontoSteuer": "Steuerkonto"
+        "creditKontoSteuer": "Steuerkonto",
+        "debitKontoAufwand": "Aufwand-Konto",
+        "debitKontoVorsteuer": "Vorsteuer-Konto",
+        "creditKontoVerbindlichkeit": "Verbindlichkeits-Konto"
     }
 }

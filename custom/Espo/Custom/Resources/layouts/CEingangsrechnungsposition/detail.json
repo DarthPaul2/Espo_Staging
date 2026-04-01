@@ -1,0 +1,50 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "positionsnummer"
+                },
+                {
+                    "name": "eingangsrechnung"
+                }
+            ],
+            [
+                {
+                    "name": "name"
+                }
+            ],
+            [
+                {
+                    "name": "menge"
+                },
+                {
+                    "name": "einheit"
+                },
+                {
+                    "name": "einzelpreisNetto"
+                },
+                {
+                    "name": "gesamtNetto"
+                }
+            ],
+            [
+                {
+                    "name": "kostenart"
+                },
+                {
+                    "name": "beschreibung"
+                }
+            ],
+            [
+                {
+                    "name": "material"
+                },
+                false,
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

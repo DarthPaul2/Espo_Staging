@@ -7,31 +7,40 @@
         "quelleTyp": "Quelle Typ",
         "dokumentTyp": "Dokument Typ",
         "steuerFall": "Steuer Fall",
-        "buchungsregelnDebit": "Buchungsregeln (Debitkonto)",
-        "buchungsregelnErloes": "Buchungsregeln (Erlöskonto)",
-        "buchungsregelnSteuer": "Buchungsregeln (Steuerkonto)",
+        "buchungsregelnDebit": "Debitkonto",
+        "buchungsregelnErloes": "Erlöskonto",
+        "buchungsregelnSteuer": "Steuerkonto",
         "beschreibung": "Beschreibung",
         "description": "Description",
         "phase1Verwendet": "In Phase 1 verwendet",
-        "buchungen": "Buchungen"
+        "buchungen": "Buchungen",
+        "aufwandKontoRegeln": "Aufwandskonto",
+        "vorsteuerKontoRegeln": "Vorsteuerkonto",
+        "verbindlichkeitKontoRegeln": "Verbindlichkeitskonto"
     },
     "options": {
         "quelleTyp": {
-            "CRechnung": "Ausgangsrechnung"
+            "CRechnung": "Ausgangsrechnung",
+            "CEingangsrechnung": "Eingangsrechnung"
         },
         "dokumentTyp": {
-            "einzelrechnung": "Einzelrechnung"
+            "einzelrechnung": "Einzelrechnung",
+            "eingangsrechnung": "Eingangsrechnung"
         },
         "steuerFall": {
             "normal": "Normale Umsatzsteuer",
             "ermaessigt": "Ermäßigte Umsatzsteuer",
-            "13b": "§ 13b UStG"
+            "13b": "§ 13b UStG",
+            "steuerfrei": "Steuerfrei / ohne Vorsteuer"
         }
     },
     "links": {
         "buchungsregelnDebit": "Buchungsregeln (Debitkonto)",
         "buchungsregelnErloes": "Buchungsregeln (Erlöskonto)",
         "buchungsregelnSteuer": "Buchungsregeln (Steuerkonto)",
-        "buchungen": "Buchungen"
+        "buchungen": "Buchungen",
+        "aufwandKontoRegeln": "Aufwand-Konto-Regeln",
+        "vorsteuerKontoRegeln": "Vorsteuer-Konto-Regeln",
+        "verbindlichkeitKontoRegeln": "Verbindlichkeits-Konto-Regeln"
     }
 }

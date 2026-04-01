@@ -42,14 +42,24 @@
                 "umsatzuebersicht",
                 "umsatzsteuer_uebersicht",
                 "offene_forderungen",
-                "kontenbewegungen"
+                "kontenbewegungen",
+                "festgeschriebene_eingangsrechnungen",
+                "verbindlichkeiten",
+                "aufwand",
+                "vorsteuer",
+                "kontenbewegungen_eingang"
             ],
             "style": {
                 "festgeschriebene_rechnungen": null,
                 "umsatzuebersicht": null,
                 "umsatzsteuer_uebersicht": null,
                 "offene_forderungen": null,
-                "kontenbewegungen": null
+                "kontenbewegungen": null,
+                "festgeschriebene_eingangsrechnungen": null,
+                "verbindlichkeiten": null,
+                "aufwand": null,
+                "vorsteuer": null,
+                "kontenbewegungen_eingang": null
             },
             "default": "festgeschriebene_rechnungen",
             "maxLength": 100,

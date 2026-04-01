@@ -1,0 +1,23 @@
+{
+    "_delimiter_": {
+        "disabled": true
+    },
+    "debitKonto": {
+        "index": 0
+    },
+    "creditKontoNetto": {
+        "index": 1
+    },
+    "creditKontoSteuer": {
+        "index": 2
+    },
+    "debitKontoAufwand": {
+        "index": 3
+    },
+    "debitKontoVorsteuer": {
+        "index": 4
+    },
+    "creditKontoVerbindlichkeit": {
+        "index": 5
+    }
+}

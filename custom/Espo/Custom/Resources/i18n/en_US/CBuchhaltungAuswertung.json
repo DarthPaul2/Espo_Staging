@@ -22,7 +22,12 @@
             "umsatzuebersicht": "Umsatzübersicht",
             "umsatzsteuer_uebersicht": "Umsatzsteuer-Übersicht",
             "offene_forderungen": "Offene Forderungen",
-            "kontenbewegungen": "Kontenbewegungen"
+            "kontenbewegungen": "Kontenbewegungen",
+            "festgeschriebene_eingangsrechnungen": "Festgeschriebene Eingangsrechnungen",
+            "verbindlichkeiten": "Verbindlichkeiten",
+            "aufwand": "Aufwand",
+            "vorsteuer": "Vorsteuer",
+            "kontenbewegungen_eingang": "Kontenbewegungen Eingang"
         },
         "standardZeitraum": {
             "monat": "Monat",

@@ -1,0 +1,29 @@
+{
+    "recordViews": {
+        "detail": "custom:views/c-eingangsrechnung/record/detail"
+    },
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#e30000",
+    "iconClass": "fas fa-arrow-down-short-wide",
+    "relationshipPanels": {
+        "lieferant": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "buchungsjournal": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "festgeschriebenVon": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungspositionen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

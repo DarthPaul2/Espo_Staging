@@ -15,6 +15,10 @@
         "buchhaltungAuswertungen": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

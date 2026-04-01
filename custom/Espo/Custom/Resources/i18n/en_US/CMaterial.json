@@ -28,13 +28,15 @@
         "lagerSegment": "LagerSegment",
         "lagerEbene": "LagerEbene",
         "lagerPlatz": "LagerPlatz",
-        "lagerplatzCode": "LagerplatzCode"
+        "lagerplatzCode": "LagerplatzCode",
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
     },
     "links": {
         "positionen": "Positionen",
         "rechnungspositions": "Rechnungspositions",
         "lieferscheinpositions": "Lieferscheinpositions",
-        "auftragspositions": "Auftragspositions"
+        "auftragspositions": "Auftragspositions",
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
     },
     "labels": {
         "Create CMaterial": "Erstellen Material/Serviceleistung"

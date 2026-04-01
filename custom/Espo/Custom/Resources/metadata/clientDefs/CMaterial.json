@@ -21,6 +21,10 @@
         "auftragspositions": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungspositionen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "recordViews": {

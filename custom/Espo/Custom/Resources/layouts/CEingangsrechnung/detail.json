@@ -1,0 +1,87 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "lieferant"
+                },
+                {
+                    "name": "eingangsrechnungsnummer"
+                },
+                {
+                    "name": "lieferantenRechnungsnummer"
+                }
+            ],
+            [
+                {
+                    "name": "steuerfall"
+                },
+                false,
+                {
+                    "name": "status"
+                },
+                {
+                    "name": "aktiv"
+                }
+            ],
+            [
+                {
+                    "name": "belegdatum"
+                },
+                {
+                    "name": "eingangsdatum"
+                },
+                false,
+                {
+                    "name": "faelligAm"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "betragNetto"
+                },
+                {
+                    "name": "steuerBetrag"
+                },
+                {
+                    "name": "betragBrutto"
+                }
+            ]
+        ],
+        "style": "default",
+        "noteStyle": "info",
+        "label": ""
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "festgeschriebenAm"
+                },
+                {
+                    "name": "festgeschriebenVon"
+                },
+                {
+                    "name": "buchungsjournal"
+                }
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                },
+                {
+                    "name": "pruefhinweis"
+                }
+            ]
+        ],
+        "style": "default",
+        "noteStyle": "info",
+        "label": ""
+    }
+]

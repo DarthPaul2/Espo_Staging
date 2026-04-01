@@ -1,0 +1,49 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "positionsnummer"
+                },
+                false,
+                false,
+                false
+            ],
+            [
+                {
+                    "name": "name"
+                }
+            ],
+            [
+                {
+                    "name": "menge"
+                },
+                {
+                    "name": "einheit"
+                },
+                {
+                    "name": "einzelpreisNetto"
+                },
+                {
+                    "name": "gesamtNetto"
+                }
+            ],
+            [
+                {
+                    "name": "kostenart"
+                },
+                {
+                    "name": "beschreibung"
+                }
+            ],
+            [
+                false,
+                {
+                    "name": "material"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

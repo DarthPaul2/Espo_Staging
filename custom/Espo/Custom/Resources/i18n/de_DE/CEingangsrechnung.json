@@ -1,0 +1,44 @@
+{
+    "labels": {
+        "Create CEingangsrechnung": "Eingangsrechnung erstellen"
+    },
+    "fields": {
+        "eingangsrechnungsnummer": "Eingangsrech.-Nr.",
+        "lieferantenRechnungsnummer": "Lief.-Rechnung-Nr.",
+        "belegdatum": "Belegdatum",
+        "eingangsdatum": "Eingangsdatum",
+        "faelligAm": "Fällig am",
+        "betragBrutto": "Betrag (brutto)",
+        "betragNetto": "Betrag (netto)",
+        "steuerBetrag": "Steuerbetrag",
+        "steuerfall": "Steuer Fall",
+        "status": "Status",
+        "festgeschriebenAm": "Festgeschrieben am",
+        "aktiv": "Aktiv",
+        "bemerkung": "Bemerkung",
+        "pruefhinweis": "Prüfhinweis",
+        "lieferant": "Lieferant",
+        "buchungsjournal": "Buchungsjournal",
+        "festgeschriebenVon": "Festgeschrieben von",
+        "freigabeAm": "Freigabe am",
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
+    },
+    "options": {
+        "steuerfall": {
+            "ust19": "19%",
+            "ust7": "7%",
+            "steuerfrei": "0%"
+        },
+        "status": {
+            "entwurf": "Entwurf",
+            "freigabe": "Freigabe",
+            "festgeschrieben": "Festgeschrieben"
+        }
+    },
+    "links": {
+        "lieferant": "Lieferant",
+        "buchungsjournal": "Buchungsjournal",
+        "festgeschriebenVon": "Festgeschrieben von",
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
+    }
+}

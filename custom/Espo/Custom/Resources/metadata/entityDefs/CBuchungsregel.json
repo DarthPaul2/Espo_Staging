@@ -45,10 +45,12 @@
         "quelleTyp": {
             "type": "enum",
             "options": [
-                "CRechnung"
+                "CRechnung",
+                "CEingangsrechnung"
             ],
             "style": {
-                "CRechnung": null
+                "CRechnung": null,
+                "CEingangsrechnung": null
             },
             "default": "CRechnung",
             "maxLength": 100,
@@ -57,10 +59,12 @@
         "dokumentTyp": {
             "type": "enum",
             "options": [
-                "einzelrechnung"
+                "einzelrechnung",
+                "eingangsrechnung"
             ],
             "style": {
-                "einzelrechnung": null
+                "einzelrechnung": null,
+                "eingangsrechnung": null
             },
             "default": "einzelrechnung",
             "maxLength": 100,
@@ -71,12 +75,14 @@
             "options": [
                 "normal",
                 "ermaessigt",
-                "13b"
+                "13b",
+                "steuerfrei"
             ],
             "style": {
                 "normal": null,
                 "ermaessigt": null,
-                "13b": null
+                "13b": null,
+                "steuerfrei": null
             },
             "default": "normal",
             "maxLength": 100,
@@ -102,6 +108,15 @@
             "type": "bool",
             "default": true,
             "isCustom": true
+        },
+        "aufwandKontoRegeln": {
+            "type": "link"
+        },
+        "vorsteuerKontoRegeln": {
+            "type": "link"
+        },
+        "verbindlichkeitKontoRegeln": {
+            "type": "link"
         }
     },
     "links": {
@@ -148,6 +163,27 @@
             "type": "hasMany",
             "foreign": "buchungsregel",
             "entity": "CBuchung",
+            "audited": false,
+            "isCustom": true
+        },
+        "aufwandKontoRegeln": {
+            "type": "belongsTo",
+            "foreign": "debitKontoAufwand",
+            "entity": "CKonto",
+            "audited": false,
+            "isCustom": true
+        },
+        "vorsteuerKontoRegeln": {
+            "type": "belongsTo",
+            "foreign": "debitKontoVorsteuer",
+            "entity": "CKonto",
+            "audited": false,
+            "isCustom": true
+        },
+        "verbindlichkeitKontoRegeln": {
+            "type": "belongsTo",
+            "foreign": "creditKontoVerbindlichkeit",
+            "entity": "CKonto",
             "audited": false,
             "isCustom": true
         }

@@ -1,0 +1,57 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "lieferantennummer"
+                },
+                {
+                    "name": "aktiv"
+                }
+            ],
+            [
+                {
+                    "name": "strasse"
+                },
+                {
+                    "name": "plz"
+                },
+                {
+                    "name": "ort"
+                },
+                {
+                    "name": "land"
+                }
+            ],
+            [
+                {
+                    "name": "ansprechpartner"
+                },
+                {
+                    "name": "email"
+                },
+                {
+                    "name": "telefon"
+                }
+            ],
+            [
+                {
+                    "name": "ustIdNr"
+                },
+                {
+                    "name": "steuernummer"
+                }
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

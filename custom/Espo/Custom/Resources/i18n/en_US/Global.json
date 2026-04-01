@@ -28,7 +28,10 @@
         "CBuchungsregel": "Buchungsregel",
         "CBuchungsjournal": "Buchungsjournal",
         "CBuchung": "Buchung",
-        "CBuchhaltungAuswertung": "Buchhaltung Auswertung"
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertung",
+        "CLieferant": "Lieferant",
+        "CEingangsrechnung": "Eingangsrechnung",
+        "CEingangsrechnungsposition": "Eingangsrechnungsposition"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -59,7 +62,10 @@
         "CBuchungsregel": "Buchungsregeln",
         "CBuchungsjournal": "Buchungsjournale",
         "CBuchung": "Buchungen",
-        "CBuchhaltungAuswertung": "Buchhaltung Auswertungen"
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertungen",
+        "CLieferant": "Lieferanten",
+        "CEingangsrechnung": "Eingangsrechnungen",
+        "CEingangsrechnungsposition": "Eingangsrechnungspositionen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

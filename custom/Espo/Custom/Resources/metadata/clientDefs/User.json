@@ -83,6 +83,18 @@
         "festgeschriebenDurch": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "festgeschriebenVon": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "freigegebeneEingangsrechnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

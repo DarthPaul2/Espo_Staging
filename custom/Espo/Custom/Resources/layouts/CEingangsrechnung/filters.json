@@ -1,0 +1,11 @@
+[
+    "name",
+    "eingangsdatum",
+    "lieferantenRechnungsnummer",
+    "lieferant",
+    "status",
+    "steuerfall",
+    "belegdatum",
+    "faelligAm",
+    "aktiv"
+]
