@@ -1,13 +1,13 @@
 [
     {
         "name": "name",
-        "width": 20,
+        "width": 29,
         "link": true,
         "align": "left"
     },
     {
         "name": "quelleTyp",
-        "width": 13,
+        "width": 14,
         "align": "left"
     },
     {
@@ -17,31 +17,38 @@
     },
     {
         "name": "steuerFall",
-        "width": 16
+        "width": 18,
+        "align": "left"
     },
     {
         "name": "buchungsregelnDebit",
-        "width": 16
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "buchungsregelnErloes",
-        "width": 16
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "buchungsregelnSteuer",
-        "width": 16
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "aufwandKontoRegeln",
-        "width": 16
+        "width": 11,
+        "align": "left"
     },
     {
         "name": "vorsteuerKontoRegeln",
-        "width": 16
+        "width": 11,
+        "align": "left"
     },
     {
         "name": "verbindlichkeitKontoRegeln",
-        "width": 16
+        "width": 14,
+        "align": "left"
     },
     {
         "name": "aktiv",

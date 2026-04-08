@@ -1,15 +1,19 @@
 [
     {
         "name": "name",
-        "link": true
+        "width": 30,
+        "link": true,
+        "align": "left"
     },
     {
         "name": "auswertungTyp",
-        "width": 16
+        "width": 25,
+        "align": "left"
     },
     {
         "name": "aktiv",
-        "width": 16
+        "width": 7,
+        "align": "left"
     },
     {
         "name": "phase1Verwendet",
@@ -17,7 +21,8 @@
     },
     {
         "name": "sortierung",
-        "width": 16
+        "width": 10,
+        "align": "left"
     },
     {
         "name": "standardZeitraum",

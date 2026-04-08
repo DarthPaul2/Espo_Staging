@@ -25,6 +25,10 @@
         "eingangsrechnungspositionen": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungImportPositions": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "recordViews": {

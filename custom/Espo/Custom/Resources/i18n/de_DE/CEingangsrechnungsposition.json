@@ -13,7 +13,9 @@
         "kostenart": "Kostenart",
         "beschreibung": "Beschreibung",
         "eingangsrechnung": "Eingangsrechnung",
-        "material": "Material"
+        "material": "Material",
+        "rabattProzent": "Rabatt (%)",
+        "rabattBetrag": "Rabattbetrag"
     },
     "options": {
         "einheit": {

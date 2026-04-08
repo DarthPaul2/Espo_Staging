@@ -9,6 +9,10 @@
         "eingangsrechnungen": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungImporte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

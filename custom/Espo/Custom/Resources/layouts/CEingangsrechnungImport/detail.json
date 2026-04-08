@@ -1,0 +1,199 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                }
+            ],
+            [
+                {
+                    "name": "eingangsrechnung"
+                },
+                false,
+                {
+                    "name": "status"
+                }
+            ],
+            [
+                false,
+                false,
+                {
+                    "name": "originalFile"
+                }
+            ],
+            [
+                false,
+                {
+                    "name": "uebernommenAm"
+                },
+                {
+                    "name": "uebernommenVon"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "customLabel": "Allgemein"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "recognizedLieferantName"
+                },
+                {
+                    "name": "matchedLieferant"
+                }
+            ],
+            [
+                {
+                    "name": "strasse"
+                },
+                {
+                    "name": "plz"
+                },
+                {
+                    "name": "ort"
+                },
+                {
+                    "name": "land"
+                }
+            ],
+            [
+                {
+                    "name": "dokumentTyp"
+                },
+                {
+                    "name": "ustIdNr"
+                },
+                {
+                    "name": "steuernummer"
+                }
+            ],
+            [
+                {
+                    "name": "recognizedIban"
+                },
+                {
+                    "name": "recognizedBankName"
+                },
+                {
+                    "name": "recognizedBic"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Lieferant"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "lieferantenRechnungsnummer"
+                },
+                {
+                    "name": "belegdatum"
+                },
+                {
+                    "name": "eingangsdatum"
+                }
+            ],
+            [
+                {
+                    "name": "faelligAm"
+                },
+                {
+                    "name": "steuerfall"
+                },
+                {
+                    "name": "waehrung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Rechnungsdaten"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "betragNetto"
+                },
+                {
+                    "name": "steuerBetrag"
+                },
+                {
+                    "name": "betragBrutto"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Summen"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "warnhinweise"
+                },
+                {
+                    "name": "fehlertext"
+                },
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Import-Prüfung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "ocrText"
+                },
+                {
+                    "name": "aiJson"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Rohdaten"
+    }
+]

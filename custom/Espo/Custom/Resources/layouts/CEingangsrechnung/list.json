@@ -1,7 +1,7 @@
 [
     {
         "name": "name",
-        "width": 26,
+        "width": 30,
         "link": true,
         "align": "left"
     },
@@ -22,12 +22,13 @@
     },
     {
         "name": "belegdatum",
-        "width": 11,
+        "width": 10,
         "align": "left"
     },
     {
         "name": "faelligAm",
-        "width": 16
+        "width": 8,
+        "align": "left"
     },
     {
         "name": "steuerfall",

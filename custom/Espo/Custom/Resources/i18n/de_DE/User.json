@@ -15,7 +15,8 @@
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
         "cFreigabeDurch": "Freigabe durch",
         "cFestgeschriebenDurch": "Festgeschrieben durch",
-        "cEingangsrechnungs": "Eingangsrechnungs"
+        "cEingangsrechnungs": "Eingangsrechnungs",
+        "cEingangsImporte": "Eingangsimporte"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -33,6 +34,7 @@
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
         "cFreigabeDurch": "Freigabe durch",
         "cFestgeschriebenDurch": "Festgeschrieben durch",
-        "cEingangsrechnungs": "Eingangsrechnungs"
+        "cEingangsrechnungs": "Eingangsrechnungs",
+        "cEingangsImporte": "Eingangsimporte"
     }
 }

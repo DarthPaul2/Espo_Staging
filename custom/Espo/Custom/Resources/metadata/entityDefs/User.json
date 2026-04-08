@@ -111,6 +111,13 @@
             "entity": "CEingangsrechnung",
             "audited": false,
             "isCustom": true
+        },
+        "cEingangsImporte": {
+            "type": "hasMany",
+            "foreign": "uebernommenVon",
+            "entity": "CEingangsrechnungImport",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

@@ -1,0 +1,63 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "lieferantennummer"
+                },
+                {
+                    "name": "aktiv"
+                }
+            ],
+            [
+                {
+                    "name": "strasse"
+                },
+                {
+                    "name": "plz"
+                },
+                {
+                    "name": "ort"
+                },
+                {
+                    "name": "land"
+                }
+            ],
+            [
+                {
+                    "name": "ustIdNr"
+                },
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "iban"
+                },
+                {
+                    "name": "bankName"
+                },
+                {
+                    "name": "bic"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Bankverbindung"
+    }
+]

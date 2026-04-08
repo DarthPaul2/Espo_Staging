@@ -12,10 +12,15 @@
         "steuernummer": "Steuernummer",
         "aktiv": "Aktiv",
         "bemerkung": "Bemerkung",
-        "eingangsrechnungen": "Eingangsrechnungen"
+        "eingangsrechnungen": "Eingangsrechnungen",
+        "eingangsrechnungImporte": "Eingangsrechnung Importe",
+        "iban": "IBAN",
+        "bic": "BIC",
+        "bankName": "Bank Name"
     },
     "links": {
-        "eingangsrechnungen": "Eingangsrechnungen"
+        "eingangsrechnungen": "Eingangsrechnungen",
+        "eingangsrechnungImporte": "Eingangsrechnung Importe"
     },
     "labels": {
         "Create CLieferant": "Create Lieferant"

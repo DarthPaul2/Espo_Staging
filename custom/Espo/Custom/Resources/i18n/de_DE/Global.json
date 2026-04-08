@@ -12,7 +12,8 @@
         "CFormular": "Formularberichte",
         "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs",
         "CMelderQuartal": "Melderprüflisten Quartale",
-        "CBuchhaltungAuswertung": "Buchhaltung Auswertungen"
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertungen",
+        "CEingangsrechnungImport": "Import Eingangsrechnungen"
     },
     "Global": {
         "Today": "",
@@ -23,6 +24,7 @@
         "Account": "Kunde",
         "CFormular": "Formularbericht",
         "CMelderQuartal": "Melderprüfliste Quartal",
-        "CBuchhaltungAuswertung": "Buchhaltung Auswertung"
+        "CBuchhaltungAuswertung": "Buchhaltung Auswertung",
+        "CEingangsrechnungImport": "Import Eingangsrechnung"
     }
 }

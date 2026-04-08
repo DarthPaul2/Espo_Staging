@@ -1,0 +1,251 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": true,
+            "pattern": "$noBadCharacters"
+        },
+        "description": {
+            "type": "text"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        },
+        "positionsnummer": {
+            "type": "varchar",
+            "maxLength": 10,
+            "options": [],
+            "isCustom": true
+        },
+        "beschreibung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "menge": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "einheit": {
+            "type": "enum",
+            "options": [
+                "Stk.",
+                "m",
+                "cm",
+                "mm",
+                "kg",
+                "g",
+                "l",
+                "m²",
+                "m³",
+                "Rol.",
+                "Pkg.",
+                "Dos.",
+                "Ktn.",
+                "Satz",
+                "VE",
+                "d",
+                "Paar",
+                "monat",
+                "jahr",
+                "pausch",
+                "tag",
+                "vpe",
+                "lfdm",
+                "std",
+                "einht",
+                "Km"
+            ],
+            "style": {
+                "Stk.": null,
+                "m": null,
+                "cm": null,
+                "mm": null,
+                "kg": null,
+                "g": null,
+                "l": null,
+                "m²": null,
+                "m³": null,
+                "Rol.": null,
+                "Pkg.": null,
+                "Dos.": null,
+                "Ktn.": null,
+                "Satz": null,
+                "VE": null,
+                "d": null,
+                "Paar": null,
+                "monat": null,
+                "jahr": null,
+                "pausch": null,
+                "tag": null,
+                "vpe": null,
+                "lfdm": null,
+                "std": null,
+                "einht": null,
+                "Km": null
+            },
+            "default": "Stk.",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "einzelpreisNetto": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "gesamtNetto": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true,
+            "readOnly": true
+        },
+        "aiConfidence": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "warnhinweis": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "eingangsrechnungImport": {
+            "type": "link"
+        },
+        "rabattProzent": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "rabattBetrag": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "material": {
+            "type": "link"
+        },
+        "materialMatchStatus": {
+            "type": "enum",
+            "options": [
+                "unbekannt",
+                "automatisch_zugeordnet",
+                "manuell_zugeordnet",
+                "mehrdeutig",
+                "nicht_gefunden"
+            ],
+            "style": {
+                "unbekannt": null,
+                "automatisch_zugeordnet": null,
+                "manuell_zugeordnet": null,
+                "mehrdeutig": null,
+                "nicht_gefunden": null
+            },
+            "default": "unbekannt",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "materialMatchScore": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "materialMatchHinweis": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "eingangsrechnungImport": {
+            "type": "belongsTo",
+            "foreign": "eingangsrechnungImportPositions",
+            "entity": "CEingangsrechnungImport",
+            "audited": false,
+            "isCustom": true
+        },
+        "material": {
+            "type": "belongsTo",
+            "foreign": "eingangsrechnungImportPositions",
+            "entity": "CMaterial",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    }
+}

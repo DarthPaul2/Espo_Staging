@@ -1,0 +1,32 @@
+[
+    {
+        "name": "name",
+        "width": 25,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "belegdatum",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "matchedLieferant",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "lieferantenRechnungsnummer",
+        "width": 16
+    },
+    {
+        "name": "betragBrutto",
+        "width": 11,
+        "align": "left"
+    }
+]

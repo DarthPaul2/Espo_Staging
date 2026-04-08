@@ -113,6 +113,24 @@
             "rowsMin": 2,
             "cutHeight": 200,
             "isCustom": true
+        },
+        "iban": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
+        },
+        "bic": {
+            "type": "varchar",
+            "maxLength": 30,
+            "options": [],
+            "isCustom": true
+        },
+        "bankName": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
         }
     },
     "links": {
@@ -138,6 +156,13 @@
             "type": "hasMany",
             "foreign": "lieferant",
             "entity": "CEingangsrechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "eingangsrechnungImporte": {
+            "type": "hasMany",
+            "foreign": "matchedLieferant",
+            "entity": "CEingangsrechnungImport",
             "audited": false,
             "isCustom": true
         }

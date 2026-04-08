@@ -9,7 +9,9 @@
         "kostenart": "Kostenart",
         "beschreibung": "Beschreibung",
         "eingangsrechnung": "Eingangsrechnung",
-        "material": "Material"
+        "material": "Material",
+        "rabattProzent": "Rabatt (%)",
+        "rabattBetrag": "Rabattbetrag"
     },
     "links": {
         "eingangsrechnung": "Eingangsrechnung",

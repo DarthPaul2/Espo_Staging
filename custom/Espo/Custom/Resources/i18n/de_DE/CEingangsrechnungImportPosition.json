@@ -1,0 +1,39 @@
+{
+    "labels": {
+        "Create CEingangsrechnungImportPosition": "Import Eingangsrechnung Position erstellen"
+    },
+    "fields": {
+        "positionsnummer": "Pos. Nr.",
+        "beschreibung": "Beschreibung",
+        "description": "Description",
+        "menge": "Menge",
+        "einheit": "Einheit",
+        "einzelpreisNetto": "Preis (Netto)",
+        "gesamtNetto": "Gesamt (Netto)",
+        "aiConfidence": "KI-Konfidenz",
+        "warnhinweis": "Warnhinweis",
+        "eingangsrechnungImport": "Eingangsrechnung Import",
+        "rabattProzent": "Rabatt (%)",
+        "rabattBetrag": "Rabattbetrag",
+        "material": "Material",
+        "materialMatchStatus": "Material-Match Status",
+        "materialMatchScore": "Material-Match Score",
+        "materialMatchHinweis": "Material-Match Hinweis"
+    },
+    "options": {
+        "einheit": {
+            "stk": "stk"
+        },
+        "materialMatchStatus": {
+            "unbekannt": "Unbekannt",
+            "automatisch_zugeordnet": "Automatisch zugeordnet",
+            "manuell_zugeordnet": "Manuell zugeordnet",
+            "mehrdeutig": "Mehrdeutig",
+            "nicht_gefunden": "Nicht gefunden"
+        }
+    },
+    "links": {
+        "eingangsrechnungImport": "Eingangsrechnung Import",
+        "material": "Material"
+    }
+}

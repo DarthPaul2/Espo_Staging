@@ -1,0 +1,346 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": true,
+            "pattern": "$noBadCharacters"
+        },
+        "description": {
+            "type": "text"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        },
+        "status": {
+            "type": "enum",
+            "options": [
+                "neu",
+                "in_verarbeitung",
+                "zur_pruefung",
+                "uebernommen",
+                "fehler"
+            ],
+            "style": {
+                "neu": null,
+                "in_verarbeitung": null,
+                "zur_pruefung": null,
+                "uebernommen": null,
+                "fehler": null
+            },
+            "default": "neu",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "ocrText": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "aiJson": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "warnhinweise": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "fehlertext": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "recognizedLieferantName": {
+            "type": "varchar",
+            "maxLength": 150,
+            "options": [],
+            "isCustom": true
+        },
+        "lieferantenRechnungsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "belegdatum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "eingangsdatum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "faelligAm": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "steuerfall": {
+            "type": "enum",
+            "options": [
+                "ust19",
+                "ust7",
+                "steuerfrei",
+                "unbekannt"
+            ],
+            "style": {
+                "ust19": null,
+                "ust7": null,
+                "steuerfrei": null,
+                "unbekannt": null
+            },
+            "maxLength": 100,
+            "isCustom": true,
+            "default": "unbekannt"
+        },
+        "betragNetto": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "betragBrutto": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "waehrung": {
+            "type": "varchar",
+            "maxLength": 20,
+            "options": [],
+            "isCustom": true,
+            "default": "EUR"
+        },
+        "strasse": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "plz": {
+            "type": "varchar",
+            "maxLength": 20,
+            "options": [],
+            "isCustom": true
+        },
+        "ort": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
+        },
+        "land": {
+            "type": "varchar",
+            "maxLength": 50,
+            "default": "Deutschland",
+            "options": [],
+            "isCustom": true
+        },
+        "ustIdNr": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
+        },
+        "steuernummer": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
+        },
+        "matchedLieferant": {
+            "type": "link"
+        },
+        "uebernommenAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "eingangsrechnung": {
+            "type": "link"
+        },
+        "originalFileName": {
+            "type": "varchar",
+            "maxLength": 255,
+            "options": [],
+            "isCustom": true
+        },
+        "steuerBetrag": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "uebernommenVon": {
+            "type": "link"
+        },
+        "bemerkung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "originalFile": {
+            "type": "file",
+            "sourceList": [],
+            "accept": [],
+            "isCustom": true
+        },
+        "recognizedIban": {
+            "type": "varchar",
+            "maxLength": 50,
+            "options": [],
+            "isCustom": true
+        },
+        "recognizedBic": {
+            "type": "varchar",
+            "maxLength": 30,
+            "options": [],
+            "isCustom": true
+        },
+        "recognizedBankName": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "dokumentTyp": {
+            "type": "enum",
+            "options": [
+                "eingangsrechnung",
+                "angebot",
+                "lieferschein",
+                "unbekannt"
+            ],
+            "style": {
+                "eingangsrechnung": null,
+                "angebot": null,
+                "lieferschein": null,
+                "unbekannt": null
+            },
+            "default": "unbekannt",
+            "maxLength": 100,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "matchedLieferant": {
+            "type": "belongsTo",
+            "foreign": "eingangsrechnungImporte",
+            "entity": "CLieferant",
+            "audited": false,
+            "isCustom": true
+        },
+        "eingangsrechnung": {
+            "type": "belongsTo",
+            "foreign": "importe",
+            "entity": "CEingangsrechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "uebernommenVon": {
+            "type": "belongsTo",
+            "foreign": "cEingangsImporte",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "originalFile": {
+            "type": "belongsTo",
+            "entity": "Attachment",
+            "skipOrmDefs": true,
+            "utility": true
+        },
+        "eingangsrechnungImportPositions": {
+            "type": "hasMany",
+            "foreign": "eingangsrechnungImport",
+            "entity": "CEingangsrechnungImportPosition",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc",
+        "textFilterFields": [
+            "name"
+        ],
+        "fullTextSearch": false,
+        "countDisabled": false
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    },
+    "optimisticConcurrencyControl": false
+}

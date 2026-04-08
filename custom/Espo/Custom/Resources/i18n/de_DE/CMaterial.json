@@ -32,14 +32,16 @@
         "lagerEbene": "LagerEbene",
         "lagerPlatz": "LagerPlatz",
         "lagerplatzCode": "LagerplatzCode",
-        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
+        "eingangsrechnungImportPositions": "Eingangsrechnung Import Positions"
     },
     "links": {
         "positionen": "Positionen",
         "rechnungspositions": "Rechnungspositions",
         "lieferscheinpositions": "Lieferscheinpositions",
         "auftragspositions": "Auftragspositions",
-        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
+        "eingangsrechnungImportPositions": "Eingangsrechnung Import Positions"
     },
     "options": {
         "kategorie": {

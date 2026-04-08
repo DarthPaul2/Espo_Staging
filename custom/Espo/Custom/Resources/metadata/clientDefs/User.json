@@ -95,6 +95,18 @@
         "freigegebeneEingangsrechnungen": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungImporte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "rechnungImporte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "eingangsImporte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

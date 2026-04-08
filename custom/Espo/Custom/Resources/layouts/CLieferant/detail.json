@@ -53,5 +53,27 @@
         ],
         "style": "default",
         "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "iban"
+                },
+                {
+                    "name": "bankName"
+                },
+                {
+                    "name": "bic"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Bankverbindung"
     }
 ]

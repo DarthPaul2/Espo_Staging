@@ -21,7 +21,8 @@
         "buchungsjournal": "Buchungsjournal",
         "festgeschriebenVon": "Festgeschrieben von",
         "freigabeAm": "Freigabe am",
-        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
+        "importe": "Importe"
     },
     "options": {
         "steuerfall": {
@@ -39,6 +40,7 @@
         "lieferant": "Lieferant",
         "buchungsjournal": "Buchungsjournal",
         "festgeschriebenVon": "Festgeschrieben von",
-        "eingangsrechnungspositionen": "Eingangsrechnungspositionen"
+        "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
+        "importe": "Importe"
     }
 }

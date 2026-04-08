@@ -1,6 +1,7 @@
 {
     "recordViews": {
-        "detail": "custom:views/c-eingangsrechnung/record/detail"
+        "detail": "custom:views/c-eingangsrechnung/record/detail",
+        "edit": "custom:views/c-eingangsrechnung/record/edit"
     },
     "controller": "controllers/record",
     "boolFilterList": [
@@ -22,6 +23,10 @@
             "selectPrimaryFilterName": null
         },
         "eingangsrechnungspositionen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "importe": {
             "layout": null,
             "selectPrimaryFilterName": null
         }

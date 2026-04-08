@@ -1,0 +1,84 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "positionsnummer"
+                },
+                false,
+                false
+            ],
+            [
+                {
+                    "name": "name"
+                },
+                false
+            ],
+            [
+                false
+            ],
+            [
+                {
+                    "name": "material"
+                },
+                false
+            ],
+            [
+                {
+                    "name": "materialMatchStatus"
+                },
+                {
+                    "name": "materialMatchScore"
+                },
+                {
+                    "name": "materialMatchHinweis"
+                }
+            ],
+            [
+                false
+            ],
+            [
+                {
+                    "name": "menge"
+                },
+                {
+                    "name": "einheit"
+                },
+                false,
+                {
+                    "name": "einzelpreisNetto"
+                }
+            ],
+            [
+                {
+                    "name": "rabattProzent"
+                },
+                {
+                    "name": "rabattBetrag"
+                },
+                false,
+                {
+                    "name": "gesamtNetto"
+                }
+            ],
+            [
+                {
+                    "name": "beschreibung"
+                },
+                {
+                    "name": "eingangsrechnungImport"
+                }
+            ],
+            [
+                {
+                    "name": "warnhinweis"
+                },
+                {
+                    "name": "aiConfidence"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

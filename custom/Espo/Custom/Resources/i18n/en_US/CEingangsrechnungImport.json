@@ -1,0 +1,68 @@
+{
+    "fields": {
+        "status": "Status",
+        "ocrText": "OCR Text",
+        "aiJson": "KI JSON",
+        "warnhinweise": "Warnhinweise",
+        "fehlertext": "Fehlertext",
+        "recognizedLieferantName": "Erkannter Lieferant",
+        "lieferantenRechnungsnummer": "Lief.-Rechnung-Nr.",
+        "belegdatum": "Belegdatum",
+        "eingangsdatum": "Eingangsdatum",
+        "faelligAm": "Fällig am",
+        "steuerfall": "Steuer Fall",
+        "betragNetto": "Netto",
+        "betragBrutto": "Brutto",
+        "waehrung": "Währung",
+        "strasse": "Straße",
+        "plz": "PLZ",
+        "ort": "Ort",
+        "land": "Land",
+        "ustIdNr": "USt-IdNr",
+        "steuernummer": "Steuernummer",
+        "matchedLieferant": "Lieferant",
+        "uebernommenAm": "Übernommen am",
+        "eingangsrechnung": "Eingangsrechnung",
+        "originalFileName": "Originaldatei",
+        "steuerBetrag": "Steuerbetrag",
+        "uebernommenVon": "Übernommen von",
+        "bemerkung": "Bemerkung",
+        "originalFile": "Originaldatei hochladen",
+        "recognizedIban": "Erkannte IBAN",
+        "recognizedBic": "Erkannte BIC",
+        "recognizedBankName": "Erkannte Bank",
+        "eingangsrechnungImportPositions": "Eingangsrechnung Import Positions",
+        "dokumentTyp": "DokumentTyp"
+    },
+    "links": {
+        "matchedLieferant": "Lieferant",
+        "eingangsrechnung": "Eingangsrechnung",
+        "uebernommenVon": "Übernommen von",
+        "eingangsrechnungImportPositions": "Eingangsrechnung Import Positions"
+    },
+    "labels": {
+        "Create CEingangsrechnungImport": "Erstellen Import Eingangsrechnung"
+    },
+    "options": {
+        "status": {
+            "neu": "Neu",
+            "in_verarbeitung": "In verarbeitung",
+            "zur_pruefung": "Zur prüfung",
+            "uebernommen": "Übernommen",
+            "fehler": "Fehler"
+        },
+        "steuerfall": {
+            "ust19": "19 % Vorsteuer",
+            "ust7": "7 % Vorsteuer",
+            "steuerfrei": "Steuerfrei / ohne Vorsteuer",
+            "": "",
+            "unbekannt": "— bitte prüfen —"
+        },
+        "dokumentTyp": {
+            "eingangsrechnung": "Eingangsrechnung",
+            "angebot": "Angebot",
+            "lieferschein": "Lieferschein",
+            "unbekannt": "Unbekannt"
+        }
+    }
+}

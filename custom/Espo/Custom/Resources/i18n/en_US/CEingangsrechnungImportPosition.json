@@ -1,0 +1,38 @@
+{
+    "fields": {
+        "positionsnummer": "Pos. Nr.",
+        "beschreibung": "Beschreibung",
+        "menge": "Menge",
+        "einheit": "Einheit",
+        "einzelpreisNetto": "Preis (Netto)",
+        "gesamtNetto": "Gesamt (Netto)",
+        "aiConfidence": "KI-Konfidenz",
+        "warnhinweis": "Warnhinweis",
+        "eingangsrechnungImport": "Eingangsrechnung Import",
+        "rabattProzent": "Rabatt (%)",
+        "rabattBetrag": "Rabattbetrag",
+        "material": "Material",
+        "materialMatchStatus": "Material-Match Status",
+        "materialMatchScore": "Material-Match Score",
+        "materialMatchHinweis": "Material-Match Hinweis"
+    },
+    "links": {
+        "eingangsrechnungImport": "Eingangsrechnung Import",
+        "material": "Material"
+    },
+    "labels": {
+        "Create CEingangsrechnungImportPosition": "Create Import Eingangsrechnung Position"
+    },
+    "options": {
+        "einheit": {
+            "stk": "stk"
+        },
+        "materialMatchStatus": {
+            "unbekannt": "Unbekannt",
+            "automatisch_zugeordnet": "Automatisch zugeordnet",
+            "manuell_zugeordnet": "Manuell zugeordnet",
+            "mehrdeutig": "Mehrdeutig",
+            "nicht_gefunden": "Nicht gefunden"
+        }
+    }
+}

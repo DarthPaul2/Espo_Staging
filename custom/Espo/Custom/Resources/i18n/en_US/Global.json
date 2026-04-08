@@ -31,7 +31,9 @@
         "CBuchhaltungAuswertung": "Buchhaltung Auswertung",
         "CLieferant": "Lieferant",
         "CEingangsrechnung": "Eingangsrechnung",
-        "CEingangsrechnungsposition": "Eingangsrechnungsposition"
+        "CEingangsrechnungsposition": "Eingangsrechnungsposition",
+        "CEingangsrechnungImport": "Import Eingangsrechnung",
+        "CEingangsrechnungImportPosition": "Import Eingangsrechnung Position"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -65,7 +67,9 @@
         "CBuchhaltungAuswertung": "Buchhaltung Auswertungen",
         "CLieferant": "Lieferanten",
         "CEingangsrechnung": "Eingangsrechnungen",
-        "CEingangsrechnungsposition": "Eingangsrechnungspositionen"
+        "CEingangsrechnungsposition": "Eingangsrechnungspositionen",
+        "CEingangsrechnungImport": "Import Eingangsrechnungen",
+        "CEingangsrechnungImportPosition": "Import Eingangsrechnung Positionen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

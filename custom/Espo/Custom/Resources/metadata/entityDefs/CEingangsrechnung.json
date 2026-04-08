@@ -206,6 +206,13 @@
             "entity": "CEingangsrechnungsposition",
             "audited": false,
             "isCustom": true
+        },
+        "importe": {
+            "type": "hasMany",
+            "foreign": "eingangsrechnung",
+            "entity": "CEingangsrechnungImport",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

@@ -1,0 +1,30 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "detail": "custom:views/c-eingangsrechnung-import/record/detail"
+    },
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "matchedLieferant": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "eingangsrechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "uebernommenVon": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "eingangsrechnungImportPositions": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    },
+    "kanbanViewMode": false,
+    "color": "#d90b0b",
+    "iconClass": "fas fa-arrow-right-to-bracket"
+}

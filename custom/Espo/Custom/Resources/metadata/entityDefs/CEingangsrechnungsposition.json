@@ -71,10 +71,32 @@
         "einheit": {
             "type": "enum",
             "options": [
-                "stk",
+                "Stk.",
                 "m",
+                "cm",
+                "mm",
                 "kg",
-                "std"
+                "g",
+                "l",
+                "m²",
+                "m³",
+                "Rol.",
+                "Pkg.",
+                "Dos.",
+                "Ktn.",
+                "Satz",
+                "VE",
+                "d",
+                "Paar",
+                "monat",
+                "jahr",
+                "pausch",
+                "tag",
+                "vpe",
+                "lfdm",
+                "std",
+                "einht",
+                "Km"
             ],
             "style": {
                 "stk": null,
@@ -130,6 +152,16 @@
         },
         "material": {
             "type": "link"
+        },
+        "rabattProzent": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
+        },
+        "rabattBetrag": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
         }
     },
     "links": {

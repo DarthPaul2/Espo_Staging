@@ -1,0 +1,20 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "edit": "custom:views/c-eingangsrechnung-import-position/record/edit",
+        "editSmall": "custom:views/c-eingangsrechnung-import-position/record/edit-small"
+    },
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "relationshipPanels": {
+        "eingangsrechnungImport": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "material": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}
