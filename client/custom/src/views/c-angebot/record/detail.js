@@ -180,6 +180,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                     menge: p.menge,
                     einheit: p.einheit,
                     preis: p.preis,
+                    rabatt: p.rabatt || 0,
                     gesamt: p.gesamt,
                     beschreibung,
 
@@ -216,7 +217,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             const params = {
                 limit: 200,
                 offset: 0,
-                select: ['id', 'name', 'beschreibung', 'menge', 'einheit', 'preis', 'gesamt', 'materialName', 'materialDescription', 'angebotId', 'positionType', 'titel', 'positionsNummer'],
+                select: ['id', 'name', 'beschreibung', 'menge', 'einheit', 'preis', 'rabatt', 'gesamt', 'materialName', 'materialDescription', 'angebotId', 'positionType', 'titel', 'positionsNummer'],
                 where: [{ type: 'equals', attribute: 'angebotId', value: angebotId }],
                 orderBy: 'sortierung',
                 order: 'asc'

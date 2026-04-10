@@ -33,7 +33,8 @@
         "CEingangsrechnung": "Eingangsrechnung",
         "CEingangsrechnungsposition": "Eingangsrechnungsposition",
         "CEingangsrechnungImport": "Import Eingangsrechnung",
-        "CEingangsrechnungImportPosition": "Import Eingangsrechnung Position"
+        "CEingangsrechnungImportPosition": "Import Eingangsrechnung Position",
+        "CZahlung": "Zahlung"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -69,7 +70,8 @@
         "CEingangsrechnung": "Eingangsrechnungen",
         "CEingangsrechnungsposition": "Eingangsrechnungspositionen",
         "CEingangsrechnungImport": "Import Eingangsrechnungen",
-        "CEingangsrechnungImportPosition": "Import Eingangsrechnung Positionen"
+        "CEingangsrechnungImportPosition": "Import Eingangsrechnung Positionen",
+        "CZahlung": "Zahlungen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

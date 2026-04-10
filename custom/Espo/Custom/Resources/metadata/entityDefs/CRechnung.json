@@ -186,17 +186,19 @@
             "type": "enum",
             "options": [
                 "offen",
-                "versendet",
+                "teilweise_bezahlt",
                 "bezahlt",
-                "storniert"
+                "storniert",
+                "versendet"
             ],
             "default": "offen",
             "displayAsLabel": true,
             "style": {
                 "offen": "primary",
-                "versendet": null,
+                "teilweise_bezahlt": "info",
                 "bezahlt": "success",
-                "storniert": "danger"
+                "storniert": "danger",
+                "versendet": null
             },
             "maxLength": 100,
             "isCustom": true

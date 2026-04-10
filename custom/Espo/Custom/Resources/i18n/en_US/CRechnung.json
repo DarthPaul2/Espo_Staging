@@ -65,7 +65,8 @@
             "offen": "offen",
             "versendet": "versendet",
             "bezahlt": "bezahlt",
-            "storniert": "storniert"
+            "storniert": "storniert",
+            "teilweise_bezahlt": "Teilweise bezahlt"
         },
         "bemerkungVorlage": {
             "- auswählen -": "- auswählen -",
