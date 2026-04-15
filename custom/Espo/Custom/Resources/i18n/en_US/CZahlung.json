@@ -1,9 +1,55 @@
 {
     "fields": {
-    },
-    "links": {
+        "zahlungsnummer": "Zahlung-Nr.",
+        "zahlungsRichtung": "Zahlungsrichtung",
+        "zahlungsdatum": "Zahldatum",
+        "betrag": "Betrag",
+        "zahlungsart": "Zahlungsart",
+        "referenz": "Verwendungszweck",
+        "bemerkung": "Bemerkung",
+        "status": "Status",
+        "festgeschriebenAm": "Festgeschrieben am",
+        "freigabeAm": "Freigabe am",
+        "testmodus": "Testmodus",
+        "bankbezugTyp": "Bankbezug-Typ",
+        "festgeschriebenVon": "Festgeschrieben von",
+        "ausgleiche": "Ausgleiche",
+        "kontoauszugReferenz": "Kontoauszug-Referenz",
+        "istFestgeschrieben": "Festgeschrieben",
+        "buchungsjournal": "Buchungsjournal",
+        "account": "Kunde",
+        "lieferant": "Lieferant"
     },
     "labels": {
         "Create CZahlung": "Create Zahlung"
+    },
+    "options": {
+        "zahlungsRichtung": {
+            "eingang": "Zahlungseingang",
+            "ausgang": "Zahlungsausgang"
+        },
+        "zahlungsart": {
+            "bank": "Bank",
+            "bar": "Bar",
+            "sonstige": "Sonstige"
+        },
+        "status": {
+            "entwurf": "Entwurf",
+            "freigabe": "Freigabe",
+            "festgeschrieben": "Festgeschrieben"
+        },
+        "bankbezugTyp": {
+            "bank": "Bank",
+            "kasse": "Kasse",
+            "manuell": "Manuell",
+            "sonstige": "Sonstige"
+        }
+    },
+    "links": {
+        "festgeschriebenVon": "Festgeschrieben von",
+        "ausgleiche": "Ausgleiche",
+        "buchungsjournal": "Buchungsjournal",
+        "account": "Kunde",
+        "lieferant": "Lieferant"
     }
 }

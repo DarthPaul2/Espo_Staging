@@ -19,6 +19,10 @@
         "eingangsrechnungs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "zahlung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

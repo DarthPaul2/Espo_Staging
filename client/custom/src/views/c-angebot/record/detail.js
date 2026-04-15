@@ -89,6 +89,11 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             // имя ответственного пользователя (assignedUser)
             const assignedUserName = this.model.get('assignedUserName') || '';
 
+            L('buildPayload flags', {
+                gesetzOption13b: this.model.get('gesetzOption13b'),
+                gesetzOption12: this.model.get('gesetzOption12')
+            });
+
             return {
                 id: this.model.id,
                 titel: 'ANGEBOT',
@@ -98,6 +103,8 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 betrag_netto: netto,
                 betrag_brutto: brutto,
                 steuer: steuer,
+                gesetzOption13b: !!this.model.get('gesetzOption13b'),
+                gesetzOption12: !!this.model.get('gesetzOption12'),
 
                 kunde: this.model.get('accountName'),
                 strasse: this.model.get('accountBillingAddressStreet'),
@@ -234,10 +241,8 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
         setup: function () {
             Dep.prototype.setup.call(this);
 
-            // --- PDF-Modus persistent merken (über Page-Reload) ---
-            const storageKey = 'cangebot_pdf_mode'; // общий для пользователя/браузера
-            const savedMode = localStorage.getItem(storageKey) || 'v2';
-            this.USE_PDF_V2 = (savedMode !== 'v1');
+            // что это: фиксируем обычный режим страницы на V2
+            this.USE_PDF_V2 = true;
 
 
             this.once('after:render', () => this._applyPdfLinkLabel(), this);
@@ -406,11 +411,10 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 // Wird nur als Fallback verwendet, falls V2 fehlschlägt.
                 const urlV1 = this.FLASK_BASE + '/angebote/preview_pdf';
 
-                L('pdfPreview: POST', { url: this.USE_PDF_V2 ? urlV2 : urlV1 });
-
+                L('pdfPreview: POST', { url: urlV2 });
 
                 $.ajax({
-                    url: this.USE_PDF_V2 ? urlV2 : urlV1,
+                    url: urlV2,
                     method: 'POST',
                     contentType: 'application/json',
                     xhrFields: { responseType: 'blob' },
@@ -505,7 +509,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                     // (Preise je Position sichtbar).
                     // Implementiert in routes_angebote_rechnung.py.
                     const urlV1 = `${this.FLASK_BASE}/angebote/${angebotKey}/save_pdf`;
-                    const url = this.USE_PDF_V2 ? urlV2 : urlV1;
+                    const url = urlV2;
 
                     L('pdfSave: POST', { url });
 
@@ -516,7 +520,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                         headers: { 'Authorization': this.BASIC_AUTH },
                         data: JSON.stringify(payload),
                         success: (resp) => {
-                            localStorage.setItem('cangebot_pdf_mode', 'v2');
+
                             this.USE_PDF_V2 = true;
                             setTimeout(() => this._applyPdfLinkLabel(), 0);
 
@@ -644,8 +648,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                         headers: { 'Authorization': this.BASIC_AUTH },
                         data: JSON.stringify(payload),
                         success: (resp) => {
-                            localStorage.setItem('cangebot_pdf_mode', 'v1');
-                            this.USE_PDF_V2 = false;
+
                             setTimeout(() => this._applyPdfLinkLabel(), 0);
 
                             L('pdfSaveWithPrice: success', resp);

@@ -14,7 +14,11 @@
         "creditKontoSteuer": "Steuerkonto",
         "debitKontoAufwand": "Aufwand-Konto",
         "debitKontoVorsteuer": "Vorsteuer-Konto",
-        "creditKontoVerbindlichkeit": "Verbindlichkeits-Konto"
+        "creditKontoVerbindlichkeit": "Verbindlichkeits-Konto",
+        "bankKontoRegeln": "Bankkonto-Regeln",
+        "kasseKontoRegeln": "Kassekonto-Regeln",
+        "forderungKontoRegeln": "Forderungskonto-Regeln",
+        "verbindlichkeitZahlungKontoRegeln": "Verbindlichkeitskonto-Zahlung-Regeln"
     },
     "links": {
         "debitKonto": "Debitkonto",
@@ -22,6 +26,10 @@
         "creditKontoSteuer": "Steuerkonto",
         "debitKontoAufwand": "Aufwand-Konto",
         "debitKontoVorsteuer": "Vorsteuer-Konto",
-        "creditKontoVerbindlichkeit": "Verbindlichkeits-Konto"
+        "creditKontoVerbindlichkeit": "Verbindlichkeits-Konto",
+        "bankKontoRegeln": "Bankkonto-Regeln",
+        "kasseKontoRegeln": "Kassekonto-Regeln",
+        "forderungKontoRegeln": "Forderungskonto-Regeln",
+        "verbindlichkeitZahlungKontoRegeln": "Verbindlichkeitskonto-Zahlung-Regeln"
     }
 }

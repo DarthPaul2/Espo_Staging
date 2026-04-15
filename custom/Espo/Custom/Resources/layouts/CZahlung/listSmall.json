@@ -1,0 +1,33 @@
+[
+    {
+        "name": "zahlungsnummer",
+        "width": 21,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "zahlungsdatum",
+        "width": 11,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 18,
+        "align": "left"
+    },
+    {
+        "name": "betrag",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "zahlungsRichtung",
+        "width": 20
+    },
+    {
+        "name": "zahlungsart",
+        "width": 12,
+        "align": "left"
+    }
+]

@@ -1,0 +1,66 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "rechnung"
+                },
+                {
+                    "name": "eingangsrechnung"
+                }
+            ],
+            [
+                {
+                    "name": "ausgleichsdatum"
+                },
+                {
+                    "name": "betrag"
+                }
+            ],
+            [
+                {
+                    "name": "richtung"
+                },
+                {
+                    "name": "ausgleichTyp"
+                }
+            ],
+            [
+                {
+                    "name": "ausgleichStatus"
+                },
+                {
+                    "name": "restbetragNachAusgleich"
+                }
+            ],
+            [
+                {
+                    "name": "istAktiv"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "zahlung"
+                }
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                },
+                {
+                    "name": "testmodus"
+                }
+            ]
+        ],
+        "style": "default",
+        "noteStyle": "info",
+        "label": ""
+    }
+]

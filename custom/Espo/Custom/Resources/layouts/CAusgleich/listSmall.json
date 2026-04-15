@@ -1,0 +1,43 @@
+[
+    {
+        "name": "ausgleichsdatum",
+        "width": 13,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "ausgleichStatus",
+        "width": 9,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "richtung",
+        "width": 20
+    },
+    {
+        "name": "ausgleichTyp",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "betrag",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "restbetragNachAusgleich",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "rechnung",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "eingangsrechnung",
+        "width": 14,
+        "align": "left"
+    }
+]

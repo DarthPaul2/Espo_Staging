@@ -140,6 +140,13 @@
             "entity": "CObjekt",
             "audited": false,
             "isCustom": true
+        },
+        "cZahlung": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CZahlung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

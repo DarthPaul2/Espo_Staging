@@ -57,11 +57,13 @@
             "type": "enum",
             "options": [
                 "CRechnung",
-                "CEingangsrechnung"
+                "CEingangsrechnung",
+                "CZahlung"
             ],
             "style": {
                 "CRechnung": null,
-                "CEingangsrechnung": null
+                "CEingangsrechnung": null,
+                "CZahlung": null
             },
             "default": "CRechnung",
             "maxLength": 100,
@@ -154,6 +156,13 @@
             "type": "hasMany",
             "foreign": "buchungsjournal",
             "entity": "CEingangsrechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "zahlung": {
+            "type": "hasMany",
+            "foreign": "buchungsjournal",
+            "entity": "CZahlung",
             "audited": false,
             "isCustom": true
         }

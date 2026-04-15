@@ -16,16 +16,23 @@
         "buchungen": "Buchungen",
         "aufwandKontoRegeln": "Aufwandskonto",
         "vorsteuerKontoRegeln": "Vorsteuerkonto",
-        "verbindlichkeitKontoRegeln": "Verbindlichkeitskonto"
+        "verbindlichkeitKontoRegeln": "Verbindlichkeitskonto",
+        "bankKontoRegeln": "Bankkonto",
+        "kasseKontoRegeln": "Kassekonto",
+        "forderungKontoRegeln": "Forderungskonto Zahlung",
+        "verbindlichkeitZahlungKontoRegeln": "Verbindlichkeitskonto Zahlung"
     },
     "options": {
         "quelleTyp": {
             "CRechnung": "Ausgangsrechnung",
-            "CEingangsrechnung": "Eingangsrechnung"
+            "CEingangsrechnung": "Eingangsrechnung",
+            "CZahlung": "Zahlung"
         },
         "dokumentTyp": {
             "einzelrechnung": "Einzelrechnung",
-            "eingangsrechnung": "Eingangsrechnung"
+            "eingangsrechnung": "Eingangsrechnung",
+            "zahlungseingang": "Zahlungseingang",
+            "zahlungsausgang": "Zahlungsausgang"
         },
         "steuerFall": {
             "normal": "Normale Umsatzsteuer",
@@ -41,6 +48,10 @@
         "buchungen": "Buchungen",
         "aufwandKontoRegeln": "Aufwand-Konto-Regeln",
         "vorsteuerKontoRegeln": "Vorsteuer-Konto-Regeln",
-        "verbindlichkeitKontoRegeln": "Verbindlichkeits-Konto-Regeln"
+        "verbindlichkeitKontoRegeln": "Verbindlichkeits-Konto-Regeln",
+        "bankKontoRegeln": "Bankkonto",
+        "kasseKontoRegeln": "Kassekonto",
+        "forderungKontoRegeln": "Forderungskonto Zahlung",
+        "verbindlichkeitZahlungKontoRegeln": "Verbindlichkeitskonto Zahlung"
     }
 }

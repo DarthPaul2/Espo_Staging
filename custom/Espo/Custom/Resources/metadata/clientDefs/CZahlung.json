@@ -1,8 +1,33 @@
 {
     "controller": "controllers/record",
+    "recordViews": {
+        "detail": "custom:views/c-zahlung/record/detail"
+    },
     "boolFilterList": [
         "onlyMy"
     ],
     "color": "#005f62",
-    "iconClass": "fas fa-euro-sign"
+    "iconClass": "fas fa-euro-sign",
+    "relationshipPanels": {
+        "festgeschriebenVon": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "ausgleiche": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "buchungsjournal": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "account": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "lieferant": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
 }

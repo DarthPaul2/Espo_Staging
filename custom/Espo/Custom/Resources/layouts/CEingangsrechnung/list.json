@@ -46,6 +46,16 @@
         "align": "left"
     },
     {
+        "name": "zahlungsstatus",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "restbetragOffen",
+        "width": 14,
+        "align": "left"
+    },
+    {
         "name": "aktiv",
         "width": 6,
         "align": "left"

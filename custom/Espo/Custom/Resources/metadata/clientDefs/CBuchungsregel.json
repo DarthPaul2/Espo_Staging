@@ -31,6 +31,22 @@
         "verbindlichkeitKontoRegeln": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "bankKontoRegeln": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "kasseKontoRegeln": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "forderungKontoRegeln": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "verbindlichkeitZahlungKontoRegeln": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

@@ -1,0 +1,39 @@
+{
+    "fields": {
+        "ausgleichsdatum": "Ausgl.-Datum",
+        "betrag": "Ausgl.-Betrag",
+        "richtung": "Ausgl.-Richtung",
+        "restbetragNachAusgleich": "Restbetrag nach Ausgleich",
+        "bemerkung": "Bemerkung",
+        "testmodus": "Testmodus",
+        "ausgleichTyp": "Ausgleich-Typ",
+        "ausgleichStatus": "Status",
+        "zahlung": "Zahlung",
+        "rechnung": "Rechnung",
+        "eingangsrechnung": "Eingangsrechnung",
+        "istAktiv": "Aktiv",
+        "ausgleichsnummer": "Ausgleich-Nr."
+    },
+    "links": {
+        "zahlung": "Zahlung",
+        "rechnung": "Rechnung",
+        "eingangsrechnung": "Eingangsrechnung"
+    },
+    "labels": {
+        "Create CAusgleich": "Create Ausgleich"
+    },
+    "options": {
+        "richtung": {
+            "forderungsausgleich": "Forderungsausgleich",
+            "verbindlichkeitsausgleich": "Verbindlichkeitsausgleich"
+        },
+        "ausgleichTyp": {
+            "voll": "Vollausgleich",
+            "teil": "Teilausgleich"
+        },
+        "ausgleichStatus": {
+            "aktiv": "Aktiv",
+            "storniert": "Storniert"
+        }
+    }
+}

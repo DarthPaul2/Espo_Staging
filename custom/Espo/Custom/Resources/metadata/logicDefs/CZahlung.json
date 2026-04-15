@@ -1,0 +1,30 @@
+{
+    "fields": {
+        "account": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "lieferantId",
+                        "data": {
+                            "field": "lieferant"
+                        }
+                    }
+                ]
+            }
+        },
+        "lieferant": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "accountId",
+                        "data": {
+                            "field": "account"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -118,6 +118,13 @@
             "entity": "CEingangsrechnungImport",
             "audited": false,
             "isCustom": true
+        },
+        "cZahlungs": {
+            "type": "hasMany",
+            "foreign": "festgeschriebenVon",
+            "entity": "CZahlung",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

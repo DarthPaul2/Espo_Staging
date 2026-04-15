@@ -16,12 +16,14 @@
         "buchungen": "Buchungen",
         "rechnung": "Rechnung",
         "buchhaltungAuswertungen": "Buchhaltungsauswertungen",
-        "eingangsrechnungs": "Eingangsrechnungen"
+        "eingangsrechnungs": "Eingangsrechnungen",
+        "zahlung": "Zahlung"
     },
     "options": {
         "quelleTyp": {
             "CRechnung": "Ausgangsrechnung",
-            "CEingangsrechnung": "Eingangsrechnung"
+            "CEingangsrechnung": "Eingangsrechnung",
+            "CZahlung": "Zahlung"
         },
         "buchhaltungStatus": {
             "entwurf": "Entwurf",
@@ -32,6 +34,7 @@
         "buchungen": "Buchungen",
         "rechnung": "Rechnung",
         "buchhaltungAuswertungen": "Buchhaltungsauswertungen",
-        "eingangsrechnungs": "Eingangsrechnungen"
+        "eingangsrechnungs": "Eingangsrechnungen",
+        "zahlung": "Zahlung"
     }
 }

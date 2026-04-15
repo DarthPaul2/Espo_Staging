@@ -59,6 +59,14 @@
         "objekts": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "zahlung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "cZahlung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

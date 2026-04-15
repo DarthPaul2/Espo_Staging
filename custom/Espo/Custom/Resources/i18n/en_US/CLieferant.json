@@ -16,11 +16,13 @@
         "eingangsrechnungImporte": "Eingangsrechnung Importe",
         "iban": "IBAN",
         "bic": "BIC",
-        "bankName": "Bank Name"
+        "bankName": "Bank Name",
+        "zahlung": "Zahlung"
     },
     "links": {
         "eingangsrechnungen": "Eingangsrechnungen",
-        "eingangsrechnungImporte": "Eingangsrechnung Importe"
+        "eingangsrechnungImporte": "Eingangsrechnung Importe",
+        "zahlung": "Zahlung"
     },
     "labels": {
         "Create CLieferant": "Create Lieferant"

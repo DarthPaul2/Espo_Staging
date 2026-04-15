@@ -613,6 +613,21 @@ class CEingangsrechnung extends Base
             $eingangsrechnung->set('steuerBetrag', $steuerBetrag);
             $eingangsrechnung->set('betragBrutto', $betragBrutto);
 
+            // Что это:
+            // стартовый offener Restbetrag после первой Festschreibung Eingangsrechnung.
+            //
+            // Зачем:
+            // в момент Festschreibung документ уже бухгалтерски зафиксирован,
+            // но ещё не оплачен, значит весь Bruttobetrag пока остаётся offen.
+            $eingangsrechnung->set('restbetragOffen', $betragBrutto);
+
+            // Что это:
+            // стартовый operativer Zahlungsstatus Eingangsrechnung.
+            //
+            // Зачем:
+            // после Festschreibung и до первой оплаты Eingangsrechnung должна считаться offen.
+            $eingangsrechnung->set('zahlungsstatus', 'offen');
+
             $eingangsrechnung->set('status', 'festgeschrieben');
             $eingangsrechnung->set('festgeschriebenAm', date('Y-m-d H:i:s'));
 

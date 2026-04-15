@@ -48,11 +48,6 @@
                 },
                 {
                     "name": "leistungsdatumBis"
-                }
-            ],
-            [
-                {
-                    "name": "status"
                 },
                 {
                     "name": "pdfUrl"
@@ -115,6 +110,14 @@
                 false,
                 {
                     "name": "mahnregel"
+                }
+            ],
+            [
+                {
+                    "name": "status"
+                },
+                {
+                    "name": "restbetragOffen"
                 }
             ]
         ],

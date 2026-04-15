@@ -5,7 +5,7 @@
     "buchungen": {
         "index": 0
     },
-    "eingangsrechnungs": {
+    "zahlung": {
         "index": 1
     }
 }

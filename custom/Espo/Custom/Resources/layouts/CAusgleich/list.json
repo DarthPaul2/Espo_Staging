@@ -1,0 +1,42 @@
+[
+    {
+        "name": "ausgleichsdatum",
+        "width": 16
+    },
+    {
+        "name": "ausgleichStatus",
+        "width": 16
+    },
+    {
+        "name": "richtung",
+        "width": 16
+    },
+    {
+        "name": "ausgleichTyp",
+        "width": 16
+    },
+    {
+        "name": "betrag",
+        "width": 16
+    },
+    {
+        "name": "restbetragNachAusgleich",
+        "width": 16
+    },
+    {
+        "name": "zahlung",
+        "width": 16
+    },
+    {
+        "name": "rechnung",
+        "width": 16
+    },
+    {
+        "name": "eingangsrechnung",
+        "width": 16
+    },
+    {
+        "name": "testmodus",
+        "width": 16
+    }
+]

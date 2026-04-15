@@ -52,11 +52,23 @@
                 {
                     "name": "betragBrutto"
                 }
+            ],
+            [
+                {
+                    "name": "zahlungsstatus"
+                },
+                {
+                    "name": "restbetragOffen"
+                }
             ]
         ],
+        "dynamicLogicVisible": null,
         "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
         "noteStyle": "info",
-        "label": ""
+        "customLabel": "Zahlungsinformationen"
     },
     {
         "rows": [

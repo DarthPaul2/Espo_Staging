@@ -82,11 +82,13 @@
             "type": "enum",
             "options": [
                 "CRechnung",
-                "CEingangsrechnung"
+                "CEingangsrechnung",
+                "CZahlung"
             ],
             "style": {
                 "CRechnung": null,
-                "CEingangsrechnung": null
+                "CEingangsrechnung": null,
+                "CZahlung": null
             },
             "default": "CRechnung",
             "maxLength": 100,

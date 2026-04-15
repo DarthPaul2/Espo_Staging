@@ -3,28 +3,44 @@
 namespace Espo\Custom\Hooks\CEingangsrechnung;
 
 use Espo\ORM\Entity;
+use Espo\ORM\EntityManager;
 use Espo\Core\Exceptions\Forbidden;
 
-// Что это: запрещает обычное редактирование festgeschriebene Eingangsrechnung.
+// Что это:
+// запрещает обычное редактирование festgeschriebene Eingangsrechnung.
+//
+// Зачем:
+// после Festschreibung документ нельзя менять вручную,
+// но служебные system-save должны оставаться возможны.
 class PreventEditIfFestgeschrieben
 {
+    public function __construct(
+        private EntityManager $entityManager
+    ) {}
+
     public function beforeSave(Entity $entity, array $options = []): void
     {
-        // Новую запись создавать можно.
-        if ($entity->isNew()) {
-            return;
-        }
-
-        $status = strtolower((string) ($entity->get('status') ?? ''));
-
-        // Если документ не festgeschrieben, редактирование разрешено.
-        if ($status !== 'festgeschrieben') {
-            return;
-        }
-
-        // Разрешаем только системные изменения через специальные actions,
-        // если они явно передадут этот флаг.
+        // Что это:
+        // разрешение для внутренних служебных сохранений.
         if (!empty($options['allowFestgeschriebenSave'])) {
+            return;
+        }
+
+        // Новую запись создавать можно.
+        if (!$entity->getId()) {
+            return;
+        }
+
+        // Что это:
+        // состояние документа в базе ДО текущего сохранения.
+        $stored = $this->entityManager->getEntity('CEingangsrechnung', $entity->getId());
+        if (!$stored) {
+            return;
+        }
+
+        $storedStatus = strtolower((string) ($stored->get('status') ?? ''));
+
+        if ($storedStatus !== 'festgeschrieben') {
             return;
         }
 

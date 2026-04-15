@@ -2,7 +2,8 @@
     "hooks": {
         "beforeSave": [
             "AutoNumber",
-            "PreventEditIfFestgeschrieben"
+            "PreventEditIfFestgeschrieben",
+            "SetEingangsdatumIfEmpty"
         ],
         "beforeRemove": [
             "PreventDeleteIfFestgeschrieben"
@@ -158,6 +159,29 @@
             "type": "datetime",
             "minuteStep": 30,
             "isCustom": true
+        },
+        "zahlungsstatus": {
+            "type": "enum",
+            "options": [
+                "offen",
+                "teilweise_bezahlt",
+                "bezahlt",
+                "storniert"
+            ],
+            "style": {
+                "offen": null,
+                "teilweise_bezahlt": null,
+                "bezahlt": null,
+                "storniert": null
+            },
+            "default": "offen",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "restbetragOffen": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
         }
     },
     "links": {
@@ -211,6 +235,13 @@
             "type": "hasMany",
             "foreign": "eingangsrechnung",
             "entity": "CEingangsrechnungImport",
+            "audited": false,
+            "isCustom": true
+        },
+        "ausgleiche": {
+            "type": "hasMany",
+            "foreign": "eingangsrechnung",
+            "entity": "CAusgleich",
             "audited": false,
             "isCustom": true
         }

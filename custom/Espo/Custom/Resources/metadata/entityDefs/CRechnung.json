@@ -357,6 +357,11 @@
             "notNull": true,
             "type": "bool",
             "isCustom": true
+        },
+        "restbetragOffen": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true
         }
     },
     "links": {
@@ -466,6 +471,13 @@
             "type": "hasMany",
             "foreign": "rechnung",
             "entity": "CBuchungsjournal",
+            "audited": false,
+            "isCustom": true
+        },
+        "ausgleiche": {
+            "type": "hasMany",
+            "foreign": "rechnung",
+            "entity": "CAusgleich",
             "audited": false,
             "isCustom": true
         }

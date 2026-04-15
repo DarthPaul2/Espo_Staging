@@ -21,11 +21,9 @@
                 {
                     "name": "belegdatum"
                 },
+                false,
                 {
                     "name": "quelleTyp"
-                },
-                {
-                    "name": "quelleIdExtern"
                 },
                 {
                     "name": "quelleNummer"

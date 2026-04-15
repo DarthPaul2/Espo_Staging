@@ -46,11 +46,13 @@
             "type": "enum",
             "options": [
                 "CRechnung",
-                "CEingangsrechnung"
+                "CEingangsrechnung",
+                "CZahlung"
             ],
             "style": {
                 "CRechnung": null,
-                "CEingangsrechnung": null
+                "CEingangsrechnung": null,
+                "CZahlung": null
             },
             "default": "CRechnung",
             "maxLength": 100,
@@ -60,11 +62,15 @@
             "type": "enum",
             "options": [
                 "einzelrechnung",
-                "eingangsrechnung"
+                "eingangsrechnung",
+                "zahlungseingang",
+                "zahlungsausgang"
             ],
             "style": {
                 "einzelrechnung": null,
-                "eingangsrechnung": null
+                "eingangsrechnung": null,
+                "zahlungseingang": null,
+                "zahlungsausgang": null
             },
             "default": "einzelrechnung",
             "maxLength": 100,
@@ -116,6 +122,18 @@
             "type": "link"
         },
         "verbindlichkeitKontoRegeln": {
+            "type": "link"
+        },
+        "bankKontoRegeln": {
+            "type": "link"
+        },
+        "kasseKontoRegeln": {
+            "type": "link"
+        },
+        "forderungKontoRegeln": {
+            "type": "link"
+        },
+        "verbindlichkeitZahlungKontoRegeln": {
             "type": "link"
         }
     },
@@ -183,6 +201,34 @@
         "verbindlichkeitKontoRegeln": {
             "type": "belongsTo",
             "foreign": "creditKontoVerbindlichkeit",
+            "entity": "CKonto",
+            "audited": false,
+            "isCustom": true
+        },
+        "bankKontoRegeln": {
+            "type": "belongsTo",
+            "foreign": "bankKontoRegeln",
+            "entity": "CKonto",
+            "audited": false,
+            "isCustom": true
+        },
+        "kasseKontoRegeln": {
+            "type": "belongsTo",
+            "foreign": "kasseKontoRegeln",
+            "entity": "CKonto",
+            "audited": false,
+            "isCustom": true
+        },
+        "forderungKontoRegeln": {
+            "type": "belongsTo",
+            "foreign": "forderungKontoRegeln",
+            "entity": "CKonto",
+            "audited": false,
+            "isCustom": true
+        },
+        "verbindlichkeitZahlungKontoRegeln": {
+            "type": "belongsTo",
+            "foreign": "verbindlichkeitZahlungKontoRegeln",
             "entity": "CKonto",
             "audited": false,
             "isCustom": true

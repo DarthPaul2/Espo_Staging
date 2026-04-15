@@ -1,0 +1,26 @@
+{
+    "controller": "controllers/record",
+    "recordViews": {
+        "edit": "custom:views/c-ausgleich/record/edit",
+        "editSmall": "custom:views/c-ausgleich/record/edit-small"
+    },
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#909090",
+    "iconClass": "fas fa-tower-cell",
+    "relationshipPanels": {
+        "zahlung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "rechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "eingangsrechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

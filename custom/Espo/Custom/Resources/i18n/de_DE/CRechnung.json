@@ -44,7 +44,9 @@
         "freigegebeneRechnungen": "Freigegebene Rechnungen",
         "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
         "buchungsjournale": "Buchungsjournale",
-        "istTest": "Nur für TEST !!!"
+        "istTest": "Nur für TEST !!!",
+        "ausgleiche": "Ausgleiche",
+        "restbetragOffen": "Offener Restbetrag"
     },
     "links": {
         "account": "Account",
@@ -59,7 +61,8 @@
         "contact": "Contact",
         "freigegebeneRechnungen": "Freigegebene Rechnungen",
         "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
-        "buchungsjournale": "Buchungsjournale"
+        "buchungsjournale": "Buchungsjournale",
+        "ausgleiche": "Ausgleiche"
     },
     "options": {
         "status": {

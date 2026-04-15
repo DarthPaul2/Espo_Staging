@@ -107,6 +107,14 @@
         "eingangsImporte": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "freigegebeneZahlungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "zahlungs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

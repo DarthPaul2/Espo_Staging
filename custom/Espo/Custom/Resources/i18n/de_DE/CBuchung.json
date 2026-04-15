@@ -26,7 +26,8 @@
         },
         "quelleTyp": {
             "CRechnung": "Ausgangsrechnung",
-            "CEingangsrechnung": "Eingangsrechnung"
+            "CEingangsrechnung": "Eingangsrechnung",
+            "CZahlung": "Zahlung"
         },
         "steuerFall": {
             "normal": "Normale Umsatzsteuer",

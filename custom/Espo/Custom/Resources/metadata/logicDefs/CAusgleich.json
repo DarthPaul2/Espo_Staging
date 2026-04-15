@@ -1,0 +1,30 @@
+{
+    "fields": {
+        "rechnung": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "eingangsrechnungId",
+                        "data": {
+                            "field": "eingangsrechnung"
+                        }
+                    }
+                ]
+            }
+        },
+        "eingangsrechnung": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "rechnungId",
+                        "data": {
+                            "field": "rechnung"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

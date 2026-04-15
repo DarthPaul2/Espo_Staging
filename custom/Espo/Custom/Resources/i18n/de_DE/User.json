@@ -16,7 +16,8 @@
         "cFreigabeDurch": "Freigabe durch",
         "cFestgeschriebenDurch": "Festgeschrieben durch",
         "cEingangsrechnungs": "Eingangsrechnungs",
-        "cEingangsImporte": "Eingangsimporte"
+        "cEingangsImporte": "Eingangsimporte",
+        "cZahlungs": "Zahlungs"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -35,6 +36,7 @@
         "cFreigabeDurch": "Freigabe durch",
         "cFestgeschriebenDurch": "Festgeschrieben durch",
         "cEingangsrechnungs": "Eingangsrechnungs",
-        "cEingangsImporte": "Eingangsimporte"
+        "cEingangsImporte": "Eingangsimporte",
+        "cZahlungs": "Zahlungs"
     }
 }

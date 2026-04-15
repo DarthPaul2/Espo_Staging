@@ -126,6 +126,34 @@
             "entity": "CBuchungsregel",
             "audited": false,
             "isCustom": true
+        },
+        "bankKontoRegeln": {
+            "type": "hasMany",
+            "foreign": "bankKontoRegeln",
+            "entity": "CBuchungsregel",
+            "audited": false,
+            "isCustom": true
+        },
+        "kasseKontoRegeln": {
+            "type": "hasMany",
+            "foreign": "kasseKontoRegeln",
+            "entity": "CBuchungsregel",
+            "audited": false,
+            "isCustom": true
+        },
+        "forderungKontoRegeln": {
+            "type": "hasMany",
+            "foreign": "forderungKontoRegeln",
+            "entity": "CBuchungsregel",
+            "audited": false,
+            "isCustom": true
+        },
+        "verbindlichkeitZahlungKontoRegeln": {
+            "type": "hasMany",
+            "foreign": "verbindlichkeitZahlungKontoRegeln",
+            "entity": "CBuchungsregel",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

@@ -17,7 +17,7 @@
     },
     {
         "name": "steuerFall",
-        "width": 18,
+        "width": 10,
         "align": "left"
     },
     {
@@ -48,6 +48,26 @@
     {
         "name": "verbindlichkeitKontoRegeln",
         "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "bankKontoRegeln",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "kasseKontoRegeln",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "forderungKontoRegeln",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "verbindlichkeitZahlungKontoRegeln",
+        "width": 10,
         "align": "left"
     },
     {

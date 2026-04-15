@@ -1,9 +1,20 @@
 {
+    "hooks": {
+        "beforeSave": [
+            "AutoNumber",
+            "SetZahlungsRichtungByPartner",
+            "PreventEditIfFestgeschrieben"
+        ],
+        "beforeRemove": [
+            "PreventDeleteIfFestgeschrieben"
+        ]
+    },
     "fields": {
         "name": {
             "type": "varchar",
-            "required": true,
-            "pattern": "$noBadCharacters"
+            "required": false,
+            "pattern": "$noBadCharacters",
+            "options": []
         },
         "description": {
             "type": "text"
@@ -34,6 +45,142 @@
         "teams": {
             "type": "linkMultiple",
             "view": "views/fields/teams"
+        },
+        "zahlungsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true,
+            "readOnly": true
+        },
+        "zahlungsRichtung": {
+            "type": "enum",
+            "options": [
+                "eingang",
+                "ausgang"
+            ],
+            "style": {
+                "eingang": null,
+                "ausgang": null
+            },
+            "default": "eingang",
+            "maxLength": 100,
+            "isCustom": true,
+            "readOnly": true
+        },
+        "zahlungsdatum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true,
+            "required": true
+        },
+        "betrag": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true,
+            "required": true
+        },
+        "zahlungsart": {
+            "type": "enum",
+            "options": [
+                "bank",
+                "bar",
+                "sonstige"
+            ],
+            "style": {
+                "bank": null,
+                "bar": null,
+                "sonstige": null
+            },
+            "default": "bank",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "referenz": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "bemerkung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "status": {
+            "type": "enum",
+            "options": [
+                "entwurf",
+                "freigabe",
+                "festgeschrieben"
+            ],
+            "style": {
+                "entwurf": null,
+                "freigabe": null,
+                "festgeschrieben": null
+            },
+            "default": "entwurf",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "festgeschriebenAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "freigabeAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "testmodus": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "bankbezugTyp": {
+            "type": "enum",
+            "options": [
+                "bank",
+                "kasse",
+                "manuell",
+                "sonstige"
+            ],
+            "style": {
+                "bank": null,
+                "kasse": null,
+                "manuell": null,
+                "sonstige": null
+            },
+            "default": "bank",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "festgeschriebenVon": {
+            "type": "link"
+        },
+        "kontoauszugReferenz": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "istFestgeschrieben": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "buchungsjournal": {
+            "type": "link"
+        },
+        "account": {
+            "type": "link"
+        },
+        "lieferant": {
+            "type": "link"
         }
     },
     "links": {
@@ -54,6 +201,41 @@
             "entity": "Team",
             "relationName": "entityTeam",
             "layoutRelationshipsDisabled": true
+        },
+        "festgeschriebenVon": {
+            "type": "belongsTo",
+            "foreign": "cZahlungs",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "ausgleiche": {
+            "type": "hasMany",
+            "foreign": "zahlung",
+            "entity": "CAusgleich",
+            "audited": false,
+            "isCustom": true
+        },
+        "buchungsjournal": {
+            "type": "belongsTo",
+            "foreign": "zahlung",
+            "entity": "CBuchungsjournal",
+            "audited": false,
+            "isCustom": true
+        },
+        "account": {
+            "type": "belongsTo",
+            "foreign": "cZahlung",
+            "entity": "Account",
+            "audited": false,
+            "isCustom": true
+        },
+        "lieferant": {
+            "type": "belongsTo",
+            "foreign": "zahlung",
+            "entity": "CLieferant",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

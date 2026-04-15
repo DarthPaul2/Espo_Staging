@@ -29,6 +29,10 @@
         "importe": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "ausgleiche": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

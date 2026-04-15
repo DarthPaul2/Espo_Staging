@@ -14,7 +14,8 @@
         "cStundenberichts": "Stundenberichts",
         "cMelderQuartals": "Melder Quartals",
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
-        "cObjekts": "Objekts"
+        "cObjekts": "Objekts",
+        "cZahlung": "Zahlung"
     },
     "links": {
         "cFirmenHauptkontakt": "Firmen Hauptkontakt",
@@ -29,7 +30,8 @@
         "cStundenberichts": "Stundenberichts",
         "cMelderQuartals": "Melder Quartals",
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
-        "cObjekts": "Objekts"
+        "cObjekts": "Objekts",
+        "cZahlung": "Zahlung"
     },
     "options": {
         "type": {

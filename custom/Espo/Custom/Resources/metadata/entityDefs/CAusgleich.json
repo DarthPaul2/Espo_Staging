@@ -1,0 +1,212 @@
+{
+    "hooks": {
+        "beforeSave": [
+            "AutoNumber",
+            "PreventEditIfZahlungFestgeschrieben"
+        ],
+        "beforeRemove": [
+            "PreventDeleteIfZahlungFestgeschrieben"
+        ]
+    },
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": false,
+            "pattern": "$noBadCharacters",
+            "options": []
+        },
+        "description": {
+            "type": "text"
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        },
+        "ausgleichsdatum": {
+            "notNull": false,
+            "type": "date",
+            "isCustom": true
+        },
+        "betrag": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true,
+            "required": true
+        },
+        "richtung": {
+            "type": "enum",
+            "options": [
+                "forderungsausgleich",
+                "verbindlichkeitsausgleich"
+            ],
+            "style": {
+                "forderungsausgleich": null,
+                "verbindlichkeitsausgleich": null
+            },
+            "default": "forderungsausgleich",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "restbetragNachAusgleich": {
+            "notNull": false,
+            "type": "float",
+            "isCustom": true,
+            "readOnly": true
+        },
+        "bemerkung": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "testmodus": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "ausgleichTyp": {
+            "type": "enum",
+            "options": [
+                "voll",
+                "teil"
+            ],
+            "style": {
+                "voll": null,
+                "teil": null
+            },
+            "default": "voll",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "ausgleichStatus": {
+            "type": "enum",
+            "options": [
+                "aktiv",
+                "storniert"
+            ],
+            "style": {
+                "aktiv": null,
+                "storniert": null
+            },
+            "default": "aktiv",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "zahlung": {
+            "type": "link"
+        },
+        "rechnung": {
+            "type": "link"
+        },
+        "eingangsrechnung": {
+            "type": "link"
+        },
+        "istAktiv": {
+            "notNull": true,
+            "type": "bool",
+            "default": true,
+            "isCustom": true
+        },
+        "ausgleichsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true,
+            "readOnly": true
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "zahlung": {
+            "type": "belongsTo",
+            "foreign": "ausgleiche",
+            "entity": "CZahlung",
+            "audited": false,
+            "isCustom": true
+        },
+        "rechnung": {
+            "type": "belongsTo",
+            "foreign": "ausgleiche",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "eingangsrechnung": {
+            "type": "belongsTo",
+            "foreign": "ausgleiche",
+            "entity": "CEingangsrechnung",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    }
+}

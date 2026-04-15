@@ -1,0 +1,92 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "lieferant"
+                }
+            ],
+            [
+                {
+                    "name": "zahlungsnummer"
+                },
+                {
+                    "name": "status"
+                },
+                {
+                    "name": "zahlungsRichtung"
+                }
+            ],
+            [
+                {
+                    "name": "zahlungsdatum"
+                },
+                {
+                    "name": "betrag"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "zahlungsart"
+                },
+                {
+                    "name": "bankbezugTyp"
+                }
+            ],
+            [
+                {
+                    "name": "referenz"
+                },
+                {
+                    "name": "kontoauszugReferenz"
+                }
+            ]
+        ],
+        "style": "default",
+        "noteStyle": "info",
+        "label": ""
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "bemerkung"
+                },
+                {
+                    "name": "testmodus"
+                },
+                {
+                    "name": "istFestgeschrieben"
+                }
+            ],
+            [
+                {
+                    "name": "freigabeAm"
+                },
+                {
+                    "name": "festgeschriebenAm"
+                },
+                {
+                    "name": "festgeschriebenVon"
+                }
+            ],
+            [
+                {
+                    "name": "buchungsjournal"
+                }
+            ]
+        ],
+        "style": "default",
+        "noteStyle": "info",
+        "label": ""
+    }
+]

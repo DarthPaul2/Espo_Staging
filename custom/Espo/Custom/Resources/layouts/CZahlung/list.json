@@ -1,0 +1,59 @@
+[
+    {
+        "name": "zahlungsnummer",
+        "width": 12,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 9,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "zahlungsRichtung",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "betrag",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "zahlungsdatum",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "zahlungsart",
+        "width": 9,
+        "align": "left"
+    },
+    {
+        "name": "bankbezugTyp",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "referenz",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "testmodus",
+        "width": 7,
+        "align": "left"
+    },
+    {
+        "name": "festgeschriebenAm",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "festgeschriebenVon",
+        "width": 12,
+        "align": "left"
+    }
+]

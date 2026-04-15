@@ -52,6 +52,11 @@
         "align": "left"
     },
     {
+        "name": "restbetragOffen",
+        "width": 14,
+        "align": "left"
+    },
+    {
         "name": "objekt",
         "width": 12,
         "align": "left"

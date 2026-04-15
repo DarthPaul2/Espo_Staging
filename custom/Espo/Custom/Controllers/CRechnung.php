@@ -1162,6 +1162,21 @@ public function postActionFestschreiben($params, $data, $request)
         $rechnung->set('betragBrutto', $betragBrutto);
         $rechnung->set('ustBetrag', $ustBetrag);
 
+        // Что это:
+        // стартовый offener Restbetrag после первой Festschreibung Rechnung.
+        //
+        // Зачем:
+        // в момент Festschreibung Rechnung уже бухгалтерски зафиксирован,
+        // но ещё не оплачен, значит весь Bruttobetrag пока остаётся offen.
+        $rechnung->set('restbetragOffen', $betragBrutto);
+
+        // Что это:
+        // стартовый operativer Zahlungsstatus Rechnung.
+        //
+        // Зачем:
+        // после Festschreibung и до первой оплаты Rechnung должна считаться offen.
+        $rechnung->set('status', 'offen');
+
         $rechnung->set('buchhaltungStatus', 'festgeschrieben');
         $rechnung->set('istFestgeschrieben', true);
         $rechnung->set('festgeschriebenAm', date('Y-m-d H:i:s'));

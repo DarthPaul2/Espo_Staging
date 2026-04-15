@@ -1,0 +1,8 @@
+[
+    "status",
+    "zahlungsdatum",
+    "zahlungsRichtung",
+    "zahlungsart",
+    "bankbezugTyp",
+    "testmodus"
+]

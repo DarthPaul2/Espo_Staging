@@ -1,0 +1,40 @@
+{
+    "labels": {
+        "Create CAusgleich": "Ausgleich erstellen"
+    },
+    "fields": {
+        "ausgleichsdatum": "Ausgl.-Datum",
+        "betrag": "Ausgl.-Betrag",
+        "richtung": "Ausgl.-Richtung",
+        "restbetragNachAusgleich": "Restbetrag nach Ausgleich",
+        "description": "Description",
+        "bemerkung": "Bemerkung",
+        "testmodus": "Testmodus",
+        "ausgleichTyp": "Ausgleich-Typ",
+        "ausgleichStatus": "Status",
+        "zahlung": "Zahlung",
+        "rechnung": "Rechnung",
+        "eingangsrechnung": "Eingangsrechnung",
+        "istAktiv": "Aktiv",
+        "ausgleichsnummer": "Ausgleich-Nr."
+    },
+    "options": {
+        "richtung": {
+            "forderungsausgleich": "Forderungsausgleich",
+            "verbindlichkeitsausgleich": "Verbindlichkeitsausgleich"
+        },
+        "ausgleichTyp": {
+            "voll": "Vollausgleich",
+            "teil": "Teilausgleich"
+        },
+        "ausgleichStatus": {
+            "aktiv": "Aktiv",
+            "storniert": "Storniert"
+        }
+    },
+    "links": {
+        "zahlung": "Zahlung",
+        "rechnung": "Rechnung",
+        "eingangsrechnung": "Eingangsrechnung"
+    }
+}

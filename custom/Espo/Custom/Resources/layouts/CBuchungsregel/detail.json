@@ -76,5 +76,30 @@
         "noteText": null,
         "noteStyle": "info",
         "customLabel": "Konten für Eingangsrechnung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "bankKontoRegeln"
+                },
+                {
+                    "name": "kasseKontoRegeln"
+                },
+                {
+                    "name": "forderungKontoRegeln"
+                },
+                {
+                    "name": "verbindlichkeitZahlungKontoRegeln"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Konten für Zahlung"
     }
 ]

@@ -19,14 +19,18 @@
         "festgeschriebenVon": "Festgeschrieben von",
         "freigabeAm": "Freigabe am",
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
-        "importe": "Importe"
+        "importe": "Importe",
+        "ausgleiche": "Ausgleiche",
+        "zahlungsstatus": "Zahlungsstatus",
+        "restbetragOffen": "Offener Restbetrag"
     },
     "links": {
         "lieferant": "Lieferant",
         "buchungsjournal": "Buchungsjournal",
         "festgeschriebenVon": "Festgeschrieben von",
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
-        "importe": "Importe"
+        "importe": "Importe",
+        "ausgleiche": "Ausgleiche"
     },
     "labels": {
         "Create CEingangsrechnung": "Create Eingangsrechnung"
@@ -41,6 +45,12 @@
             "entwurf": "Entwurf",
             "freigabe": "Freigabe",
             "festgeschrieben": "Festgeschrieben"
+        },
+        "zahlungsstatus": {
+            "offen": "Offen",
+            "teilweise_bezahlt": "Teilweise bezahlt",
+            "bezahlt": "Bezahlt",
+            "storniert": "Storniert"
         }
     }
 }
