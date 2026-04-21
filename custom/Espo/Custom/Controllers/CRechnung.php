@@ -3,6 +3,7 @@
 namespace Espo\Custom\Controllers;
 
 use Espo\Core\Templates\Controllers\Base;
+use Espo\ORM\Entity;
 
 class CRechnung extends Base
 {
@@ -296,8 +297,6 @@ class CRechnung extends Base
 
         return $rows;
 
-
-        return $rows;
     } catch (\Throwable $e) {
         $this->getContainer()->get('log')->error("monatlicheStatistik error: " . $e->getMessage());
         return ['success' => false, 'error' => 'SQL error'];
@@ -545,6 +544,322 @@ if (!is_array($ids) || !count($ids)) {
     exit;
 }
 
+    /**
+     * Это helper: проверяет, относится ли тип счета к auftragsgebundene Spezialtypen.
+     * Зачем: чтобы не влезать этой логикой в обычные Einzelrechnungen.
+     */
+    protected function isAuftragsgebundenerRechnungstyp(string $rechnungstyp): bool
+    {
+        $rechnungstyp = strtolower(trim($rechnungstyp));
+
+        return in_array($rechnungstyp, [
+            'teilrechnung',
+            'abschlagsrechnung',
+            'schlussrechnung',
+        ], true);
+    }
+
+    /**
+     * Это helper: безопасно приводит значение к float с округлением.
+     * Зачем: чтобы в расчётах не таскать null/строки и не ловить мелкий мусор.
+     */
+    protected function toMoneyValue($value): float
+    {
+        return round((float) ($value ?? 0), 2);
+    }
+
+    /**
+     * Это helper: загружает fachliche Abrechnungsdaten по Auftrag.
+     *
+     * Что считает:
+     * - Auftragssumme netto/brutto из CAuftrag
+     * - уже festgeschriebene Teilrechnungen + Abschlagsrechnungen
+     * - количество festgeschriebene Schlussrechnungen
+     *
+     * Важно:
+     * - берём только deleted = 0
+     * - берём только buchhaltung_status = 'festgeschrieben'
+     * - исключаем storniert
+     * - при необходимости исключаем текущую Rechnung по ID
+     *
+     * Зачем:
+     * это и будет verbindliche server-side Grundlage для Freigabe/Festschreibung,
+     * а не старые totals-поля Auftrag.
+     */
+    protected function getAuftragAbrechnungsKontext(string $auftragId, ?string $excludeRechnungId = null): array
+    {
+        $em = $this->getEntityManager();
+        $pdo = $em->getPDO();
+
+        $auftrag = $em->getEntity('CAuftrag', $auftragId);
+
+        if (!$auftrag) {
+            throw new \RuntimeException('Auftrag wurde nicht gefunden.');
+        }
+
+        $auftragNetto = $this->toMoneyValue($auftrag->get('betragNetto'));
+        $auftragBrutto = $this->toMoneyValue($auftrag->get('betragBrutto'));
+
+        $params = [
+            ':auftragId' => $auftragId,
+        ];
+
+        $excludeSql = '';
+        if ($excludeRechnungId) {
+            $excludeSql = ' AND id <> :excludeRechnungId ';
+            $params[':excludeRechnungId'] = $excludeRechnungId;
+        }
+
+        // Это уже festgeschriebene Teilrechnung + Abschlagsrechnung.
+        $sqlTeilAbschlag = "
+            SELECT
+                COALESCE(SUM(betrag_netto), 0)  AS sumNetto,
+                COALESCE(SUM(betrag_brutto), 0) AS sumBrutto,
+                COUNT(*)                        AS cnt
+            FROM c_rechnung
+            WHERE
+                deleted = 0
+                AND auftrag_id = :auftragId
+                AND buchhaltung_status = 'festgeschrieben'
+                AND rechnungstyp IN ('teilrechnung', 'abschlagsrechnung')
+                AND status <> 'storniert'
+                {$excludeSql}
+        ";
+
+        $sthTeilAbschlag = $pdo->prepare($sqlTeilAbschlag);
+        $sthTeilAbschlag->execute($params);
+        $rowTeilAbschlag = $sthTeilAbschlag->fetch(\PDO::FETCH_ASSOC) ?: [];
+
+        $sumTeilAbschlagNetto = $this->toMoneyValue($rowTeilAbschlag['sumNetto'] ?? 0);
+        $sumTeilAbschlagBrutto = $this->toMoneyValue($rowTeilAbschlag['sumBrutto'] ?? 0);
+        $cntTeilAbschlag = (int) ($rowTeilAbschlag['cnt'] ?? 0);
+
+        // Это уже festgeschriebene Schlussrechnungen.
+        $sqlSchluss = "
+            SELECT
+                COALESCE(SUM(betrag_netto), 0)  AS sumNetto,
+                COALESCE(SUM(betrag_brutto), 0) AS sumBrutto,
+                COUNT(*)                        AS cnt
+            FROM c_rechnung
+            WHERE
+                deleted = 0
+                AND auftrag_id = :auftragId
+                AND buchhaltung_status = 'festgeschrieben'
+                AND rechnungstyp = 'schlussrechnung'
+                AND status <> 'storniert'
+                {$excludeSql}
+        ";
+
+        $sthSchluss = $pdo->prepare($sqlSchluss);
+        $sthSchluss->execute($params);
+        $rowSchluss = $sthSchluss->fetch(\PDO::FETCH_ASSOC) ?: [];
+
+        $sumSchlussNetto = $this->toMoneyValue($rowSchluss['sumNetto'] ?? 0);
+        $sumSchlussBrutto = $this->toMoneyValue($rowSchluss['sumBrutto'] ?? 0);
+        $cntSchluss = (int) ($rowSchluss['cnt'] ?? 0);
+
+        // Это уже abgerechnet через festgeschriebene Teil-/Abschlagsrechnungen.
+        $nochAbrechenbarNetto = round($auftragNetto - $sumTeilAbschlagNetto, 2);
+        $nochAbrechenbarBrutto = round($auftragBrutto - $sumTeilAbschlagBrutto, 2);
+
+        if ($nochAbrechenbarNetto < 0) {
+            $nochAbrechenbarNetto = 0.0;
+        }
+        if ($nochAbrechenbarBrutto < 0) {
+            $nochAbrechenbarBrutto = 0.0;
+        }
+
+        return [
+            'auftragId' => $auftragId,
+
+            'auftragNetto' => $auftragNetto,
+            'auftragBrutto' => $auftragBrutto,
+
+            'sumTeilAbschlagNetto' => $sumTeilAbschlagNetto,
+            'sumTeilAbschlagBrutto' => $sumTeilAbschlagBrutto,
+            'countTeilAbschlag' => $cntTeilAbschlag,
+
+            'sumSchlussNetto' => $sumSchlussNetto,
+            'sumSchlussBrutto' => $sumSchlussBrutto,
+            'countSchluss' => $cntSchluss,
+
+            'nochAbrechenbarNetto' => $nochAbrechenbarNetto,
+            'nochAbrechenbarBrutto' => $nochAbrechenbarBrutto,
+        ];
+    }
+
+    /**
+     * Это helper: валидирует auftragsgebundene Rechnung gegen Auftrag.
+     *
+     * Что проверяет:
+     * - Auftrag обязателен
+     * - Auftrag существует
+     * - Teilrechnung / Abschlagsrechnung не превышают допустимый Rest
+     * - Schlussrechnung: только одна aktive festgeschriebene Schlussrechnung
+     * - Schlussrechnung не должна превышать noch abrechenbar
+     *
+     * Важно:
+     * обычные Rechnungen сюда не попадают.
+     */
+    protected function validateAuftragsgebundeneRechnung(Entity $rechnung, bool $excludeCurrentRechnung = false): array
+    {
+        $rechnungId = $rechnung->getId();
+        $rechnungstyp = strtolower(trim((string) ($rechnung->get('rechnungstyp') ?? '')));
+        $auftragId = (string) ($rechnung->get('auftragId') ?? '');
+
+        if (!$this->isAuftragsgebundenerRechnungstyp($rechnungstyp)) {
+            return [
+                'success' => true,
+                'message' => null,
+                'kontext' => null,
+            ];
+        }
+
+        if (!$auftragId) {
+            return [
+                'success' => false,
+                'message' => 'Für diesen Rechnungstyp ist ein Auftrag zwingend erforderlich.',
+                'kontext' => null,
+            ];
+        }
+
+        $betragNetto = $this->toMoneyValue($rechnung->get('betragNetto'));
+        $betragBrutto = $this->toMoneyValue($rechnung->get('betragBrutto'));
+
+        $kontext = $this->getAuftragAbrechnungsKontext(
+            $auftragId,
+            $excludeCurrentRechnung ? $rechnungId : null
+        );
+
+        if ($kontext['auftragBrutto'] <= 0) {
+            return [
+                'success' => false,
+                'message' => 'Der Auftrag hat keinen gültigen Bruttobetrag als Kontrollgrundlage.',
+                'kontext' => $kontext,
+            ];
+        }
+
+        if (in_array($rechnungstyp, ['teilrechnung', 'abschlagsrechnung'], true)) {
+            if ($kontext['countSchluss'] > 0) {
+                return [
+                    'success' => false,
+                    'message' => 'Zu diesem Auftrag existiert bereits eine festgeschriebene Schlussrechnung.',
+                    'kontext' => $kontext,
+                ];
+            }
+
+            if ($betragBrutto > $kontext['nochAbrechenbarBrutto']) {
+                return [
+                    'success' => false,
+                    'message' => 'Der Rechnungsbetrag überschreitet den noch abrechenbaren Betrag des Auftrags.',
+                    'kontext' => $kontext,
+                ];
+            }
+        }
+
+        if ($rechnungstyp === 'schlussrechnung') {
+            if ($kontext['countSchluss'] > 0) {
+                return [
+                    'success' => false,
+                    'message' => 'Zu diesem Auftrag existiert bereits eine aktive festgeschriebene Schlussrechnung.',
+                    'kontext' => $kontext,
+                ];
+            }
+
+            if ($kontext['nochAbrechenbarBrutto'] <= 0) {
+                return [
+                    'success' => false,
+                    'message' => 'Für diesen Auftrag besteht kein abrechenbarer Rest mehr für eine Schlussrechnung.',
+                    'kontext' => $kontext,
+                ];
+            }
+        }
+
+        return [
+            'success' => true,
+            'message' => null,
+            'kontext' => $kontext,
+        ];
+    }
+
+        /**
+     * Это helper: пересчитывает Restbetrag для Schlussrechnung по Auftrag.
+     *
+     * Что делает:
+     * - берёт Auftragssumme из CAuftrag
+     * - вычитает уже festgeschriebene Teilrechnung + Abschlagsrechnung
+     * - считает остаток netto/brutto
+     * - для Schlussrechnung возвращает именно ту сумму, которая ещё должна быть выставлена
+     *
+     * Важно:
+     * - не трогает Einzelrechnung
+     * - не трогает Teilrechnung / Abschlagsrechnung
+     * - работает только для Schlussrechnung
+     */
+    protected function calculateSchlussrechnungRestwerte(Entity $rechnung, bool $excludeCurrentRechnung = false): array
+    {
+        $rechnungstyp = strtolower(trim((string) ($rechnung->get('rechnungstyp') ?? '')));
+
+        if ($rechnungstyp !== 'schlussrechnung') {
+            return [
+                'success' => false,
+                'message' => 'Die Restwertberechnung ist nur für Schlussrechnungen zulässig.',
+                'netto' => 0.0,
+                'ust' => 0.0,
+                'brutto' => 0.0,
+                'kontext' => null,
+            ];
+        }
+
+        $rechnungId = $rechnung->getId();
+        $auftragId = (string) ($rechnung->get('auftragId') ?? '');
+
+        if (!$auftragId) {
+            return [
+                'success' => false,
+                'message' => 'Für die Schlussrechnung fehlt der Auftrag.',
+                'netto' => 0.0,
+                'ust' => 0.0,
+                'brutto' => 0.0,
+                'kontext' => null,
+            ];
+        }
+
+        $kontext = $this->getAuftragAbrechnungsKontext(
+            $auftragId,
+            $excludeCurrentRechnung ? $rechnungId : null
+        );
+
+        $restNetto = $this->toMoneyValue($kontext['auftragNetto'] - $kontext['sumTeilAbschlagNetto']);
+        $restBrutto = $this->toMoneyValue($kontext['auftragBrutto'] - $kontext['sumTeilAbschlagBrutto']);
+        $restUst = $this->toMoneyValue($restBrutto - $restNetto);
+
+        if ($restNetto < 0) {
+            $restNetto = 0.0;
+        }
+
+        if ($restBrutto < 0) {
+            $restBrutto = 0.0;
+        }
+
+        if ($restUst < 0) {
+            $restUst = 0.0;
+        }
+
+        return [
+            'success' => true,
+            'message' => null,
+            'auftragNetto' => $this->toMoneyValue($kontext['auftragNetto']),
+            'auftragBrutto' => $this->toMoneyValue($kontext['auftragBrutto']),
+            'bereitsAbgerechnetNetto' => $this->toMoneyValue($kontext['sumTeilAbschlagNetto']),
+            'bereitsAbgerechnetBrutto' => $this->toMoneyValue($kontext['sumTeilAbschlagBrutto']),
+            'netto' => $restNetto,
+            'ust' => $restUst,
+            'brutto' => $restBrutto,
+            'kontext' => $kontext,
+        ];
+    }
+    
 // Это action для fachlicher Freigabe счета.
 // Он проверяет, можно ли перевести Rechnung в статус "freigabe".
 public function postActionFreigeben($params, $data, $request)
@@ -575,13 +890,22 @@ public function postActionFreigeben($params, $data, $request)
     }
 
     try {
+        // Это: определяем тип счета и текущий бухгалтерический статус.
         $rechnungstyp = strtolower((string) ($rechnung->get('rechnungstyp') ?? ''));
         $buchhaltungStatus = strtolower((string) ($rechnung->get('buchhaltungStatus') ?? 'entwurf'));
 
-        if ($rechnungstyp !== 'einzelrechnung') {
+        // Это: список типов, которые допускаются в новый workflow Freigabe.
+        $erlaubteRechnungstypen = [
+            'einzelrechnung',
+            'teilrechnung',
+            'abschlagsrechnung',
+            'schlussrechnung',
+        ];
+
+        if (!in_array($rechnungstyp, $erlaubteRechnungstypen, true)) {
             return [
                 'success' => false,
-                'message' => 'Nur Einzelrechnungen können in Phase 1 freigegeben werden.'
+                'message' => 'Dieser Rechnungstyp ist für die fachliche Freigabe nicht zugelassen.'
             ];
         }
 
@@ -623,12 +947,55 @@ public function postActionFreigeben($params, $data, $request)
         $betragNetto = (float) ($rechnung->get('betragNetto') ?? 0);
         $betragBrutto = (float) ($rechnung->get('betragBrutto') ?? 0);
 
+        // Это: для Schlussrechnung verbindlich берём Restwerte aus Auftrag,
+        // а не текущую полную сумму всех позиций заказа.
+        if ($rechnungstyp === 'schlussrechnung') {
+            $restwerte = $this->calculateSchlussrechnungRestwerte($rechnung, true);
+
+            if (!$restwerte['success']) {
+                return [
+                    'success' => false,
+                    'message' => $restwerte['message'] ?: 'Die Restwertberechnung der Schlussrechnung ist fehlgeschlagen.'
+                ];
+            }
+
+            $betragNetto = (float) $restwerte['netto'];
+            $betragBrutto = (float) $restwerte['brutto'];
+        }
+
+        // Это: для Schlussrechnung сразу synchronisieren wir die berechneten Restwerte
+        // zurück in die Rechnung, damit die folgende Prüfung уже работает с правильной суммой.
+        if ($rechnungstyp === 'schlussrechnung') {
+            $rechnung->set('betragNetto', round($betragNetto, 2));
+            $rechnung->set('betragBrutto', round($betragBrutto, 2));
+            $rechnung->set('ustBetrag', round($betragBrutto - $betragNetto, 2));
+        }
+
+        // Это: zentrale server-side Auftragskontrolle nur für auftragsgebundene Rechnungstypen.
+        $auftragsCheck = $this->validateAuftragsgebundeneRechnung($rechnung, true);
+
+        if (!$auftragsCheck['success']) {
+            return [
+                'success' => false,
+                'message' => $auftragsCheck['message'] ?: 'Die auftragsbezogene Prüfung ist fehlgeschlagen.'
+            ];
+        }
+
         if ($betragNetto <= 0 || $betragBrutto <= 0) {
             return [
                 'success' => false,
                 'message' => 'Netto- und Bruttobetrag müssen größer als 0 sein.'
             ];
         }
+
+        // Это: для Schlussrechnung сразу synchronisieren wir die berechneten Restwerte
+        // zurück in die Rechnung, damit Freigabe уже работает с правильной суммой.
+        if ($rechnungstyp === 'schlussrechnung') {
+            $rechnung->set('betragNetto', round($betragNetto, 2));
+            $rechnung->set('betragBrutto', round($betragBrutto, 2));
+            $rechnung->set('ustBetrag', round($betragBrutto - $betragNetto, 2));
+        }
+
 
         $gesetzOption13b = (bool) ($rechnung->get('gesetzOption13b') ?? false);
         $gesetzOption12 = (bool) ($rechnung->get('gesetzOption12') ?? false);
@@ -815,14 +1182,23 @@ public function postActionFestschreiben($params, $data, $request)
         // -----------------------------
         // 1) Grundvalidierung Rechnung
         // -----------------------------
+        // Это: определяем тип счета и текущий бухгалтерический статус.
         $rechnungstyp = strtolower((string) ($rechnung->get('rechnungstyp') ?? ''));
         $buchhaltungStatus = strtolower((string) ($rechnung->get('buchhaltungStatus') ?? 'entwurf'));
         $istFestgeschrieben = (bool) ($rechnung->get('istFestgeschrieben') ?? false);
 
-        if ($rechnungstyp !== 'einzelrechnung') {
+        // Это: список типов, которые допускаются в Festschreibung.
+        $erlaubteRechnungstypen = [
+            'einzelrechnung',
+            'teilrechnung',
+            'abschlagsrechnung',
+            'schlussrechnung',
+        ];
+
+        if (!in_array($rechnungstyp, $erlaubteRechnungstypen, true)) {
             return [
                 'success' => false,
-                'message' => 'Nur Einzelrechnungen können in Phase 1 festgeschrieben werden.'
+                'message' => 'Dieser Rechnungstyp ist für die Festschreibung nicht zugelassen.'
             ];
         }
 
@@ -868,10 +1244,45 @@ public function postActionFestschreiben($params, $data, $request)
             ];
         }
 
-        // Это берёт суммы из Rechnung и округляет их до 2 знаков.
+        // Это: базово берём суммы из Rechnung.
         $betragNetto = round((float) ($rechnung->get('betragNetto') ?? 0), 2);
         $betragBrutto = round((float) ($rechnung->get('betragBrutto') ?? 0), 2);
         $ustBetrag = round((float) ($rechnung->get('ustBetrag') ?? ($betragBrutto - $betragNetto)), 2);
+
+        // Это: для Schlussrechnung verbindlich пересчитываем Restwerte
+        // прямо перед Festschreibung, чтобы в Journal ушла именно остаточная сумма.
+        if ($rechnungstyp === 'schlussrechnung') {
+            $restwerte = $this->calculateSchlussrechnungRestwerte($rechnung, true);
+
+            if (!$restwerte['success']) {
+                return [
+                    'success' => false,
+                    'message' => $restwerte['message'] ?: 'Die Restwertberechnung der Schlussrechnung ist fehlgeschlagen.'
+                ];
+            }
+
+            $betragNetto = round((float) $restwerte['netto'], 2);
+            $betragBrutto = round((float) $restwerte['brutto'], 2);
+            $ustBetrag = round($betragBrutto - $betragNetto, 2);
+        }
+
+        // Это: synchronisieren wir die berechneten Restwerte zurück in die Rechnung,
+        // damit auch die folgende Auftragsprüfung mit den richtigen Beträgen läuft.
+        if ($rechnungstyp === 'schlussrechnung') {
+            $rechnung->set('betragNetto', $betragNetto);
+            $rechnung->set('betragBrutto', $betragBrutto);
+            $rechnung->set('ustBetrag', $ustBetrag);
+        }
+
+        // Это: повторная zentrale Auftragskontrolle direkt vor der Festschreibung.
+        $auftragsCheck = $this->validateAuftragsgebundeneRechnung($rechnung, true);
+
+        if (!$auftragsCheck['success']) {
+            return [
+                'success' => false,
+                'message' => $auftragsCheck['message'] ?: 'Die auftragsbezogene Prüfung ist fehlgeschlagen.'
+            ];
+        }
 
         if ($betragNetto <= 0 || $betragBrutto <= 0) {
             return [
@@ -941,7 +1352,7 @@ public function postActionFestschreiben($params, $data, $request)
                 'aktiv' => true,
                 'phase1Verwendet' => true,
                 'quelleTyp' => 'CRechnung',
-                'dokumentTyp' => 'einzelrechnung',
+                'dokumentTyp' => $rechnungstyp,
                 'steuerFall' => $steuerFall,
                 'deleted' => false,
             ])

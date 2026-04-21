@@ -1,6 +1,6 @@
 // Отчёт Verbindlichkeiten.
-// Что это: стартовый Phase-2-Bericht по offenen Verbindlichkeiten
-// на основе festgeschriebene Eingangsrechnungen.
+// Что это: Phase-3-Bericht по offenen Verbindlichkeiten
+// на основе festgeschriebene Eingangsrechnungen с учётом restbetragOffen.
 
 define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], function () {
     return {
@@ -35,19 +35,19 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
-                                    <div><strong>Netto offen</strong></div>
-                                    <div class="kb-kpi-netto" style="font-size: 22px;">0,00 €</div>
+                                    <div><strong>Teilweise bezahlt</strong></div>
+                                    <div class="kb-kpi-teilweise" style="font-size: 22px;">0</div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
-                                    <div><strong>Steuer offen</strong></div>
-                                    <div class="kb-kpi-steuer" style="font-size: 22px;">0,00 €</div>
+                                    <div><strong>Summe offen</strong></div>
+                                    <div class="kb-kpi-offen" style="font-size: 22px;">0,00 €</div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
-                                    <div><strong>Brutto offen</strong></div>
+                                    <div><strong>Ursprünglich brutto</strong></div>
                                     <div class="kb-kpi-brutto" style="font-size: 22px;">0,00 €</div>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
 
                         <div class="kb-tab-panel" data-tab-panel="gf">
                             <p><strong>Geschäftsführung</strong></p>
-                            <p>Überblick über aktuell offene Verbindlichkeiten aus festgeschriebenen Eingangsrechnungen.</p>
+                            <p>Überblick über aktuell offene Verbindlichkeiten nach bereits berücksichtigten Zahlungen.</p>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
@@ -101,13 +101,14 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                                             <th>Lieferant</th>
                                             <th>Belegdatum</th>
                                             <th>Fällig am</th>
-                                            <th>Tage bis/seit Fälligkeit</th>
-                                            <th>Brutto offen</th>
+                                            <th>Zahlungsstatus</th>
+                                            <th>Offen</th>
+                                            <th>Buchungsjournal</th>
                                         </tr>
                                     </thead>
                                     <tbody class="kb-tbody-gf">
                                         <tr>
-                                            <td colspan="6" class="text-muted">Noch keine Daten geladen.</td>
+                                            <td colspan="7" class="text-muted">Noch keine Daten geladen.</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -116,7 +117,7 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
 
                         <div class="kb-tab-panel hidden" data-tab-panel="buha">
                             <p><strong>Buchhaltung</strong></p>
-                            <p>Erweiterte Sicht auf offene Verbindlichkeiten mit Steuerfall und Journalbezug.</p>
+                            <p>Erweiterte Sicht auf offene Verbindlichkeiten mit Restbetrag und Zahlungsstatus aus Phase 3.</p>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
@@ -127,9 +128,9 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                                             <th>Lieferant</th>
                                             <th>Belegdatum</th>
                                             <th>Fällig am</th>
-                                            <th>Netto offen</th>
-                                            <th>Steuer offen</th>
-                                            <th>Brutto offen</th>
+                                            <th>Brutto ursprünglich</th>
+                                            <th>Restbetrag offen</th>
+                                            <th>Zahlungsstatus</th>
                                             <th>Steuerfall</th>
                                             <th>Buchungsjournal</th>
                                         </tr>
@@ -161,6 +162,11 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                     type: 'equals',
                     attribute: 'status',
                     value: 'festgeschrieben'
+                },
+                {
+                    type: 'greaterThan',
+                    attribute: 'restbetragOffen',
+                    value: 0
                 }
             ];
 
@@ -190,13 +196,13 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                     'lieferantenRechnungsnummer',
                     'belegdatum',
                     'faelligAm',
-                    'betragNetto',
-                    'steuerBetrag',
                     'betragBrutto',
+                    'restbetragOffen',
                     'steuerfall',
                     'lieferantId',
                     'lieferantName',
                     'status',
+                    'zahlungsstatus',
                     'buchungsjournalId',
                     'buchungsjournalName'
                 ];
@@ -206,7 +212,10 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                 collection.fetch().then(() => {
                     const list = (collection.models || [])
                         .map(model => model.attributes || {})
-                        .filter(item => String(item.status || '').toLowerCase() === 'festgeschrieben');
+                        .filter(item =>
+                            String(item.status || '').toLowerCase() === 'festgeschrieben' &&
+                            Number(item.restbetragOffen || 0) > 0
+                        );
 
                     list.sort((a, b) => {
                         const aFaellig = a.faelligAm || '';
@@ -233,12 +242,12 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
             const $tbodyGf = view.$el.find('.kb-tbody-gf');
             const $tbodyBuha = view.$el.find('.kb-tbody-buha');
 
-            let sumNetto = 0;
-            let sumSteuer = 0;
+            let sumOffen = 0;
             let sumBrutto = 0;
+            let anzahlTeilweise = 0;
 
             if (!list.length) {
-                $tbodyGf.html('<tr><td colspan="6" class="text-muted">Keine offenen Verbindlichkeiten gefunden.</td></tr>');
+                $tbodyGf.html('<tr><td colspan="7" class="text-muted">Keine offenen Verbindlichkeiten gefunden.</td></tr>');
                 $tbodyBuha.html('<tr><td colspan="10" class="text-muted">Keine offenen Verbindlichkeiten gefunden.</td></tr>');
                 this.updateKennzahlen(view, 0, 0, 0, 0);
                 this.updateInfoZeile(view, 0);
@@ -249,13 +258,16 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
             let htmlBuha = '';
 
             list.forEach((item) => {
-                const netto = Number(item.betragNetto || 0);
-                const steuer = Number(item.steuerBetrag || 0);
                 const brutto = Number(item.betragBrutto || 0);
+                const rest = Number(item.restbetragOffen || 0);
 
-                sumNetto += netto;
-                sumSteuer += steuer;
                 sumBrutto += brutto;
+                sumOffen += rest;
+
+                const zahlungsstatusRaw = String(item.zahlungsstatus || '').trim();
+                if (zahlungsstatusRaw === 'teilweise_bezahlt') {
+                    anzahlTeilweise++;
+                }
 
                 const nummerText = view.escapeHtml_(item.eingangsrechnungsnummer || item.name || '');
                 const id = view.escapeHtml_(item.id || '');
@@ -271,19 +283,7 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                 const faelligAm = view.escapeHtml_(view.formatDateGerman_(item.faelligAm));
                 const lieferantenRechnungsnummer = view.escapeHtml_(item.lieferantenRechnungsnummer || '');
                 const steuerfall = view.escapeHtml_(item.steuerfall || '');
-
-                const tage = this.calculateFaelligkeitText_(item.faelligAm);
-
-                htmlGf += `
-                    <tr>
-                        <td>${nummer}</td>
-                        <td>${lieferant}</td>
-                        <td>${belegdatum}</td>
-                        <td>${faelligAm}</td>
-                        <td>${view.escapeHtml_(tage)}</td>
-                        <td>${view.formatCurrency_(brutto)}</td>
-                    </tr>
-                `;
+                const statusText = view.escapeHtml_(this.formatStatus_(zahlungsstatusRaw));
 
                 let journalLink = '<span class="text-muted">–</span>';
 
@@ -293,6 +293,18 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                     journalLink = `<a href="#CBuchungsjournal/view/${journalId}">${journalNummerText}</a>`;
                 }
 
+                htmlGf += `
+                    <tr>
+                        <td>${nummer}</td>
+                        <td>${lieferant}</td>
+                        <td>${belegdatum}</td>
+                        <td>${faelligAm}</td>
+                        <td>${statusText}</td>
+                        <td>${view.formatCurrency_(rest)}</td>
+                        <td>${journalLink}</td>
+                    </tr>
+                `;
+
                 htmlBuha += `
                     <tr>
                         <td>${nummer}</td>
@@ -300,9 +312,9 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                         <td>${lieferant}</td>
                         <td>${belegdatum}</td>
                         <td>${faelligAm}</td>
-                        <td>${view.formatCurrency_(netto)}</td>
-                        <td>${view.formatCurrency_(steuer)}</td>
                         <td>${view.formatCurrency_(brutto)}</td>
+                        <td>${view.formatCurrency_(rest)}</td>
+                        <td>${statusText}</td>
                         <td>${steuerfall}</td>
                         <td>${journalLink}</td>
                     </tr>
@@ -312,14 +324,14 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
             $tbodyGf.html(htmlGf);
             $tbodyBuha.html(htmlBuha);
 
-            this.updateKennzahlen(view, list.length, sumNetto, sumSteuer, sumBrutto);
+            this.updateKennzahlen(view, list.length, anzahlTeilweise, sumOffen, sumBrutto);
             this.updateInfoZeile(view, list.length);
         },
 
-        updateKennzahlen(view, anzahl, netto, steuer, brutto) {
+        updateKennzahlen(view, anzahl, teilweise, offen, brutto) {
             view.$el.find('.kb-kpi-anzahl').text(anzahl);
-            view.$el.find('.kb-kpi-netto').text(view.formatCurrency_(netto));
-            view.$el.find('.kb-kpi-steuer').text(view.formatCurrency_(steuer));
+            view.$el.find('.kb-kpi-teilweise').text(teilweise);
+            view.$el.find('.kb-kpi-offen').text(view.formatCurrency_(offen));
             view.$el.find('.kb-kpi-brutto').text(view.formatCurrency_(brutto));
         },
 
@@ -340,29 +352,12 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
             view.$el.find('.kb-info-anzahl').text(anzahl);
         },
 
-        calculateFaelligkeitText_(faelligAm) {
-            if (!faelligAm) {
-                return '–';
-            }
-
-            const today = window.moment().startOf('day');
-            const due = window.moment(faelligAm).startOf('day');
-
-            if (!due.isValid()) {
-                return '–';
-            }
-
-            const diff = today.diff(due, 'days');
-
-            if (diff === 0) {
-                return 'heute fällig';
-            }
-
-            if (diff > 0) {
-                return diff + ' Tage überfällig';
-            }
-
-            return Math.abs(diff) + ' Tage bis Fälligkeit';
+        formatStatus_(value) {
+            if (value === 'offen') return 'Offen';
+            if (value === 'teilweise_bezahlt') return 'Teilweise bezahlt';
+            if (value === 'bezahlt') return 'Bezahlt';
+            if (value === 'storniert') return 'Storniert';
+            return value || '–';
         }
     };
 });

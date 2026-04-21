@@ -105,45 +105,59 @@
 }
 
 /* ==== Общие стили для блока уведомлений ==== */
+/* Что это: делает системные уведомления Espo читаемыми.
+   Зачем: убирает прозрачность, повышает контраст, отделяет уведомление от фона. */
 #notification {
-    font-weight: bold !important;
-    border-radius: 6px !important;
-    padding: 8px 14px !important;
-    color: #6d6d6d !important;
-    min-width: 240px;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    padding: 10px 16px !important;
+    min-width: 260px;
     text-align: center;
+    opacity: 1 !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    background-image: none !important;
+}
+
+/* Что это: стиль текста внутри уведомления.
+   Зачем: запрещает серый/блеклый текст и убирает влияние вложенных элементов. */
+#notification,
+#notification * {
+    text-shadow: none !important;
 }
 
 /* === Загрузка (loading) === */
+/* Зачем: тёмный плотный фон, белый текст. */
 #notification.alert-loading {
-    background-color: rgba(186, 255, 172, 0.65) !important;
-    color: #4a4b4a !important;
-    /* KleSec-Farbe */
+    background-color: #8c92d3 !important;
+    color: #ffffff !important;
 }
 
 /* === Успех (success) === */
+/* Зачем: нормальный зелёный без прозрачности. */
 #notification.alert-success {
-    background-color: rgba(134, 255, 170, 0.65) !important;
-    color: #666666 !important;
-    /* зелёный */
+    background-color: #56c25b !important;
+    color: #ffffff !important;
 }
 
-/* === Ошибка (error) === */
+/* === Ошибка (danger) === */
+/* Зачем: плотный красный фон и белый текст для максимального контраста. */
 #notification.alert-danger {
-    background-color: rgba(250, 120, 120, 0.65) !important;
-    color: #6d6d6d !important;
+    background-color: #ec4c4c !important;
+    color: #ffffff !important;
 }
 
 /* === Информация (info) === */
+/* Зачем: спокойный синий, хорошо читается. */
 #notification.alert-info {
-    background-color: rgba(152, 246, 253, 0.65) !important;
-    color: #6d6d6d !important;
+    background-color: #497bb4 !important;
+    color: #ffffff !important;
 }
 
+/* === Предупреждение (warning) === */
+/* Зачем: на жёлтом фоне чёрный текст читается лучше белого. */
 #notification.alert-warning {
-    background-color: rgba(255, 193, 7, 0.65) !important;
-    color: #6d6d6d !important;
-    font-weight: bold;
-    border-radius: 6px;
-    padding: 8px 14px;
+    background-color: #f2b553 !important;
+    color: #111111 !important;
+    font-weight: 700 !important;
 }

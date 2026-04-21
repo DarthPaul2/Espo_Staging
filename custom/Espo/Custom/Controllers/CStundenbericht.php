@@ -56,11 +56,17 @@ class CStundenbericht extends Base
                 continue;
             }
 
-            // имя файла в ZIP: берём basename без query (?v=...)
+            // Что это: берём имя файла из pdfUrl, но делаем его уникальным через ID записи.
+            // Зачем: чтобы одинаковые PDF-имена не затирали друг друга внутри ZIP.
             $urlNoQuery = preg_replace('/\?.*$/', '', $url);
-            $fileNameInZip = basename($urlNoQuery);
-            if ($fileNameInZip === '' || stripos($fileNameInZip, '.pdf') === false) {
+            $baseName = basename($urlNoQuery);
+
+            if ($baseName === '' || stripos($baseName, '.pdf') === false) {
                 $fileNameInZip = 'stundenbericht_' . $id . '.pdf';
+            } else {
+                $nameWithoutExt = pathinfo($baseName, PATHINFO_FILENAME);
+                $extension = pathinfo($baseName, PATHINFO_EXTENSION) ?: 'pdf';
+                $fileNameInZip = $nameWithoutExt . '__' . $id . '.' . $extension;
             }
 
             // скачиваем PDF (без авторизации, как вы указали)

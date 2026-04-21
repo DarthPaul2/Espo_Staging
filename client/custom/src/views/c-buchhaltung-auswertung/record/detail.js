@@ -16,7 +16,15 @@ define(
         'custom:views/c-buchhaltung-auswertung/report/umsatzuebersicht',
         'custom:views/c-buchhaltung-auswertung/report/umsatzsteuer-uebersicht',
         'custom:views/c-buchhaltung-auswertung/report/offene-forderungen',
-        'custom:views/c-buchhaltung-auswertung/report/kontenbewegungen'
+        'custom:views/c-buchhaltung-auswertung/report/kontenbewegungen',
+        'custom:views/c-buchhaltung-auswertung/report/festgeschriebene-zahlungen',
+        'custom:views/c-buchhaltung-auswertung/report/ausgleichsuebersicht',
+        'custom:views/c-buchhaltung-auswertung/report/zahlungseingaenge',
+        'custom:views/c-buchhaltung-auswertung/report/zahlungsausgaenge',
+        'custom:views/c-buchhaltung-auswertung/report/teilweise-ausgeglichene-belege',
+        'custom:views/c-buchhaltung-auswertung/report/voll-ausgeglichene-belege',
+        'custom:views/c-buchhaltung-auswertung/report/zahlungsuebersicht',
+        'custom:views/c-buchhaltung-auswertung/report/kontenbewegungen-zahlung'
     ],
     function (
         Dep,
@@ -29,7 +37,15 @@ define(
         UmsatzuebersichtReport,
         UmsatzsteuerUebersichtReport,
         OffeneForderungenReport,
-        KontenbewegungenReport
+        KontenbewegungenReport,
+        FestgeschriebeneZahlungenReport,
+        AusgleichsuebersichtReport,
+        ZahlungseingaengeReport,
+        ZahlungsausgaengeReport,
+        TeilweiseAusgeglicheneBelegeReport,
+        VollAusgeglicheneBelegeReport,
+        ZahlungsuebersichtReport,
+        KontenbewegungenZahlungReport
     ) {
         return Dep.extend({
 
@@ -228,6 +244,95 @@ define(
 
                     if (this.shouldLoadReport_(auswertungTyp)) {
                         KontenbewegungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'festgeschriebene_zahlungen') {
+                    FestgeschriebeneZahlungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    FestgeschriebeneZahlungenReport.renderTabsBlock(this);
+                    FestgeschriebeneZahlungenReport.bindUi(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        FestgeschriebeneZahlungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'ausgleichsuebersicht') {
+                    AusgleichsuebersichtReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    AusgleichsuebersichtReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        AusgleichsuebersichtReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'zahlungseingaenge') {
+                    ZahlungseingaengeReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    ZahlungseingaengeReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        ZahlungseingaengeReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'zahlungsausgaenge') {
+                    ZahlungsausgaengeReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    ZahlungsausgaengeReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        ZahlungsausgaengeReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'teilweise_ausgeglichene_belege') {
+                    TeilweiseAusgeglicheneBelegeReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    TeilweiseAusgeglicheneBelegeReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        TeilweiseAusgeglicheneBelegeReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'voll_ausgeglichene_belege') {
+                    VollAusgeglicheneBelegeReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    VollAusgeglicheneBelegeReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        VollAusgeglicheneBelegeReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'zahlungsuebersicht') {
+                    ZahlungsuebersichtReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    ZahlungsuebersichtReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        ZahlungsuebersichtReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'kontenbewegungen_zahlung') {
+                    KontenbewegungenZahlungReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    KontenbewegungenZahlungReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        KontenbewegungenZahlungReport.load(this);
                     }
                 }
 
@@ -595,6 +700,46 @@ define(
                                 KontenbewegungenReport.load(this);
                             }
 
+                            if (auswertungTyp === 'festgeschriebene_zahlungen') {
+                                this._lastReportLoadSignature = null;
+                                FestgeschriebeneZahlungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'ausgleichsuebersicht') {
+                                this._lastReportLoadSignature = null;
+                                AusgleichsuebersichtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'zahlungseingaenge') {
+                                this._lastReportLoadSignature = null;
+                                ZahlungseingaengeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'zahlungsausgaenge') {
+                                this._lastReportLoadSignature = null;
+                                ZahlungsausgaengeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'teilweise_ausgeglichene_belege') {
+                                this._lastReportLoadSignature = null;
+                                TeilweiseAusgeglicheneBelegeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'voll_ausgeglichene_belege') {
+                                this._lastReportLoadSignature = null;
+                                VollAusgeglicheneBelegeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'zahlungsuebersicht') {
+                                this._lastReportLoadSignature = null;
+                                ZahlungsuebersichtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'kontenbewegungen_zahlung') {
+                                this._lastReportLoadSignature = null;
+                                KontenbewegungenZahlungReport.load(this);
+                            }
+
                             this.updateZeitraumButtons_();
                             this.notify('Zeitraum gespeichert', 'success');
                         },
@@ -670,6 +815,46 @@ define(
                             if (auswertungTyp === 'kontenbewegungen') {
                                 this._lastReportLoadSignature = null;
                                 KontenbewegungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'festgeschriebene_zahlungen') {
+                                this._lastReportLoadSignature = null;
+                                FestgeschriebeneZahlungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'ausgleichsuebersicht') {
+                                this._lastReportLoadSignature = null;
+                                AusgleichsuebersichtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'zahlungseingaenge') {
+                                this._lastReportLoadSignature = null;
+                                ZahlungseingaengeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'zahlungsausgaenge') {
+                                this._lastReportLoadSignature = null;
+                                ZahlungsausgaengeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'teilweise_ausgeglichene_belege') {
+                                this._lastReportLoadSignature = null;
+                                TeilweiseAusgeglicheneBelegeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'voll_ausgeglichene_belege') {
+                                this._lastReportLoadSignature = null;
+                                VollAusgeglicheneBelegeReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'zahlungsuebersicht') {
+                                this._lastReportLoadSignature = null;
+                                ZahlungsuebersichtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'kontenbewegungen_zahlung') {
+                                this._lastReportLoadSignature = null;
+                                KontenbewegungenZahlungReport.load(this);
                             }
 
                             this.updateZeitraumButtons_();

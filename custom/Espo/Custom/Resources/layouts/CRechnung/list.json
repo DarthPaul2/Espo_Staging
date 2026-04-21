@@ -32,11 +32,6 @@
         "align": "left"
     },
     {
-        "name": "mahnstufe",
-        "width": 10,
-        "align": "left"
-    },
-    {
         "name": "letzteMahnungAm",
         "width": 10,
         "align": "left"
@@ -44,6 +39,11 @@
     {
         "name": "pdfUrl",
         "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "istFestgeschrieben",
+        "width": 6,
         "align": "left"
     },
     {

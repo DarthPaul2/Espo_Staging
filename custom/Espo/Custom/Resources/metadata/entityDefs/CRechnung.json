@@ -13,7 +13,8 @@
             "SchlussImporter",
             "UpdateRechnungTotals",
             "MarkAuftragspositionAbgerechnet",
-            "ResetBereitsabgerechnetOnDelete"
+            "ResetBereitsabgerechnetOnDelete",
+            "UpdateAuftragStatusOnSchlussrechnungPayment"
         ],
         "afterRelate": [
             "MarkAuftragspositionAbgerechnet"
@@ -339,7 +340,8 @@
             "notNull": true,
             "type": "bool",
             "isCustom": true,
-            "default": false
+            "default": false,
+            "tooltip": true
         },
         "festschreibungHinweis": {
             "type": "text",

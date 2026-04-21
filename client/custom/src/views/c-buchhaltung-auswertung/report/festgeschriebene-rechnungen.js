@@ -160,11 +160,6 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-rechnungen
                     type: 'equals',
                     attribute: 'buchhaltungStatus',
                     value: 'festgeschrieben'
-                },
-                {
-                    type: 'equals',
-                    attribute: 'rechnungstyp',
-                    value: 'einzelrechnung'
                 }
             ];
 
@@ -209,9 +204,9 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-rechnungen
                 collection.data.where = where;
 
                 collection.fetch().then(() => {
+                    console.log('[FestgeschriebeneRechnungen] RAW models', (collection.models || []).map(model => model.attributes || {}));
                     const list = (collection.models || [])
-                        .map(model => model.attributes || {})
-                        .filter(item => item.istFestgeschrieben === true);
+                        .map(model => model.attributes || {});
 
                     list.sort((a, b) => {
                         const aFest = a.festgeschriebenAm || '';

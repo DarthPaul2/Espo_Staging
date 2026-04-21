@@ -1,5 +1,6 @@
 // Отчёт Offene Forderungen.
-// Что это: отдельный модуль рендера для auswertungTyp = offene_forderungen.
+// Что это: Phase-3-Bericht по offenen Forderungen
+// на основе festgeschriebene Ausgangsrechnungen с учётом restbetragOffen.
 
 define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], function () {
     return {
@@ -34,19 +35,19 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
-                                    <div><strong>Netto</strong></div>
-                                    <div class="kb-kpi-netto" style="font-size: 22px;">0,00 €</div>
+                                    <div><strong>Teilweise bezahlt</strong></div>
+                                    <div class="kb-kpi-teilweise" style="font-size: 22px;">0</div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
-                                    <div><strong>USt</strong></div>
-                                    <div class="kb-kpi-ust" style="font-size: 22px;">0,00 €</div>
+                                    <div><strong>Summe offen</strong></div>
+                                    <div class="kb-kpi-offen" style="font-size: 22px;">0,00 €</div>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="well">
-                                    <div><strong>Brutto</strong></div>
+                                    <div><strong>Ursprünglich brutto</strong></div>
                                     <div class="kb-kpi-brutto" style="font-size: 22px;">0,00 €</div>
                                 </div>
                             </div>
@@ -90,7 +91,7 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
 
                         <div class="kb-tab-panel" data-tab-panel="gf">
                             <p><strong>Geschäftsführung</strong></p>
-                            <p>Kompakter Überblick über offene Forderungen der festgeschriebenen Ausgangsrechnungen.</p>
+                            <p>Kompakter Überblick über aktuell offene Forderungen nach bereits berücksichtigten Zahlungen.</p>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
@@ -100,13 +101,14 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                                             <th>Kunde</th>
                                             <th>Belegdatum</th>
                                             <th>Fällig am</th>
-                                            <th>Brutto offen</th>
+                                            <th>Zahlungsstatus</th>
+                                            <th>Offen</th>
                                             <th>Buchungsjournal</th>
                                         </tr>
                                     </thead>
                                     <tbody class="kb-tbody-gf">
                                         <tr>
-                                            <td colspan="6" class="text-muted">Noch keine Daten geladen.</td>
+                                            <td colspan="7" class="text-muted">Noch keine Daten geladen.</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -115,7 +117,7 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
 
                         <div class="kb-tab-panel hidden" data-tab-panel="buha">
                             <p><strong>Buchhaltung</strong></p>
-                            <p>Erweiterte Sicht auf offene Forderungen der Phase 1 ohne Zahlungsausgleich.</p>
+                            <p>Erweiterte Sicht auf offene Forderungen mit Restbetrag und Zahlungsstatus aus Phase 3.</p>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
@@ -125,9 +127,9 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                                             <th>Kunde</th>
                                             <th>Belegdatum</th>
                                             <th>Fällig am</th>
-                                            <th>Netto</th>
-                                            <th>USt</th>
-                                            <th>Brutto</th>
+                                            <th>Brutto ursprünglich</th>
+                                            <th>Restbetrag offen</th>
+                                            <th>Status</th>
                                             <th>Steuerfall</th>
                                             <th>Buchungsjournal</th>
                                             <th>Festgeschrieben am</th>
@@ -162,9 +164,9 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                     value: 'festgeschrieben'
                 },
                 {
-                    type: 'equals',
-                    attribute: 'rechnungstyp',
-                    value: 'einzelrechnung'
+                    type: 'greaterThan',
+                    attribute: 'restbetragOffen',
+                    value: 0
                 }
             ];
 
@@ -193,15 +195,15 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                     'rechnungsnummer',
                     'belegdatum',
                     'faelligAm',
-                    'betragNetto',
                     'betragBrutto',
-                    'ustBetrag',
+                    'restbetragOffen',
                     'festgeschriebenAm',
                     'accountId',
                     'accountName',
                     'istFestgeschrieben',
                     'buchhaltungStatus',
                     'rechnungstyp',
+                    'status',
                     'gesetzOption13b',
                     'gesetzOption12'
                 ];
@@ -211,8 +213,10 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                 collection.fetch().then(() => {
                     let list = (collection.models || []).map(model => model.attributes || {});
 
-                    // Что это: client-side страховка по bool
-                    list = list.filter(item => item.istFestgeschrieben === true);
+                    list = list.filter(item =>
+                        String(item.buchhaltungStatus || '').trim() === 'festgeschrieben' &&
+                        Number(item.restbetragOffen || 0) > 0
+                    );
 
                     list.sort((a, b) => {
                         const aFaellig = a.faelligAm || '';
@@ -297,12 +301,12 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
             const $tbodyGf = view.$el.find('.kb-tbody-gf');
             const $tbodyBuha = view.$el.find('.kb-tbody-buha');
 
-            let sumNetto = 0;
-            let sumUst = 0;
+            let sumOffen = 0;
             let sumBrutto = 0;
+            let anzahlTeilweise = 0;
 
             if (!list.length) {
-                $tbodyGf.html('<tr><td colspan="6" class="text-muted">Keine offenen Forderungen gefunden.</td></tr>');
+                $tbodyGf.html('<tr><td colspan="7" class="text-muted">Keine offenen Forderungen gefunden.</td></tr>');
                 $tbodyBuha.html('<tr><td colspan="10" class="text-muted">Keine offenen Forderungen gefunden.</td></tr>');
                 this.updateKennzahlen(view, 0, 0, 0, 0);
                 view.updateInfoZeile_(0);
@@ -313,13 +317,16 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
             let htmlBuha = '';
 
             list.forEach((item) => {
-                const netto = Number(item.betragNetto || 0);
-                const ust = Number(item.ustBetrag || 0);
                 const brutto = Number(item.betragBrutto || 0);
+                const rest = Number(item.restbetragOffen || 0);
 
-                sumNetto += netto;
-                sumUst += ust;
                 sumBrutto += brutto;
+                sumOffen += rest;
+
+                const statusRaw = String(item.status || '').trim();
+                if (statusRaw === 'teilweise_bezahlt') {
+                    anzahlTeilweise++;
+                }
 
                 const rechnungsnummerText = view.escapeHtml_(item.rechnungsnummer || item.name || '');
                 const rechnungId = view.escapeHtml_(item.id || '');
@@ -334,6 +341,7 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                 const belegdatum = view.escapeHtml_(view.formatDateGerman_(item.belegdatum));
                 const faelligAm = view.escapeHtml_(view.formatDateGerman_(item.faelligAm));
                 const festgeschriebenAm = view.escapeHtml_(view.formatDateTimeGerman_(item.festgeschriebenAm));
+                const statusText = view.escapeHtml_(this.formatStatus_(statusRaw));
 
                 let steuerFall = 'normal';
                 if (item.gesetzOption13b) {
@@ -356,7 +364,8 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                         <td>${kunde}</td>
                         <td>${belegdatum}</td>
                         <td>${faelligAm}</td>
-                        <td>${view.formatCurrency_(brutto)}</td>
+                        <td>${statusText}</td>
+                        <td>${view.formatCurrency_(rest)}</td>
                         <td>${journalLink}</td>
                     </tr>
                 `;
@@ -367,9 +376,9 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                         <td>${kunde}</td>
                         <td>${belegdatum}</td>
                         <td>${faelligAm}</td>
-                        <td>${view.formatCurrency_(netto)}</td>
-                        <td>${view.formatCurrency_(ust)}</td>
                         <td>${view.formatCurrency_(brutto)}</td>
+                        <td>${view.formatCurrency_(rest)}</td>
+                        <td>${statusText}</td>
                         <td>${steuerFall}</td>
                         <td>${journalLink}</td>
                         <td>${festgeschriebenAm}</td>
@@ -380,15 +389,23 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
             $tbodyGf.html(htmlGf);
             $tbodyBuha.html(htmlBuha);
 
-            this.updateKennzahlen(view, list.length, sumNetto, sumUst, sumBrutto);
+            this.updateKennzahlen(view, list.length, anzahlTeilweise, sumOffen, sumBrutto);
             view.updateInfoZeile_(list.length);
         },
 
-        updateKennzahlen(view, anzahl, netto, ust, brutto) {
+        updateKennzahlen(view, anzahl, teilweise, offen, brutto) {
             view.$el.find('.kb-kpi-anzahl').text(anzahl);
-            view.$el.find('.kb-kpi-netto').text(view.formatCurrency_(netto));
-            view.$el.find('.kb-kpi-ust').text(view.formatCurrency_(ust));
+            view.$el.find('.kb-kpi-teilweise').text(teilweise);
+            view.$el.find('.kb-kpi-offen').text(view.formatCurrency_(offen));
             view.$el.find('.kb-kpi-brutto').text(view.formatCurrency_(brutto));
+        },
+
+        formatStatus_(value) {
+            if (value === 'offen') return 'Offen';
+            if (value === 'teilweise_bezahlt') return 'Teilweise bezahlt';
+            if (value === 'bezahlt') return 'Bezahlt';
+            if (value === 'storniert') return 'Storniert';
+            return value || '–';
         }
     };
 });

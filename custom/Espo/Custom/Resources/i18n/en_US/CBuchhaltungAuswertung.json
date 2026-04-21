@@ -27,7 +27,15 @@
             "verbindlichkeiten": "Verbindlichkeiten",
             "aufwand": "Aufwand",
             "vorsteuer": "Vorsteuer",
-            "kontenbewegungen_eingang": "Kontenbewegungen Eingang"
+            "kontenbewegungen_eingang": "Kontenbewegungen Eingang",
+            "festgeschriebene_zahlungen": "Festgeschriebene Zahlungen",
+            "ausgleichsuebersicht": "Ausgleichsübersicht",
+            "zahlungseingaenge": "Zahlungseingänge",
+            "zahlungsausgaenge": "Zahlungsausgänge",
+            "teilweise_ausgeglichene_belege": "Teilweise ausgeglichene Belege",
+            "voll_ausgeglichene_belege": "Voll ausgeglichene Belege",
+            "zahlungsuebersicht": "Zahlungsübersicht",
+            "kontenbewegungen_zahlung": "Kontenbewegungen Zahlung"
         },
         "standardZeitraum": {
             "monat": "Monat",

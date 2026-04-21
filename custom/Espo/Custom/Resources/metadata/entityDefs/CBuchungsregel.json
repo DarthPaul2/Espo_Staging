@@ -64,13 +64,21 @@
                 "einzelrechnung",
                 "eingangsrechnung",
                 "zahlungseingang",
-                "zahlungsausgang"
+                "zahlungsausgang",
+                "teilrechnung",
+                "abschlagsrechnung",
+                "schlussrechnung",
+                "gutschrift"
             ],
             "style": {
                 "einzelrechnung": null,
                 "eingangsrechnung": null,
                 "zahlungseingang": null,
-                "zahlungsausgang": null
+                "zahlungsausgang": null,
+                "teilrechnung": null,
+                "abschlagsrechnung": null,
+                "schlussrechnung": null,
+                "gutschrift": null
             },
             "default": "einzelrechnung",
             "maxLength": 100,

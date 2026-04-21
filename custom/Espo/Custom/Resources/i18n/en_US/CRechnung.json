@@ -3,8 +3,8 @@
         "rechnungsnummer": "Rech.-Nr.",
         "einleitung": "Einleitung",
         "bemerkung": "Bemerkung",
-        "betragNetto": "Betrag (netto)",
-        "betragBrutto": "Betrag (brutto)",
+        "betragNetto": "Netto",
+        "betragBrutto": "Brutto",
         "ustBetrag": "USt-Betrag",
         "faelligAm": "Fällig am",
         "leistungsdatumVon": "Leistungsdatum von",
@@ -26,7 +26,7 @@
         "mahnstufe": "Mahnstufe",
         "letzteMahnungAm": "Letzte Mahnung",
         "mahnungs": "Mahnungen",
-        "rechnungstyp": "Rechnungstyp",
+        "rechnungstyp": "Rech.-Typ",
         "bezahltAm": "Bezahlt am",
         "briefs": "Briefs",
         "objekt": "Objekt",
@@ -35,7 +35,7 @@
         "buchhaltungStatus": "Buchhaltungsstatus",
         "freigabeAm": "Freigabe am",
         "festgeschriebenAm": "Festgeschrieben am",
-        "istFestgeschrieben": "Ist festgeschrieben",
+        "istFestgeschrieben": "FEST",
         "festschreibungHinweis": "Festschreibung Hinweis",
         "freigegebeneRechnungen": "Freigegebene Rechnungen",
         "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
@@ -95,5 +95,8 @@
             "freigabe": "Freigabe",
             "festgeschrieben": "Festgeschrieben"
         }
+    },
+    "tooltips": {
+        "istFestgeschrieben": "ist Festgeschrieben"
     }
 }

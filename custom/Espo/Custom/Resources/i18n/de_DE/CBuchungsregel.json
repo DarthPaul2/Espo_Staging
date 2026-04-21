@@ -32,7 +32,11 @@
             "einzelrechnung": "Einzelrechnung",
             "eingangsrechnung": "Eingangsrechnung",
             "zahlungseingang": "Zahlungseingang",
-            "zahlungsausgang": "Zahlungsausgang"
+            "zahlungsausgang": "Zahlungsausgang",
+            "teilrechnung": "Teilrechnung",
+            "abschlagsrechnung": "Abschlagsrechnung",
+            "schlussrechnung": "Schlussrechnung",
+            "gutschrift": "Gutschrift"
         },
         "steuerFall": {
             "normal": "Normale Umsatzsteuer",

@@ -47,7 +47,15 @@
                 "verbindlichkeiten",
                 "aufwand",
                 "vorsteuer",
-                "kontenbewegungen_eingang"
+                "kontenbewegungen_eingang",
+                "festgeschriebene_zahlungen",
+                "ausgleichsuebersicht",
+                "zahlungseingaenge",
+                "zahlungsausgaenge",
+                "teilweise_ausgeglichene_belege",
+                "voll_ausgeglichene_belege",
+                "zahlungsuebersicht",
+                "kontenbewegungen_zahlung"
             ],
             "style": {
                 "festgeschriebene_rechnungen": null,
@@ -59,7 +67,15 @@
                 "verbindlichkeiten": null,
                 "aufwand": null,
                 "vorsteuer": null,
-                "kontenbewegungen_eingang": null
+                "kontenbewegungen_eingang": null,
+                "festgeschriebene_zahlungen": null,
+                "ausgleichsuebersicht": null,
+                "zahlungseingaenge": null,
+                "zahlungsausgaenge": null,
+                "teilweise_ausgeglichene_belege": null,
+                "voll_ausgeglichene_belege": null,
+                "zahlungsuebersicht": null,
+                "kontenbewegungen_zahlung": null
             },
             "default": "festgeschriebene_rechnungen",
             "maxLength": 100,
@@ -80,7 +96,7 @@
         "phase1Verwendet": {
             "notNull": true,
             "type": "bool",
-            "default": true,
+            "default": false,
             "isCustom": true
         },
         "sortierung": {
