@@ -18,12 +18,12 @@
     },
     {
         "name": "betrag",
-        "width": 10,
+        "width": 8,
         "align": "left"
     },
     {
         "name": "zahlungsdatum",
-        "width": 11,
+        "width": 10,
         "align": "left"
     },
     {
@@ -32,18 +32,8 @@
         "align": "left"
     },
     {
-        "name": "bankbezugTyp",
-        "width": 11,
-        "align": "left"
-    },
-    {
         "name": "referenz",
         "width": 11,
-        "align": "left"
-    },
-    {
-        "name": "testmodus",
-        "width": 7,
         "align": "left"
     },
     {
@@ -54,6 +44,11 @@
     {
         "name": "festgeschriebenVon",
         "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "istStorniert",
+        "width": 9,
         "align": "left"
     }
 ]

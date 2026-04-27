@@ -10,35 +10,17 @@
                 },
                 {
                     "name": "betrag"
-                },
-                {
-                    "name": "buchungstext"
                 }
             ],
             [
                 {
-                    "name": "kontoNummer"
+                    "name": "buchungstext"
                 },
                 {
                     "name": "kontoBezeichnung"
                 },
-                false,
                 {
                     "name": "belegdatum"
-                }
-            ],
-            [
-                {
-                    "name": "quelleTyp"
-                },
-                {
-                    "name": "quelleIdExtern"
-                },
-                {
-                    "name": "quelleNummer"
-                },
-                {
-                    "name": "steuerFall"
                 }
             ],
             [
@@ -53,13 +35,12 @@
                 {
                     "name": "istStorno"
                 },
-                false,
                 {
                     "name": "beschreibung"
                 }
             ]
         ],
         "style": "default",
-        "label": "Overview"
+        "label": ""
     }
 ]

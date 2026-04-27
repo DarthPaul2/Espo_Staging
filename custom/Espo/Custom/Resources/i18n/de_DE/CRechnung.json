@@ -46,7 +46,11 @@
         "buchungsjournale": "Buchungsjournale",
         "istTest": "Nur für TEST !!!",
         "ausgleiche": "Ausgleiche",
-        "restbetragOffen": "Offener Restbetrag"
+        "restbetragOffen": "Offener Restbetrag",
+        "istStorniert": "Ist Storno",
+        "storniertAm": "Storniert am",
+        "stornoGrund": "Storno-Grund",
+        "storniertVon": "Storniert von"
     },
     "links": {
         "account": "Account",
@@ -62,7 +66,8 @@
         "freigegebeneRechnungen": "Freigegebene Rechnungen",
         "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
         "buchungsjournale": "Buchungsjournale",
-        "ausgleiche": "Ausgleiche"
+        "ausgleiche": "Ausgleiche",
+        "storniertVon": "Storniert von"
     },
     "options": {
         "status": {

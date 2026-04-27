@@ -181,6 +181,23 @@
         },
         "lieferant": {
             "type": "link"
+        },
+        "istStorniert": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true
+        },
+        "storniertAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "stornoGrund": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
         }
     },
     "links": {

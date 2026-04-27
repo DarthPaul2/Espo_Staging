@@ -141,6 +141,12 @@
         },
         "buchungsregel": {
             "type": "link"
+        },
+        "istStorno": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true,
+            "readOnly": true
         }
     },
     "links": {

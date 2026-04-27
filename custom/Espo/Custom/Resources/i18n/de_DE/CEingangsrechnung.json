@@ -25,7 +25,11 @@
         "importe": "Importe",
         "ausgleiche": "Ausgleiche",
         "zahlungsstatus": "Zahlungsstatus",
-        "restbetragOffen": "Offener Restbetrag"
+        "restbetragOffen": "Offener Restbetrag",
+        "istStorniert": "Ist Storno",
+        "storniertAm": "Storniert am",
+        "stornoGrund": "Storno-Grund",
+        "storniertVon": "Storniert von"
     },
     "options": {
         "steuerfall": {
@@ -51,6 +55,7 @@
         "festgeschriebenVon": "Festgeschrieben von",
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
         "importe": "Importe",
-        "ausgleiche": "Ausgleiche"
+        "ausgleiche": "Ausgleiche",
+        "storniertVon": "Storniert von"
     }
 }

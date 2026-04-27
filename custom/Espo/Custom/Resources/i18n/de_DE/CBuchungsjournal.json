@@ -17,7 +17,9 @@
         "rechnung": "Rechnung",
         "buchhaltungAuswertungen": "Buchhaltungsauswertungen",
         "eingangsrechnungs": "Eingangsrechnungen",
-        "zahlung": "Zahlung"
+        "zahlung": "Zahlung",
+        "istStorno": "Ist Storno",
+        "stornoGrund": "Storno-Grund"
     },
     "options": {
         "quelleTyp": {

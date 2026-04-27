@@ -33,6 +33,10 @@
         "ausgleiche": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "storniertVon": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

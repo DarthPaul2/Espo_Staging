@@ -1,7 +1,8 @@
-// Отчёт Festgeschriebene Eingangsrechnungen.
-// Что это: отдельный модуль рендера для auswertungTyp = festgeschriebene_eingangsrechnungen.
+// Отчёт Stornierte Eingangsrechnungen.
+// Что это: отдельный модуль рендера для auswertungTyp = stornierte_eingangsrechnungen.
+// Зачем: показывает все сторнированные входящие счета в том же стиле, что и stornierte_rechnungen.
 
-define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsrechnungen', [], function () {
+define('custom:views/c-buchhaltung-auswertung/report/stornierte-eingangsrechnungen', [], function () {
     return {
 
         renderKennzahlenBlock(view) {
@@ -28,7 +29,7 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="well">
-                                    <div><strong>Anzahl Eingangsrechnungen</strong></div>
+                                    <div><strong>Anzahl storniert</strong></div>
                                     <div class="kb-kpi-anzahl" style="font-size: 22px;">0</div>
                                 </div>
                             </div>
@@ -82,15 +83,15 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
                         </ul>
                     </div>
                     <div class="panel-body">
-                        <div class="alert alert-info kb-auswertung-info">
+                        <div class="alert alert-danger kb-auswertung-info">
                             Zeitraum: <strong><span class="kb-info-zeitraum">–</span></strong>
                             &nbsp;|&nbsp;
-                            Gefundene Eingangsrechnungen: <strong><span class="kb-info-anzahl">0</span></strong>
+                            Stornierte Eingangsrechnungen: <strong><span class="kb-info-anzahl">0</span></strong>
                         </div>
 
                         <div class="kb-tab-panel" data-tab-panel="gf">
                             <p><strong>Geschäftsführung</strong></p>
-                            <p>Kompakter Überblick über festgeschriebene Eingangsrechnungen im ausgewählten Zeitraum.</p>
+                            <p>Kompakter Überblick über stornierte Eingangsrechnungen im ausgewählten Zeitraum.</p>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
@@ -99,9 +100,9 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
                                             <th>Eingangsrechnungsnummer</th>
                                             <th>Lieferant</th>
                                             <th>Belegdatum</th>
-                                            <th>Fällig am</th>
                                             <th>Brutto</th>
-                                            <th>Festgeschrieben am</th>
+                                            <th>Storniert am</th>
+                                            <th>Grund</th>
                                         </tr>
                                     </thead>
                                     <tbody class="kb-tbody-gf">
@@ -115,28 +116,26 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
 
                         <div class="kb-tab-panel hidden" data-tab-panel="buha">
                             <p><strong>Buchhaltung</strong></p>
-                            <p>Erweiterte Sicht mit fachlicher Detailtiefe und Drill-down zu Journal.</p>
+                            <p>Erweiterte Sicht mit Storno-Journal und fachlichen Details.</p>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>Eingangsrechnungsnummer</th>
-                                            <th>Lieferanten-Rechnungsnummer</th>
                                             <th>Lieferant</th>
                                             <th>Belegdatum</th>
-                                            <th>Fällig am</th>
                                             <th>Netto</th>
                                             <th>Steuer</th>
                                             <th>Brutto</th>
-                                            <th>Steuerfall</th>
-                                            <th>Buchungsjournal</th>
-                                            <th>Festgeschrieben am</th>
+                                            <th>Storniert am</th>
+                                            <th>Grund</th>
+                                            <th>Storno-Journal</th>
                                         </tr>
                                     </thead>
                                     <tbody class="kb-tbody-buha">
                                         <tr>
-                                            <td colspan="11" class="text-muted">Noch keine Daten geladen.</td>
+                                            <td colspan="9" class="text-muted">Noch keine Daten geladen.</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -164,24 +163,24 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
                 },
                 {
                     type: 'equals',
-                    attribute: 'istStorniert',
-                    value: false
+                    attribute: 'zahlungsstatus',
+                    value: 'storniert'
                 }
             ];
 
             if (zeitraumVon) {
                 where.push({
                     type: 'greaterThanOrEquals',
-                    attribute: 'belegdatum',
-                    value: zeitraumVon
+                    attribute: 'storniertAm',
+                    value: zeitraumVon + ' 00:00:00'
                 });
             }
 
             if (zeitraumBis) {
                 where.push({
                     type: 'lessThanOrEquals',
-                    attribute: 'belegdatum',
-                    value: zeitraumBis
+                    attribute: 'storniertAm',
+                    value: zeitraumBis + ' 23:59:59'
                 });
             }
 
@@ -192,44 +191,31 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
                     'id',
                     'name',
                     'eingangsrechnungsnummer',
-                    'lieferantenRechnungsnummer',
                     'belegdatum',
-                    'eingangsdatum',
-                    'faelligAm',
                     'betragNetto',
                     'steuerBetrag',
                     'betragBrutto',
-                    'steuerfall',
-                    'festgeschriebenAm',
                     'lieferantId',
                     'lieferantName',
-                    'status',
+                    'storniertAm',
+                    'stornoGrund',
                     'istStorniert',
-                    'buchungsjournalId',
-                    'buchungsjournalName'
+                    'status',
+                    'zahlungsstatus'
                 ];
 
                 collection.data.where = where;
 
                 collection.fetch().then(() => {
                     const list = (collection.models || [])
-                        .map(model => model.attributes || {})
-                        .filter(item =>
-                            String(item.status || '').toLowerCase() === 'festgeschrieben' &&
-                            !item.istStorniert
-                        );
+                        .map(model => model.attributes || {});
 
                     list.sort((a, b) => {
-                        const aFest = a.festgeschriebenAm || '';
-                        const bFest = b.festgeschriebenAm || '';
-                        if (aFest !== bFest) {
-                            return bFest.localeCompare(aFest);
-                        }
+                        const aStorno = a.storniertAm || '';
+                        const bStorno = b.storniertAm || '';
 
-                        const aBeleg = a.belegdatum || '';
-                        const bBeleg = b.belegdatum || '';
-                        if (aBeleg !== bBeleg) {
-                            return bBeleg.localeCompare(aBeleg);
+                        if (aStorno !== bStorno) {
+                            return bStorno.localeCompare(aStorno);
                         }
 
                         const aNr = a.eingangsrechnungsnummer || '';
@@ -237,10 +223,112 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
                         return bNr.localeCompare(aNr);
                     });
 
+                    this.loadStornoJournale(view, list);
+                }).catch((err) => {
+                    console.error('[StornierteEingangsrechnungen] load failed', err);
+                    view.notify('Fehler beim Laden der stornierten Eingangsrechnungen', 'error');
+                });
+            });
+        },
+
+        // Что это:
+        // Загружает все журналы по найденным Eingangsrechnungen
+        // и потом уже на клиенте выбирает именно сторно-журнал.
+        //
+        // Зачем:
+        // Чтобы не зависеть от того, как именно gespeichert/angezeigt поле quelleTyp
+        // и не отрезать нужный Journal слишком жёстким where-фильтром.
+        loadStornoJournale(view, list) {
+            if (!list.length) {
+                this.render(view, list);
+                return;
+            }
+
+            const ids = list.map(item => item.id).filter(Boolean);
+
+            const where = [
+                {
+                    type: 'in',
+                    attribute: 'quelleIdExtern',
+                    value: ids
+                }
+            ];
+
+            view.getCollectionFactory().create('CBuchungsjournal', (collection) => {
+                collection.maxSize = 500;
+
+                collection.data.select = [
+                    'id',
+                    'journalNummer',
+                    'quelleIdExtern',
+                    'quelleTyp',
+                    'quelleNummer',
+                    'buchungstext',
+                    'istStorno',
+                    'createdAt'
+                ];
+
+                collection.data.where = where;
+                collection.data.orderBy = 'createdAt';
+                collection.data.order = 'desc';
+
+                collection.fetch().then(() => {
+                    const journalMap = {};
+
+                    (collection.models || []).forEach(model => {
+                        const item = model.attributes || {};
+                        const quelleIdExtern = item.quelleIdExtern || null;
+
+                        if (!quelleIdExtern) return;
+                        if (journalMap[quelleIdExtern]) return;
+
+                        const journalNummer = String(item.journalNummer || item.name || '');
+                        const buchungstext = String(item.buchungstext || '');
+                        const quelleTyp = String(item.quelleTyp || '');
+                        const istStorno = !!item.istStorno;
+
+                        // Что это:
+                        // Erkennung des echten Storno-Journals.
+                        //
+                        // Зачем:
+                        // Берём только сторно-журнал, а не ursprüngliches Festschreibungsjournal.
+                        const isStornoJournal =
+                            istStorno === true ||
+                            journalNummer.indexOf('ESTR-JRN-') === 0 ||
+                            buchungstext.indexOf('Storno Eingangsrechnung ') === 0;
+
+                        const looksLikeOriginalJournal =
+                            journalNummer.indexOf('EJR-') === 0 &&
+                            journalNummer.indexOf('ESTR-JRN-') !== 0 &&
+                            buchungstext.indexOf('Festschreibung Eingangsrechnung ') === 0;
+
+                        // Что это:
+                        // Дополнительная мягкая проверка Quelle-Typ.
+                        //
+                        // Зачем:
+                        // Принимаем и technische, и fachliche Darstellung.
+                        const quelleTypPasst =
+                            quelleTyp === 'CEingangsrechnung' ||
+                            quelleTyp === 'Eingangsrechnung' ||
+                            quelleTyp === '';
+
+                        if (!quelleTypPasst) return;
+                        if (!isStornoJournal || looksLikeOriginalJournal) return;
+
+                        journalMap[quelleIdExtern] = {
+                            id: item.id || '',
+                            journalNummer: item.journalNummer || item.name || ''
+                        };
+                    });
+
+                    list.forEach(item => {
+                        item._stornoJournal = journalMap[item.id] || null;
+                    });
+
                     this.render(view, list);
                 }).catch((err) => {
-                    console.error('[FestgeschriebeneEingangsrechnungen] load failed', err);
-                    view.notify('Fehler beim Laden der Eingangsrechnungen', 'error');
+                    console.error('[StornierteEingangsrechnungen] load journals failed', err);
+                    this.render(view, list);
                 });
             });
         },
@@ -254,8 +342,8 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
             let sumBrutto = 0;
 
             if (!list.length) {
-                $tbodyGf.html('<tr><td colspan="6" class="text-muted">Keine festgeschriebenen Eingangsrechnungen gefunden.</td></tr>');
-                $tbodyBuha.html('<tr><td colspan="11" class="text-muted">Keine festgeschriebenen Eingangsrechnungen gefunden.</td></tr>');
+                $tbodyGf.html('<tr><td colspan="6" class="text-muted">Keine stornierten Eingangsrechnungen gefunden.</td></tr>');
+                $tbodyBuha.html('<tr><td colspan="9" class="text-muted">Keine stornierten Eingangsrechnungen gefunden.</td></tr>');
                 this.updateKennzahlen(view, 0, 0, 0, 0);
                 this.updateInfoZeile(view, 0);
                 return;
@@ -284,43 +372,39 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-eingangsre
                     : lieferantText;
 
                 const belegdatum = view.escapeHtml_(view.formatDateGerman_(item.belegdatum));
-                const faelligAm = view.escapeHtml_(view.formatDateGerman_(item.faelligAm));
-                const festgeschriebenAm = view.escapeHtml_(view.formatDateTimeGerman_(item.festgeschriebenAm));
-                const lieferantenRechnungsnummer = view.escapeHtml_(item.lieferantenRechnungsnummer || '');
-                const steuerfall = view.escapeHtml_(item.steuerfall || '');
+                const storniertAm = view.escapeHtml_(view.formatDateTimeGerman_(item.storniertAm));
+                const stornoGrund = view.escapeHtml_(item.stornoGrund || '—');
 
                 htmlGf += `
                     <tr>
                         <td>${nummer}</td>
                         <td>${lieferant}</td>
                         <td>${belegdatum}</td>
-                        <td>${faelligAm}</td>
                         <td>${view.formatCurrency_(brutto)}</td>
-                        <td>${festgeschriebenAm}</td>
+                        <td>${storniertAm}</td>
+                        <td>${stornoGrund}</td>
                     </tr>
                 `;
 
                 let journalLink = '<span class="text-muted">–</span>';
 
-                if (item.buchungsjournalId) {
-                    const journalId = view.escapeHtml_(item.buchungsjournalId || '');
-                    const journalNummerText = view.escapeHtml_(item.buchungsjournalName || 'Journal');
+                if (item._stornoJournal && item._stornoJournal.id) {
+                    const journalId = view.escapeHtml_(item._stornoJournal.id);
+                    const journalNummerText = view.escapeHtml_(item._stornoJournal.journalNummer || 'Journal');
                     journalLink = `<a href="#CBuchungsjournal/view/${journalId}">${journalNummerText}</a>`;
                 }
 
                 htmlBuha += `
                     <tr>
                         <td>${nummer}</td>
-                        <td>${lieferantenRechnungsnummer}</td>
                         <td>${lieferant}</td>
                         <td>${belegdatum}</td>
-                        <td>${faelligAm}</td>
                         <td>${view.formatCurrency_(netto)}</td>
                         <td>${view.formatCurrency_(steuer)}</td>
                         <td>${view.formatCurrency_(brutto)}</td>
-                        <td>${steuerfall}</td>
+                        <td>${storniertAm}</td>
+                        <td>${stornoGrund}</td>
                         <td>${journalLink}</td>
-                        <td>${festgeschriebenAm}</td>
                     </tr>
                 `;
             });

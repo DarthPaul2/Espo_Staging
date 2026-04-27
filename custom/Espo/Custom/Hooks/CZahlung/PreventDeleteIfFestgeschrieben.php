@@ -6,7 +6,6 @@ use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
 use Espo\Core\Exceptions\Forbidden;
 use Espo\Core\Utils\Log;
-use Espo\ORM\Repository\Option\RemoveOptions;
 
 // Что это:
 // запрещает удаление festgeschriebene Zahlung
@@ -22,7 +21,7 @@ class PreventDeleteIfFestgeschrieben
         private Log $log
     ) {}
 
-    public function beforeRemove(Entity $entity, RemoveOptions $options): void
+    public function beforeRemove(Entity $entity, array $options = []): void
     {
         $status = strtolower((string) ($entity->get('status') ?? ''));
         $zahlungId = $entity->getId();
@@ -50,7 +49,8 @@ class PreventDeleteIfFestgeschrieben
             $ausgleich->set('istAktiv', false);
             $ausgleich->set('deleted', true);
 
-            // служебное сохранение
+            // Что это:
+            // служебное сохранение Ausgleich перед удалением Zahlung.
             $this->entityManager->saveEntity($ausgleich);
         }
 

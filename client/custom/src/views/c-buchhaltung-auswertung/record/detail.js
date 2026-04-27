@@ -24,7 +24,14 @@ define(
         'custom:views/c-buchhaltung-auswertung/report/teilweise-ausgeglichene-belege',
         'custom:views/c-buchhaltung-auswertung/report/voll-ausgeglichene-belege',
         'custom:views/c-buchhaltung-auswertung/report/zahlungsuebersicht',
-        'custom:views/c-buchhaltung-auswertung/report/kontenbewegungen-zahlung'
+        'custom:views/c-buchhaltung-auswertung/report/kontenbewegungen-zahlung',
+        'custom:views/c-buchhaltung-auswertung/report/stornierte-rechnungen',
+        'custom:views/c-buchhaltung-auswertung/report/stornierte-eingangsrechnungen',
+        'custom:views/c-buchhaltung-auswertung/report/stornierte-zahlungen',
+        'custom:views/c-buchhaltung-auswertung/report/stornierte-ausgleiche',
+        'custom:views/c-buchhaltung-auswertung/report/stornierte-kontenbewegungen',
+        'custom:views/c-buchhaltung-auswertung/report/stornierte-journale',
+        'custom:views/c-buchhaltung-auswertung/report/storno-uebersicht',
     ],
     function (
         Dep,
@@ -45,7 +52,14 @@ define(
         TeilweiseAusgeglicheneBelegeReport,
         VollAusgeglicheneBelegeReport,
         ZahlungsuebersichtReport,
-        KontenbewegungenZahlungReport
+        KontenbewegungenZahlungReport,
+        StornierteRechnungenReport,
+        StornierteEingangsrechnungenReport,
+        StornierteZahlungenReport,
+        StornierteAusgleicheReport,
+        StornierteKontenbewegungenReport,
+        StornierteJournaleReport,
+        StornoUebersichtReport,
     ) {
         return Dep.extend({
 
@@ -333,6 +347,83 @@ define(
 
                     if (this.shouldLoadReport_(auswertungTyp)) {
                         KontenbewegungenZahlungReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'stornierte_rechnungen') {
+                    StornierteRechnungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornierteRechnungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornierteRechnungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'stornierte_eingangsrechnungen') {
+                    StornierteEingangsrechnungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornierteEingangsrechnungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornierteEingangsrechnungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'stornierte_zahlungen') {
+                    StornierteZahlungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornierteZahlungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornierteZahlungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'stornierte_ausgleiche') {
+                    StornierteAusgleicheReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornierteAusgleicheReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornierteAusgleicheReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'stornierte_kontenbewegungen') {
+                    StornierteKontenbewegungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornierteKontenbewegungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornierteKontenbewegungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'stornierte_journale') {
+                    StornierteJournaleReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornierteJournaleReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornierteJournaleReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'storno_uebersicht') {
+                    StornoUebersichtReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornoUebersichtReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornoUebersichtReport.load(this);
                     }
                 }
 
@@ -740,6 +831,41 @@ define(
                                 KontenbewegungenZahlungReport.load(this);
                             }
 
+                            if (auswertungTyp === 'stornierte_rechnungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteRechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_eingangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteEingangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_zahlungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteZahlungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_ausgleiche') {
+                                this._lastReportLoadSignature = null;
+                                StornierteAusgleicheReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_kontenbewegungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteKontenbewegungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_journale') {
+                                this._lastReportLoadSignature = null;
+                                StornierteJournaleReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'storno_uebersicht') {
+                                this._lastReportLoadSignature = null;
+                                StornoUebersichtReport.load(this);
+                            }
+
                             this.updateZeitraumButtons_();
                             this.notify('Zeitraum gespeichert', 'success');
                         },
@@ -855,6 +981,41 @@ define(
                             if (auswertungTyp === 'kontenbewegungen_zahlung') {
                                 this._lastReportLoadSignature = null;
                                 KontenbewegungenZahlungReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_rechnungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteRechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_eingangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteEingangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_zahlungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteZahlungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_ausgleiche') {
+                                this._lastReportLoadSignature = null;
+                                StornierteAusgleicheReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_kontenbewegungen') {
+                                this._lastReportLoadSignature = null;
+                                StornierteKontenbewegungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_journale') {
+                                this._lastReportLoadSignature = null;
+                                StornierteJournaleReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'storno_uebersicht') {
+                                this._lastReportLoadSignature = null;
+                                StornoUebersichtReport.load(this);
                             }
 
                             this.updateZeitraumButtons_();

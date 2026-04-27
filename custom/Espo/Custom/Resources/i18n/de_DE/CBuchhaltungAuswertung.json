@@ -36,7 +36,14 @@
             "teilweise_ausgeglichene_belege": "Teilweise ausgeglichene Belege",
             "voll_ausgeglichene_belege": "Voll ausgeglichene Belege",
             "zahlungsuebersicht": "Zahlungsübersicht",
-            "kontenbewegungen_zahlung": "Kontenbewegungen Zahlung"
+            "kontenbewegungen_zahlung": "Kontenbewegungen Zahlung",
+            "stornierte_rechnungen": "Stornierte Rechnungen",
+            "stornierte_eingangsrechnungen": "Stornierte Eingangsrechnungen",
+            "stornierte_zahlungen": "Stornierte Zahlungen",
+            "stornierte_ausgleiche": "Stornierte Ausgleiche",
+            "stornierte_kontenbewegungen": "Stornierte Kontenbewegungen",
+            "stornierte_journale": "Stornierte Journale",
+            "storno_uebersicht": "Storno-Übersicht"
         },
         "standardZeitraum": {
             "monat": "Monat",

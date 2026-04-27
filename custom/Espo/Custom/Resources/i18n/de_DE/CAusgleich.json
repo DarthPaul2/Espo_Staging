@@ -16,7 +16,9 @@
         "rechnung": "Rechnung",
         "eingangsrechnung": "Eingangsrechnung",
         "istAktiv": "Aktiv",
-        "ausgleichsnummer": "Ausgleich-Nr."
+        "ausgleichsnummer": "Ausgleich-Nr.",
+        "storniertAm": "Storniert am",
+        "stornoGrund": "Storno-Grund"
     },
     "options": {
         "richtung": {

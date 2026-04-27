@@ -55,7 +55,14 @@
                 "teilweise_ausgeglichene_belege",
                 "voll_ausgeglichene_belege",
                 "zahlungsuebersicht",
-                "kontenbewegungen_zahlung"
+                "kontenbewegungen_zahlung",
+                "stornierte_rechnungen",
+                "stornierte_eingangsrechnungen",
+                "stornierte_zahlungen",
+                "stornierte_ausgleiche",
+                "stornierte_kontenbewegungen",
+                "stornierte_journale",
+                "storno_uebersicht"
             ],
             "style": {
                 "festgeschriebene_rechnungen": null,
@@ -75,7 +82,14 @@
                 "teilweise_ausgeglichene_belege": null,
                 "voll_ausgeglichene_belege": null,
                 "zahlungsuebersicht": null,
-                "kontenbewegungen_zahlung": null
+                "kontenbewegungen_zahlung": null,
+                "stornierte_rechnungen": null,
+                "stornierte_eingangsrechnungen": null,
+                "stornierte_zahlungen": null,
+                "stornierte_ausgleiche": null,
+                "stornierte_kontenbewegungen": null,
+                "stornierte_journale": null,
+                "storno_uebersicht": null
             },
             "default": "festgeschriebene_rechnungen",
             "maxLength": 100,

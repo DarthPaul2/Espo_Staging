@@ -22,7 +22,10 @@
         "istFestgeschrieben": "Festgeschrieben",
         "buchungsjournal": "Buchungsjournal",
         "account": "Kunde",
-        "lieferant": "Lieferant"
+        "lieferant": "Lieferant",
+        "istStorniert": "Ist Storno",
+        "storniertAm": "Storniert am",
+        "stornoGrund": "Storno-Grund"
     },
     "options": {
         "zahlungsRichtung": {

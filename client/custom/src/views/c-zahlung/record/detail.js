@@ -14,6 +14,8 @@ define('custom:views/c-zahlung/record/detail', [
         afterRender: function () {
             Dep.prototype.afterRender.call(this);
             this._renderWorkflowButtons();
+            this._renderStornoButton();
+            this._renderStornoInfoBox();
             this._applyActionLocksDeferred();
         },
 
@@ -84,6 +86,170 @@ define('custom:views/c-zahlung/record/detail', [
                     this.actionWorkflowFestgeschrieben();
                 });
             }, 500);
+        },
+
+        // Что это:
+        // Добавляет fachliche кнопку Stornieren в стандартный верхний ряд кнопок.
+        //
+        // Зачем:
+        // Для festgeschriebene Zahlung действие должно быть видно,
+        // а после erfolgtem Storno кнопка должна стать grau und deaktiviert.
+        _renderStornoButton: function () {
+            setTimeout(() => {
+                const $actionBar = this.$el.find('.detail-button-container, .header-button-container, .record-button-container').first();
+
+                if (!$actionBar.length) {
+                    setTimeout(() => this._renderStornoButton(), 300);
+                    return;
+                }
+
+                const status = String(this.model.get('status') || '').toLowerCase();
+                const istFestgeschrieben = !!this.model.get('istFestgeschrieben');
+                const istStorniert = !!this.model.get('istStorniert');
+
+                // Показываем кнопку только для festgeschriebene Zahlung.
+                // Если уже storniert — оставляем её видимой, но делаем серой и недоступной.
+                if (!(status === 'festgeschrieben' && istFestgeschrieben)) {
+                    $actionBar.find('button[data-action="stornierenZahlung"]').remove();
+                    return;
+                }
+
+                let $btn = $actionBar.find('button[data-action="stornierenZahlung"]').first();
+
+                if (!$btn.length) {
+                    $btn = $(`
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-action="stornierenZahlung"
+                            title="Festgeschriebene Zahlung stornieren">
+                            Stornieren
+                        </button>
+                    `);
+
+                    const $editBtn = $actionBar.find('.action[data-action="edit"]').first();
+
+                    if ($editBtn.length) {
+                        $btn.insertAfter($editBtn);
+                    } else {
+                        $actionBar.append($btn);
+                    }
+
+                    $btn.on('click', () => {
+                        if ($btn.prop('disabled')) {
+                            return;
+                        }
+                        this.actionStornierenZahlung();
+                    });
+                }
+
+                if (istStorniert) {
+                    $btn
+                        .removeClass('btn-danger')
+                        .addClass('btn-default')
+                        .prop('disabled', true)
+                        .css({
+                            pointerEvents: 'none',
+                            opacity: 0.65
+                        })
+                        .attr('title', 'Diese Zahlung ist bereits storniert.');
+                } else {
+                    $btn
+                        .removeClass('btn-default')
+                        .addClass('btn-danger')
+                        .prop('disabled', false)
+                        .css({
+                            pointerEvents: '',
+                            opacity: ''
+                        })
+                        .attr('title', 'Festgeschriebene Zahlung stornieren');
+                }
+            }, 300);
+        },
+
+        // Что это:
+        // Показывает заметный storno-блок в карточке Zahlung.
+        //
+        // Зачем:
+        // Чтобы пользователь сразу видел, что запись уже storniert,
+        // когда это произошло и по какой причине.
+        _renderStornoInfoBox: function () {
+            setTimeout(() => {
+                // если блок уже есть — сначала убираем, потом заново строим
+                this.$el.find('[data-name="zahlung-storno-info-box"]').remove();
+
+                const istStorniert = !!this.model.get('istStorniert');
+                if (!istStorniert) {
+                    return;
+                }
+
+                const storniertAm = this.model.get('storniertAm') || '—';
+                const stornoGrund = this.model.get('stornoGrund') || '—';
+
+                const $actionBar = this.$el.find('.detail-button-container, .header-button-container, .record-button-container').first();
+
+                if (!$actionBar.length) {
+                    setTimeout(() => this._renderStornoInfoBox(), 300);
+                    return;
+                }
+
+                // Что это:
+                // Крупный красный Hinweis-Block для stornierten Zahlungen.
+                //
+                // Зачем:
+                // Чтобы Storno у оплаты визуально бросался в глаза так же,
+                // как у stornierten Rechnungen.
+                const rows = [];
+
+                rows.push(`
+                    <div data-name="zahlung-storno-info-box"
+                        style="
+                            display: flex;
+                            align-items: flex-start;
+                            gap: 0;
+                            margin-top: 10px;
+                            margin-bottom: 12px;
+                            padding: 18px 20px;
+                            border: 1px solid #ebccd1;
+                            background: #f2dede;
+                            color: #a94442;
+                            border-radius: 6px;
+                        ">
+                `);
+
+                rows.push(`<div style="font-size: 28px; line-height: 1; margin-right: 12px;">⛔</div>`);
+                rows.push('<div style="flex: 1;">');
+                rows.push('<div style="font-size: 24px; font-weight: 700; color: #a94442; margin-bottom: 10px;">Diese Zahlung wurde storniert.</div>');
+
+                if (storniertAm) {
+                    rows.push(`<div style="margin-bottom: 6px; font-size: 20px; color:rgb(51, 51, 51); "><strong>Storniert am:</strong> ${this._escapeHtml(String(storniertAm))}</div>`);
+                }
+
+                if (stornoGrund) {
+                    rows.push(`<div style="font-size: 20px; color:rgb(52, 52, 52); "><strong>Storno-Grund:</strong> ${this._escapeHtml(String(stornoGrund))}</div>`);
+                }
+
+                rows.push('</div>');
+                rows.push('</div>');
+
+                const $box = $(rows.join(''));
+
+                $box.insertAfter($actionBar);
+            }, 250);
+        },
+
+        // Что это:
+        // Минимальное HTML-Escaping для пользовательских текстов.
+        //
+        // Зачем:
+        // Чтобы stornoGrund безопасно отображался в Info-Box.
+        _escapeHtml: function (value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
         },
 
         _applyEditButtonLock: function () {
@@ -328,6 +494,86 @@ define('custom:views/c-zahlung/record/detail', [
 
                 this.notify(msg, 'error');
                 console.error('[CZahlung/detail] actionWorkflowFestgeschrieben error', xhr);
+            });
+        },
+
+        // Что это:
+        // Запускает fachliches Storno einer festgeschriebenen Zahlung.
+        //
+        // Зачем:
+        // Phase 4: отменяет Zahlungswirkung через server-side Storno-Logik.
+        actionStornierenZahlung: function () {
+            const id = this.model.id;
+            if (!id) {
+                this.notify('Zahlung-ID fehlt.', 'error');
+                return;
+            }
+
+            const status = String(this.model.get('status') || '').toLowerCase();
+            const istFestgeschrieben = !!this.model.get('istFestgeschrieben');
+            const istStorniert = !!this.model.get('istStorniert');
+
+            if (!(status === 'festgeschrieben' && istFestgeschrieben)) {
+                this.notify('Nur festgeschriebene Zahlungen können storniert werden.', 'warning');
+                return;
+            }
+
+            if (istStorniert) {
+                this.notify('Die Zahlung ist bereits storniert.', 'warning');
+                return;
+            }
+
+            const stornoGrund = window.prompt('Bitte Storno-Grund eingeben:');
+
+            if (stornoGrund === null) {
+                return;
+            }
+
+            const grund = String(stornoGrund || '').trim();
+
+            if (!grund) {
+                this.notify('Storno-Grund fehlt.', 'warning');
+                return;
+            }
+
+            const confirmed = window.confirm(
+                'Möchten Sie diese festgeschriebene Zahlung wirklich stornieren?\n\n' +
+                'Storno-Grund: ' + grund
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            const notifyId = this.notify('Zahlung wird storniert…', 'loading');
+
+            Espo.Ajax.postRequest('CZahlung/action/stornieren', {
+                id: id,
+                stornoGrund: grund
+            }).then((resp) => {
+                this.notify(false, 'loading', notifyId);
+
+                if (!resp || resp.success === false) {
+                    this.notify((resp && resp.message) || 'Storno konnte nicht abgeschlossen werden.', 'error');
+                    return;
+                }
+
+                this.notify(resp.message || 'Zahlung wurde erfolgreich storniert.', 'success');
+
+                this.model.fetch({
+                    success: () => this.reRender(),
+                    error: () => window.location.reload()
+                });
+            }).catch((xhr) => {
+                this.notify(false, 'loading', notifyId);
+
+                let msg = 'Storno konnte nicht abgeschlossen werden.';
+                try {
+                    msg = xhr?.responseJSON?.message || xhr?.responseJSON?.error || msg;
+                } catch (e) { }
+
+                this.notify(msg, 'error');
+                console.error('[CZahlung/detail] actionStornierenZahlung error', xhr);
             });
         }
     });

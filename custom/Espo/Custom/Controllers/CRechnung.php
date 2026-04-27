@@ -1588,6 +1588,15 @@ public function postActionFestschreiben($params, $data, $request)
         // после Festschreibung и до первой оплаты Rechnung должна считаться offen.
         $rechnung->set('status', 'offen');
 
+        // Что это:
+        // сохраняем связь Rechnung -> ursprüngliches Buchungsjournal.
+        //
+        // Зачем:
+        // Phase 4 Storno ищет исходный Journal сначала прямо в Rechnung,
+        // поэтому связь должна фиксироваться уже в момент Festschreibung.
+        $rechnung->set('buchungsjournalId', $journal->getId());
+        $rechnung->set('buchungsjournalName', $journal->get('journalNummer'));
+
         $rechnung->set('buchhaltungStatus', 'festgeschrieben');
         $rechnung->set('istFestgeschrieben', true);
         $rechnung->set('festgeschriebenAm', date('Y-m-d H:i:s'));
@@ -1636,6 +1645,393 @@ public function postActionFestschreiben($params, $data, $request)
         return [
             'success' => false,
             'message' => 'Festschreibung konnte nicht abgeschlossen werden. Es wurden keine endgültigen Änderungen übernommen.'
+        ];
+    }
+}
+
+    /**
+     * Что это:
+     * Phase 4 — fachliches Storno einer festgeschriebenen Rechnung.
+     *
+     * Зачем:
+     * Не редактирует старую Rechnung задним числом,
+     * а создаёт nachvollziehbare Gegenbuchungen
+     * и выводит документ из aktiver Forderungslogik.
+     */
+    public function postActionStornieren($params, $data, $request)
+    {
+        $this->getAcl()->check('CRechnung', 'edit');
+
+        $id = $params['id'] ?? null;
+        if (!$id && isset($data->id)) {
+            $id = $data->id;
+        }
+
+        if (!$id) {
+            return [
+                'success' => false,
+                'message' => 'Rechnung-ID fehlt.'
+            ];
+        }
+
+        $em = $this->getEntityManager();
+        $pdo = $em->getPDO();
+
+        /** @var Entity|null $rechnung */
+        $rechnung = $em->getEntity('CRechnung', $id);
+
+        if (!$rechnung) {
+            return [
+                'success' => false,
+                'message' => 'Rechnung wurde nicht gefunden.'
+            ];
+        }
+
+        try {
+            $buchhaltungStatus = strtolower((string) ($rechnung->get('buchhaltungStatus') ?? ''));
+            $istFestgeschrieben = (bool) ($rechnung->get('istFestgeschrieben') ?? false);
+            $istStorniert = (bool) ($rechnung->get('istStorniert') ?? false);
+            $status = strtolower((string) ($rechnung->get('status') ?? ''));
+
+            if ($buchhaltungStatus !== 'festgeschrieben' || !$istFestgeschrieben) {
+                return [
+                    'success' => false,
+                    'message' => 'Nur festgeschriebene Rechnungen können storniert werden.'
+                ];
+            }
+
+            if ($istStorniert || $status === 'storniert') {
+                return [
+                    'success' => false,
+                    'message' => 'Die Rechnung ist bereits storniert.'
+                ];
+            }
+
+            $stornoGrund = trim((string) ($data->stornoGrund ?? ''));
+            if ($stornoGrund === '') {
+                return [
+                    'success' => false,
+                    'message' => 'Storno-Grund fehlt.'
+                ];
+            }
+
+            // Что это:
+            // Жёсткая стартовая Sicherheitsregel für Phase 4:
+            // сначала сторнируются Zahlungen/Ausgleiche, потом Rechnung.
+            //
+            // Зачем:
+            // чтобы не разрушать payment-layer и restbetrag-логикy.
+            if ($this->hasAktiveAusgleicheFuerRechnung($rechnung->getId(), $em)) {
+                return [
+                    'success' => false,
+                    'message' => 'Zu dieser Rechnung existieren noch aktive Zahlungen/Ausgleiche. Bitte zuerst die zugehörigen Zahlungen stornieren.'
+                ];
+            }
+
+            // Что это:
+            // zuerst versuchen wir das ursprüngliche Journal direkt aus der Rechnung zu nehmen.
+            //
+            // Зачем:
+            // для новых Rechnungen связь должна уже лежать в buchungsjournalId.
+            $originalJournalId = $rechnung->get('buchungsjournalId');
+            $originalJournal = null;
+
+            if ($originalJournalId) {
+                $originalJournal = $em->getEntity('CBuchungsjournal', $originalJournalId);
+            }
+
+            // Что это:
+            // Fallback-Suche für ältere Rechnungen,
+            // bei denen buchungsjournalId damals noch nicht in die Rechnung zurückgeschrieben wurde.
+            //
+            // Зачем:
+            // чтобы Storno работало и на уже существующих festgeschriebene Rechnungen.
+            if (!$originalJournal) {
+                $journalCollection = $em
+                    ->getRDBRepository('CBuchungsjournal')
+                    ->where([
+                        'deleted' => false,
+                        'quelleTyp' => 'ausgangsrechnung',
+                        'quelleIdExtern' => $rechnung->getId(),
+                    ])
+                    ->find();
+
+                if ($journalCollection && count($journalCollection)) {
+                    $originalJournal = $journalCollection[0];
+                    $originalJournalId = $originalJournal->getId();
+                }
+            }
+
+            if (!$originalJournal || !$originalJournalId) {
+                return [
+                    'success' => false,
+                    'message' => 'Zur Rechnung wurde kein ursprüngliches Buchungsjournal gefunden.'
+                ];
+            }
+
+            $originalBuchungen = $em
+                ->getRDBRepository('CBuchung')
+                ->where([
+                    'buchungsjournalId' => $originalJournalId,
+                    'deleted' => false,
+                ])
+                ->find();
+
+            if (!$originalBuchungen || !count($originalBuchungen)) {
+                return [
+                    'success' => false,
+                    'message' => 'Zu dieser Rechnung wurden keine ursprünglichen Buchungen gefunden.'
+                ];
+            }
+
+            $journalNummer = 'STR-JRN-' . date('Ymd-His') . '-' . substr($rechnung->getId(), -6);
+
+            if (!$pdo->inTransaction()) {
+                $pdo->beginTransaction();
+            }
+
+            // Что это:
+            // Neues Storno-Journal.
+            //
+            // Зачем:
+            // storno должно жить как отдельное nachvollziehbares бухгалтерское событие.
+            $journal = $em->getNewEntity('CBuchungsjournal');
+
+            $journal->set('name', $journalNummer);
+            $journal->set('journalNummer', $journalNummer);
+            $journal->set('belegdatum', date('Y-m-d'));
+            $journal->set('buchungstext', 'Storno Rechnung ' . (string) ($rechnung->get('rechnungsnummer') ?? ''));
+            $journal->set('quelleTyp', 'ausgangsrechnung');
+            $journal->set('quelleIdExtern', $rechnung->getId());
+            $journal->set('quelleNummer', $rechnung->get('rechnungsnummer'));
+            $journal->set('buchhaltungStatus', 'festgeschrieben');
+            $journal->set('phase1Verwendet', true);
+            $journal->set('istStorno', true);
+            $journal->set('stornoGrund', $stornoGrund);
+
+            $journal->set('rechnungId', $rechnung->getId());
+            $journal->set('rechnungName', $rechnung->get('rechnungsnummer'));
+
+            $em->saveEntity($journal);
+
+            if (!$journal->getId()) {
+                throw new \RuntimeException('Storno-Buchungsjournal konnte nicht erstellt werden.');
+            }
+
+            $createdCount = 0;
+
+            foreach ($originalBuchungen as $originalBuchung) {
+                $originalArt = strtolower((string) ($originalBuchung->get('buchungsart') ?? ''));
+                $stornoArt = $originalArt === 'debit' ? 'credit' : 'debit';
+
+                $buchung = $em->getNewEntity('CBuchung');
+
+                $buchung->set(
+                    'name',
+                    ($stornoArt === 'debit' ? 'Soll ' : 'Haben ') . (string) ($originalBuchung->get('kontoNummer') ?? '')
+                );
+                $buchung->set('buchungsart', $stornoArt);
+                $buchung->set('betrag', round((float) ($originalBuchung->get('betrag') ?? 0), 2));
+                $buchung->set('kontoNummer', $originalBuchung->get('kontoNummer'));
+                $buchung->set('kontoBezeichnung', $originalBuchung->get('kontoBezeichnung'));
+                $buchung->set(
+                    'buchungstext',
+                    'Storno zu ' . (string) ($originalBuchung->get('buchungstext') ?? '')
+                );
+                $buchung->set('belegdatum', date('Y-m-d'));
+                $buchung->set('quelleTyp', 'ausgangsrechnung');
+                $buchung->set('quelleIdExtern', $rechnung->getId());
+                $buchung->set('quelleNummer', $rechnung->get('rechnungsnummer'));
+                $buchung->set('steuerFall', $originalBuchung->get('steuerFall'));
+                $buchung->set('phase1Verwendet', true);
+                $buchung->set('istStorno', true);
+
+                $buchung->set('buchungsjournalId', $journal->getId());
+                $buchung->set('buchungsjournalName', $journal->get('journalNummer'));
+
+                $buchung->set('buchungsregelId', $originalBuchung->get('buchungsregelId'));
+                $buchung->set('buchungsregelName', $originalBuchung->get('buchungsregelName'));
+
+                $em->saveEntity($buchung);
+                $createdCount++;
+            }
+
+            if ($createdCount !== count($originalBuchungen)) {
+                throw new \RuntimeException('Storno-Buchungen konnten nicht vollständig erstellt werden.');
+            }
+
+            $user = $this->getUser();
+
+            // Что это:
+            // Rechnung fachlich in stornierten Zustand setzen.
+            //
+            // Зачем:
+            // stornierten Beleg больше не должен участвовать как aktive Forderung.
+            $rechnung->set('istStorniert', true);
+            $rechnung->set('storniertAm', date('Y-m-d H:i:s'));
+            $rechnung->set('stornoGrund', $stornoGrund);
+            $rechnung->set('status', 'storniert');
+            $rechnung->set('restbetragOffen', 0.0);
+            $rechnung->set('bezahltAm', null);
+
+            if ($user) {
+                $rechnung->set('storniertVonId', $user->getId());
+                $rechnung->set('storniertVonName', $user->get('name'));
+            }
+
+            $em->saveEntity($rechnung, [
+                'allowFestgeschriebenSave' => true
+            ]);
+
+            if ($pdo->inTransaction()) {
+                $pdo->commit();
+            }
+
+            return [
+                'success' => true,
+                'message' => 'Rechnung wurde erfolgreich storniert.',
+                'id' => $rechnung->getId(),
+                'journalId' => $journal->getId(),
+                'journalNummer' => $journal->get('journalNummer'),
+                'buchungen' => $createdCount,
+                'storniertAm' => $rechnung->get('storniertAm'),
+            ];
+        } catch (\Throwable $e) {
+            try {
+                if (isset($pdo) && $pdo->inTransaction()) {
+                    $pdo->rollBack();
+                }
+            } catch (\Throwable $rollbackError) {
+                $this->getContainer()->get('log')->error(
+                    'CRechnung::postActionStornieren rollback error: ' . $rollbackError->getMessage()
+                );
+            }
+
+            $this->getContainer()->get('log')->error(
+                'CRechnung::postActionStornieren error: ' . $e->getMessage()
+            );
+
+            return [
+                'success' => false,
+                'message' => 'Storno konnte nicht abgeschlossen werden. Es wurden keine endgültigen Änderungen übernommen.'
+            ];
+        }
+    }
+    
+    /**
+     * Что это:
+     * Проверяет, есть ли по Rechnung noch aktive Ausgleiche.
+     *
+     * Зачем:
+     * В стартовой модели Phase 4 нельзя сторнировать Rechnung,
+     * пока по ней ещё живы платежные закрытия.
+     */
+    protected function hasAktiveAusgleicheFuerRechnung(string $rechnungId, $em): bool
+    {
+        $collection = $em
+            ->getRDBRepository('CAusgleich')
+            ->where([
+                'rechnungId' => $rechnungId,
+                'deleted' => false,
+                'istAktiv' => true,
+                'ausgleichStatus' => 'aktiv',
+            ])
+            ->find();
+
+        return $collection && count($collection) > 0;
+    }
+
+
+    /**
+     * Что это:
+     * SQL-отчёт по сторнированным Ausgangsrechnungen.
+     *
+     * Зачем:
+     * Даёт стабильную server-side выборку всех fachlich stornierten Rechnungen
+     * для Auswertungen, без зависимости от нестабильных collection-фильтров
+     * и без риска подтянуть не те Journale или не те Status-Sätze.
+     */
+    public function getActionStornierteRechnungenReport($params, $data, $request)
+{
+    $this->getAcl()->check('CRechnung', 'read');
+
+    $em = $this->getEntityManager();
+    $pdo = $em->getPDO();
+
+    $von = $request->getQueryParam('von');
+    $bis = $request->getQueryParam('bis');
+
+    $where = "
+        r.deleted = 0
+        AND r.status = 'storniert'
+        AND r.buchhaltung_status = 'festgeschrieben'
+    ";
+
+    $bind = [];
+
+    if ($von) {
+        $where .= " AND r.storniert_am >= :von ";
+        $bind['von'] = $von . ' 00:00:00';
+    }
+
+    if ($bis) {
+        $where .= " AND r.storniert_am <= :bis ";
+        $bind['bis'] = $bis . ' 23:59:59';
+    }
+
+    $sql = "
+        SELECT
+            r.id,
+            r.name,
+            r.rechnungsnummer,
+            r.belegdatum,
+            r.betrag_netto AS betragNetto,
+            r.ust_betrag AS ustBetrag,
+            r.betrag_brutto AS betragBrutto,
+            r.account_id AS accountId,
+            acc.name AS accountName,
+            r.storniert_am AS storniertAm,
+            r.storno_grund AS stornoGrund,
+            r.ist_storniert AS istStorniert,
+            r.status,
+            r.buchhaltung_status AS buchhaltungStatus,
+            j.id AS stornoJournalId,
+            j.journal_nummer AS stornoJournalNummer
+        FROM c_rechnung r
+        LEFT JOIN account acc
+            ON acc.id = r.account_id
+            AND acc.deleted = 0
+        LEFT JOIN c_buchungsjournal j
+            ON j.quelle_id_extern = r.id
+            AND j.deleted = 0
+            AND COALESCE(j.ist_storno, 0) = 1
+            AND j.quelle_typ = 'ausgangsrechnung'
+        WHERE {$where}
+        ORDER BY r.storniert_am DESC, r.created_at DESC
+    ";
+
+    try {
+        $sth = $pdo->prepare($sql);
+        $sth->execute($bind);
+
+        $rows = $sth->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+        foreach ($rows as &$row) {
+            $row['betragNetto'] = (float) ($row['betragNetto'] ?? 0);
+            $row['ustBetrag'] = (float) ($row['ustBetrag'] ?? 0);
+            $row['betragBrutto'] = (float) ($row['betragBrutto'] ?? 0);
+            $row['istStorniert'] = (int) ($row['istStorniert'] ?? 0);
+        }
+
+        return $rows;
+    } catch (\Throwable $e) {
+        $this->getContainer()->get('log')->error(
+            'CRechnung::getActionStornierteRechnungenReport error: ' . $e->getMessage()
+        );
+
+        return [
+            'success' => false,
+            'error' => 'SQL error in stornierteRechnungenReport',
         ];
     }
 }

@@ -117,6 +117,19 @@ define('custom:views/c-stundenbericht/record/detail', ['views/record/detail'], f
             const s = (v) => (v === null || v === undefined) ? '' : String(v);
             const b = (v) => !!v;
 
+            // Берём Einsatzbeginn сначала из модели,
+            // но если на форме есть видимое значение, используем именно его
+            let einsatzbeginnValue = s(model.get('einsatzbeginn'));
+
+            const einsatzbeginnInput = this.$el.find('[data-name="einsatzbeginn"] input').val();
+            if (einsatzbeginnInput) {
+                einsatzbeginnValue = s(einsatzbeginnInput);
+            }
+
+            console.log('[PDF] einsatzbeginn model =', model.get('einsatzbeginn'));
+            console.log('[PDF] einsatzbeginn input =', einsatzbeginnInput);
+            console.log('[PDF] einsatzbeginn final =', einsatzbeginnValue);
+
             // --- 1) Собираем formData идентично Logcat ---
             const formData = {
                 kunde_name: s(model.get('accountName')),
@@ -142,7 +155,7 @@ define('custom:views/c-stundenbericht/record/detail', ['views/record/detail'], f
                 zk: b(model.get('anlageZk')),
                 funk: b(model.get('anlageFunk')),
 
-                einsatzbeginn: s(model.get('einsatzbeginn')),
+                einsatzbeginn: einsatzbeginnValue,
                 person_name: s(model.get('notdienstAnruferName')),
                 person_telefonnummer: s(model.get('notdienstAnruferTelefon')),
 

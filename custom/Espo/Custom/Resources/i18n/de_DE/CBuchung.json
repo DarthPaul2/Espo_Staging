@@ -5,7 +5,7 @@
     "fields": {
         "buchungsart": "Buchungsart",
         "betrag": "Betrag",
-        "kontoNummer": "Konto Nummer",
+        "kontoNummer": "Konto Nr.",
         "kontoBezeichnung": "Konto Bezeichnung",
         "buchungstext": "Buchungstext",
         "belegdatum": "Belegdatum",
@@ -17,7 +17,8 @@
         "beschreibung": "Beschreibung",
         "description": "Description",
         "buchungsjournal": "Buchungsjournal",
-        "buchungsregel": "Buchungsregel"
+        "buchungsregel": "Buchungsregel",
+        "istStorno": "Ist Storno"
     },
     "options": {
         "buchungsart": {

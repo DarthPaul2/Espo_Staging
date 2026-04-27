@@ -15,6 +15,9 @@ define('custom:views/c-eingangsrechnung/record/detail', [
             Dep.prototype.afterRender.call(this);
             this._renderWorkflowButtons();
             this._applyActionLocksDeferred();
+            this._renderStornoActionButton();
+            this._renderStornoInfoBlock();
+            this._updateStornoActionButtonState();
         },
 
         onRemove: function () {
@@ -326,6 +329,230 @@ define('custom:views/c-eingangsrechnung/record/detail', [
                 this.notify(msg, 'error');
                 console.error('[CEingangsrechnung/detail] actionWorkflowFestgeschrieben error', xhr);
             });
-        }
+        },
+
+        _renderStornoActionButton: function () {
+            setTimeout(() => {
+                const $actionBar = this.$el.find('.detail-button-container, .header-button-container, .record-button-container').first();
+
+                if (!$actionBar.length) {
+                    setTimeout(() => this._renderStornoActionButton(), 300);
+                    return;
+                }
+
+                if (this.$el.find('button[data-action="stornierenEingangsrechnung"]').length) {
+                    this._updateStornoActionButtonState();
+                    return;
+                }
+
+                const $btn = $(`
+                    <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-action="stornierenEingangsrechnung"
+                        style="margin-left: 6px;"
+                        title="Eingangsrechnung stornieren"
+                    >
+                        Stornieren
+                    </button>
+                `);
+
+                // Что это:
+                // вставляем кнопку сразу после стандартной Bearbeiten.
+                //
+                // Зачем:
+                // чтобы она стояла в одном ряду со стандартными action-кнопками,
+                // а не падала ниже в конец контейнера.
+                const $editBtn = $actionBar.find('.action[data-action="edit"]').first();
+
+                if ($editBtn.length) {
+                    $btn.insertAfter($editBtn);
+                } else {
+                    $actionBar.append($btn);
+                }
+
+                $btn.on('click', () => {
+                    this.actionStornierenEingangsrechnung();
+                });
+
+                this._updateStornoActionButtonState();
+            }, 300);
+        },
+
+        _updateStornoActionButtonState: function () {
+            const isFestgeschrieben =
+                String(this.model.get('status') || '').toLowerCase() === 'festgeschrieben';
+
+            const isStorniert =
+                !!this.model.get('istStorniert') ||
+                String(this.model.get('zahlungsstatus') || '').toLowerCase() === 'storniert';
+
+            const $btn = this.$el.find('button[data-action="stornierenEingangsrechnung"]');
+            if (!$btn.length) {
+                return;
+            }
+
+            if (!isFestgeschrieben || isStorniert) {
+                $btn
+                    .prop('disabled', true)
+                    .addClass('disabled')
+                    .css({
+                        pointerEvents: 'none',
+                        opacity: 0.5
+                    })
+                    .attr('title', isStorniert
+                        ? 'Die Eingangsrechnung ist bereits storniert.'
+                        : 'Nur festgeschriebene Eingangsrechnungen können storniert werden.');
+                return;
+            }
+
+            $btn
+                .prop('disabled', false)
+                .removeClass('disabled')
+                .css({
+                    pointerEvents: '',
+                    opacity: ''
+                })
+                .attr('title', 'Eingangsrechnung stornieren');
+        },
+
+        actionStornierenEingangsrechnung: function () {
+            const id = this.model.id;
+            if (!id) {
+                this.notify('Eingangsrechnung-ID fehlt.', 'error');
+                return;
+            }
+
+            const isStorniert =
+                !!this.model.get('istStorniert') ||
+                String(this.model.get('zahlungsstatus') || '').toLowerCase() === 'storniert';
+
+            if (isStorniert) {
+                this._updateStornoActionButtonState();
+                return;
+            }
+
+            const stornoGrund = window.prompt('Bitte Storno-Grund eingeben:');
+            if (stornoGrund === null) {
+                return;
+            }
+
+            if (!String(stornoGrund).trim()) {
+                this.notify('Storno-Grund fehlt.', 'warning');
+                return;
+            }
+
+            const notifyId = this.notify('Eingangsrechnung wird storniert…', 'loading');
+
+            Espo.Ajax.postRequest('CEingangsrechnung/action/stornieren', {
+                id: id,
+                stornoGrund: String(stornoGrund).trim()
+            }).then((resp) => {
+                this.notify(false, 'loading', notifyId);
+
+                if (!resp || resp.success === false) {
+                    this.notify((resp && resp.message) || 'Storno konnte nicht abgeschlossen werden.', 'error');
+                    return;
+                }
+
+                // Что это:
+                // Мгновенно переключаем UI в storniert,
+                // ещё до полного fetch/reRender.
+                this.model.set({
+                    istStorniert: true,
+                    storniertAm: resp.storniertAm || this.model.get('storniertAm') || null,
+                    stornoGrund: String(stornoGrund).trim(),
+                    zahlungsstatus: 'storniert',
+                    restbetragOffen: 0
+                });
+
+                this._updateStornoActionButtonState();
+                this._renderStornoInfoBlock();
+
+                this.notify(resp.message || 'Eingangsrechnung wurde storniert.', 'success');
+
+                this.model.fetch({
+                    success: () => this.reRender(),
+                    error: () => window.location.reload()
+                });
+            }).catch((xhr) => {
+                this.notify(false, 'loading', notifyId);
+
+                let msg = 'Storno konnte nicht abgeschlossen werden.';
+                try {
+                    msg = xhr?.responseJSON?.message || xhr?.responseJSON?.error || msg;
+                } catch (e) { }
+
+                this.notify(msg, 'error');
+                console.error('[CEingangsrechnung/detail] actionStornierenEingangsrechnung error', xhr);
+            });
+        },
+
+        _renderStornoInfoBlock: function () {
+            this.$el.find('[data-name="eingangsrechnung-storno-block"]').remove();
+
+            const isStorniert =
+                !!this.model.get('istStorniert') ||
+                String(this.model.get('zahlungsstatus') || '').toLowerCase() === 'storniert' ||
+                !!this.model.get('storniertAm') ||
+                !!this.model.get('stornoGrund');
+
+            if (!isStorniert) {
+                return;
+            }
+
+            const storniertAm = this.model.get('storniertAm') || '—';
+            const stornoGrund = this.model.get('stornoGrund') || '—';
+            const storniertVonName =
+                this.model.get('storniertVonName') ||
+                this.model.get('storniertVonId') ||
+                '—';
+
+            const $workflow = this.$el.find('[data-name="eingangsrechnung-workflow-actions"]').first();
+            const $target = $workflow.length
+                ? $workflow
+                : this.$el.find('.detail-button-container, .header-button-container, .record-button-container').first();
+
+            if (!$target.length) {
+                return;
+            }
+
+            const $block = $(`
+                <div data-name="eingangsrechnung-storno-block"
+                    style="
+                        margin-top: 16px;
+                        margin-bottom: 12px;
+                        padding: 18px 20px;
+                        border: 1px solid #ebccd1;
+                        background: #f2dede;
+                        color: #a94442;
+                        border-radius: 6px;
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 14px;
+                    ">
+                    <div style="font-size: 28px; line-height: 1;">⛔</div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 24px; font-weight: 700; margin-bottom: 10px; color: #a94442;">
+                            Diese Eingangsrechnung wurde storniert.
+                        </div>
+                        <div style="margin-bottom: 6px; font-size: 20px; color: rgb(51, 51, 51);">
+                            <strong>Storniert am:</strong>
+                            ${Espo.Utils?.escapeString ? Espo.Utils.escapeString(String(storniertAm)) : String(storniertAm)}
+                        </div>
+                        <div style="margin-bottom: 6px; font-size: 20px; color: rgb(51, 51, 51);">
+                            <strong>Storniert von:</strong>
+                            ${Espo.Utils?.escapeString ? Espo.Utils.escapeString(String(storniertVonName)) : String(storniertVonName)}
+                        </div>
+                        <div style="font-size: 20px; color: rgb(51, 51, 51);">
+                            <strong>Storno-Grund:</strong>
+                            ${Espo.Utils?.escapeString ? Espo.Utils.escapeString(String(stornoGrund)) : String(stornoGrund)}
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            $block.insertAfter($target);
+        },
     });
 });

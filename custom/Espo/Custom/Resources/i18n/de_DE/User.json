@@ -17,7 +17,9 @@
         "cFestgeschriebenDurch": "Festgeschrieben durch",
         "cEingangsrechnungs": "Eingangsrechnungs",
         "cEingangsImporte": "Eingangsimporte",
-        "cZahlungs": "Zahlungs"
+        "cZahlungs": "Zahlungs",
+        "cStornierteRechnungen": "Stornierte Rechnungen",
+        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -37,6 +39,8 @@
         "cFestgeschriebenDurch": "Festgeschrieben durch",
         "cEingangsrechnungs": "Eingangsrechnungs",
         "cEingangsImporte": "Eingangsimporte",
-        "cZahlungs": "Zahlungs"
+        "cZahlungs": "Zahlungs",
+        "cStornierteRechnungen": "Stornierte Rechnungen",
+        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen"
     }
 }

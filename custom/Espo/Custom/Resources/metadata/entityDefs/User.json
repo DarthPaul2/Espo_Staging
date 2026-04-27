@@ -125,6 +125,20 @@
             "entity": "CZahlung",
             "audited": false,
             "isCustom": true
+        },
+        "cStornierteRechnungen": {
+            "type": "hasMany",
+            "foreign": "storniertVon",
+            "entity": "CRechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cStornierteEingangsrechnungen": {
+            "type": "hasMany",
+            "foreign": "storniertVon",
+            "entity": "CEingangsrechnung",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

@@ -364,6 +364,27 @@
             "notNull": false,
             "type": "float",
             "isCustom": true
+        },
+        "istStorniert": {
+            "notNull": true,
+            "type": "bool",
+            "readOnly": true,
+            "isCustom": true
+        },
+        "storniertAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "stornoGrund": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "storniertVon": {
+            "type": "link"
         }
     },
     "links": {
@@ -480,6 +501,13 @@
             "type": "hasMany",
             "foreign": "rechnung",
             "entity": "CAusgleich",
+            "audited": false,
+            "isCustom": true
+        },
+        "storniertVon": {
+            "type": "belongsTo",
+            "foreign": "cStornierteRechnungen",
+            "entity": "User",
             "audited": false,
             "isCustom": true
         }

@@ -115,6 +115,14 @@
         "zahlungs": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "stornierteRechnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "stornierteEingangsrechnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

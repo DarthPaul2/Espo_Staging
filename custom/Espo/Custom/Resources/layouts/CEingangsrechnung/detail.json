@@ -95,5 +95,33 @@
         "style": "default",
         "noteStyle": "info",
         "label": ""
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "istStorniert"
+                },
+                {
+                    "name": "storniertAm"
+                },
+                {
+                    "name": "storniertVon"
+                }
+            ],
+            [
+                {
+                    "name": "stornoGrund"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "danger",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Storno"
     }
 ]

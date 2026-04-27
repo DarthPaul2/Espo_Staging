@@ -22,7 +22,11 @@
         "importe": "Importe",
         "ausgleiche": "Ausgleiche",
         "zahlungsstatus": "Zahlungsstatus",
-        "restbetragOffen": "Offener Restbetrag"
+        "restbetragOffen": "Offener Restbetrag",
+        "istStorniert": "Ist Storno",
+        "storniertAm": "Storniert am",
+        "stornoGrund": "Storno-Grund",
+        "storniertVon": "Storniert von"
     },
     "links": {
         "lieferant": "Lieferant",
@@ -30,7 +34,8 @@
         "festgeschriebenVon": "Festgeschrieben von",
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
         "importe": "Importe",
-        "ausgleiche": "Ausgleiche"
+        "ausgleiche": "Ausgleiche",
+        "storniertVon": "Storniert von"
     },
     "labels": {
         "Create CEingangsrechnung": "Create Eingangsrechnung"

@@ -524,8 +524,14 @@ define('custom:views/c-rechnung/record/detail', [
             this.buttonList.push({
                 name: 'createMahnung',
                 label: this.translate ? this.translate('Mahnung erzeugen', 'labels', 'CRechnung') : 'Mahnung erzeugen',
-                style: 'danger',
+                style: 'warning',
                 title: 'Mahnung als PDF erzeugen'
+            });
+            this.buttonList.push({
+                name: 'stornieren',
+                label: this.translate ? this.translate('Stornieren', 'labels', 'CRechnung') : 'Stornieren',
+                style: 'danger',
+                title: 'Rechnung stornieren'
             });
             document.addEventListener('click', this._blockCreateRelatedIfUnsaved, true);
         },
@@ -535,6 +541,7 @@ define('custom:views/c-rechnung/record/detail', [
             Dep.prototype.afterRender.call(this);
 
             this._renderBuchhaltungWorkflowButtons();
+            this._renderStornoInfoBlock();
             this._applyActionLocksDeferred();
         },
 
@@ -597,6 +604,80 @@ define('custom:views/c-rechnung/record/detail', [
                     this.actionWorkflowFestgeschrieben();
                 });
             }, 500);
+        },
+
+        // Это рисует заметный красный блок после сторно Rechnung.
+        // Зачем:
+        // чтобы сразу в карточке было видно, что документ уже сторнирован.
+        _renderStornoInfoBlock: function () {
+            setTimeout(() => {
+                this.$el.find('div[data-name="rechnung-storno-info"]').remove();
+
+                const isStorniert =
+                    !!this.model.get('istStorniert') ||
+                    String(this.model.get('status') || '').toLowerCase() === 'storniert';
+
+                if (!isStorniert) {
+                    return;
+                }
+
+                const storniertAm = this.model.get('storniertAm') || '';
+                const stornoGrund = this.model.get('stornoGrund') || '';
+                const storniertVonName =
+                    this.model.get('storniertVonName') ||
+                    this.model.get('storniertVonBenutzerName') ||
+                    '';
+
+                const $target =
+                    this.$el.find('div[data-name="buchhaltung-workflow-actions"]').first().length
+                        ? this.$el.find('div[data-name="buchhaltung-workflow-actions"]').first()
+                        : this.$el.find('.detail-button-container, .header-button-container, .record-button-container').first();
+
+                if (!$target.length) {
+                    setTimeout(() => this._renderStornoInfoBlock(), 300);
+                    return;
+                }
+
+                const rows = [];
+
+                rows.push(`<div style="font-size: 28px; line-height: 1; margin-right: 12px;">⛔</div>`);
+                rows.push('<div style="flex: 1;">');
+                rows.push('<div style="font-size: 24px; font-weight: 700; color: #a94442; margin-bottom: 10px;">Diese Rechnung wurde storniert.</div>');
+
+                if (storniertAm) {
+                    rows.push(`<div style="margin-bottom: 6px; font-size: 20px;"><strong>Storniert am:</strong> ${_.escape(String(storniertAm))}</div>`);
+                }
+
+                if (storniertVonName) {
+                    rows.push(`<div style="margin-bottom: 6px; font-size: 20px;"><strong>Storniert von:</strong> ${_.escape(String(storniertVonName))}</div>`);
+                }
+
+                if (stornoGrund) {
+                    rows.push(`<div style="margin-bottom: 0; font-size: 20px;"><strong>Storno-Grund:</strong> ${_.escape(String(stornoGrund))}</div>`);
+                }
+
+                rows.push('</div>');
+
+                const $info = $(`
+                    <div data-name="rechnung-storno-info"
+                         style="
+                            display: flex;
+                            align-items: flex-start;
+                            gap: 4px;
+                            margin-top: 10px;
+                            margin-bottom: 12px;
+                            padding: 16px 18px;
+                            border: 1px solid #ebccd1;
+                            background: #f2dede;
+                            border-radius: 6px;
+                            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+                         ">
+                        ${rows.join('')}
+                    </div>
+                `);
+
+                $info.insertAfter($target);
+            }, 150);
         },
 
         // Это action кнопки "Freigabe" в detail view счета.
@@ -1327,6 +1408,109 @@ define('custom:views/c-rechnung/record/detail', [
             });
         },
 
+        // Это action для кнопки "Stornieren".
+        // Зачем:
+        // вызывает server-side Storno для festgeschriebene Rechnung.
+        actionStornieren: function () {
+            const id =
+                this.model.id ||
+                this.model.get('id') ||
+                this.options?.id ||
+                this.options?.model?.id ||
+                null;
+
+            if (!id) {
+                this.notify('Rechnung-ID fehlt.', 'error');
+                return;
+            }
+
+            const isFestgeschrieben =
+                !!this.model.get('istFestgeschrieben') ||
+                String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+            const isStorniert =
+                !!this.model.get('istStorniert') ||
+                String(this.model.get('status') || '').toLowerCase() === 'storniert';
+
+            if (isStorniert) {
+                this.notify('Die Rechnung wurde bereits storniert.', 'warning');
+                this._applyStornoButtonLock();
+                return;
+            }
+
+            if (!isFestgeschrieben) {
+                this.notify('Nur festgeschriebene Rechnungen können storniert werden.', 'warning');
+                return;
+            }
+
+            const stornoGrund = window.prompt('Bitte Storno-Grund eingeben:');
+            if (stornoGrund === null) {
+                return;
+            }
+
+            const grund = String(stornoGrund || '').trim();
+            if (!grund) {
+                this.notify('Storno-Grund fehlt.', 'warning');
+                return;
+            }
+
+            if (!window.confirm('Soll diese Rechnung wirklich storniert werden?')) {
+                return;
+            }
+
+            const notifyId = this.showLoader('Rechnung wird storniert…');
+
+            Espo.Ajax.postRequest('CRechnung/action/stornieren', {
+                id: id,
+                stornoGrund: grund
+            }).then((resp) => {
+                this.hideLoader(notifyId);
+
+                if (!resp || resp.success === false) {
+                    this.notify((resp && resp.message) || 'Storno konnte nicht abgeschlossen werden.', 'error');
+                    return;
+                }
+
+                this.notify(resp.message || 'Rechnung wurde storniert.', 'success');
+
+                // Сразу локально помечаем, чтобы кнопка стала серой
+                this.model.set('istStorniert', true);
+                this.model.set('status', 'storniert');
+                this.model.set('stornoGrund', grund);
+                if (resp.storniertAm) {
+                    this.model.set('storniertAm', resp.storniertAm);
+                }
+                this._renderStornoInfoBlock();
+
+                if (resp.storniertAm) {
+                    this.model.set('storniertAm', resp.storniertAm);
+                }
+
+                this._applyStornoButtonLock();
+
+                this.model.fetch({
+                    success: () => {
+                        this.reRender();
+                    },
+                    error: () => {
+                        window.location.reload();
+                    }
+                });
+            }).catch((xhr) => {
+                this.hideLoader(notifyId);
+
+                let msg = 'Storno konnte nicht abgeschlossen werden.';
+                try {
+                    msg =
+                        xhr?.responseJSON?.message ||
+                        xhr?.responseJSON?.error ||
+                        msg;
+                } catch (e) { }
+
+                this.notify(msg, 'error');
+                console.error('[CRechnung/detail] actionStornieren error', xhr);
+            });
+        },
 
         // ==== cleanup ====
         onRemove: function () {
@@ -1462,6 +1646,62 @@ define('custom:views/c-rechnung/record/detail', [
                 .attr('title', 'Rechnung senden ist erst nach der Festschreibung zulässig.');
         },
 
+        // Это управляет кнопкой "Stornieren".
+        // Зачем:
+        // - активна только для festgeschriebene Rechnung
+        // - неактивна, если Rechnung уже storniert
+        _applyStornoButtonLock: function () {
+            const isFestgeschrieben =
+                !!this.model.get('istFestgeschrieben') ||
+                String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+            const isStorniert =
+                !!this.model.get('istStorniert') ||
+                String(this.model.get('status') || '').toLowerCase() === 'storniert';
+
+            const $btn = this.$el.find('.action[data-action="stornieren"]');
+
+            if (!$btn.length) {
+                return;
+            }
+
+            // Уже storniert → серо и недоступно
+            if (isStorniert) {
+                $btn
+                    .prop('disabled', true)
+                    .addClass('disabled')
+                    .css({
+                        pointerEvents: 'none',
+                        opacity: 0.5
+                    })
+                    .attr('title', 'Diese Rechnung wurde bereits storniert.');
+                return;
+            }
+
+            // Не festgeschrieben → тоже недоступно
+            if (!isFestgeschrieben) {
+                $btn
+                    .prop('disabled', true)
+                    .addClass('disabled')
+                    .css({
+                        pointerEvents: 'none',
+                        opacity: 0.5
+                    })
+                    .attr('title', 'Storno ist erst nach der Festschreibung zulässig.');
+                return;
+            }
+
+            // festgeschrieben и не storniert → кнопка активна
+            $btn
+                .prop('disabled', false)
+                .removeClass('disabled')
+                .css({
+                    pointerEvents: '',
+                    opacity: ''
+                })
+                .attr('title', 'Rechnung stornieren');
+        },
+
         // Это повторно применяет блокировки, пока Espo дорисовывает кнопки.
         _applyActionLocksDeferred: function (attempt = 0) {
             const maxAttempts = 20;
@@ -1470,6 +1710,7 @@ define('custom:views/c-rechnung/record/detail', [
                 this._applyEditButtonLock();
                 this._applyDeleteButtonLock();
                 this._applySendButtonLock();
+                this._applyStornoButtonLock();
                 this._applyPositionsPanelLock();
 
                 if (attempt < maxAttempts) {

@@ -169,19 +169,41 @@
                 "storniert"
             ],
             "style": {
-                "offen": null,
-                "teilweise_bezahlt": null,
-                "bezahlt": null,
-                "storniert": null
+                "offen": "primary",
+                "teilweise_bezahlt": "info",
+                "bezahlt": "success",
+                "storniert": "danger"
             },
             "default": "offen",
             "maxLength": 100,
-            "isCustom": true
+            "isCustom": true,
+            "displayAsLabel": true
         },
         "restbetragOffen": {
             "notNull": false,
             "type": "float",
             "isCustom": true
+        },
+        "istStorniert": {
+            "notNull": true,
+            "type": "bool",
+            "readOnly": true,
+            "isCustom": true
+        },
+        "storniertAm": {
+            "notNull": false,
+            "type": "datetime",
+            "minuteStep": 30,
+            "isCustom": true
+        },
+        "stornoGrund": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "storniertVon": {
+            "type": "link"
         }
     },
     "links": {
@@ -242,6 +264,13 @@
             "type": "hasMany",
             "foreign": "eingangsrechnung",
             "entity": "CAusgleich",
+            "audited": false,
+            "isCustom": true
+        },
+        "storniertVon": {
+            "type": "belongsTo",
+            "foreign": "cStornierteEingangsrechnungen",
+            "entity": "User",
             "audited": false,
             "isCustom": true
         }
