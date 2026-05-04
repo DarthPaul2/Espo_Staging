@@ -14,7 +14,7 @@
         "beschreibung": "Beschreibung",
         "buchungsjournal": "Buchungsjournal",
         "buchungsregel": "Buchungsregel",
-        "istStorno": "Ist Storno"
+        "istStorno": "Storno"
     },
     "links": {
         "buchungsjournal": "Buchungsjournal",

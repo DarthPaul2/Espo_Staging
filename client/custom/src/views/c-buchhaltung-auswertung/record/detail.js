@@ -32,6 +32,9 @@ define(
         'custom:views/c-buchhaltung-auswertung/report/stornierte-kontenbewegungen',
         'custom:views/c-buchhaltung-auswertung/report/stornierte-journale',
         'custom:views/c-buchhaltung-auswertung/report/storno-uebersicht',
+        'custom:views/c-buchhaltung-auswertung/report/korrekturketten-ausgangsrechnungen',
+        'custom:views/c-buchhaltung-auswertung/report/korrekturketten-eingangsrechnungen',
+        'custom:views/c-buchhaltung-auswertung/report/stornierte-belege-kontrolle',
     ],
     function (
         Dep,
@@ -60,6 +63,9 @@ define(
         StornierteKontenbewegungenReport,
         StornierteJournaleReport,
         StornoUebersichtReport,
+        KorrekturkettenAusgangsrechnungenReport,
+        KorrekturkettenEingangsrechnungenReport,
+        StornierteBelegeKontrolleReport,
     ) {
         return Dep.extend({
 
@@ -424,6 +430,39 @@ define(
 
                     if (this.shouldLoadReport_(auswertungTyp)) {
                         StornoUebersichtReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'korrekturketten_ausgangsrechnungen') {
+                    KorrekturkettenAusgangsrechnungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    KorrekturkettenAusgangsrechnungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        KorrekturkettenAusgangsrechnungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'korrekturketten_eingangsrechnungen') {
+                    KorrekturkettenEingangsrechnungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    KorrekturkettenEingangsrechnungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        KorrekturkettenEingangsrechnungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'stornierte_belege_kontrolle') {
+                    StornierteBelegeKontrolleReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    StornierteBelegeKontrolleReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        StornierteBelegeKontrolleReport.load(this);
                     }
                 }
 
@@ -866,6 +905,21 @@ define(
                                 StornoUebersichtReport.load(this);
                             }
 
+                            if (auswertungTyp === 'korrekturketten_ausgangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                KorrekturkettenAusgangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'korrekturketten_eingangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                KorrekturkettenEingangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_belege_kontrolle') {
+                                this._lastReportLoadSignature = null;
+                                StornierteBelegeKontrolleReport.load(this);
+                            }
+
                             this.updateZeitraumButtons_();
                             this.notify('Zeitraum gespeichert', 'success');
                         },
@@ -1016,6 +1070,21 @@ define(
                             if (auswertungTyp === 'storno_uebersicht') {
                                 this._lastReportLoadSignature = null;
                                 StornoUebersichtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'korrekturketten_ausgangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                KorrekturkettenAusgangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'korrekturketten_eingangsrechnungen') {
+                                this._lastReportLoadSignature = null;
+                                KorrekturkettenEingangsrechnungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'stornierte_belege_kontrolle') {
+                                this._lastReportLoadSignature = null;
+                                StornierteBelegeKontrolleReport.load(this);
                             }
 
                             this.updateZeitraumButtons_();

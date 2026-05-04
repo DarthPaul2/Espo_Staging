@@ -533,6 +533,23 @@ define('custom:views/c-rechnung/record/detail', [
                 style: 'danger',
                 title: 'Rechnung stornieren'
             });
+
+            // Что это: добавляет кнопку Nachfolgebeleg только для stornierten Rechnungen.
+            // Зачем: обычные Rechnungen не должны видеть Phase-5-Aktion до Storno.
+            const canShowKorrekturNachfolgeButton =
+                this.model.get('istStorniert') === true &&
+                String(this.model.get('status') || '').toLowerCase() === 'storniert' &&
+                !this.model.get('nachfolgeBelegId');
+
+            if (canShowKorrekturNachfolgeButton) {
+                this.buttonList.push({
+                    name: 'createKorrekturNachfolgebeleg',
+                    label: 'Korrigierten Nachfolgebeleg anlegen',
+                    acl: 'edit',
+                    action: 'createKorrekturNachfolgebeleg',
+                    title: 'Erstellt einen neuen korrigierten Nachfolgebeleg zu dieser stornierten Rechnung.'
+                });
+            }
             document.addEventListener('click', this._blockCreateRelatedIfUnsaved, true);
         },
 
@@ -567,6 +584,9 @@ define('custom:views/c-rechnung/record/detail', [
         `);
 
                 $workflow.insertAfter($actionBar);
+                // Что это: сразу блокирует workflow-кнопки, если Rechnung уже storniert.
+                // Зачем: чтобы кнопки не мигали активными до deferred lock.
+                this._applyStorniertGlobalButtonLock();
 
                 const status = String(this.model.get('buchhaltungStatus') || 'entwurf').toLowerCase();
 
@@ -642,18 +662,18 @@ define('custom:views/c-rechnung/record/detail', [
 
                 rows.push(`<div style="font-size: 28px; line-height: 1; margin-right: 12px;">⛔</div>`);
                 rows.push('<div style="flex: 1;">');
-                rows.push('<div style="font-size: 24px; font-weight: 700; color: #a94442; margin-bottom: 10px;">Diese Rechnung wurde storniert.</div>');
+                rows.push('<div style="font-size: 18px; font-weight: 700; color: #a94442; margin-bottom: 10px;">Diese Rechnung wurde storniert.</div>');
 
                 if (storniertAm) {
-                    rows.push(`<div style="margin-bottom: 6px; font-size: 20px;"><strong>Storniert am:</strong> ${_.escape(String(storniertAm))}</div>`);
+                    rows.push(`<div style="margin-bottom: 6px; font-size: 14px;"><strong>Storniert am:</strong> ${_.escape(String(storniertAm))}</div>`);
                 }
 
                 if (storniertVonName) {
-                    rows.push(`<div style="margin-bottom: 6px; font-size: 20px;"><strong>Storniert von:</strong> ${_.escape(String(storniertVonName))}</div>`);
+                    rows.push(`<div style="margin-bottom: 6px; font-size: 14px;"><strong>Storniert von:</strong> ${_.escape(String(storniertVonName))}</div>`);
                 }
 
                 if (stornoGrund) {
-                    rows.push(`<div style="margin-bottom: 0; font-size: 20px;"><strong>Storno-Grund:</strong> ${_.escape(String(stornoGrund))}</div>`);
+                    rows.push(`<div style="margin-bottom: 0; font-size: 14px;"><strong>Storno-Grund:</strong> ${_.escape(String(stornoGrund))}</div>`);
                 }
 
                 rows.push('</div>');
@@ -1408,6 +1428,103 @@ define('custom:views/c-rechnung/record/detail', [
             });
         },
 
+        // Что это:
+        // Открывает нормальное модальное окно для ввода Storno-Grund.
+        //
+        // Зачем:
+        // Заменяет уродливый window.prompt() на аккуратный UI в стиле Espo/Bootstrap.
+        openStornoGrundModal_: function (callback) {
+            this.$el.find('[data-name="rechnung-storno-modal"]').remove();
+
+            const modalHtml = `
+        <div class="modal fade" data-name="rechnung-storno-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document" style="max-width: 620px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="background: #f2dede; color: #a94442;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">
+                            Rechnung stornieren
+                        </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="alert alert-warning" style="margin-bottom: 15px;">
+                            Diese Aktion erstellt Storno-Buchungen und setzt die Rechnung fachlich auf storniert.
+                            Die ursprüngliche Rechnung wird nicht gelöscht.
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">
+                                Storno-Grund <span style="color: #a94442;">*</span>
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                data-name="stornoGrund"
+                                rows="4"
+                                placeholder="Bitte Storno-Grund eingeben..."
+                                style="resize: vertical;"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-action="cancelStornoModal">
+                            Abbrechen
+                        </button>
+
+                        <button type="button" class="btn btn-danger" data-action="confirmStornoModal">
+                            Stornieren
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+            const $modal = $(modalHtml);
+            this.$el.append($modal);
+
+            const closeModal = () => {
+                $modal.modal('hide');
+
+                setTimeout(() => {
+                    $modal.remove();
+                }, 300);
+            };
+
+            $modal.on('shown.bs.modal', () => {
+                $modal.find('[data-name="stornoGrund"]').focus();
+            });
+
+            $modal.on('click', '[data-action="cancelStornoModal"]', () => {
+                closeModal();
+            });
+
+            $modal.on('click', '[data-action="confirmStornoModal"]', () => {
+                const stornoGrund = String($modal.find('[data-name="stornoGrund"]').val() || '').trim();
+
+                if (!stornoGrund) {
+                    this.notify('Storno-Grund fehlt.', 'warning');
+                    $modal.find('[data-name="stornoGrund"]').focus();
+                    return;
+                }
+
+                closeModal();
+
+                if (typeof callback === 'function') {
+                    callback(stornoGrund);
+                }
+            });
+
+            $modal.modal({
+                backdrop: 'static',
+                keyboard: true
+            });
+        },
+
         // Это action для кнопки "Stornieren".
         // Зачем:
         // вызывает server-side Storno для festgeschriebene Rechnung.
@@ -1435,6 +1552,7 @@ define('custom:views/c-rechnung/record/detail', [
             if (isStorniert) {
                 this.notify('Die Rechnung wurde bereits storniert.', 'warning');
                 this._applyStornoButtonLock();
+                this._applyStorniertGlobalButtonLock();
                 return;
             }
 
@@ -1443,72 +1561,69 @@ define('custom:views/c-rechnung/record/detail', [
                 return;
             }
 
-            const stornoGrund = window.prompt('Bitte Storno-Grund eingeben:');
-            if (stornoGrund === null) {
-                return;
-            }
+            // Что это:
+            // Открывает модальное окно для Storno-Grund вместо window.prompt.
+            //
+            // Зачем:
+            // Storno выполняется через нормальный UI, без системного prompt.
+            this.openStornoGrundModal_((grund) => {
+                const notifyId = this.showLoader('Rechnung wird storniert…');
 
-            const grund = String(stornoGrund || '').trim();
-            if (!grund) {
-                this.notify('Storno-Grund fehlt.', 'warning');
-                return;
-            }
+                Espo.Ajax.postRequest('CRechnung/action/stornieren', {
+                    id: id,
+                    stornoGrund: String(grund).trim()
+                }).then((resp) => {
+                    this.hideLoader(notifyId);
 
-            if (!window.confirm('Soll diese Rechnung wirklich storniert werden?')) {
-                return;
-            }
-
-            const notifyId = this.showLoader('Rechnung wird storniert…');
-
-            Espo.Ajax.postRequest('CRechnung/action/stornieren', {
-                id: id,
-                stornoGrund: grund
-            }).then((resp) => {
-                this.hideLoader(notifyId);
-
-                if (!resp || resp.success === false) {
-                    this.notify((resp && resp.message) || 'Storno konnte nicht abgeschlossen werden.', 'error');
-                    return;
-                }
-
-                this.notify(resp.message || 'Rechnung wurde storniert.', 'success');
-
-                // Сразу локально помечаем, чтобы кнопка стала серой
-                this.model.set('istStorniert', true);
-                this.model.set('status', 'storniert');
-                this.model.set('stornoGrund', grund);
-                if (resp.storniertAm) {
-                    this.model.set('storniertAm', resp.storniertAm);
-                }
-                this._renderStornoInfoBlock();
-
-                if (resp.storniertAm) {
-                    this.model.set('storniertAm', resp.storniertAm);
-                }
-
-                this._applyStornoButtonLock();
-
-                this.model.fetch({
-                    success: () => {
-                        this.reRender();
-                    },
-                    error: () => {
-                        window.location.reload();
+                    if (!resp || resp.success === false) {
+                        this.notify((resp && resp.message) || 'Storno konnte nicht abgeschlossen werden.', 'error');
+                        return;
                     }
+
+                    this.notify(resp.message || 'Rechnung wurde storniert.', 'success');
+
+                    // Что это:
+                    // Локально обновляет модель сразу после успешного Storno.
+                    //
+                    // Зачем:
+                    // Кнопки и красный Storno-Block обновляются без ожидания полного reload.
+                    this.model.set('istStorniert', true);
+                    this.model.set('status', 'storniert');
+                    this.model.set('stornoGrund', String(grund).trim());
+                    this.model.set('restbetragOffen', 0);
+                    this.model.set('bezahltAm', null);
+
+                    if (resp.storniertAm) {
+                        this.model.set('storniertAm', resp.storniertAm);
+                    }
+
+                    this._renderStornoInfoBlock();
+                    this._applyStornoButtonLock();
+                    this._applyStorniertGlobalButtonLock();
+
+                    this.model.fetch({
+                        success: () => {
+                            this.reRender();
+                        },
+                        error: () => {
+                            window.location.reload();
+                        }
+                    });
+                }).catch((xhr) => {
+                    this.hideLoader(notifyId);
+
+                    let msg = 'Storno konnte nicht abgeschlossen werden.';
+
+                    try {
+                        msg =
+                            xhr?.responseJSON?.message ||
+                            xhr?.responseJSON?.error ||
+                            msg;
+                    } catch (e) { }
+
+                    this.notify(msg, 'error');
+                    console.error('[CRechnung/detail] actionStornieren error', xhr);
                 });
-            }).catch((xhr) => {
-                this.hideLoader(notifyId);
-
-                let msg = 'Storno konnte nicht abgeschlossen werden.';
-                try {
-                    msg =
-                        xhr?.responseJSON?.message ||
-                        xhr?.responseJSON?.error ||
-                        msg;
-                } catch (e) { }
-
-                this.notify(msg, 'error');
-                console.error('[CRechnung/detail] actionStornieren error', xhr);
             });
         },
 
@@ -1703,6 +1818,9 @@ define('custom:views/c-rechnung/record/detail', [
         },
 
         // Это повторно применяет блокировки, пока Espo дорисовывает кнопки.
+        // Зачем:
+        // Espo иногда дорисовывает header actions и panel actions не сразу,
+        // поэтому блокировки нужно применить несколько раз после render.
         _applyActionLocksDeferred: function (attempt = 0) {
             const maxAttempts = 20;
 
@@ -1713,10 +1831,109 @@ define('custom:views/c-rechnung/record/detail', [
                 this._applyStornoButtonLock();
                 this._applyPositionsPanelLock();
 
+                // Что это: отдельная глобальная блокировка для stornierten Rechnungen.
+                // Зачем: после Storno разрешены только PDF-Vorschau и Nachfolgebeleg.
+                this._applyStorniertGlobalButtonLock();
+
                 if (attempt < maxAttempts) {
                     this._applyActionLocksDeferred(attempt + 1);
                 }
             }, 250);
+        },
+
+        // Это блокирует почти все действия у stornierten Rechnungen.
+        // Зачем:
+        // После Storno документ больше не должен редактироваться, отправляться,
+        // сохраняться как новый PDF, проходить workflow или получать Mahnung.
+        // Разрешены только:
+        // - PDF-Vorschau
+        // - Korrigierten Nachfolgebeleg anlegen
+        _applyStorniertGlobalButtonLock: function () {
+            const isStorniert =
+                !!this.model.get('istStorniert') ||
+                String(this.model.get('status') || '').toLowerCase() === 'storniert';
+
+            if (!isStorniert) {
+                return;
+            }
+
+            const allowedActions = [
+                'pdfPreview',
+                'createKorrekturNachfolgebeleg'
+            ];
+
+            const lockButton = ($btn, title) => {
+                $btn
+                    .prop('disabled', true)
+                    .addClass('disabled')
+                    .css({
+                        pointerEvents: 'none',
+                        opacity: 0.45
+                    })
+                    .attr('title', title || 'Diese Aktion ist bei einer stornierten Rechnung nicht zulässig.');
+            };
+
+            const unlockButton = ($btn, title) => {
+                $btn
+                    .prop('disabled', false)
+                    .removeClass('disabled')
+                    .css({
+                        pointerEvents: '',
+                        opacity: ''
+                    });
+
+                if (title) {
+                    $btn.attr('title', title);
+                }
+            };
+
+            // 1. Header-/Standard-Buttons sperren.
+            this.$el.find('button.action, a.action').each((i, el) => {
+                const $btn = $(el);
+                const action = String($btn.attr('data-action') || '');
+
+                if (!action) {
+                    return;
+                }
+
+                if (allowedActions.includes(action)) {
+                    if (action === 'pdfPreview') {
+                        unlockButton($btn, 'PDF Vorschau anzeigen');
+                    }
+
+                    if (action === 'createKorrekturNachfolgebeleg') {
+                        unlockButton($btn, 'Erstellt einen neuen korrigierten Nachfolgebeleg zu dieser stornierten Rechnung.');
+                    }
+
+                    return;
+                }
+
+                lockButton($btn);
+            });
+
+            // 2. Buchhaltungs-Workflow-Buttons sperren.
+            this.$el
+                .find('div[data-name="buchhaltung-workflow-actions"] button')
+                .each((i, el) => {
+                    lockButton($(el), 'Der Workflow ist bei einer stornierten Rechnung abgeschlossen.');
+                });
+
+            // 3. Positionen-Panel komplett gegen Änderungen sperren.
+            this._applyPositionsPanelLock();
+
+            // 4. Zusätzliche typische create/select/delete Buttons in Panels sperren.
+            this.$el
+                .find('.panel button.action, .panel a.action, .panel .dropdown-toggle')
+                .each((i, el) => {
+                    const $btn = $(el);
+                    const action = String($btn.attr('data-action') || '');
+
+                    if (allowedActions.includes(action)) {
+                        return;
+                    }
+
+                    lockButton($btn, 'Bei einer stornierten Rechnung sind keine Änderungen mehr zulässig.');
+                });
         },
 
         // Это скрывает панельные и строковые действия у Positionen
@@ -1764,6 +1981,211 @@ define('custom:views/c-rechnung/record/detail', [
             // Добивка по последней колонке строк
             $panel.find('tbody tr').each(function () {
                 $(this).find('td:last-child .btn, td:last-child .dropdown, td:last-child .dropdown-toggle, td:last-child .btn-group, td:last-child a, td:last-child button').hide();
+            });
+        },
+
+        // Что это: открывает нормальное модальное окно для выбора Korrekturtyp и ввода Korrekturgrund.
+        // Зачем: заменяет уродливый window.prompt() на рабочий UI с выпадающим списком.
+        _openKorrekturNachfolgeModal: function (callback) {
+            const modalId = 'korrektur-nachfolge-modal-' + Date.now();
+
+            const options = [
+                { value: 'inhaltliche_korrektur', label: 'Inhaltliche Korrektur' },
+                { value: 'betragskorrektur', label: 'Betragskorrektur' },
+                { value: 'positionskorrektur', label: 'Positionskorrektur' },
+                { value: 'steuerkorrektur', label: 'Steuerkorrektur' },
+                { value: 'adresskorrektur', label: 'Adresskorrektur' },
+                { value: 'formelle_korrektur', label: 'Formelle Korrektur' },
+                { value: 'sonstige_korrektur', label: 'Sonstige Korrektur' }
+            ];
+
+            const optionHtml = options.map(o => {
+                return `<option value="${_.escape(o.value)}">${_.escape(o.label)}</option>`;
+            }).join('');
+
+            const html = `
+        <div class="modal fade" id="${modalId}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 620px;">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: 1px solid #ddd;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Korrigierten Nachfolgebeleg anlegen</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="alert alert-warning" style="margin-bottom: 16px;">
+                            Für diese stornierte Rechnung wird ein neuer korrigierter Nachfolgebeleg als Entwurf erstellt.
+                        </div>
+
+                        <div class="form-group">
+                            <label for="${modalId}-typ">Korrekturtyp</label>
+                            <select id="${modalId}-typ" class="form-control">
+                                ${optionHtml}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="${modalId}-grund">Korrekturgrund</label>
+                            <textarea id="${modalId}-grund"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Bitte Korrekturgrund eingeben..."></textarea>
+                        </div>
+
+                        <div style="font-size: 12px; color: #777;">
+                            Der alte Beleg bleibt storniert. Der neue Nachfolgebeleg wird als eigenständiger Entwurf erstellt.
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-action="cancel">
+                            Abbrechen
+                        </button>
+                        <button type="button" class="btn btn-warning" data-action="confirm">
+                            Nachfolgebeleg erstellen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+            const $modal = $(html);
+            $('body').append($modal);
+
+            const cleanup = () => {
+                $modal.off();
+                $modal.remove();
+            };
+
+            $modal.on('click', '[data-action="cancel"]', function () {
+                $modal.modal('hide');
+            });
+
+            $modal.on('click', '[data-action="confirm"]', () => {
+                const korrekturTyp = String($modal.find(`#${modalId}-typ`).val() || '').trim();
+                const korrekturGrund = String($modal.find(`#${modalId}-grund`).val() || '').trim();
+
+                if (!korrekturTyp) {
+                    this.notify('Korrekturtyp fehlt.', 'warning');
+                    return;
+                }
+
+                if (!korrekturGrund) {
+                    this.notify('Korrekturgrund fehlt.', 'warning');
+                    $modal.find(`#${modalId}-grund`).focus();
+                    return;
+                }
+
+                $modal.modal('hide');
+
+                if (typeof callback === 'function') {
+                    callback({
+                        korrekturTyp: korrekturTyp,
+                        korrekturGrund: korrekturGrund
+                    });
+                }
+            });
+
+            $modal.on('hidden.bs.modal', cleanup);
+
+            $modal.modal({
+                backdrop: 'static',
+                keyboard: true
+            });
+
+            setTimeout(() => {
+                $modal.find(`#${modalId}-grund`).focus();
+            }, 300);
+        },
+
+        // Что это: запускает создание korrigierten Nachfolgebeleg для stornierten Rechnung.
+        // Зачем: Phase 5 требует создавать новый самостоятельный Beleg после Storno, связанный с Ursprungsbeleg.
+        actionCreateKorrekturNachfolgebeleg: function () {
+            const id =
+                this.model.id ||
+                this.model.get('id') ||
+                this.options?.id ||
+                this.options?.model?.id ||
+                null;
+
+            if (!id) {
+                this.notify('Rechnung-ID fehlt.', 'error');
+                return;
+            }
+
+            const isStorniert =
+                !!this.model.get('istStorniert') ||
+                String(this.model.get('status') || '').toLowerCase() === 'storniert';
+
+            if (!isStorniert) {
+                this.notify('Ein Nachfolgebeleg kann nur für eine stornierte Rechnung erstellt werden.', 'warning');
+                return;
+            }
+
+            if (this.model.get('nachfolgeBelegId')) {
+                this.notify('Für diese Rechnung existiert bereits ein Nachfolgebeleg.', 'warning');
+                return;
+            }
+
+            // Что это: открывает нормальное окно выбора Korrekturtyp + Korrekturgrund.
+            // Зачем: пользователь больше не вводит техническое значение через window.prompt().
+            this._openKorrekturNachfolgeModal((result) => {
+                const korrekturTyp = result.korrekturTyp;
+                const korrekturGrund = result.korrekturGrund;
+
+                if (!window.confirm('Soll ein neuer korrigierter Nachfolgebeleg als Entwurf erstellt werden?')) {
+                    return;
+                }
+
+                const notifyId = this.showLoader('Korrigierter Nachfolgebeleg wird erstellt…');
+
+                Espo.Ajax.postRequest('CRechnung/action/createKorrekturNachfolgebeleg', {
+                    id: id,
+                    korrekturTyp: korrekturTyp,
+                    korrekturGrund: korrekturGrund
+                }).then((resp) => {
+                    this.hideLoader(notifyId);
+
+                    if (!resp || resp.success === false) {
+                        this.notify((resp && resp.message) || 'Nachfolgebeleg konnte nicht erstellt werden.', 'error');
+                        return;
+                    }
+
+                    const copiedPositions = resp.copiedPositions || 0;
+
+                    this.notify(
+                        (resp.message || 'Nachfolgebeleg wurde erstellt.') +
+                        ' Kopierte Positionen: ' + copiedPositions,
+                        'success'
+                    );
+
+                    if (resp.nachfolgeBelegId) {
+                        window.location.hash = '#CRechnung/view/' + resp.nachfolgeBelegId;
+                        window.location.reload();
+                        return;
+                    }
+
+                    this.model.fetch({
+                        success: () => this.reRender(),
+                        error: () => window.location.reload()
+                    });
+                }).catch((xhr) => {
+                    this.hideLoader(notifyId);
+
+                    let msg = 'Nachfolgebeleg konnte nicht erstellt werden.';
+                    try {
+                        msg =
+                            xhr?.responseJSON?.message ||
+                            xhr?.responseJSON?.error ||
+                            msg;
+                    } catch (e) { }
+
+                    this.notify(msg, 'error');
+                    console.error('[CRechnung/detail] createKorrekturNachfolgebeleg error', xhr);
+                });
             });
         },
     });

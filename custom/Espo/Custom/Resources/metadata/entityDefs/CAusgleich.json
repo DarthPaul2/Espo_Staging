@@ -55,7 +55,7 @@
             "type": "float",
             "isCustom": true,
             "required": true,
-            "readOnly": true
+            "readOnly": false
         },
         "richtung": {
             "type": "enum",

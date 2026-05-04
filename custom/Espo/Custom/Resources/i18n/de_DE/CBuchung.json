@@ -18,7 +18,7 @@
         "description": "Description",
         "buchungsjournal": "Buchungsjournal",
         "buchungsregel": "Buchungsregel",
-        "istStorno": "Ist Storno"
+        "istStorno": "Storno"
     },
     "options": {
         "buchungsart": {

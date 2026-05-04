@@ -32,12 +32,15 @@
                 {
                     "name": "kostenart"
                 },
+                false,
                 {
-                    "name": "beschreibung"
+                    "name": "rabattProzent"
                 }
             ],
             [
-                false,
+                {
+                    "name": "beschreibung"
+                },
                 {
                     "name": "material"
                 }

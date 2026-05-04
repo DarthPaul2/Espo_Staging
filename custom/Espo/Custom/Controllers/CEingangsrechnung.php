@@ -135,7 +135,11 @@ class CEingangsrechnung extends Base
 
                 $menge = (float) ($position->get('menge') ?? 0);
                 $einzelpreisNetto = (float) ($position->get('einzelpreisNetto') ?? 0);
-                $recalculatedGesamtNetto = round($menge * $einzelpreisNetto, 2);
+
+                // Что это: читает Rabatt из позиции Eingangsrechnung.
+                // Зачем: Freigabe должна проверять сумму позиции с учётом скидки.
+                $rabattProzent = round((float) ($position->get('rabattProzent') ?? 0), 2);
+                $rabattBetrag = round((float) ($position->get('rabattBetrag') ?? 0), 2);
 
                 if ($menge <= 0) {
                     return [
@@ -149,6 +153,16 @@ class CEingangsrechnung extends Base
                         'success' => false,
                         'message' => 'Mindestens eine Position hat einen ungültigen Einzelpreis.'
                     ];
+                }
+
+                $basisNetto = round($menge * $einzelpreisNetto, 2);
+
+                if ($rabattProzent > 0) {
+                    $recalculatedGesamtNetto = round($basisNetto * (1 - ($rabattProzent / 100)), 2);
+                } elseif ($rabattBetrag > 0) {
+                    $recalculatedGesamtNetto = round($basisNetto - $rabattBetrag, 2);
+                } else {
+                    $recalculatedGesamtNetto = $basisNetto;
                 }
 
                 if ($recalculatedGesamtNetto < 0) {
@@ -363,7 +377,11 @@ class CEingangsrechnung extends Base
                 $name = trim((string) ($position->get('name') ?? ''));
                 $menge = (float) ($position->get('menge') ?? 0);
                 $einzelpreisNetto = (float) ($position->get('einzelpreisNetto') ?? 0);
-                $gesamtNetto = round((float) ($position->get('gesamtNetto') ?? 0), 2);
+
+                // Что это: читает Rabatt из позиции Eingangsrechnung.
+                // Зачем: Festschreibung должна создавать Journal/Buchungen с правильной суммой после скидки.
+                $rabattProzent = round((float) ($position->get('rabattProzent') ?? 0), 2);
+                $rabattBetrag = round((float) ($position->get('rabattBetrag') ?? 0), 2);
 
                 if ($name === '') {
                     return [
@@ -386,10 +404,25 @@ class CEingangsrechnung extends Base
                     ];
                 }
 
-                $recalculatedGesamtNetto = round($menge * $einzelpreisNetto, 2);
+                $basisNetto = round($menge * $einzelpreisNetto, 2);
 
-                // Что это: для Festschreibung берём всегда заново пересчитанную сумму строки,
-                // но не сохраняем позицию отдельно до завершения всей транзакции.
+                if ($rabattProzent > 0) {
+                    $recalculatedGesamtNetto = round($basisNetto * (1 - ($rabattProzent / 100)), 2);
+                } elseif ($rabattBetrag > 0) {
+                    $recalculatedGesamtNetto = round($basisNetto - $rabattBetrag, 2);
+                } else {
+                    $recalculatedGesamtNetto = $basisNetto;
+                }
+
+                if ($recalculatedGesamtNetto < 0) {
+                    return [
+                        'success' => false,
+                        'message' => 'Mindestens eine Position hat nach Rabatt einen negativen Gesamtbetrag.'
+                    ];
+                }
+
+                // Что это: für Festschreibung берём neu berechneten Netto-Gesamtbetrag inkl. Rabatt.
+                // Зачем: Journal, Steuer und Verbindlichkeit müssen Rabatt korrekt berücksichtigen.
                 $gesamtNetto = $recalculatedGesamtNetto;
 
                 $betragNetto += $gesamtNetto;
@@ -1107,6 +1140,508 @@ class CEingangsrechnung extends Base
                 'error' => 'SQL error in stornierteEingangsrechnungenReport',
             ];
         }
+    }
+
+
+    /**
+ * Что это:
+ * SQL-Report "Korrekturketten Eingangsrechnungen".
+ *
+ * Зачем:
+ * Показывает fachliche Kette:
+ * stornierte Eingangsrechnung -> korrigierter Nachfolgebeleg.
+ *
+ * Используется в:
+ * CBuchhaltungAuswertung / Korrekturketten Eingangsrechnungen.
+ */
+public function getActionKorrekturkettenReport($params, $data, $request)
+{
+    $this->getAcl()->check('CEingangsrechnung', 'read');
+
+    $em = $this->getEntityManager();
+    $pdo = $em->getPDO();
+
+    $von = $request->getQueryParam('von');
+    $bis = $request->getQueryParam('bis');
+
+    $where = "
+        u.deleted = 0
+        AND u.nachfolge_beleg_id IS NOT NULL
+        AND u.nachfolge_beleg_id <> ''
+    ";
+
+    $bind = [];
+
+    // Что это:
+    // Zeitraumfilter по Storno-Zeitpunkt des Ursprungsbelegs.
+    //
+    // Зачем:
+    // Korrekturkette начинается с Storno des fehlerhaften Eingangsbelegs.
+    if ($von) {
+        $where .= " AND u.storniert_am >= :von ";
+        $bind['von'] = $von . ' 00:00:00';
+    }
+
+    if ($bis) {
+        $where .= " AND u.storniert_am <= :bis ";
+        $bind['bis'] = $bis . ' 23:59:59';
+    }
+
+    $sql = "
+        SELECT
+            -- Ursprung
+            u.id AS ursprungId,
+            u.eingangsrechnungsnummer AS ursprungEingangsrechnungsnummer,
+            u.name AS ursprungName,
+            u.lieferanten_rechnungsnummer AS ursprungLieferantenRechnungsnummer,
+            u.status AS ursprungStatus,
+            u.zahlungsstatus AS ursprungZahlungsstatus,
+            u.ist_storniert AS ursprungIstStorniert,
+            u.betrag_netto AS ursprungBetragNetto,
+            u.steuer_betrag AS ursprungSteuerBetrag,
+            u.betrag_brutto AS ursprungBetragBrutto,
+            u.restbetrag_offen AS ursprungRestbetragOffen,
+            u.storniert_am AS ursprungStorniertAm,
+            u.storno_grund AS ursprungStornoGrund,
+
+            -- Nachfolger
+            n.id AS nachfolgerId,
+            n.eingangsrechnungsnummer AS nachfolgerEingangsrechnungsnummer,
+            n.name AS nachfolgerName,
+            n.lieferanten_rechnungsnummer AS nachfolgerLieferantenRechnungsnummer,
+            n.status AS nachfolgerStatus,
+            n.zahlungsstatus AS nachfolgerZahlungsstatus,
+            n.ist_storniert AS nachfolgerIstStorniert,
+            n.betrag_netto AS nachfolgerBetragNetto,
+            n.steuer_betrag AS nachfolgerSteuerBetrag,
+            n.betrag_brutto AS nachfolgerBetragBrutto,
+            n.restbetrag_offen AS nachfolgerRestbetragOffen,
+            n.freigabe_am AS nachfolgerFreigabeAm,
+            n.festgeschrieben_am AS nachfolgerFestgeschriebenAm,
+
+            -- Korrektur
+            COALESCE(n.korrektur_typ, u.korrektur_typ) AS korrekturTyp,
+            COALESCE(n.korrektur_grund, u.korrektur_grund) AS korrekturGrund,
+
+            -- Lieferant
+            u.lieferant_id AS lieferantId,
+            l.name AS lieferantName,
+
+            -- technische Kontrolle
+            u.nachfolge_beleg_id AS linkedNachfolgerId,
+            u.nachfolge_beleg_name AS linkedNachfolgerName,
+            n.ersetzt_beleg_id AS nachfolgerErsetztBelegId,
+            n.ersetzt_beleg_name AS nachfolgerErsetztBelegName
+
+        FROM c_eingangsrechnung u
+
+        LEFT JOIN c_eingangsrechnung n
+            ON n.id = u.nachfolge_beleg_id
+            AND n.deleted = 0
+
+        LEFT JOIN c_lieferant l
+            ON l.id = u.lieferant_id
+            AND l.deleted = 0
+
+        WHERE {$where}
+
+        ORDER BY
+            u.storniert_am DESC,
+            u.created_at DESC
+    ";
+
+    try {
+        $sth = $pdo->prepare($sql);
+        $sth->execute($bind);
+
+        $rows = $sth->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+        foreach ($rows as &$row) {
+            $row['ursprungIstStorniert'] = (int) ($row['ursprungIstStorniert'] ?? 0);
+            $row['nachfolgerIstStorniert'] = (int) ($row['nachfolgerIstStorniert'] ?? 0);
+
+            $row['ursprungBetragNetto'] = (float) ($row['ursprungBetragNetto'] ?? 0);
+            $row['ursprungSteuerBetrag'] = (float) ($row['ursprungSteuerBetrag'] ?? 0);
+            $row['ursprungBetragBrutto'] = (float) ($row['ursprungBetragBrutto'] ?? 0);
+            $row['ursprungRestbetragOffen'] = (float) ($row['ursprungRestbetragOffen'] ?? 0);
+
+            $row['nachfolgerBetragNetto'] = (float) ($row['nachfolgerBetragNetto'] ?? 0);
+            $row['nachfolgerSteuerBetrag'] = (float) ($row['nachfolgerSteuerBetrag'] ?? 0);
+            $row['nachfolgerBetragBrutto'] = (float) ($row['nachfolgerBetragBrutto'] ?? 0);
+            $row['nachfolgerRestbetragOffen'] = (float) ($row['nachfolgerRestbetragOffen'] ?? 0);
+        }
+
+        return $rows;
+    } catch (\Throwable $e) {
+        $this->getContainer()->get('log')->error(
+            'CEingangsrechnung::getActionKorrekturkettenReport error: ' . $e->getMessage()
+        );
+
+        return [
+            'success' => false,
+            'error' => 'SQL error in korrekturkettenReport',
+            'message' => 'Korrekturketten Eingangsrechnungen konnten nicht geladen werden.',
+        ];
+    }
+}
+
+/**
+ * Что это:
+ * Kontrollreport für stornierte Eingangsrechnungen ohne/mit Nachfolger.
+ *
+ * Зачем:
+ * Показывает все stornierten Eingangsrechnungen и контролирует,
+ * есть ли к ним Nachfolgebeleg.
+ *
+ * Используется в:
+ * CBuchhaltungAuswertung / Stornierte Belege Kontrolle.
+ */
+public function getActionStornierteBelegeKontrolleReport($params, $data, $request)
+{
+    $this->getAcl()->check('CEingangsrechnung', 'read');
+
+    $em = $this->getEntityManager();
+    $pdo = $em->getPDO();
+
+    $von = $request->getQueryParam('von');
+    $bis = $request->getQueryParam('bis');
+
+    $where = "
+        r.deleted = 0
+        AND COALESCE(r.ist_storniert, 0) = 1
+        AND r.zahlungsstatus = 'storniert'
+    ";
+
+    $bind = [];
+
+    if ($von) {
+        $where .= " AND r.storniert_am >= :von ";
+        $bind['von'] = $von . ' 00:00:00';
+    }
+
+    if ($bis) {
+        $where .= " AND r.storniert_am <= :bis ";
+        $bind['bis'] = $bis . ' 23:59:59';
+    }
+
+    $sql = "
+        SELECT
+            'eingang' AS bereich,
+
+            r.id AS id,
+            r.eingangsrechnungsnummer AS belegNummer,
+            r.name AS name,
+            'eingangsrechnung' AS belegTyp,
+
+            r.status AS status,
+            r.zahlungsstatus AS zahlungsstatus,
+            r.ist_storniert AS istStorniert,
+            r.storniert_am AS storniertAm,
+            r.storno_grund AS stornoGrund,
+
+            r.betrag_netto AS betragNetto,
+            r.steuer_betrag AS steuerBetrag,
+            r.betrag_brutto AS betragBrutto,
+
+            r.lieferant_id AS partnerId,
+            l.name AS partnerName,
+
+            r.nachfolge_beleg_id AS nachfolgerId,
+            r.nachfolge_beleg_name AS nachfolgerName,
+            n.eingangsrechnungsnummer AS nachfolgerNummer,
+            n.status AS nachfolgerStatus,
+            n.zahlungsstatus AS nachfolgerZahlungsstatus,
+            n.ist_storniert AS nachfolgerIstStorniert,
+
+            COALESCE(n.korrektur_typ, r.korrektur_typ) AS korrekturTyp,
+            COALESCE(n.korrektur_grund, r.korrektur_grund) AS korrekturGrund
+
+        FROM c_eingangsrechnung r
+
+        LEFT JOIN c_lieferant l
+            ON l.id = r.lieferant_id
+            AND l.deleted = 0
+
+        LEFT JOIN c_eingangsrechnung n
+            ON n.id = r.nachfolge_beleg_id
+            AND n.deleted = 0
+
+        WHERE {$where}
+
+        ORDER BY
+            r.storniert_am DESC,
+            r.created_at DESC
+    ";
+
+    try {
+        $sth = $pdo->prepare($sql);
+        $sth->execute($bind);
+
+        $rows = $sth->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+        foreach ($rows as &$row) {
+            $row['istStorniert'] = (int) ($row['istStorniert'] ?? 0);
+            $row['nachfolgerIstStorniert'] = (int) ($row['nachfolgerIstStorniert'] ?? 0);
+
+            $row['betragNetto'] = (float) ($row['betragNetto'] ?? 0);
+            $row['steuerBetrag'] = (float) ($row['steuerBetrag'] ?? 0);
+            $row['betragBrutto'] = (float) ($row['betragBrutto'] ?? 0);
+        }
+
+        return $rows;
+    } catch (\Throwable $e) {
+        $this->getContainer()->get('log')->error(
+            'CEingangsrechnung::getActionStornierteBelegeKontrolleReport error: ' . $e->getMessage()
+        );
+
+        return [
+            'success' => false,
+            'error' => 'SQL error in stornierteBelegeKontrolleReport',
+            'message' => 'Stornierte Eingangsrechnungen konnten nicht geladen werden.',
+        ];
+    }
+}
+
+    /**
+     * Что это:
+     * Phase 5 — создаёт korrigierten Nachfolgebeleg zu einer stornierten Eingangsrechnung.
+     *
+     * Зачем:
+     * Stornierte Eingangsrechnung не редактируется задним числом.
+     * Вместо неё создаётся новая самостоятельная Eingangsrechnung im Entwurf,
+     * связанная с Ursprungsbeleg.
+     */
+    public function postActionCreateKorrekturNachfolgebeleg($params, $data, $request)
+    {
+        $this->getAcl()->check('CEingangsrechnung', 'edit');
+
+        $em = $this->getEntityManager();
+
+        $id = $data->id ?? null;
+        $korrekturTyp = trim((string)($data->korrekturTyp ?? ''));
+        $korrekturGrund = trim((string)($data->korrekturGrund ?? ''));
+
+        if (!$id) {
+            return [
+                'success' => false,
+                'message' => 'Eingangsrechnung-ID fehlt.',
+            ];
+        }
+
+        $allowedTypes = [
+            'inhaltliche_korrektur',
+            'betragskorrektur',
+            'positionskorrektur',
+            'steuerkorrektur',
+            'adresskorrektur',
+            'formelle_korrektur',
+            'sonstige_korrektur',
+        ];
+
+        if (!in_array($korrekturTyp, $allowedTypes, true)) {
+            return [
+                'success' => false,
+                'message' => 'Ungültiger Korrekturtyp.',
+            ];
+        }
+
+        if ($korrekturGrund === '') {
+            return [
+                'success' => false,
+                'message' => 'Korrekturgrund fehlt.',
+            ];
+        }
+
+        $ursprung = $em->getEntity('CEingangsrechnung', $id);
+
+        if (!$ursprung) {
+            return [
+                'success' => false,
+                'message' => 'Ursprungs-Eingangsrechnung wurde nicht gefunden.',
+            ];
+        }
+
+        $istStorniert = (bool)($ursprung->get('istStorniert') ?? false);
+        $zahlungsstatus = strtolower((string)($ursprung->get('zahlungsstatus') ?? ''));
+
+        if (!$istStorniert && $zahlungsstatus !== 'storniert') {
+            return [
+                'success' => false,
+                'message' => 'Ein Nachfolgebeleg kann nur für eine stornierte Eingangsrechnung erstellt werden.',
+            ];
+        }
+
+        if ($ursprung->get('nachfolgeBelegId')) {
+            return [
+                'success' => false,
+                'message' => 'Für diese Eingangsrechnung existiert bereits ein Nachfolgebeleg.',
+            ];
+        }
+
+        $nachfolger = $em->getNewEntity('CEingangsrechnung');
+
+        // Basisdaten aus Ursprungs-Eingangsrechnung übernehmen.
+        $fieldsToCopy = [
+            'lieferantId',
+            'lieferantName',
+
+            'lieferantenRechnungsnummer',
+            'belegdatum',
+            'eingangsdatum',
+            'faelligAm',
+
+            'steuerfall',
+            'betragNetto',
+            'steuerBetrag',
+            'betragBrutto',
+
+            'bemerkung',
+            'pruefhinweis',
+
+            'assignedUserId',
+            'assignedUserName',
+        ];
+
+        foreach ($fieldsToCopy as $field) {
+            if ($ursprung->has($field)) {
+                $nachfolger->set($field, $ursprung->get($field));
+            }
+        }
+
+        // Neue Eingangsrechnung ist frischer Entwurf ohne buchhalterische Wirkung.
+        $nachfolger->set('status', 'entwurf');
+        $nachfolger->set('zahlungsstatus', 'offen');
+        $nachfolger->set('aktiv', true);
+
+        $nachfolger->set('freigabeAm', null);
+        $nachfolger->set('festgeschriebenAm', null);
+        $nachfolger->set('festgeschriebenVonId', null);
+        $nachfolger->set('festgeschriebenVonName', null);
+
+        $nachfolger->set('buchungsjournalId', null);
+        $nachfolger->set('buchungsjournalName', null);
+
+        // Keine Storno-Merkmale auf dem neuen Beleg.
+        $nachfolger->set('istStorniert', false);
+        $nachfolger->set('storniertAm', null);
+        $nachfolger->set('stornoGrund', null);
+        $nachfolger->set('storniertVonId', null);
+        $nachfolger->set('storniertVonName', null);
+
+        // Keine Zahlungswirkung im Entwurf.
+        $nachfolger->set('restbetragOffen', null);
+
+        // Phase-5-Korrekturdaten.
+        $ursprungName =
+            $ursprung->get('eingangsrechnungsnummer')
+            ?: $ursprung->get('name')
+            ?: $ursprung->get('id');
+
+        $nachfolger->set('istKorrekturbeleg', true);
+        $nachfolger->set('korrekturTyp', $korrekturTyp);
+        $nachfolger->set('korrekturGrund', $korrekturGrund);
+        $nachfolger->set('ersetztBelegId', $ursprung->get('id'));
+        $nachfolger->set('ersetztBelegName', $ursprungName);
+        $nachfolger->set('nachfolgeBelegId', null);
+        $nachfolger->set('nachfolgeBelegName', null);
+
+        // Name bewusst markieren. Eingangsrechnungsnummer kommt über AutoNumber.
+        $nachfolger->set('name', 'Korrektur zu ' . $ursprungName);
+
+        // Erst speichern, damit neue ID für Positionen existiert.
+        $em->saveEntity($nachfolger);
+
+        $nachfolgerId = $nachfolger->get('id');
+
+        if (!$nachfolgerId) {
+            throw new \RuntimeException('Nachfolgebeleg konnte nicht erstellt werden.');
+        }
+
+        // ------------------------------------------------------------
+        // Positionen aus Ursprungs-Eingangsrechnung kopieren
+        // ------------------------------------------------------------
+        $positionCollection = $em
+            ->getRDBRepository('CEingangsrechnungsposition')
+            ->where([
+                'eingangsrechnungId' => $ursprung->get('id'),
+                'deleted' => false,
+            ])
+            ->find();
+
+        $copiedPositions = 0;
+
+        if ($positionCollection && count($positionCollection)) {
+            foreach ($positionCollection as $altePosition) {
+                $neuePosition = $em->getNewEntity('CEingangsrechnungsposition');
+
+                $positionFieldsToCopy = [
+                    'positionsnummer',
+                    'name',
+                    'bezeichnung',
+                    'beschreibung',
+                    'menge',
+                    'einheit',
+                    'einzelpreisNetto',
+                    'gesamtNetto',
+                    'kostenart',
+                    'bemerkung',
+                    'materialId',
+                    'materialName',
+                    'rabattProzent',
+                    'rabattBetrag',
+                ];
+
+                foreach ($positionFieldsToCopy as $field) {
+                    if ($altePosition->has($field)) {
+                        $neuePosition->set($field, $altePosition->get($field));
+                    }
+                }
+
+                $neuePosition->set('eingangsrechnungId', $nachfolgerId);
+                $neuePosition->set(
+                    'eingangsrechnungName',
+                    $nachfolger->get('eingangsrechnungsnummer') ?: $nachfolger->get('name') ?: $nachfolgerId
+                );
+
+                $em->saveEntity($neuePosition);
+                $copiedPositions++;
+            }
+        }
+
+        // Startwerte aus Ursprung übernehmen.
+        // Wichtig: restbetragOffen bleibt trotzdem leer, weil der Entwurf noch keine Verbindlichkeit erzeugt.
+        $nachfolger->set('betragNetto', round((float)($ursprung->get('betragNetto') ?? 0), 2));
+        $nachfolger->set('steuerBetrag', round((float)($ursprung->get('steuerBetrag') ?? 0), 2));
+        $nachfolger->set('betragBrutto', round((float)($ursprung->get('betragBrutto') ?? 0), 2));
+        $nachfolger->set('restbetragOffen', null);
+
+        $em->saveEntity($nachfolger);
+
+        $nachfolgerName =
+            $nachfolger->get('eingangsrechnungsnummer')
+            ?: $nachfolger->get('name')
+            ?: $nachfolgerId;
+
+        // Rückverknüpfung auf dem stornierten Ursprungsbeleg.
+        $ursprung->set('nachfolgeBelegId', $nachfolgerId);
+        $ursprung->set('nachfolgeBelegName', $nachfolgerName);
+
+        // Korrekturinfo auch auf Ursprung sichtbar machen.
+        $ursprung->set('korrekturTyp', $korrekturTyp);
+        $ursprung->set('korrekturGrund', $korrekturGrund);
+        $ursprung->set('istKorrekturbeleg', false);
+
+        $em->saveEntity($ursprung, [
+            'allowFestgeschriebenSave' => true,
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Korrigierter Nachfolgebeleg wurde als Entwurf erstellt.',
+            'nachfolgeBelegId' => $nachfolgerId,
+            'nachfolgeBelegName' => $nachfolgerName,
+            'copiedPositions' => $copiedPositions,
+        ];
     }
 
 }

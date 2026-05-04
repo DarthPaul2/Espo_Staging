@@ -26,10 +26,17 @@
         "ausgleiche": "Ausgleiche",
         "zahlungsstatus": "Zahlungsstatus",
         "restbetragOffen": "Offener Restbetrag",
-        "istStorniert": "Ist Storno",
+        "istStorniert": "Storniert",
         "storniertAm": "Storniert am",
-        "stornoGrund": "Storno-Grund",
-        "storniertVon": "Storniert von"
+        "stornoGrund": "Stornogrund",
+        "storniertVon": "Storniert von",
+        "istKorrekturbeleg": "Korrekturbeleg",
+        "korrekturTyp": "Korrekturtyp",
+        "korrekturGrund": "Korrekturgrund",
+        "ersetztBelegId": "Ersetzt Beleg ID",
+        "nachfolgeBelegId": "Nachfolgebeleg ID",
+        "nachfolgeBelegName": "Nachfolgebeleg",
+        "ersetztBelegName": "Ersetzt Beleg"
     },
     "options": {
         "steuerfall": {
@@ -47,6 +54,16 @@
             "teilweise_bezahlt": "Teilweise bezahlt",
             "bezahlt": "Bezahlt",
             "storniert": "Storniert"
+        },
+        "korrekturTyp": {
+            "inhaltliche_korrektur": "Inhaltliche Korrektur",
+            "betragskorrektur": "Betragskorrektur",
+            "positionskorrektur": "Positionskorrektur",
+            "steuerkorrektur": "Steuerkorrektur",
+            "adresskorrektur": "Adresskorrektur",
+            "formelle_korrektur": "Formelle Korrektur",
+            "sonstige_korrektur": "Sonstige Korrektur",
+            "keine_korrektur": "  "
         }
     },
     "links": {
@@ -57,5 +74,9 @@
         "importe": "Importe",
         "ausgleiche": "Ausgleiche",
         "storniertVon": "Storniert von"
+    },
+    "tooltips": {
+        "ersetztBelegId": "Der Lesername der alten Eingangsrechnung.",
+        "nachfolgeBelegId": "Die ID des neuen Nachfolgebelegs, der auf der alten stornierten Eingangsrechnung gespeichert ist."
     }
 }

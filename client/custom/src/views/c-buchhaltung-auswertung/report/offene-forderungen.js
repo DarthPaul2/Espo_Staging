@@ -204,6 +204,7 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                     'buchhaltungStatus',
                     'rechnungstyp',
                     'status',
+                    'istStorniert',
                     'gesetzOption13b',
                     'gesetzOption12'
                 ];
@@ -213,10 +214,18 @@ define('custom:views/c-buchhaltung-auswertung/report/offene-forderungen', [], fu
                 collection.fetch().then(() => {
                     let list = (collection.models || []).map(model => model.attributes || {});
 
-                    list = list.filter(item =>
-                        String(item.buchhaltungStatus || '').trim() === 'festgeschrieben' &&
-                        Number(item.restbetragOffen || 0) > 0
-                    );
+                    list = list.filter(item => {
+                        const buchhaltungStatus = String(item.buchhaltungStatus || '').trim();
+                        const status = String(item.status || '').toLowerCase();
+                        const istStorniert = !!item.istStorniert;
+
+                        return (
+                            buchhaltungStatus === 'festgeschrieben' &&
+                            status !== 'storniert' &&
+                            !istStorniert &&
+                            Number(item.restbetragOffen || 0) > 0
+                        );
+                    });
 
                     list.sort((a, b) => {
                         const aFaellig = a.faelligAm || '';

@@ -203,6 +203,7 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                     'lieferantName',
                     'status',
                     'zahlungsstatus',
+                    'istStorniert',
                     'buchungsjournalId',
                     'buchungsjournalName'
                 ];
@@ -212,11 +213,18 @@ define('custom:views/c-buchhaltung-auswertung/report/verbindlichkeiten', [], fun
                 collection.fetch().then(() => {
                     const list = (collection.models || [])
                         .map(model => model.attributes || {})
-                        .filter(item =>
-                            String(item.status || '').toLowerCase() === 'festgeschrieben' &&
-                            Number(item.restbetragOffen || 0) > 0
-                        );
+                        .filter(item => {
+                            const status = String(item.status || '').toLowerCase();
+                            const zahlungsstatus = String(item.zahlungsstatus || '').toLowerCase();
+                            const istStorniert = !!item.istStorniert;
 
+                            return (
+                                status === 'festgeschrieben' &&
+                                zahlungsstatus !== 'storniert' &&
+                                !istStorniert &&
+                                Number(item.restbetragOffen || 0) > 0
+                            );
+                        });
                     list.sort((a, b) => {
                         const aFaellig = a.faelligAm || '';
                         const bFaellig = b.faelligAm || '';

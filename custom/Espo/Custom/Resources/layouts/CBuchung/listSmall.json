@@ -1,0 +1,33 @@
+[
+    {
+        "name": "name",
+        "width": 20,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "buchungsart",
+        "width": 15,
+        "align": "left"
+    },
+    {
+        "name": "betrag",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "kontoNummer",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "quelleNummer",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "istStorno",
+        "width": 10,
+        "align": "left"
+    }
+]

@@ -219,14 +219,14 @@ define('custom:views/c-zahlung/record/detail', [
 
                 rows.push(`<div style="font-size: 28px; line-height: 1; margin-right: 12px;">⛔</div>`);
                 rows.push('<div style="flex: 1;">');
-                rows.push('<div style="font-size: 24px; font-weight: 700; color: #a94442; margin-bottom: 10px;">Diese Zahlung wurde storniert.</div>');
+                rows.push('<div style="font-size: 18px; font-weight: 700; color: #a94442; margin-bottom: 10px;">Diese Zahlung wurde storniert.</div>');
 
                 if (storniertAm) {
-                    rows.push(`<div style="margin-bottom: 6px; font-size: 20px; color:rgb(51, 51, 51); "><strong>Storniert am:</strong> ${this._escapeHtml(String(storniertAm))}</div>`);
+                    rows.push(`<div style="margin-bottom: 6px; font-size: 14px; color:rgb(51, 51, 51); "><strong>Storniert am:</strong> ${this._escapeHtml(String(storniertAm))}</div>`);
                 }
 
                 if (stornoGrund) {
-                    rows.push(`<div style="font-size: 20px; color:rgb(52, 52, 52); "><strong>Storno-Grund:</strong> ${this._escapeHtml(String(stornoGrund))}</div>`);
+                    rows.push(`<div style="font-size: 14px; color:rgb(52, 52, 52); "><strong>Storno-Grund:</strong> ${this._escapeHtml(String(stornoGrund))}</div>`);
                 }
 
                 rows.push('</div>');

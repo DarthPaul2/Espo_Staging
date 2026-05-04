@@ -43,7 +43,10 @@
             "stornierte_ausgleiche": "Stornierte Ausgleiche",
             "stornierte_kontenbewegungen": "Stornierte Kontenbewegungen",
             "stornierte_journale": "Stornierte Journale",
-            "storno_uebersicht": "Storno-Übersicht"
+            "storno_uebersicht": "Storno-Übersicht",
+            "korrekturketten_ausgangsrechnungen": "Korrekturketten Ausgangsrechnungen",
+            "korrekturketten_eingangsrechnungen": "Korrekturketten Eingangsrechnungen",
+            "stornierte_belege_kontrolle": "Stornierte Belege Kontrolle"
         },
         "standardZeitraum": {
             "monat": "Monat",

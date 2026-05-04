@@ -115,13 +115,71 @@
                 }
             ]
         ],
-        "dynamicLogicVisible": null,
+        "dynamicLogicVisible": {
+            "conditionGroup": [
+                {
+                    "type": "isTrue",
+                    "attribute": "istStorniert"
+                }
+            ]
+        },
         "style": "danger",
         "dynamicLogicStyled": null,
         "tabBreak": false,
         "hidden": false,
-        "noteText": null,
+        "noteText": "Dieser Bereich dokumentiert die fachliche Stornierung des Belegs. Die ursprüngliche Historie bleibt erhalten.",
         "noteStyle": "info",
-        "customLabel": "Storno"
+        "customLabel": "Storno-Informationen"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "istKorrekturbeleg"
+                },
+                {
+                    "name": "korrekturTyp"
+                },
+                {
+                    "name": "korrekturGrund"
+                }
+            ],
+            [
+                {
+                    "name": "ersetztBelegName"
+                },
+                {
+                    "name": "nachfolgeBelegName"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": {
+            "conditionGroup": [
+                {
+                    "type": "or",
+                    "value": [
+                        {
+                            "type": "isTrue",
+                            "attribute": "istKorrekturbeleg"
+                        },
+                        {
+                            "type": "isNotEmpty",
+                            "attribute": "nachfolgeBelegId"
+                        },
+                        {
+                            "type": "isNotEmpty",
+                            "attribute": "ersetztBelegId"
+                        }
+                    ]
+                }
+            ]
+        },
+        "style": "warning",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": "Dieser Bereich zeigt, ob dieser Beleg einen stornierten Ursprungsbeleg ersetzt oder selbst durch einen Nachfolgebeleg ersetzt wurde.",
+        "noteStyle": "info",
+        "customLabel": "Korrektur \/ Nachfolge"
     }
 ]

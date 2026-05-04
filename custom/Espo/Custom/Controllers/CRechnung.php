@@ -1716,11 +1716,42 @@ public function postActionFestschreiben($params, $data, $request)
             }
 
             // Что это:
-            // Жёсткая стартовая Sicherheitsregel für Phase 4:
-            // сначала сторнируются Zahlungen/Ausgleiche, потом Rechnung.
+            // Schutzregel für auftragsgebundene Rechnungskette.
             //
             // Зачем:
-            // чтобы не разрушать payment-layer и restbetrag-логикy.
+            // Wenn zu einem Auftrag bereits eine aktive festgeschriebene Schlussrechnung existiert,
+            // darf eine Teilrechnung / Abschlagsrechnung darunter nicht nachträglich storniert werden.
+            // Zuerst muss die Schlussrechnung storniert werden, danach die betroffene Teil-/Abschlagsrechnung.
+            $rechnungstyp = strtolower(trim((string) ($rechnung->get('rechnungstyp') ?? '')));
+            $auftragId = (string) ($rechnung->get('auftragId') ?? '');
+
+            if (
+                in_array($rechnungstyp, ['teilrechnung', 'abschlagsrechnung'], true)
+                && $auftragId !== ''
+            ) {
+                $aktiveSchlussrechnung = $this->findAktiveSchlussrechnungFuerAuftrag(
+                    $auftragId,
+                    $rechnung->getId()
+                );
+
+                if ($aktiveSchlussrechnung) {
+                    $schlussNummer =
+                        $aktiveSchlussrechnung['rechnungsnummer']
+                        ?: ($aktiveSchlussrechnung['name'] ?? '');
+
+                    return [
+                        'success' => false,
+                        'message' =>
+                            'Zu diesem Auftrag existiert bereits eine aktive festgeschriebene Schlussrechnung'
+                            . ($schlussNummer ? ' (' . $schlussNummer . ')' : '')
+                            . '. Bitte stornieren Sie zuerst die Schlussrechnung, danach die Teil-/Abschlagsrechnung.'
+                    ];
+                }
+            }
+
+            // Что это:
+            // Жёсткая стартовая Sicherheitsregel für Phase 4:
+            // сначала сторнируются Zahlungen/Ausgleiche, потом Rechnung.
             if ($this->hasAktiveAusgleicheFuerRechnung($rechnung->getId(), $em)) {
                 return [
                     'success' => false,
@@ -1917,6 +1948,58 @@ public function postActionFestschreiben($params, $data, $request)
             ];
         }
     }
+
+    /**
+     * Что это:
+     * Проверяет, есть ли по Auftrag уже aktive festgeschriebene Schlussrechnung.
+     *
+     * Зачем:
+     * Teilrechnung / Abschlagsrechnung нельзя сторнировать после активной Schlussrechnung,
+     * потому что Schlussrechnung закрывает Abrechnungskette des Auftrags.
+     */
+    protected function findAktiveSchlussrechnungFuerAuftrag(string $auftragId, ?string $excludeRechnungId = null): ?array
+    {
+        $pdo = $this->getEntityManager()->getPDO();
+
+        $excludeSql = '';
+        $params = [
+            ':auftragId' => $auftragId,
+        ];
+
+        if ($excludeRechnungId) {
+            $excludeSql = ' AND id <> :excludeRechnungId ';
+            $params[':excludeRechnungId'] = $excludeRechnungId;
+        }
+
+        $sql = "
+            SELECT
+                id,
+                rechnungsnummer,
+                name,
+                status,
+                buchhaltung_status,
+                ist_storniert,
+                betrag_brutto
+            FROM c_rechnung
+            WHERE
+                deleted = 0
+                AND auftrag_id = :auftragId
+                AND rechnungstyp = 'schlussrechnung'
+                AND buchhaltung_status = 'festgeschrieben'
+                AND COALESCE(ist_storniert, 0) = 0
+                AND status <> 'storniert'
+                {$excludeSql}
+            ORDER BY created_at DESC
+            LIMIT 1
+        ";
+
+        $sth = $pdo->prepare($sql);
+        $sth->execute($params);
+
+        $row = $sth->fetch(\PDO::FETCH_ASSOC);
+
+        return $row ?: null;
+    }
     
     /**
      * Что это:
@@ -2034,5 +2117,555 @@ public function postActionFestschreiben($params, $data, $request)
             'error' => 'SQL error in stornierteRechnungenReport',
         ];
     }
+}
+
+/**
+ * Что это:
+ * Phase 5 — SQL-Report "Korrekturketten Ausgangsrechnungen".
+ *
+ * Зачем:
+ * Показывает fachliche Kette:
+ * storniert Ursprung-Rechnung -> korrigierter Nachfolgebeleg.
+ *
+ * Используется в:
+ * CBuchhaltungAuswertung / Korrekturketten Ausgangsrechnungen.
+ */
+public function getActionKorrekturkettenReport($params, $data, $request)
+{
+    $this->getAcl()->check('CRechnung', 'read');
+
+    $em = $this->getEntityManager();
+    $pdo = $em->getPDO();
+
+    $von = $request->getQueryParam('von');
+    $bis = $request->getQueryParam('bis');
+
+    $where = "
+        u.deleted = 0
+        AND u.nachfolge_beleg_id IS NOT NULL
+        AND u.nachfolge_beleg_id <> ''
+    ";
+
+    $bind = [];
+
+    // Что это:
+    // Zeitraumfilter по Storno-Zeitpunkt des Ursprungsbelegs.
+    //
+    // Зачем:
+    // бухгалтерски Korrekturkette начинается с Storno des fehlerhaften Belegs.
+    if ($von) {
+        $where .= " AND u.storniert_am >= :von ";
+        $bind['von'] = $von . ' 00:00:00';
+    }
+
+    if ($bis) {
+        $where .= " AND u.storniert_am <= :bis ";
+        $bind['bis'] = $bis . ' 23:59:59';
+    }
+
+    $sql = "
+        SELECT
+            -- Ursprung
+            u.id AS ursprungId,
+            u.rechnungsnummer AS ursprungRechnungsnummer,
+            u.name AS ursprungName,
+            u.rechnungstyp AS ursprungRechnungstyp,
+            u.status AS ursprungStatus,
+            u.buchhaltung_status AS ursprungBuchhaltungStatus,
+            u.ist_festgeschrieben AS ursprungIstFestgeschrieben,
+            u.ist_storniert AS ursprungIstStorniert,
+            u.betrag_netto AS ursprungBetragNetto,
+            u.ust_betrag AS ursprungUstBetrag,
+            u.betrag_brutto AS ursprungBetragBrutto,
+            u.restbetrag_offen AS ursprungRestbetragOffen,
+            u.storniert_am AS ursprungStorniertAm,
+            u.storno_grund AS ursprungStornoGrund,
+
+            -- Nachfolger
+            n.id AS nachfolgerId,
+            n.rechnungsnummer AS nachfolgerRechnungsnummer,
+            n.name AS nachfolgerName,
+            n.rechnungstyp AS nachfolgerRechnungstyp,
+            n.status AS nachfolgerStatus,
+            n.buchhaltung_status AS nachfolgerBuchhaltungStatus,
+            n.ist_festgeschrieben AS nachfolgerIstFestgeschrieben,
+            n.ist_storniert AS nachfolgerIstStorniert,
+            n.betrag_netto AS nachfolgerBetragNetto,
+            n.ust_betrag AS nachfolgerUstBetrag,
+            n.betrag_brutto AS nachfolgerBetragBrutto,
+            n.restbetrag_offen AS nachfolgerRestbetragOffen,
+            n.freigabe_am AS nachfolgerFreigabeAm,
+            n.festgeschrieben_am AS nachfolgerFestgeschriebenAm,
+
+            -- Korrektur
+            COALESCE(n.korrektur_typ, u.korrektur_typ) AS korrekturTyp,
+            COALESCE(n.korrektur_grund, u.korrektur_grund) AS korrekturGrund,
+
+            -- Kunde / Auftrag
+            u.account_id AS accountId,
+            acc.name AS accountName,
+            u.auftrag_id AS auftragId,
+            auf.name AS auftragName,
+
+            -- technische Kontrolle
+            u.nachfolge_beleg_id AS linkedNachfolgerId,
+            u.nachfolge_beleg_name AS linkedNachfolgerName,
+            n.ersetzt_beleg_id AS nachfolgerErsetztBelegId,
+            n.ersetzt_beleg_name AS nachfolgerErsetztBelegName
+
+        FROM c_rechnung u
+
+        LEFT JOIN c_rechnung n
+            ON n.id = u.nachfolge_beleg_id
+            AND n.deleted = 0
+
+        LEFT JOIN account acc
+            ON acc.id = u.account_id
+            AND acc.deleted = 0
+
+        LEFT JOIN c_auftrag auf
+            ON auf.id = u.auftrag_id
+            AND auf.deleted = 0
+
+        WHERE {$where}
+
+        ORDER BY
+            u.storniert_am DESC,
+            u.created_at DESC
+    ";
+
+    try {
+        $sth = $pdo->prepare($sql);
+        $sth->execute($bind);
+
+        $rows = $sth->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+        foreach ($rows as &$row) {
+            $row['ursprungIstFestgeschrieben'] = (int) ($row['ursprungIstFestgeschrieben'] ?? 0);
+            $row['ursprungIstStorniert'] = (int) ($row['ursprungIstStorniert'] ?? 0);
+
+            $row['nachfolgerIstFestgeschrieben'] = (int) ($row['nachfolgerIstFestgeschrieben'] ?? 0);
+            $row['nachfolgerIstStorniert'] = (int) ($row['nachfolgerIstStorniert'] ?? 0);
+
+            $row['ursprungBetragNetto'] = (float) ($row['ursprungBetragNetto'] ?? 0);
+            $row['ursprungUstBetrag'] = (float) ($row['ursprungUstBetrag'] ?? 0);
+            $row['ursprungBetragBrutto'] = (float) ($row['ursprungBetragBrutto'] ?? 0);
+            $row['ursprungRestbetragOffen'] = (float) ($row['ursprungRestbetragOffen'] ?? 0);
+
+            $row['nachfolgerBetragNetto'] = (float) ($row['nachfolgerBetragNetto'] ?? 0);
+            $row['nachfolgerUstBetrag'] = (float) ($row['nachfolgerUstBetrag'] ?? 0);
+            $row['nachfolgerBetragBrutto'] = (float) ($row['nachfolgerBetragBrutto'] ?? 0);
+            $row['nachfolgerRestbetragOffen'] = (float) ($row['nachfolgerRestbetragOffen'] ?? 0);
+        }
+
+        return $rows;
+    } catch (\Throwable $e) {
+        $this->getContainer()->get('log')->error(
+            'CRechnung::getActionKorrekturkettenReport error: ' . $e->getMessage()
+        );
+
+        return [
+            'success' => false,
+            'error' => 'SQL error in korrekturkettenReport',
+            'message' => 'Korrekturketten Ausgangsrechnungen konnten nicht geladen werden.',
+        ];
+    }
+}
+
+/**
+ * Что это:
+ * Kontrollreport für stornierte Ausgangsrechnungen ohne/mit Nachfolger.
+ *
+ * Зачем:
+ * Показывает все stornierten Ausgangsrechnungen и контролирует,
+ * есть ли к ним Nachfolgebeleg.
+ *
+ * Используется в:
+ * CBuchhaltungAuswertung / Stornierte Belege Kontrolle.
+ */
+public function getActionStornierteBelegeKontrolleReport($params, $data, $request)
+{
+    $this->getAcl()->check('CRechnung', 'read');
+
+    $em = $this->getEntityManager();
+    $pdo = $em->getPDO();
+
+    $von = $request->getQueryParam('von');
+    $bis = $request->getQueryParam('bis');
+
+    $where = "
+        r.deleted = 0
+        AND r.status = 'storniert'
+        AND COALESCE(r.ist_storniert, 0) = 1
+    ";
+
+    $bind = [];
+
+    if ($von) {
+        $where .= " AND r.storniert_am >= :von ";
+        $bind['von'] = $von . ' 00:00:00';
+    }
+
+    if ($bis) {
+        $where .= " AND r.storniert_am <= :bis ";
+        $bind['bis'] = $bis . ' 23:59:59';
+    }
+
+    $sql = "
+        SELECT
+            'ausgang' AS bereich,
+
+            r.id AS id,
+            r.rechnungsnummer AS belegNummer,
+            r.name AS name,
+            r.rechnungstyp AS belegTyp,
+
+            r.status AS status,
+            NULL AS zahlungsstatus,
+            r.ist_storniert AS istStorniert,
+            r.storniert_am AS storniertAm,
+            r.storno_grund AS stornoGrund,
+
+            r.betrag_netto AS betragNetto,
+            r.ust_betrag AS steuerBetrag,
+            r.betrag_brutto AS betragBrutto,
+
+            r.account_id AS partnerId,
+            acc.name AS partnerName,
+
+            r.nachfolge_beleg_id AS nachfolgerId,
+            r.nachfolge_beleg_name AS nachfolgerName,
+            n.rechnungsnummer AS nachfolgerNummer,
+            n.status AS nachfolgerStatus,
+            NULL AS nachfolgerZahlungsstatus,
+            n.ist_storniert AS nachfolgerIstStorniert,
+
+            COALESCE(n.korrektur_typ, r.korrektur_typ) AS korrekturTyp,
+            COALESCE(n.korrektur_grund, r.korrektur_grund) AS korrekturGrund
+
+        FROM c_rechnung r
+
+        LEFT JOIN account acc
+            ON acc.id = r.account_id
+            AND acc.deleted = 0
+
+        LEFT JOIN c_rechnung n
+            ON n.id = r.nachfolge_beleg_id
+            AND n.deleted = 0
+
+        WHERE {$where}
+
+        ORDER BY
+            r.storniert_am DESC,
+            r.created_at DESC
+    ";
+
+    try {
+        $sth = $pdo->prepare($sql);
+        $sth->execute($bind);
+
+        $rows = $sth->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+        foreach ($rows as &$row) {
+            $row['istStorniert'] = (int) ($row['istStorniert'] ?? 0);
+            $row['nachfolgerIstStorniert'] = (int) ($row['nachfolgerIstStorniert'] ?? 0);
+
+            $row['betragNetto'] = (float) ($row['betragNetto'] ?? 0);
+            $row['steuerBetrag'] = (float) ($row['steuerBetrag'] ?? 0);
+            $row['betragBrutto'] = (float) ($row['betragBrutto'] ?? 0);
+        }
+
+        return $rows;
+    } catch (\Throwable $e) {
+        $this->getContainer()->get('log')->error(
+            'CRechnung::getActionStornierteBelegeKontrolleReport error: ' . $e->getMessage()
+        );
+
+        return [
+            'success' => false,
+            'error' => 'SQL error in stornierteBelegeKontrolleReport',
+            'message' => 'Stornierte Ausgangsrechnungen konnten nicht geladen werden.',
+        ];
+    }
+}
+
+// Что это: создаёт neuen korrigierten Nachfolgebeleg zu einer stornierten Rechnung.
+// Зачем: Phase 5 требует не редактировать stornierten Ursprungsbeleg, а создать новый самостоятельный Entwurf-Beleg.
+public function postActionCreateKorrekturNachfolgebeleg($params, $data, $request)
+{
+    // Что это: проверяет право на редактирование Rechnungen.
+    // Зачем: Nachfolgebeleg darf nur von berechtigten Benutzern erstellt werden.
+    $this->getAcl()->check('CRechnung', 'edit');
+
+    $em = $this->getEntityManager();
+
+    $id = $data->id ?? null;
+    $korrekturTyp = trim((string)($data->korrekturTyp ?? ''));
+    $korrekturGrund = trim((string)($data->korrekturGrund ?? ''));
+
+    if (!$id) {
+        return [
+            'success' => false,
+            'message' => 'Rechnung-ID fehlt.',
+        ];
+    }
+
+    $allowedTypes = [
+        'inhaltliche_korrektur',
+        'betragskorrektur',
+        'positionskorrektur',
+        'steuerkorrektur',
+        'adresskorrektur',
+        'formelle_korrektur',
+        'sonstige_korrektur',
+    ];
+
+    if (!in_array($korrekturTyp, $allowedTypes, true)) {
+        return [
+            'success' => false,
+            'message' => 'Ungültiger Korrekturtyp.',
+        ];
+    }
+
+    if ($korrekturGrund === '') {
+        return [
+            'success' => false,
+            'message' => 'Korrekturgrund fehlt.',
+        ];
+    }
+
+    // Что это: загружает старую stornierten Rechnung.
+    // Зачем: используем тот же EntityManager-стиль, который уже работает в этом контроллере.
+    $ursprung = $em->getEntity('CRechnung', $id);
+
+    if (!$ursprung) {
+        return [
+            'success' => false,
+            'message' => 'Ursprungsrechnung wurde nicht gefunden.',
+        ];
+    }
+
+    $istStorniert = (bool)($ursprung->get('istStorniert') ?? false);
+    $status = strtolower((string)($ursprung->get('status') ?? ''));
+
+    if (!$istStorniert && $status !== 'storniert') {
+        return [
+            'success' => false,
+            'message' => 'Ein Nachfolgebeleg kann nur für eine stornierte Rechnung erstellt werden.',
+        ];
+    }
+
+    if ($ursprung->get('nachfolgeBelegId')) {
+        return [
+            'success' => false,
+            'message' => 'Für diese Rechnung existiert bereits ein Nachfolgebeleg.',
+        ];
+    }
+
+    // Что это: создаёт новый, ещё не сохранённый Entwurf-Beleg.
+    // Зачем: Nachfolgebeleg должен быть новой самостоятельной Rechnung.
+    $nachfolger = $em->getNewEntity('CRechnung');
+
+    // Basisdaten aus Ursprungsrechnung übernehmen.
+    $fieldsToCopy = [
+        'accountId',
+        'accountName',
+        'angebotId',
+        'angebotName',
+        'auftragId',
+        'auftragName',
+        'objektId',
+        'objektName',
+        'contactId',
+        'contactName',
+
+        'einleitung',
+        'bemerkung',
+        'faelligAm',
+        'leistungsdatumVon',
+        'leistungsdatumBis',
+        'gesetzOption13b',
+        'gesetzOption12',
+        'serviceNummer',
+        'sachbearbeiter',
+        'mahnregelId',
+        'mahnregelName',
+        'rechnungstyp',
+        'belegdatum',
+        'assignedUserId',
+        'assignedUserName',
+    ];
+
+    foreach ($fieldsToCopy as $field) {
+        if ($ursprung->has($field)) {
+            $nachfolger->set($field, $ursprung->get($field));
+        }
+    }
+
+    // Neue Rechnung ist ein frischer Entwurf ohne buchhalterische Wirkung.
+    $nachfolger->set('status', 'offen');
+    $nachfolger->set('buchhaltungStatus', 'entwurf');
+    $nachfolger->set('istFestgeschrieben', false);
+    $nachfolger->set('festgeschriebenAm', null);
+    $nachfolger->set('freigabeAm', null);
+    $nachfolger->set('buchungsjournalId', null);
+    $nachfolger->set('buchungsjournalName', null);
+
+    // Keine Storno-Merkmale auf dem neuen Beleg.
+    $nachfolger->set('istStorniert', false);
+    $nachfolger->set('storniertAm', null);
+    $nachfolger->set('stornoGrund', null);
+    $nachfolger->set('storniertVonId', null);
+    $nachfolger->set('storniertVonName', null);
+
+    // Keine Zahlungswirkung auf dem neuen Entwurf.
+    $nachfolger->set('bezahltAm', null);
+    $nachfolger->set('restbetragOffen', null);
+
+    // PDF muss neu erzeugt werden.
+    $nachfolger->set('pdfUrl', null);
+
+    // Phase-5-Korrekturdaten.
+    $ursprungName =
+        $ursprung->get('rechnungsnummer')
+        ?: $ursprung->get('name')
+        ?: $ursprung->get('id');
+
+    $nachfolger->set('istKorrekturbeleg', true);
+    $nachfolger->set('korrekturTyp', $korrekturTyp);
+    $nachfolger->set('korrekturGrund', $korrekturGrund);
+    $nachfolger->set('ersetztBelegId', $ursprung->get('id'));
+    $nachfolger->set('ersetztBelegName', $ursprungName);
+    $nachfolger->set('nachfolgeBelegId', null);
+    $nachfolger->set('nachfolgeBelegName', null);
+
+    // Name bewusst markieren. Rechnungsnummer kommt über bestehende AutoNumber-Logik.
+    $nachfolger->set('name', 'Korrektur zu ' . $ursprungName);
+
+    // Что это: сохраняет Kopf des neuen Nachfolgebelegs.
+    // Зачем: сначала нужен ID новой Rechnung, чтобы привязать к ней скопированные позиции.
+    $em->saveEntity($nachfolger);
+
+    $nachfolgerId = $nachfolger->get('id');
+
+    if (!$nachfolgerId) {
+        throw new \RuntimeException('Nachfolgebeleg konnte nicht erstellt werden.');
+    }
+
+    // ------------------------------------------------------------
+    // Positionen aus Ursprungsrechnung kopieren
+    // ------------------------------------------------------------
+
+    // Что это: загружает все активные Positionen der stornierten Ursprungsrechnung.
+    // Зачем: Nachfolgebeleg должен получить самостоятельные копии позиций.
+    $positionCollection = $em
+        ->getRDBRepository('CRechnungsposition')
+        ->where([
+            'rechnungId' => $ursprung->get('id'),
+            'deleted' => false,
+        ])
+        ->find();
+
+    $copiedPositions = 0;
+
+    if ($positionCollection && count($positionCollection)) {
+        foreach ($positionCollection as $altePosition) {
+            // Что это: создаёт новую Position для нового Nachfolgebeleg.
+            // Зачем: старая Position остаётся историей, новая может быть исправлена.
+            $neuePosition = $em->getNewEntity('CRechnungsposition');
+
+            // Что это: список полей CRechnungsposition, которые копируются в новый Nachfolgebeleg.
+            // Зачем: новая Rechnung получает самостоятельные позиции, но с тем же содержанием, что у старого stornierten Beleg.
+            $positionFieldsToCopy = [
+                'name',
+                'description',
+
+                'menge',
+                'einheit',
+                'preis',
+                'einkaufspreis',
+                'steuer',
+                'rabatt',
+                'gesamt',
+                'netto',
+
+                'beschreibung',
+
+                'materialId',
+                'materialName',
+
+                'auftragspositionId',
+                'auftragspositionName',
+
+                'positionsNummer',
+                'positionType',
+                'titel',
+                'sortierung',
+            ];
+
+            foreach ($positionFieldsToCopy as $field) {
+                if ($altePosition->has($field)) {
+                    $neuePosition->set($field, $altePosition->get($field));
+                }
+            }
+
+            // Что это: привязывает новую Position к новой Rechnung.
+            // Зачем: позиция должна принадлежать Nachfolgebeleg, а не старому stornierten Beleg.
+            $neuePosition->set('rechnungId', $nachfolgerId);
+            $neuePosition->set(
+                'rechnungName',
+                $nachfolger->get('rechnungsnummer') ?: $nachfolger->get('name') ?: $nachfolgerId
+            );
+
+            $em->saveEntity($neuePosition);
+            $copiedPositions++;
+        }
+    }
+
+    // Что это: переносит стартовые суммы из Ursprung-Rechnung.
+    // Зачем: новый Entwurf сразу выглядит как рабочая Kopie и может быть затем исправлен.
+    $nachfolger->set('betragNetto', round((float)($ursprung->get('betragNetto') ?? 0), 2));
+    $nachfolger->set('betragBrutto', round((float)($ursprung->get('betragBrutto') ?? 0), 2));
+    $nachfolger->set('ustBetrag', round((float)($ursprung->get('ustBetrag') ?? 0), 2));
+
+    // Что это: Entwurf bleibt ohne offene Forderung.
+    // Зачем: restbetragOffen entsteht erst bei eigener Festschreibung.
+    $nachfolger->set('restbetragOffen', null);
+
+    $em->saveEntity($nachfolger);
+
+    $nachfolgerName =
+        $nachfolger->get('rechnungsnummer')
+        ?: $nachfolger->get('name')
+        ?: $nachfolgerId;
+
+    // Что это: записывает Phase-5-Rückverknüpfung на stornierten Ursprungsbeleg.
+    // Зачем: старый Beleg должен показывать, каким Nachfolgebeleg он заменён и почему.
+    $ursprung->set('nachfolgeBelegId', $nachfolgerId);
+    $ursprung->set('nachfolgeBelegName', $nachfolgerName);
+
+    // Что это: записывает Korrektur-Informationen также на старый stornierten Beleg.
+    // Зачем: в старой Rechnung в блоке "Korrektur / Nachfolge" сразу видно причину создания Nachfolgebeleg.
+    $ursprung->set('korrekturTyp', $korrekturTyp);
+    $ursprung->set('korrekturGrund', $korrekturGrund);
+
+    // Важно:
+    // Старый Beleg НЕ является Korrekturbeleg.
+    // Он остаётся Ursprungsbeleg, который был storniert и получил Nachfolger.
+    $ursprung->set('istKorrekturbeleg', false);
+
+    // Что это: сохраняет Rückverknüpfung на уже festgeschriebene/stornierte Ursprungsrechnung.
+    // Зачем: обычное редактирование заблокировано, но системная Phase-5-Verknüpfung разрешена.
+    $em->saveEntity($ursprung, [
+        'allowFestgeschriebenSave' => true,
+    ]);
+
+    return [
+        'success' => true,
+        'message' => 'Korrigierter Nachfolgebeleg wurde als Entwurf erstellt.',
+        'nachfolgeBelegId' => $nachfolgerId,
+        'nachfolgeBelegName' => $nachfolgerName,
+        'copiedPositions' => $copiedPositions,
+    ];
 }
 }

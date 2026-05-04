@@ -385,6 +385,78 @@
         },
         "storniertVon": {
             "type": "link"
+        },
+        "istKorrekturbeleg": {
+            "notNull": true,
+            "type": "bool",
+            "isCustom": true,
+            "readOnly": true,
+            "default": false,
+            "tooltip": true
+        },
+        "korrekturTyp": {
+            "type": "enum",
+            "options": [
+                "inhaltliche_korrektur",
+                "betragskorrektur",
+                "positionskorrektur",
+                "steuerkorrektur",
+                "adresskorrektur",
+                "formelle_korrektur",
+                "sonstige_korrektur",
+                "keine_korrektur"
+            ],
+            "style": {
+                "inhaltliche_korrektur": null,
+                "betragskorrektur": null,
+                "positionskorrektur": null,
+                "steuerkorrektur": null,
+                "adresskorrektur": null,
+                "formelle_korrektur": null,
+                "sonstige_korrektur": null,
+                "keine_korrektur": null
+            },
+            "maxLength": 100,
+            "isCustom": true,
+            "default": "keine_korrektur"
+        },
+        "korrekturGrund": {
+            "type": "text",
+            "rowsMin": 2,
+            "cutHeight": 200,
+            "isCustom": true
+        },
+        "ersetztBelegId": {
+            "type": "varchar",
+            "maxLength": 100,
+            "readOnly": true,
+            "options": [],
+            "isCustom": true,
+            "tooltip": true
+        },
+        "ersetztBelegName": {
+            "type": "varchar",
+            "maxLength": 100,
+            "readOnly": true,
+            "options": [],
+            "isCustom": true,
+            "tooltip": true
+        },
+        "nachfolgeBelegId": {
+            "type": "varchar",
+            "maxLength": 100,
+            "readOnly": true,
+            "options": [],
+            "isCustom": true,
+            "tooltip": true
+        },
+        "nachfolgeBelegName": {
+            "type": "varchar",
+            "maxLength": 100,
+            "readOnly": true,
+            "options": [],
+            "tooltip": true,
+            "isCustom": true
         }
     },
     "links": {

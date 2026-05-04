@@ -20,6 +20,10 @@
         "align": "left"
     },
     {
+        "name": "rabattProzent",
+        "width": 20
+    },
+    {
         "name": "einzelpreisNetto",
         "width": 13,
         "align": "left"

@@ -62,7 +62,10 @@
                 "stornierte_ausgleiche",
                 "stornierte_kontenbewegungen",
                 "stornierte_journale",
-                "storno_uebersicht"
+                "storno_uebersicht",
+                "korrekturketten_ausgangsrechnungen",
+                "korrekturketten_eingangsrechnungen",
+                "stornierte_belege_kontrolle"
             ],
             "style": {
                 "festgeschriebene_rechnungen": null,
@@ -89,7 +92,10 @@
                 "stornierte_ausgleiche": null,
                 "stornierte_kontenbewegungen": null,
                 "stornierte_journale": null,
-                "storno_uebersicht": null
+                "storno_uebersicht": null,
+                "korrekturketten_ausgangsrechnungen": null,
+                "korrekturketten_eingangsrechnungen": null,
+                "stornierte_belege_kontrolle": null
             },
             "default": "festgeschriebene_rechnungen",
             "maxLength": 100,

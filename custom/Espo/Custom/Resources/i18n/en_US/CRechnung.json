@@ -43,10 +43,17 @@
         "istTest": "Nur für TEST !!!",
         "ausgleiche": "Ausgleiche",
         "restbetragOffen": "Offener Restbetrag",
-        "istStorniert": "Ist Storno",
+        "istStorniert": "Storniert",
         "storniertAm": "Storniert am",
-        "stornoGrund": "Storno-Grund",
-        "storniertVon": "Storniert von"
+        "stornoGrund": "Stornogrund",
+        "storniertVon": "Storniert von",
+        "istKorrekturbeleg": "Korrekturbeleg",
+        "korrekturTyp": "Korrekturtyp",
+        "korrekturGrund": "Korrekturgrund",
+        "ersetztBelegId": "Ersetzt Beleg ID",
+        "ersetztBelegName": "Ersetzt Beleg",
+        "nachfolgeBelegId": "Nachfolgebeleg ID",
+        "nachfolgeBelegName": "Nachfolgebeleg"
     },
     "links": {
         "account": "Account",
@@ -99,9 +106,24 @@
             "entwurf": "Entwurf",
             "freigabe": "Freigabe",
             "festgeschrieben": "Festgeschrieben"
+        },
+        "korrekturTyp": {
+            "inhaltliche_korrektur": "Inhaltliche Korrektur",
+            "betragskorrektur": "Betragskorrektur",
+            "positionskorrektur": "Positionskorrektur",
+            "steuerkorrektur": "Steuerkorrektur",
+            "adresskorrektur": "Adresskorrektur",
+            "formelle_korrektur": "Formelle Korrektur",
+            "sonstige_korrektur": "Sonstige Korrektur",
+            "keine_korrektur": "  "
         }
     },
     "tooltips": {
-        "istFestgeschrieben": "ist Festgeschrieben"
+        "istFestgeschrieben": "ist Festgeschrieben",
+        "nachfolgeBelegId": "speichert die technische ID des neuen Nachfolgebelegs auf dem alten, stornierten Beleg.",
+        "ersetztBelegName": "speichert den lesbaren Namen/die Nummer des alten Kontos.",
+        "ersetztBelegId": "speichert die technische ID der alten, stornierten Rechnung, die durch die neue Rechnung ersetzt wird.",
+        "istKorrekturbeleg": "zeigt an, dass dieser Beleg ein Nachfolgebeleg nach der Stornierung eines anderen Belegs ist.",
+        "nachfolgeBelegName": "speichert den lesbaren Namen/die Nummer des neuen Kontos auf dem alten, stornierten Konto."
     }
 }
