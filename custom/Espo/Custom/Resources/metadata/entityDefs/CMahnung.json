@@ -71,13 +71,15 @@
             "options": [
                 "Erstellt",
                 "Gesendet",
-                "Storniert"
+                "Storniert",
+                "zu_pruefen"
             ],
-            "default": "Erstellt",
+            "default": "zu_pruefen",
             "style": {
                 "Erstellt": null,
                 "Gesendet": null,
-                "Storniert": null
+                "Storniert": null,
+                "zu_pruefen": null
             },
             "maxLength": 100,
             "isCustom": true

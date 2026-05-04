@@ -38,7 +38,8 @@
         "status": {
             "Erstellt": "Erstellt",
             "Gesendet": "Gesendet",
-            "Storniert": "Storniert"
+            "Storniert": "Storniert",
+            "zu_pruefen": "Zu prüfen"
         }
     }
 }
