@@ -34,7 +34,14 @@ define(
         'custom:views/c-buchhaltung-auswertung/report/storno-uebersicht',
         'custom:views/c-buchhaltung-auswertung/report/korrekturketten-ausgangsrechnungen',
         'custom:views/c-buchhaltung-auswertung/report/korrekturketten-eingangsrechnungen',
+        'custom:views/c-buchhaltung-auswertung/report/summen-saldenliste',
         'custom:views/c-buchhaltung-auswertung/report/stornierte-belege-kontrolle',
+        'custom:views/c-buchhaltung-auswertung/report/kontenblatt',
+        'custom:views/c-buchhaltung-auswertung/report/steueruebersicht-gesamt',
+        'custom:views/c-buchhaltung-auswertung/report/offene-posten-abstimmung',
+        'custom:views/c-buchhaltung-auswertung/report/management-kennzahlen-grundlage',
+
+
     ],
     function (
         Dep,
@@ -65,7 +72,14 @@ define(
         StornoUebersichtReport,
         KorrekturkettenAusgangsrechnungenReport,
         KorrekturkettenEingangsrechnungenReport,
+        SummenSaldenlisteReport,
         StornierteBelegeKontrolleReport,
+        KontenblattReport,
+        SteueruebersichtGesamtReport,
+        OffenePostenAbstimmungReport,
+        ManagementKennzahlenGrundlageReport,
+
+
     ) {
         return Dep.extend({
 
@@ -466,6 +480,61 @@ define(
                     }
                 }
 
+                if (auswertungTyp === 'summen_saldenliste') {
+                    SummenSaldenlisteReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    SummenSaldenlisteReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        SummenSaldenlisteReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'kontenblatt') {
+                    KontenblattReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    KontenblattReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        KontenblattReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'steueruebersicht_gesamt') {
+                    SteueruebersichtGesamtReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    SteueruebersichtGesamtReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        SteueruebersichtGesamtReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'offene_posten_abstimmung') {
+                    OffenePostenAbstimmungReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    OffenePostenAbstimmungReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        OffenePostenAbstimmungReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'management_kennzahlen_grundlage') {
+                    ManagementKennzahlenGrundlageReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    ManagementKennzahlenGrundlageReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        ManagementKennzahlenGrundlageReport.load(this);
+                    }
+                }
+
                 this.hideStandardRecordUi_();
             },
 
@@ -703,8 +772,15 @@ define(
                 }
             },
 
+            // Что это: форматирование денежных значений.
+            // Зачем: убирает косметический Effekt "-0,00 €" bei Rundungsdifferenzen.
             formatCurrency_(value) {
-                const number = Number(value || 0);
+                let number = Number(value || 0);
+
+                if (Math.abs(number) < 0.005) {
+                    number = 0;
+                }
+
                 return number.toLocaleString('de-DE', {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
@@ -920,6 +996,32 @@ define(
                                 StornierteBelegeKontrolleReport.load(this);
                             }
 
+                            if (auswertungTyp === 'summen_saldenliste') {
+                                this._lastReportLoadSignature = null;
+                                SummenSaldenlisteReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'kontenblatt') {
+                                this._lastReportLoadSignature = null;
+                                KontenblattReport.selectedKontoNummer = null;
+                                KontenblattReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'steueruebersicht_gesamt') {
+                                this._lastReportLoadSignature = null;
+                                SteueruebersichtGesamtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'offene_posten_abstimmung') {
+                                this._lastReportLoadSignature = null;
+                                OffenePostenAbstimmungReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'management_kennzahlen_grundlage') {
+                                this._lastReportLoadSignature = null;
+                                ManagementKennzahlenGrundlageReport.load(this);
+                            }
+
                             this.updateZeitraumButtons_();
                             this.notify('Zeitraum gespeichert', 'success');
                         },
@@ -1085,6 +1187,32 @@ define(
                             if (auswertungTyp === 'stornierte_belege_kontrolle') {
                                 this._lastReportLoadSignature = null;
                                 StornierteBelegeKontrolleReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'summen_saldenliste') {
+                                this._lastReportLoadSignature = null;
+                                SummenSaldenlisteReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'kontenblatt') {
+                                this._lastReportLoadSignature = null;
+                                KontenblattReport.selectedKontoNummer = null;
+                                KontenblattReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'steueruebersicht_gesamt') {
+                                this._lastReportLoadSignature = null;
+                                SteueruebersichtGesamtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'offene_posten_abstimmung') {
+                                this._lastReportLoadSignature = null;
+                                OffenePostenAbstimmungReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'management_kennzahlen_grundlage') {
+                                this._lastReportLoadSignature = null;
+                                ManagementKennzahlenGrundlageReport.load(this);
                             }
 
                             this.updateZeitraumButtons_();

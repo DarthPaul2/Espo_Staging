@@ -11,8 +11,8 @@ use Espo\Core\Exceptions\BadRequest;
  * запрещает обычное редактирование уже festgeschriebene Rechnung.
  *
  * Зачем:
- * чтобы счёт после Festschreibung нельзя было менять вручную,
- * но служебные system-save оставались возможны.
+ * бухгалтерское содержание Rechnung после Festschreibung нельзя менять,
+ * но служебные изменения для Zahlung, Storno и Mahnwesen должны оставаться возможны.
  */
 class PreventEditAfterFestschreibung
 {
@@ -26,8 +26,8 @@ class PreventEditAfterFestschreibung
         // разрешение для внутренних служебных сохранений.
         //
         // Зачем:
-        // Phase 3 должна уметь обновлять restbetragOffen и status
-        // у уже festgeschriebene Rechnung после gültigem Ausgleich.
+        // Phase 3/4/5 используют это для Zahlung, Ausgleich, Storno
+        // и других kontrollierten Systemaktionen.
         if (!empty($options['allowFestgeschriebenSave'])) {
             return;
         }
@@ -46,6 +46,89 @@ class PreventEditAfterFestschreibung
         $alreadyFestgeschrieben = (bool) ($stored->get('istFestgeschrieben') ?? false);
         if (!$alreadyFestgeschrieben) {
             return;
+        }
+
+        // Что это:
+        // специальное узкое разрешение для Mahnwesen.
+        //
+        // Зачем:
+        // automatische Mahnung-Logik darf bei festgeschriebener Rechnung
+        // nur Mahnstufe und letzteMahnungAm ändern.
+        // Все бухгалтерские поля Rechnung остаются защищены.
+        $oldMahnstufe = $stored->get('mahnstufe');
+        $newMahnstufe = $entity->get('mahnstufe');
+
+        $oldLetzteMahnungAm = $stored->get('letzteMahnungAm');
+        $newLetzteMahnungAm = $entity->get('letzteMahnungAm');
+
+        $mahnungFieldsChanged =
+            $oldMahnstufe !== $newMahnstufe ||
+            $oldLetzteMahnungAm !== $newLetzteMahnungAm;
+
+        if ($mahnungFieldsChanged) {
+            $protectedFields = [
+                'name',
+                'description',
+                'rechnungsnummer',
+                'einleitung',
+                'bemerkung',
+                'betragNetto',
+                'betragBrutto',
+                'ustBetrag',
+                'faelligAm',
+                'leistungsdatumVon',
+                'leistungsdatumBis',
+                'gesetzOption13b',
+                'gesetzOption12',
+                'accountId',
+                'angebotId',
+                'status',
+                'serviceNummer',
+                'pdfUrl',
+                'sachbearbeiter',
+                'bemerkungVorlage',
+                'auftragId',
+                'mahnregelId',
+                'rechnungstyp',
+                'bezahltAm',
+                'objektId',
+                'contactId',
+                'belegdatum',
+                'buchhaltungStatus',
+                'freigabeAm',
+                'festgeschriebenAm',
+                'istFestgeschrieben',
+                'festschreibungHinweis',
+                'freigegebeneRechnungenId',
+                'festgeschriebeneRechnungenId',
+                'istTest',
+                'restbetragOffen',
+                'istStorniert',
+                'storniertAm',
+                'stornoGrund',
+                'storniertVonId',
+                'istKorrekturbeleg',
+                'korrekturTyp',
+                'korrekturGrund',
+                'ersetztBelegId',
+                'ersetztBelegName',
+                'nachfolgeBelegId',
+                'nachfolgeBelegName',
+                'assignedUserId',
+            ];
+
+            $onlyMahnwesenChanged = true;
+
+            foreach ($protectedFields as $field) {
+                if ($stored->get($field) !== $entity->get($field)) {
+                    $onlyMahnwesenChanged = false;
+                    break;
+                }
+            }
+
+            if ($onlyMahnwesenChanged) {
+                return;
+            }
         }
 
         // Это жесткий запрет обычного редактирования.

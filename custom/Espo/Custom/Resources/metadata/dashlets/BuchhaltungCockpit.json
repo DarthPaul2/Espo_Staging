@@ -1,0 +1,7 @@
+{
+    "view": "custom:views/dashboard/buchhaltung-cockpit",
+    "name": "BuchhaltungCockpit",
+    "label": "Buchhaltung Cockpit",
+    "aclScope": "CBuchung",
+    "entityType": "CBuchung"
+}

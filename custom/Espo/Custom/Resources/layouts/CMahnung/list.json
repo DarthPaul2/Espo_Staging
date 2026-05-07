@@ -11,6 +11,11 @@
         "align": "left"
     },
     {
+        "name": "rechnungStatus",
+        "width": 8,
+        "align": "left"
+    },
+    {
         "name": "mahnstufe",
         "width": 14,
         "align": "left"
@@ -25,18 +30,13 @@
         "width": 16
     },
     {
-        "name": "gesendetAm",
-        "width": 10,
-        "align": "left"
-    },
-    {
         "name": "gesamtbetrag",
         "width": 12,
         "align": "left"
     },
     {
-        "name": "rechnungStatus",
-        "width": 8,
+        "name": "status",
+        "width": 12,
         "align": "left"
     }
 ]

@@ -46,13 +46,20 @@
             "storno_uebersicht": "Storno-Übersicht",
             "korrekturketten_ausgangsrechnungen": "Korrekturketten Ausgangsrechnungen",
             "korrekturketten_eingangsrechnungen": "Korrekturketten Eingangsrechnungen",
-            "stornierte_belege_kontrolle": "Stornierte Belege Kontrolle"
+            "stornierte_belege_kontrolle": "Stornierte Belege Kontrolle",
+            "summen_saldenliste": "Summen- und Saldenliste",
+            "kontenblatt": "Kontenblatt",
+            "steueruebersicht_gesamt": "Steuerübersicht gesamt",
+            "offene_posten_abstimmung": "Offene-Posten-Abstimmung",
+            "management_kennzahlen_grundlage": "Management-Kennzahlen-Grundlage",
+            "gruppe_header": " "
         },
         "standardZeitraum": {
             "monat": "Monat",
             "quartal": "Quartal",
             "jahr": "Jahr",
-            "frei": "Frei"
+            "frei": "Frei",
+            "leer": " "
         },
         "renderModus": {
             "standard": "Standard",

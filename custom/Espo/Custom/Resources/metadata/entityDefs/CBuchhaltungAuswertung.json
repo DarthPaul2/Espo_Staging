@@ -65,7 +65,13 @@
                 "storno_uebersicht",
                 "korrekturketten_ausgangsrechnungen",
                 "korrekturketten_eingangsrechnungen",
-                "stornierte_belege_kontrolle"
+                "stornierte_belege_kontrolle",
+                "summen_saldenliste",
+                "kontenblatt",
+                "steueruebersicht_gesamt",
+                "offene_posten_abstimmung",
+                "management_kennzahlen_grundlage",
+                "gruppe_header"
             ],
             "style": {
                 "festgeschriebene_rechnungen": null,
@@ -95,9 +101,15 @@
                 "storno_uebersicht": null,
                 "korrekturketten_ausgangsrechnungen": null,
                 "korrekturketten_eingangsrechnungen": null,
-                "stornierte_belege_kontrolle": null
+                "stornierte_belege_kontrolle": null,
+                "summen_saldenliste": null,
+                "kontenblatt": null,
+                "steueruebersicht_gesamt": null,
+                "offene_posten_abstimmung": null,
+                "management_kennzahlen_grundlage": null,
+                "gruppe_header": null
             },
-            "default": "festgeschriebene_rechnungen",
+            "default": "gruppe_header",
             "maxLength": 100,
             "isCustom": true
         },
@@ -129,15 +141,17 @@
                 "monat",
                 "quartal",
                 "jahr",
-                "frei"
+                "frei",
+                "leer"
             ],
             "style": {
                 "monat": null,
                 "quartal": null,
                 "jahr": null,
-                "frei": null
+                "frei": null,
+                "leer": null
             },
-            "default": "monat",
+            "default": "leer",
             "maxLength": 100,
             "isCustom": true
         },
@@ -207,7 +221,7 @@
         }
     },
     "collection": {
-        "orderBy": "createdAt",
+        "orderBy": "sortierung",
         "order": "desc",
         "textFilterFields": [
             "name"

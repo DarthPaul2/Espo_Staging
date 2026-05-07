@@ -76,10 +76,10 @@
             ],
             "default": "zu_pruefen",
             "style": {
-                "Erstellt": null,
-                "Gesendet": null,
-                "Storniert": null,
-                "zu_pruefen": null
+                "Erstellt": "success",
+                "Gesendet": "info",
+                "Storniert": "danger",
+                "zu_pruefen": "warning"
             },
             "maxLength": 100,
             "isCustom": true
