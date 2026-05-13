@@ -253,6 +253,13 @@
             "entity": "CLieferant",
             "audited": false,
             "isCustom": true
+        },
+        "bankbewegungen": {
+            "type": "hasMany",
+            "foreign": "zahlung",
+            "entity": "CBankbewegung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

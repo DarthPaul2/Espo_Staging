@@ -40,7 +40,9 @@ define(
         'custom:views/c-buchhaltung-auswertung/report/steueruebersicht-gesamt',
         'custom:views/c-buchhaltung-auswertung/report/offene-posten-abstimmung',
         'custom:views/c-buchhaltung-auswertung/report/management-kennzahlen-grundlage',
-
+        'custom:views/c-buchhaltung-auswertung/report/bankbewegungen-uebersicht',
+        'custom:views/c-buchhaltung-auswertung/report/unklare-bankbewegungen',
+        'custom:views/c-buchhaltung-auswertung/report/bankbewegungen-ohne-zahlung',
 
     ],
     function (
@@ -78,7 +80,9 @@ define(
         SteueruebersichtGesamtReport,
         OffenePostenAbstimmungReport,
         ManagementKennzahlenGrundlageReport,
-
+        BankbewegungenUebersichtReport,
+        UnklareBankbewegungenReport,
+        BankbewegungenOhneZahlungReport,
 
     ) {
         return Dep.extend({
@@ -532,6 +536,39 @@ define(
 
                     if (this.shouldLoadReport_(auswertungTyp)) {
                         ManagementKennzahlenGrundlageReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'bankbewegungen_uebersicht') {
+                    BankbewegungenUebersichtReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    BankbewegungenUebersichtReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        BankbewegungenUebersichtReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'unklare_bankbewegungen') {
+                    UnklareBankbewegungenReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    UnklareBankbewegungenReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        UnklareBankbewegungenReport.load(this);
+                    }
+                }
+
+                if (auswertungTyp === 'bankbewegungen_ohne_zahlung') {
+                    BankbewegungenOhneZahlungReport.renderKennzahlenBlock(this);
+                    this.renderFilterBlock_();
+                    BankbewegungenOhneZahlungReport.renderTabsBlock(this);
+                    this.updateZeitraumButtons_();
+
+                    if (this.shouldLoadReport_(auswertungTyp)) {
+                        BankbewegungenOhneZahlungReport.load(this);
                     }
                 }
 
@@ -1022,6 +1059,21 @@ define(
                                 ManagementKennzahlenGrundlageReport.load(this);
                             }
 
+                            if (auswertungTyp === 'bankbewegungen_uebersicht') {
+                                this._lastReportLoadSignature = null;
+                                BankbewegungenUebersichtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'unklare_bankbewegungen') {
+                                this._lastReportLoadSignature = null;
+                                UnklareBankbewegungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'bankbewegungen_ohne_zahlung') {
+                                this._lastReportLoadSignature = null;
+                                BankbewegungenOhneZahlungReport.load(this);
+                            }
+
                             this.updateZeitraumButtons_();
                             this.notify('Zeitraum gespeichert', 'success');
                         },
@@ -1213,6 +1265,21 @@ define(
                             if (auswertungTyp === 'management_kennzahlen_grundlage') {
                                 this._lastReportLoadSignature = null;
                                 ManagementKennzahlenGrundlageReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'bankbewegungen_uebersicht') {
+                                this._lastReportLoadSignature = null;
+                                BankbewegungenUebersichtReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'unklare_bankbewegungen') {
+                                this._lastReportLoadSignature = null;
+                                UnklareBankbewegungenReport.load(this);
+                            }
+
+                            if (auswertungTyp === 'bankbewegungen_ohne_zahlung') {
+                                this._lastReportLoadSignature = null;
+                                BankbewegungenOhneZahlungReport.load(this);
                             }
 
                             this.updateZeitraumButtons_();

@@ -1,0 +1,27 @@
+{
+    "labels": {
+        "Create CBankkonto": "Bankkonto erstellen"
+    },
+    "fields": {
+        "iban": "IBAN",
+        "bic": "BIC",
+        "bankName": "Bankname",
+        "kontoNummer": "Buchhaltungskonto",
+        "aktiv": "Aktiv",
+        "waehrung": "Währung",
+        "startSaldo": "Startsaldo",
+        "startSaldoDatum": "Startsaldo Datum",
+        "beschreibung": "Beschreibung",
+        "name": "Hauptkonto Sparkasse",
+        "description": "Description",
+        "bankbewegungen": "Bankbewegungen"
+    },
+    "options": {
+        "waehrung": {
+            "eur": "EUR"
+        }
+    },
+    "links": {
+        "bankbewegungen": "Bankbewegungen"
+    }
+}

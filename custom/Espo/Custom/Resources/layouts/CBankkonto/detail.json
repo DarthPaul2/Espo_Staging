@@ -1,0 +1,64 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "bankName"
+                },
+                false,
+                {
+                    "name": "aktiv"
+                }
+            ],
+            [
+                {
+                    "name": "iban"
+                },
+                {
+                    "name": "bic"
+                },
+                {
+                    "name": "waehrung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "customLabel": "Bankkonto"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "kontoNummer"
+                },
+                {
+                    "name": "startSaldo"
+                },
+                {
+                    "name": "startSaldoDatum"
+                }
+            ],
+            [
+                {
+                    "name": "beschreibung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Buchhaltung"
+    }
+]

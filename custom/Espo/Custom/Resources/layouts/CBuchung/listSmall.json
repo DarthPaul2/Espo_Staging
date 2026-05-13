@@ -1,9 +1,22 @@
 [
     {
-        "name": "name",
-        "width": 20,
-        "link": true,
+        "name": "belegdatum",
+        "width": 15,
         "align": "left"
+    },
+    {
+        "name": "quelleNummer",
+        "width": 20,
+        "align": "left"
+    },
+    {
+        "name": "kontoNummer",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "kontoBezeichnung",
+        "width": 20
     },
     {
         "name": "buchungsart",
@@ -16,14 +29,8 @@
         "align": "left"
     },
     {
-        "name": "kontoNummer",
-        "width": 11,
-        "align": "left"
-    },
-    {
-        "name": "quelleNummer",
-        "width": 16,
-        "align": "left"
+        "name": "buchungstext",
+        "width": 20
     },
     {
         "name": "istStorno",

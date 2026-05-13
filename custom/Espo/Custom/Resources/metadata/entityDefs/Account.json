@@ -147,6 +147,13 @@
             "entity": "CZahlung",
             "audited": false,
             "isCustom": true
+        },
+        "cBankbewegungen": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CBankbewegung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

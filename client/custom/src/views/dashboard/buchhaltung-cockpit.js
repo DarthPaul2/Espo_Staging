@@ -200,6 +200,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             this.renderTax_(data.kpi || {});
             this.renderKonten_(data.konten || []);
             this.renderTopOpenForderungen_(data.topOpenForderungen || []);
+            this.renderVorschauNaechsteWochen_(data.vorschauNaechsteWochen || []);
 
             this.renderTaxCheck_(data.kpi || {}, data.konten || []);
             this.renderOpCheck_(data.kpi || {}, data.checks || {});
@@ -222,8 +223,16 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
 
             this.setKpi_($root, 'forderungen', kpi.offeneForderungen);
             this.setKpi_($root, 'verbindlichkeiten', kpi.offeneVerbindlichkeiten);
+
+            // Что это:
+            // Bestehende Steuer- und Liquiditätskennzahlen.
+            //
+            // Зачем:
+            // Liquiditätsbewegung bleibt als Zeitraum-Wert erhalten;
+            // Erwartete Liquidität kommt zusätzlich als Zukunfts-/Management-Kennzahl.
             this.setKpi_($root, 'steuer', kpi.steuerSaldo, true, true);
             this.setKpi_($root, 'liquiditaet', kpi.liquiditaetsbewegung, true);
+            this.setKpi_($root, 'erwartete-liquiditaet', kpi.erwarteteLiquiditaet, true);
         },
 
         setKpi_: function ($root, key, value, colorBySign, reverseGoodBad) {
@@ -441,13 +450,28 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
         renderOpenItems_: function (kpi) {
             var $root = this.$el || $(this.el);
 
+            // Что это:
+            // Offene Posten und erwartete Liquidität für Management-Sicht.
+            //
+            // Зачем:
+            // Phase 7A.5: Neben der Netto-Position wird auch die erwartete Liquidität
+            // aus Bankbestand + Forderungen - Verbindlichkeiten angezeigt.
+
             var forderungen = Number(kpi.offeneForderungen || 0);
             var verbindlichkeiten = Number(kpi.offeneVerbindlichkeiten || 0);
+            var bankSaldo = Number(kpi.bankSaldo || 0);
+
             var netto = forderungen - verbindlichkeiten;
+            var erwarteteLiquiditaet = Number(kpi.erwarteteLiquiditaet);
+
+            if (isNaN(erwarteteLiquiditaet)) {
+                erwarteteLiquiditaet = bankSaldo + forderungen - verbindlichkeiten;
+            }
 
             $root.find('[data-open-item="forderungen"]').text(this.formatCurrency_(forderungen));
             $root.find('[data-open-item="verbindlichkeiten"]').text(this.formatCurrency_(verbindlichkeiten));
             $root.find('[data-open-item="netto"]').text(this.formatCurrency_(netto));
+            $root.find('[data-open-item="erwartete-liquiditaet"]').text(this.formatCurrency_(erwarteteLiquiditaet));
 
             $root.find('[data-open-item="netto"]')
                 .removeClass('text-success text-danger');
@@ -457,6 +481,50 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             } else {
                 $root.find('[data-open-item="netto"]').addClass('text-success');
             }
+
+            $root.find('[data-open-item="erwartete-liquiditaet"]')
+                .removeClass('text-success text-danger');
+
+            if (erwarteteLiquiditaet < 0) {
+                $root.find('[data-open-item="erwartete-liquiditaet"]').addClass('text-danger');
+            } else {
+                $root.find('[data-open-item="erwartete-liquiditaet"]').addClass('text-success');
+            }
+
+            this.renderOffenePostenGraph_(
+                Number(kpi.offeneForderungen || 0),
+                Number(kpi.offeneVerbindlichkeiten || 0),
+                Number(kpi.offeneForderungen || 0) - Number(kpi.offeneVerbindlichkeiten || 0)
+            );
+        },
+
+        // Что это:
+        // Aktualisiert die grafische Darstellung der offenen Posten.
+        //
+        // Зачем:
+        // Zeigt Forderungen und Verbindlichkeiten als relative Balken.
+        // Die größeren offenen Posten erhalten 100%, die kleineren proportional dazu.
+        renderOffenePostenGraph_: function (forderungen, verbindlichkeiten, netto) {
+            var $root = this.$el || $(this.el);
+
+            forderungen = Math.max(0, Number(forderungen || 0));
+            verbindlichkeiten = Math.max(0, Number(verbindlichkeiten || 0));
+            netto = Number(netto || 0);
+
+            var max = Math.max(forderungen, verbindlichkeiten, 1);
+
+            var forderungenWidth = Math.round((forderungen / max) * 100);
+            var verbindlichkeitenWidth = Math.round((verbindlichkeiten / max) * 100);
+
+            $root.find('[data-op-bar="forderungen"]').css('width', forderungenWidth + '%');
+            $root.find('[data-op-bar="verbindlichkeiten"]').css('width', verbindlichkeitenWidth + '%');
+
+            $root.find('[data-op-graph-value="forderungen"]').text(this.formatCurrency_(forderungen));
+            $root.find('[data-op-graph-value="verbindlichkeiten"]').text(this.formatCurrency_(verbindlichkeiten));
+            $root.find('[data-op-graph-value="netto"]')
+                .text(this.formatCurrency_(netto))
+                .removeClass('text-success text-danger')
+                .addClass(netto < 0 ? 'text-danger' : 'text-success');
         },
 
         renderTax_: function (kpi) {
@@ -471,6 +539,13 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             $root.find('[data-tax="result"]').text(result);
         },
 
+        // Что это:
+        // Рендерит kompakte Kontenübersicht im Buchhaltung-Cockpit.
+        //
+        // Зачем:
+        // Phase 7A.4: сохраняем технический Saldo = Soll - Haben,
+        // но дополнительно показываем wirtschaftliche Wirkung,
+        // чтобы Erlöskonten, Umsatzsteuer и Verbindlichkeiten не выглядели "неправильным минусом".
         renderKonten_: function (konten) {
             var $root = this.$el || $(this.el);
             var $tbody = $root.find('[data-name="kontenTableBody"]');
@@ -480,26 +555,123 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             }
 
             if (!konten.length) {
-                $tbody.html('<tr><td colspan="6" class="text-muted">Keine Konten gefunden.</td></tr>');
+                $tbody.html('<tr><td colspan="7" class="text-muted">Keine Konten gefunden.</td></tr>');
                 return;
             }
 
             var html = '';
 
             konten.forEach(function (row) {
+                var kontoNummer = String(row.konto_nummer || '').trim();
+
+                var soll = Number(row.soll || 0);
+                var haben = Number(row.haben || 0);
+                var saldo = Number(row.saldo || 0);
+                var wirkung = this.getKontoWirkung_(kontoNummer, soll, haben, saldo);
+                var wirkungLabel = this.getKontoWirkungLabel_(kontoNummer);
+
                 html += `
                     <tr>
-                        <td><strong>${this.escapeHtml_(row.konto_nummer || '')}</strong></td>
+                        <td><strong>${this.escapeHtml_(kontoNummer)}</strong></td>
                         <td>${this.escapeHtml_(row.konto_bezeichnung || '')}</td>
-                        <td style="text-align: right;">${this.formatCurrency_(row.soll)}</td>
-                        <td style="text-align: right;">${this.formatCurrency_(row.haben)}</td>
-                        <td style="text-align: right;">${this.formatCurrency_(row.saldo)}</td>
+                        <td style="text-align: right;">${this.formatCurrency_(soll)}</td>
+                        <td style="text-align: right;">${this.formatCurrency_(haben)}</td>
+                        <td style="text-align: right;">${this.formatCurrency_(saldo)}</td>
+                        <td style="text-align: right;">
+                            <strong title="${this.escapeHtml_(wirkungLabel)}">
+                                ${this.formatCurrency_(wirkung)}
+                            </strong>
+                            <div class="text-muted" style="font-size: 11px;">
+                                ${this.escapeHtml_(wirkungLabel)}
+                            </div>
+                        </td>
                         <td style="text-align: right;">${row.anzahl_buchungen || 0}</td>
                     </tr>
                 `;
             }, this);
 
             $tbody.html(html);
+        },
+
+
+        // Что это:
+        // Рассчитывает wirtschaftliche Wirkung eines Kontos.
+        //
+        // Зачем:
+        // Management-Sicht darf nicht nur technischen Saldo = Soll - Haben zeigen.
+        // Für Erlöse, Umsatzsteuer und Verbindlichkeiten ist die fachliche Wirkung Haben - Soll.
+        getKontoWirkung_: function (kontoNummer, soll, haben, saldo) {
+            kontoNummer = String(kontoNummer || '').trim();
+
+            soll = Number(soll || 0);
+            haben = Number(haben || 0);
+            saldo = Number(saldo || 0);
+
+            // Aktivkonten / Forderungen / Bank / Vorsteuer / Aufwand:
+            // Wirkung = Soll - Haben
+            if (
+                kontoNummer === '1200' ||
+                kontoNummer === '1401' ||
+                kontoNummer === '1406' ||
+                kontoNummer === '1800' ||
+                kontoNummer === '6300'
+            ) {
+                return soll - haben;
+            }
+
+            // Verbindlichkeiten / Umsatzsteuer / Erlöse:
+            // Wirkung = Haben - Soll
+            if (
+                kontoNummer === '3300' ||
+                kontoNummer === '3806' ||
+                kontoNummer === '4400'
+            ) {
+                return haben - soll;
+            }
+
+            // Fallback:
+            // Wenn Konto fachlich noch nicht klassifiziert ist, bleibt technischer Saldo sichtbar.
+            return saldo;
+        },
+
+        // Что это:
+        // Возвращает fachliche Bezeichnung der Wirkung.
+        //
+        // Зачем:
+        // Бухгалтер и руководство должны видеть, почему Wirkung bei 4400 positiv ist,
+        // obwohl der technische Saldo negativ sein kann.
+        getKontoWirkungLabel_: function (kontoNummer) {
+            kontoNummer = String(kontoNummer || '').trim();
+
+            if (kontoNummer === '1200') {
+                return 'Forderungen: Soll - Haben';
+            }
+
+            if (kontoNummer === '1401' || kontoNummer === '1406') {
+                return 'Vorsteuer: Soll - Haben';
+            }
+
+            if (kontoNummer === '1800') {
+                return 'Bank: Soll - Haben';
+            }
+
+            if (kontoNummer === '3300') {
+                return 'Verbindlichkeiten: Haben - Soll';
+            }
+
+            if (kontoNummer === '3806') {
+                return 'Umsatzsteuer: Haben - Soll';
+            }
+
+            if (kontoNummer === '4400') {
+                return 'Erlöse: Haben - Soll';
+            }
+
+            if (kontoNummer === '6300') {
+                return 'Aufwand: Soll - Haben';
+            }
+
+            return 'Saldo: Soll - Haben';
         },
 
         // Что это: компактная Steuerprüfung для Buchhaltung-Tab.
@@ -1016,19 +1188,20 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
                 ));
             }
 
-            // 8. Größte offene Forderung
+            // 8. Wichtigste kritische Forderung
             if ((topOpenForderungen || []).length) {
                 var top = topOpenForderungen[0] || {};
                 var kunde = top.accountName || '–';
                 var nummer = top.rechnungsnummer || '–';
                 var betrag = Number(top.restbetragOffen || 0);
                 var rechnungId = top.id || '';
+                var grund = top.kritischGrund || 'kritisch';
 
                 items.push(this.makeArbeitsItem_(
                     'info',
-                    'Größte offene Forderung',
+                    'Wichtigste kritische Forderung',
                     kunde + ' · ' + nummer,
-                    this.formatCurrency_(betrag),
+                    this.formatCurrency_(betrag) + ' · ' + grund,
                     rechnungId ? {
                         navKind: 'url',
                         url: '#CRechnung/view/' + rechnungId,
@@ -1036,7 +1209,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
                     } : {
                         navKind: 'report',
                         reportType: 'offene_forderungen',
-                        actionLabel: 'Zu offenen Forderungen'
+                        actionLabel: 'Zu kritischen Forderungen'
                     }
                 ));
             }
@@ -1111,6 +1284,62 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             };
         },
 
+        // Что это:
+        // Рендерит Liquiditätsvorschau nächste Wochen.
+        //
+        // Зачем:
+        // Phase 7A.5: zeigt erwartete Zahlungseingänge,
+        // erwartete Zahlungsausgänge und Netto-Ausblick für 7/14/30 Tage.
+        renderVorschauNaechsteWochen_: function (rows) {
+            var $root = this.$el || $(this.el);
+            var $tbody = $root.find('[data-name="vorschauNaechsteWochenBody"]');
+
+            if (!$tbody.length) {
+                return;
+            }
+
+            if (!rows.length) {
+                $tbody.html('<tr><td colspan="5" class="text-muted">Keine Vorschau-Daten gefunden.</td></tr>');
+                return;
+            }
+
+            var html = '';
+
+            rows.forEach(function (row) {
+                var eingang = Number(row.zahlungseingaenge || 0);
+                var ausgang = Number(row.zahlungsausgaenge || 0);
+                var netto = Number(row.nettoAusblick || 0);
+
+                var nettoClass = netto < 0 ? 'text-danger' : 'text-success';
+
+                var anzahlText =
+                    String(row.anzahlEingaenge || 0) +
+                    ' Eingänge / ' +
+                    String(row.anzahlAusgaenge || 0) +
+                    ' Ausgänge';
+
+                html += `
+                    <tr>
+                        <td><strong>${this.escapeHtml_(row.label || '')}</strong></td>
+                        <td class="text-right">${this.formatCurrency_(eingang)}</td>
+                        <td class="text-right">${this.formatCurrency_(ausgang)}</td>
+                        <td class="text-right ${nettoClass}">
+                            <strong>${this.formatCurrency_(netto)}</strong>
+                        </td>
+                        <td class="text-muted">${this.escapeHtml_(anzahlText)}</td>
+                    </tr>
+                `;
+            }, this);
+
+            $tbody.html(html);
+        },
+
+        // Что это:
+        // Рендерит список kritische Forderungen.
+        //
+        // Зачем:
+        // Phase 7A.5: руководство должно видеть Forderungen, по которым нужно действовать:
+        // сначала ab 5.000 €, затем остальные kritische Forderungen.
         renderTopOpenForderungen_: function (rows) {
             var $root = this.$el || $(this.el);
             var $tbody = $root.find('[data-name="topOpenForderungenBody"]');
@@ -1120,7 +1349,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             }
 
             if (!rows.length) {
-                $tbody.html('<tr><td colspan="5" class="text-muted">Keine offenen Forderungen gefunden.</td></tr>');
+                $tbody.html('<tr><td colspan="7" class="text-muted">Keine kritischen Forderungen gefunden.</td></tr>');
                 return;
             }
 
@@ -1135,13 +1364,54 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
                     ? `<a href="#Account/view/${this.escapeHtml_(row.accountId)}">${this.escapeHtml_(row.accountName || '')}</a>`
                     : this.escapeHtml_(row.accountName || '');
 
+                var tage = Number(row.tageUeberfaellig || 0);
+                var tageText = tage > 0 ? String(tage) : '–';
+
+                var betrag = Number(row.restbetragOffen || 0);
+                var istGross = !!row.istGrosseForderung;
+
+                var grund = row.kritischGrund || 'Prüfen';
+                var mahnstufe = this.formatMahnstufe_(row.mahnstufe);
+
+                var priorityBadge = '';
+
+                if (istGross) {
+                    priorityBadge = `
+                        <span style="
+                            display: inline-block;
+                            padding: 2px 7px;
+                            border-radius: 999px;
+                            background: #fee2e2;
+                            color: #991b1b;
+                            font-size: 11px;
+                            font-weight: 700;
+                            margin-right: 5px;
+                            white-space: nowrap;
+                        ">
+                            AB 5.000 €
+                        </span>
+                    `;
+                }
+
                 html += `
                     <tr>
                         <td>${kunde}</td>
                         <td>${rechnung}</td>
                         <td>${this.escapeHtml_(this.formatDateGerman_(row.faelligAm))}</td>
-                        <td style="text-align: right;"><strong>${this.formatCurrency_(row.restbetragOffen)}</strong></td>
-                        <td>${this.escapeHtml_(this.formatMahnstufe_(row.mahnstufe))}</td>
+                        <td class="text-right">${this.escapeHtml_(tageText)}</td>
+                        <td class="text-right"><strong>${this.formatCurrency_(betrag)}</strong></td>
+                        <td>${this.escapeHtml_(mahnstufe)}</td>
+                        <td>
+                            ${priorityBadge}
+                            <span>${this.escapeHtml_(grund)}</span>
+                            ${row.id ? `
+                                <div style="margin-top: 4px;">
+                                    <a href="#CRechnung/view/${this.escapeHtml_(row.id)}" class="small">
+                                        Zur Rechnung →
+                                    </a>
+                                </div>
+                            ` : ''}
+                        </td>
                     </tr>
                 `;
             }, this);

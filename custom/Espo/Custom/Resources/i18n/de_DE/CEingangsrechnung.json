@@ -36,7 +36,8 @@
         "ersetztBelegId": "Ersetzt Beleg ID",
         "nachfolgeBelegId": "Nachfolgebeleg ID",
         "nachfolgeBelegName": "Nachfolgebeleg",
-        "ersetztBelegName": "Ersetzt Beleg"
+        "ersetztBelegName": "Ersetzt Beleg",
+        "bankbewegungen": "Bankbewegungen"
     },
     "options": {
         "steuerfall": {
@@ -73,7 +74,8 @@
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
         "importe": "Importe",
         "ausgleiche": "Ausgleiche",
-        "storniertVon": "Storniert von"
+        "storniertVon": "Storniert von",
+        "bankbewegungen": "Bankbewegungen"
     },
     "tooltips": {
         "ersetztBelegId": "Der Lesername der alten Eingangsrechnung.",

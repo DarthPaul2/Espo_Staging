@@ -51,7 +51,10 @@
             "steueruebersicht_gesamt": "Steuerübersicht gesamt",
             "offene_posten_abstimmung": "Offene-Posten-Abstimmung",
             "management_kennzahlen_grundlage": "Management-Kennzahlen-Grundlage",
-            "gruppe_header": " "
+            "gruppe_header": " ",
+            "bankbewegungen_uebersicht": "Bankbewegungen Übersicht",
+            "unklare_bankbewegungen": "Unklare Bankbewegungen",
+            "bankbewegungen_ohne_zahlung": "Bankbewegungen ohne Zahlung"
         },
         "standardZeitraum": {
             "monat": "Monat",

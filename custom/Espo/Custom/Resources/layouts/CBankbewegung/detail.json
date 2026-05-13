@@ -1,0 +1,174 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "bankkonto"
+                },
+                {
+                    "name": "buchungstag"
+                },
+                {
+                    "name": "valutadatum"
+                }
+            ],
+            [
+                {
+                    "name": "betrag"
+                },
+                {
+                    "name": "richtung"
+                },
+                {
+                    "name": "waehrung"
+                }
+            ],
+            [
+                {
+                    "name": "status"
+                },
+                {
+                    "name": "abstimmungsstatus"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "dynamicLogicStyled": null,
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "customLabel": "Bankbewegung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "gegenparteiName"
+                },
+                {
+                    "name": "gegenparteiIban"
+                },
+                {
+                    "name": "account"
+                },
+                {
+                    "name": "lieferant"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Gegenpartei"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "verwendungszweck"
+                },
+                {
+                    "name": "bankReferenz"
+                }
+            ],
+            [
+                {
+                    "name": "endToEndId"
+                },
+                {
+                    "name": "mandatsreferenz"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Verwendungszweck"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "zahlung"
+                },
+                {
+                    "name": "rechnung"
+                },
+                {
+                    "name": "eingangsrechnung"
+                }
+            ],
+            [
+                {
+                    "name": "erkannteBelegnummer"
+                },
+                {
+                    "name": "erkannteGegenpartei"
+                },
+                {
+                    "name": "zuordnungsHinweis"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Zuordnung"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "importQuelle"
+                },
+                {
+                    "name": "importiertAm"
+                },
+                {
+                    "name": "importHash"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Import"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Bemerkung"
+    }
+]

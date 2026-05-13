@@ -1,4 +1,8 @@
 {
+    "recordViews": {
+        "list": "custom:views/c-buchung/record/list",
+        "listSmall": "custom:views/c-buchung/record/list"
+    },
     "controller": "controllers/record",
     "boolFilterList": [
         "onlyMy"

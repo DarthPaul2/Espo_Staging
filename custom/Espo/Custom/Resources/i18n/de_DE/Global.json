@@ -13,7 +13,8 @@
         "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs",
         "CMelderQuartal": "Melderprüflisten Quartale",
         "CBuchhaltungAuswertung": "Buchhaltung Auswertungen",
-        "CEingangsrechnungImport": "Import Eingangsrechnungen"
+        "CEingangsrechnungImport": "Import Eingangsrechnungen",
+        "CBankkonto": "Bankkonten"
     },
     "Global": {
         "Today": "",

@@ -35,7 +35,9 @@
         "CEingangsrechnungImport": "Import Eingangsrechnung",
         "CEingangsrechnungImportPosition": "Import Eingangsrechnung Position",
         "CZahlung": "Zahlung",
-        "CAusgleich": "Ausgleich"
+        "CAusgleich": "Ausgleich",
+        "CBankkonto": "Bankkonto",
+        "CBankbewegung": "Bankbewegung"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -73,7 +75,9 @@
         "CEingangsrechnungImport": "Import Eingangsrechnungen",
         "CEingangsrechnungImportPosition": "Import Eingangsrechnung Positionen",
         "CZahlung": "Zahlungen",
-        "CAusgleich": "Ausgleiche"
+        "CAusgleich": "Ausgleiche",
+        "CBankkonto": "Bankkonten",
+        "CBankbewegung": "Bankbewegungen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

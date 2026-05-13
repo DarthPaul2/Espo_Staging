@@ -53,7 +53,8 @@
         "ersetztBelegId": "Ersetzt Beleg ID",
         "ersetztBelegName": "Ersetzt Beleg",
         "nachfolgeBelegId": "Nachfolgebeleg ID",
-        "nachfolgeBelegName": "Nachfolgebeleg"
+        "nachfolgeBelegName": "Nachfolgebeleg",
+        "bankbewegungen": "Bankbewegungen"
     },
     "links": {
         "account": "Account",
@@ -70,7 +71,8 @@
         "festgeschriebeneRechnungen": "Festgeschriebene Rechnungen",
         "buchungsjournale": "Buchungsjournale",
         "ausgleiche": "Ausgleiche",
-        "storniertVon": "Storniert von"
+        "storniertVon": "Storniert von",
+        "bankbewegungen": "Bankbewegungen"
     },
     "labels": {
         "Create CRechnung": "Create Rechnung"

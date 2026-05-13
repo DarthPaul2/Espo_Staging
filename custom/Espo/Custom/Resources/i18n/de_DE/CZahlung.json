@@ -25,7 +25,8 @@
         "lieferant": "Lieferant",
         "istStorniert": "Ist Storno",
         "storniertAm": "Storniert am",
-        "stornoGrund": "Storno-Grund"
+        "stornoGrund": "Storno-Grund",
+        "bankbewegungen": "Bankbewegungen"
     },
     "options": {
         "zahlungsRichtung": {
@@ -54,6 +55,7 @@
         "ausgleiche": "Ausgleiche",
         "buchungsjournal": "Buchungsjournal",
         "account": "Kunde",
-        "lieferant": "Lieferant"
+        "lieferant": "Lieferant",
+        "bankbewegungen": "Bankbewegungen"
     }
 }

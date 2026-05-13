@@ -59,5 +59,51 @@ class PreventDeleteIfFestgeschrieben
             . $zahlungId
             . ', count=' . count($ausgleichList)
         );
+
+        // Что это:
+        // Если удаляется не-festgeschriebene Zahlung, очищаем связь у Bankbewegungen.
+        //
+        // Зачем:
+        // Иначе CBankbewegung.zahlungId остаётся ссылаться на уже удалённую CZahlung,
+        // и повторное "Zahlung vorbereiten" будет ошибочно блокироваться.
+        $bankbewegungList = $this->entityManager
+            ->getRDBRepository('CBankbewegung')
+            ->where([
+                'zahlungId' => $zahlungId,
+                'deleted' => false,
+            ])
+            ->find();
+
+        foreach ($bankbewegungList as $bankbewegung) {
+            $oldHinweis = trim((string) ($bankbewegung->get('zuordnungsHinweis') ?? ''));
+
+            $newHinweis = 'Verknüpfte Entwurf-/Freigabe-Zahlung wurde gelöscht. Bankbewegung muss erneut geprüft werden.';
+
+            if ($oldHinweis !== '' && !str_contains($oldHinweis, $newHinweis)) {
+                $newHinweis = $oldHinweis . "\n" . $newHinweis;
+            } elseif ($oldHinweis !== '' && str_contains($oldHinweis, $newHinweis)) {
+                $newHinweis = $oldHinweis;
+            }
+
+            $bankbewegung->set('zahlungId', null);
+            $bankbewegung->set('status', 'unklar');
+            $bankbewegung->set('abstimmungsstatus', 'offen');
+            $bankbewegung->set('zuordnungsHinweis', $newHinweis);
+
+            // Что это:
+            // Служебное сохранение Bankbewegung nach Zahlung-Löschung.
+            //
+            // Зачем:
+            // Bankbewegung bleibt real vorhanden und soll wieder in Arbeitslisten erscheinen.
+            $this->entityManager->saveEntity($bankbewegung, [
+                'skipBankbewegungZuordnungsStatus' => true,
+            ]);
+        }
+
+        $this->log->info(
+            '[PreventDeleteIfFestgeschrieben] Bankbewegungen von gelöschter Zahlung getrennt. zahlungId='
+            . $zahlungId
+            . ', count=' . count($bankbewegungList)
+        );
     }
 }

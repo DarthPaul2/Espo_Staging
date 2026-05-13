@@ -15,7 +15,8 @@
         "cMelderQuartals": "Melder Quartals",
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
         "cObjekts": "Objekts",
-        "cZahlung": "Zahlung"
+        "cZahlung": "Zahlung",
+        "cBankbewegungen": "Bankbewegungen"
     },
     "links": {
         "cFirmenHauptkontakt": "Firmen Hauptkontakt",
@@ -31,7 +32,8 @@
         "cMelderQuartals": "Melder Quartals",
         "cMelderGesamtPdfs": "Melder Gesamt Pdfs",
         "cObjekts": "Objekts",
-        "cZahlung": "Zahlung"
+        "cZahlung": "Zahlung",
+        "cBankbewegungen": "Bankbewegungen"
     },
     "options": {
         "type": {

@@ -11,6 +11,13 @@ define('custom:views/c-eingangsrechnung/record/detail', [
             document.addEventListener('click', this._blockCreateRelatedIfLocked, true);
         },
 
+        // Что это:
+        // После рендера карточки Eingangsrechnung добавляем workflow,
+        // Storno/Korrektur-логику и новый Beleg-Block.
+        //
+        // Зачем:
+        // Phase 7A.3: бухгалтер должен сразу видеть, есть ли оригинальный Beleg
+        // к Eingangsrechnung, и иметь кнопку "Beleg anzeigen".
         afterRender: function () {
             Dep.prototype.afterRender.call(this);
             this._renderWorkflowButtons();
@@ -19,6 +26,7 @@ define('custom:views/c-eingangsrechnung/record/detail', [
             this._renderStornoInfoBlock();
             this._renderKorrekturNachfolgeActionButton();
             this._updateStornoActionButtonState();
+            this._renderBelegsichtBlock();
         },
 
         onRemove: function () {
@@ -1016,6 +1024,265 @@ define('custom:views/c-eingangsrechnung/record/detail', [
             `);
 
             $block.insertAfter($target);
+        },
+
+        // Что это:
+        // Рисует блок "Beleg zur Eingangsrechnung" в Detail View.
+        //
+        // Зачем:
+        // Phase 7A.3: бухгалтер должен сразу видеть,
+        // есть ли оригинальный Beleg/Scan/PDF к Eingangsrechnung.
+        _renderBelegsichtBlock: function () {
+            this.$el.find('[data-name="eingangsrechnung-belegsicht-block"]').remove();
+
+            let $target = this.$el.find('[data-name="eingangsrechnung-workflow-actions"]').first();
+
+            if (!$target.length) {
+                $target = this.$el.find('.record .panel').first();
+            }
+
+            if (!$target.length) {
+                $target = this.$el.find('.panel').first();
+            }
+
+            if (!$target.length) {
+                $target = this.$el.find('.record').first();
+            }
+
+            if (!$target.length) {
+                this.$el.prepend(`
+                    <div data-name="eingangsrechnung-belegsicht-fallback-anchor"></div>
+                `);
+
+                $target = this.$el.find('[data-name="eingangsrechnung-belegsicht-fallback-anchor"]').first();
+            }
+
+            const $block = $(`
+                <div data-name="eingangsrechnung-belegsicht-block"
+                     style="
+                        margin-top: 12px;
+                        margin-bottom: 12px;
+                        padding: 14px 16px;
+                        border: 1px solid #d6e4f0;
+                        background: #f8fbff;
+                        border-radius: 6px;
+                     ">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+                        <div>
+                            <div style="font-weight: 700; color: #1f4e79; margin-bottom: 4px;">
+                                Beleg zur Eingangsrechnung
+                            </div>
+                            <div data-name="belegsicht-status"
+                                 style="font-size: 13px; color: #555;">
+                                Beleg wird geprüft...
+                            </div>
+                        </div>
+                        <div data-name="belegsicht-actions"
+                             style="display: flex; gap: 8px; align-items: center;">
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            if ($target.hasClass('panel')) {
+                $block.insertBefore($target);
+            } else {
+                $block.insertAfter($target);
+            }
+
+            this._loadLinkedImportBeleg_($block);
+        },
+
+        // Что это:
+        // Lädt den zur Eingangsrechnung verknüpften CEingangsrechnungImport.
+        //
+        // Зачем:
+        // Der originale Beleg liegt aktuell nicht direkt auf CEingangsrechnung,
+        // sondern im Import-Datensatz im Feld originalFile.
+        _loadLinkedImportBeleg_: function ($block) {
+            const eingangsrechnungId = this.model.id;
+
+            if (!eingangsrechnungId) {
+                this._renderBelegFehlt_($block, 'Eingangsrechnung-ID fehlt.');
+                return;
+            }
+
+            Espo.Ajax.getRequest('CEingangsrechnungImport', {
+                where: [
+                    {
+                        type: 'equals',
+                        attribute: 'eingangsrechnungId',
+                        value: eingangsrechnungId
+                    }
+                ],
+                maxSize: 5
+            }).then((response) => {
+                const list = Array.isArray(response && response.list) ? response.list : [];
+
+                if (!list.length) {
+                    this._renderBelegFehlt_(
+                        $block,
+                        'Kein Import-Beleg mit dieser Eingangsrechnung verknüpft.'
+                    );
+                    return;
+                }
+
+                const importRecord = this._findBestImportWithFile_(list);
+
+                if (!importRecord) {
+                    this._renderBelegFehlt_(
+                        $block,
+                        'Import vorhanden, aber kein originalFile hinterlegt.'
+                    );
+                    return;
+                }
+
+                this._renderBelegGefunden_($block, importRecord);
+            }).catch((e) => {
+                console.error('[CEingangsrechnung/detail] Belegsicht konnte nicht geladen werden.', e);
+
+                this._renderBelegFehlt_(
+                    $block,
+                    'Belegstatus konnte nicht geladen werden.'
+                );
+            });
+        },
+
+        // Что это:
+        // Ищет среди verknüpften Importen первый Datensatz mit originalFile.
+        //
+        // Зачем:
+        // В нормальном случае будет один Import, но при повторных тестах их может быть несколько.
+        _findBestImportWithFile_: function (list) {
+            for (let i = 0; i < list.length; i++) {
+                const item = list[i] || {};
+
+                if (item.originalFileId || item.originalFileName || item.originalFile) {
+                    return item;
+                }
+            }
+
+            return null;
+        },
+
+        // Что это:
+        // Показывает состояние "Beleg vorhanden" и кнопки.
+        //
+        // Зачем:
+        // Бухгалтер может сразу открыть оригинальный PDF/Scan или Import-Datensatz.
+        _renderBelegGefunden_: function ($block, importRecord) {
+            const fileData = importRecord.originalFile || null;
+
+            const fileId =
+                importRecord.originalFileId ||
+                (fileData && fileData.id) ||
+                null;
+
+            const fileName =
+                importRecord.originalFileName ||
+                (fileData && fileData.name) ||
+                'Originalbeleg';
+
+            const importId = importRecord.id || null;
+            const importName = importRecord.name || 'Import';
+
+            const $status = $block.find('[data-name="belegsicht-status"]');
+            const $actions = $block.find('[data-name="belegsicht-actions"]');
+
+            if (!fileId) {
+                this._renderBelegFehlt_(
+                    $block,
+                    'Import vorhanden, aber Datei-ID fehlt.'
+                );
+                return;
+            }
+
+            const fileUrl = '?entryPoint=download&id=' + encodeURIComponent(fileId);
+            const importUrl = importId ? '#CEingangsrechnungImport/view/' + encodeURIComponent(importId) : null;
+
+            $status.html(`
+                <span style="
+                    display: inline-block;
+                    padding: 2px 7px;
+                    border-radius: 999px;
+                    background: #dcfce7;
+                    color: #166534;
+                    font-size: 12px;
+                    font-weight: 700;
+                    margin-right: 6px;
+                ">
+                    BELEG VORHANDEN
+                </span>
+                <span title="${this._escapeHtml_(fileName)}">
+                    ${this._escapeHtml_(fileName)}
+                </span>
+            `);
+
+            $actions.empty();
+
+            $actions.append(`
+                <a class="btn btn-primary btn-sm"
+                   href="${this._escapeHtml_(fileUrl)}"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    Beleg anzeigen
+                </a>
+            `);
+
+            if (importUrl) {
+                $actions.append(`
+                    <a class="btn btn-default btn-sm"
+                       href="${this._escapeHtml_(importUrl)}"
+                       title="${this._escapeHtml_(importName)}">
+                        Import öffnen
+                    </a>
+                `);
+            }
+        },
+
+        // Что это:
+        // Показывает состояние "Beleg fehlt".
+        //
+        // Зачем:
+        // Если оригинальный Beleg отсутствует, это должно быть явно видно.
+        _renderBelegFehlt_: function ($block, message) {
+            const $status = $block.find('[data-name="belegsicht-status"]');
+            const $actions = $block.find('[data-name="belegsicht-actions"]');
+
+            $status.html(`
+                <span style="
+                    display: inline-block;
+                    padding: 2px 7px;
+                    border-radius: 999px;
+                    background: #fee2e2;
+                    color: #991b1b;
+                    font-size: 12px;
+                    font-weight: 700;
+                    margin-right: 6px;
+                ">
+                    BELEG FEHLT
+                </span>
+                <span>${this._escapeHtml_(message || 'Kein Beleg vorhanden.')}</span>
+            `);
+
+            $actions.empty();
+
+            $actions.append(`
+                <a class="btn btn-default btn-sm"
+                   href="#CEingangsrechnungImport"
+                   title="Zur Importliste wechseln">
+                    Importliste öffnen
+                </a>
+            `);
+        },
+
+        // Что это:
+        // Экранирует текст перед вставкой в HTML.
+        //
+        // Зачем:
+        // Чтобы Dateiname/Importname безопасно отображались в DOM.
+        _escapeHtml_: function (value) {
+            return $('<div>').text(value === null || value === undefined ? '' : String(value)).html();
         },
     });
 });

@@ -33,7 +33,8 @@
         "ersetztBelegId": "Ersetzt Beleg ID",
         "nachfolgeBelegId": "Nachfolgebeleg ID",
         "nachfolgeBelegName": "Nachfolgebeleg",
-        "ersetztBelegName": "Ersetzt Beleg"
+        "ersetztBelegName": "Ersetzt Beleg",
+        "bankbewegungen": "Bankbewegungen"
     },
     "links": {
         "lieferant": "Lieferant",
@@ -42,7 +43,8 @@
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
         "importe": "Importe",
         "ausgleiche": "Ausgleiche",
-        "storniertVon": "Storniert von"
+        "storniertVon": "Storniert von",
+        "bankbewegungen": "Bankbewegungen"
     },
     "labels": {
         "Create CEingangsrechnung": "Create Eingangsrechnung"

@@ -254,6 +254,100 @@
             background: rgba(37, 99, 235, 0.12);
             color: #1d4ed8;
         }
+
+        .kb-cockpit .kb-two-line-th {
+            line-height: 1.15;
+            white-space: nowrap;
+        }
+
+        .kb-cockpit .kb-op-graph {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .kb-cockpit .kb-op-graph-row {
+            display: grid;
+            grid-template-columns: 120px 1fr 110px;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+
+        .kb-cockpit .kb-op-graph-label {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .kb-cockpit .kb-op-graph-bar-wrap {
+            height: 10px;
+            border-radius: 999px;
+            background: #eef2f7;
+            overflow: hidden;
+        }
+
+        .kb-cockpit .kb-op-graph-bar {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.2s ease;
+        }
+
+        .kb-cockpit .kb-op-graph-bar--forderungen {
+            background: #2563eb;
+        }
+
+        .kb-cockpit .kb-op-graph-bar--verbindlichkeiten {
+            background: #dc2626;
+        }
+
+        .kb-cockpit .kb-op-graph-value {
+            text-align: right;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .kb-cockpit .kb-op-graph-netto {
+            margin-top: 8px;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        .kb-cockpit .kb-expected-liquidity-box {
+            max-width: 760px;
+            margin: 0 auto 18px auto;
+            padding: 18px 26px;
+            border: 1px solid #bbf7d0;
+            border-left: 7px solid #16a34a;
+            border-right: 7px solid #16a34a;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+            box-shadow: 0 3px 12px rgba(22, 163, 74, 0.14);
+            text-align: center;
+        }
+
+        .kb-cockpit .kb-expected-liquidity-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #166534;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .kb-cockpit .kb-expected-liquidity-value {
+            font-size: 34px;
+            line-height: 1.1;
+            font-weight: 800;
+            color: #15803d;
+            margin-bottom: 6px;
+            white-space: nowrap;
+        }
+
+        .kb-cockpit .kb-expected-liquidity-formula {
+            font-size: 12px;
+            color: #4b5563;
+        }
     </style>
 
     <div class="kb-toolbar">
@@ -304,7 +398,7 @@
             </div>
 
             <div class="kb-kpi-card">
-                <div class="kb-kpi-label">Bank-Saldo</div>
+                <div class="kb-kpi-label">Bankbestand</div>
                 <div class="kb-kpi-value" data-kpi="bank">0,00 €</div>
             </div>
 
@@ -328,7 +422,13 @@
                 <div class="kb-kpi-value" data-kpi="liquiditaet">0,00 €</div>
             </div>
         </div>
-
+        <div class="kb-expected-liquidity-box">
+            <div class="kb-expected-liquidity-label">Erwartete Liquidität</div>
+            <div class="kb-expected-liquidity-value" data-kpi="erwartete-liquiditaet">0,00 €</div>
+            <div class="kb-expected-liquidity-formula">
+                Bankbestand + offene Forderungen - offene Verbindlichkeiten
+            </div>
+        </div>
         <div class="kb-chart-box">
             <div class="kb-box-title">Umsatz / Aufwand-Wirkung / Basis-Ergebnis nach Monat</div>
             <canvas id="kb-chart-umsatz"></canvas>
@@ -357,8 +457,38 @@
                                 <th>Netto-Position</th>
                                 <th class="text-right" data-open-item="netto">0,00 €</th>
                             </tr>
+                            <tr>
+                                <th>Erwartete Liquidität</th>
+                                <th class="text-right" data-open-item="erwartete-liquiditaet">0,00 €</th>
+                            </tr>
                         </tbody>
                     </table>
+                    <div class="kb-op-graph" data-name="offenePostenGraph">
+                        <div class="kb-op-graph-row">
+                            <div class="kb-op-graph-label">Forderungen</div>
+                            <div class="kb-op-graph-bar-wrap">
+                                <div class="kb-op-graph-bar kb-op-graph-bar--forderungen"
+                                    data-op-bar="forderungen"
+                                    style="width: 0%;"></div>
+                            </div>
+                            <div class="kb-op-graph-value" data-op-graph-value="forderungen">0,00 €</div>
+                        </div>
+
+                        <div class="kb-op-graph-row">
+                            <div class="kb-op-graph-label">Verbindlichkeiten</div>
+                            <div class="kb-op-graph-bar-wrap">
+                                <div class="kb-op-graph-bar kb-op-graph-bar--verbindlichkeiten"
+                                    data-op-bar="verbindlichkeiten"
+                                    style="width: 0%;"></div>
+                            </div>
+                            <div class="kb-op-graph-value" data-op-graph-value="verbindlichkeiten">0,00 €</div>
+                        </div>
+
+                        <div class="kb-op-graph-netto">
+                            Netto-Position:
+                            <strong data-op-graph-value="netto">0,00 €</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -390,7 +520,38 @@
         </div>
 
         <div class="kb-small-box">
-            <div class="kb-box-title">Top offene Forderungen</div>
+            <div class="kb-box-title">Vorschau nächste Wochen</div>
+            <div class="text-muted small" style="margin-bottom: 8px;">
+                Berechnet aus offenen, noch nicht überfälligen Ausgangs- und Eingangsrechnungen nach Fälligkeitsdatum.
+                Überfällige Forderungen bleiben separat unter kritischen Forderungen sichtbar.
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Zeitraum</th>
+                            <th class="text-right">Erwartete Eingänge</th>
+                            <th class="text-right">Erwartete Ausgänge</th>
+                            <th class="text-right">Netto-Ausblick</th>
+                            <th>Belege</th>
+                        </tr>
+                    </thead>
+                    <tbody data-name="vorschauNaechsteWochenBody">
+                        <tr>
+                            <td colspan="5" class="text-muted">Noch keine Daten geladen.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="kb-small-box">
+            <div class="kb-box-title">Kritische Forderungen</div>
+            <div class="text-muted small" style="margin-bottom: 8px;">
+                Zuerst Forderungen ab 5.000 €, danach weitere kritische Forderungen nach Mahnstufe und Überfälligkeit.
+            </div>
+
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-condensed">
                     <thead>
@@ -398,13 +559,15 @@
                             <th>Kunde</th>
                             <th>Rechnung</th>
                             <th>Fällig am</th>
-                            <th class="text-right">Offen</th>
+                            <th class="text-right">Tage überfällig</th>
+                            <th class="text-right">Offener Betrag</th>
                             <th>Mahnstufe</th>
+                            <th>Grund / Aktion</th>
                         </tr>
                     </thead>
                     <tbody data-name="topOpenForderungenBody">
                         <tr>
-                            <td colspan="5" class="text-muted">Noch keine Daten geladen.</td>
+                            <td colspan="7" class="text-muted">Noch keine Daten geladen.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -443,7 +606,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-6">
                 <div class="kb-small-box">
@@ -519,13 +681,20 @@
                             <th>Bezeichnung</th>
                             <th class="text-right">Soll</th>
                             <th class="text-right">Haben</th>
-                            <th class="text-right">Saldo</th>
+                            <th class="text-right kb-two-line-th">
+                                <div>Technischer</div>
+                                <div>Saldo</div>
+                            </th>
+                            <th class="text-right kb-two-line-th">
+                                <div>Wirtschaftliche</div>
+                                <div>Wirkung</div>
+                            </th>
                             <th class="text-right">Buchungen</th>
                         </tr>
                     </thead>
                     <tbody data-name="kontenTableBody">
                         <tr>
-                            <td colspan="6" class="text-muted">Noch keine Daten geladen.</td>
+                            <td colspan="7" class="text-muted">Noch keine Daten geladen.</td>
                         </tr>
                     </tbody>
                 </table>

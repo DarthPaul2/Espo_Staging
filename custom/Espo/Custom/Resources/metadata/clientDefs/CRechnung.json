@@ -83,6 +83,10 @@
         "storniertVon": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "bankbewegungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false,

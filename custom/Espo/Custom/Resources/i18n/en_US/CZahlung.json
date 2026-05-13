@@ -21,7 +21,8 @@
         "lieferant": "Lieferant",
         "istStorniert": "Ist Storno",
         "storniertAm": "Storniert am",
-        "stornoGrund": "Storno-Grund"
+        "stornoGrund": "Storno-Grund",
+        "bankbewegungen": "Bankbewegungen"
     },
     "labels": {
         "Create CZahlung": "Create Zahlung"
@@ -53,6 +54,7 @@
         "ausgleiche": "Ausgleiche",
         "buchungsjournal": "Buchungsjournal",
         "account": "Kunde",
-        "lieferant": "Lieferant"
+        "lieferant": "Lieferant",
+        "bankbewegungen": "Bankbewegungen"
     }
 }

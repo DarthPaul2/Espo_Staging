@@ -1,17 +1,12 @@
 [
     {
-        "name": "name",
+        "name": "belegdatum",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "quelleNummer",
         "width": 14,
-        "align": "left"
-    },
-    {
-        "name": "buchungsart",
-        "width": 11,
-        "align": "left"
-    },
-    {
-        "name": "betrag",
-        "width": 9,
         "align": "left"
     },
     {
@@ -25,19 +20,22 @@
         "align": "left"
     },
     {
-        "name": "belegdatum",
-        "width": 10,
+        "name": "buchungsart",
+        "width": 11,
         "align": "left"
     },
     {
-        "name": "quelleNummer",
-        "width": 14,
+        "name": "betrag",
+        "width": 9,
         "align": "left"
     },
     {
-        "name": "steuerFall",
-        "width": 14,
-        "align": "left"
+        "name": "buchungstext",
+        "width": 16
+    },
+    {
+        "name": "quelleTyp",
+        "width": 16
     },
     {
         "name": "istStorno",

@@ -1,0 +1,71 @@
+{
+    "fields": {
+        "buchungstag": "Buchungstag",
+        "valutadatum": "Wertstellungsdatum",
+        "betrag": "Betrag",
+        "richtung": "Richtung",
+        "waehrung": "Währung",
+        "gegenparteiName": "Gegenpartei",
+        "gegenparteiIban": "Gegenpartei IBAN",
+        "verwendungszweck": "Verwendungszweck",
+        "bankReferenz": "Bankreferenz",
+        "endToEndId": "End-to-End-ID",
+        "mandatsreferenz": "Mandatsreferenz",
+        "importHash": "Import-Hash",
+        "importQuelle": "Importquelle",
+        "importiertAm": "Importiert am",
+        "status": "Status",
+        "abstimmungsstatus": "Abstimmungsstatus",
+        "erkannteBelegnummer": "Erkannte Belegnummer",
+        "erkannteGegenpartei": "Erkannte Gegenpartei",
+        "zuordnungsHinweis": "Zuordnungshinweis",
+        "bemerkung": "Bemerkung",
+        "bankkonto": "Bankkonto",
+        "zahlung": "Zahlung",
+        "rechnung": "Rechnung",
+        "eingangsrechnung": "Eingangsrechnung",
+        "account": "Kunde",
+        "lieferant": "Lieferant"
+    },
+    "links": {
+        "bankkonto": "Bankkonto",
+        "zahlung": "Zahlung",
+        "rechnung": "Rechnung",
+        "eingangsrechnung": "Eingangsrechnung",
+        "account": "Kunde",
+        "lieferant": "Lieferant"
+    },
+    "labels": {
+        "Create CBankbewegung": "Create Bankbewegung"
+    },
+    "options": {
+        "richtung": {
+            "eingang": "Eingang",
+            "ausgang": "Ausgang"
+        },
+        "waehrung": {
+            "eur": "EUR"
+        },
+        "importQuelle": {
+            "csv": "CSV",
+            "camt": "CAMT",
+            "manual": "Manuell",
+            "api": "API"
+        },
+        "status": {
+            "importiert": "Importiert",
+            "automatisch_erkannt": "Automatisch erkannt",
+            "manuell_zugeordnet": "Manuell zugeordnet",
+            "unklar": "Unklar",
+            "ignoriert": "Ignoriert"
+        },
+        "abstimmungsstatus": {
+            "offen": "Offen",
+            "vorschlag": "Vorschlag vorhanden",
+            "zugeordnet": "Zugeordnet",
+            "teilweise_zugeordnet": "Teilweise zugeordnet",
+            "gebucht": "Gebucht",
+            "nicht_relevant": "Nicht relevant"
+        }
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "fields": {
+        "iban": "IBAN",
+        "bic": "BIC",
+        "bankName": "Bankname",
+        "kontoNummer": "Buchhaltungskonto",
+        "aktiv": "Aktiv",
+        "waehrung": "Währung",
+        "startSaldo": "Startsaldo",
+        "startSaldoDatum": "Startsaldo Datum",
+        "beschreibung": "Beschreibung",
+        "bankbewegungen": "Bankbewegungen"
+    },
+    "links": {
+        "bankbewegungen": "Bankbewegungen"
+    },
+    "labels": {
+        "Create CBankkonto": "Create Bankkonto"
+    },
+    "options": {
+        "waehrung": {
+            "eur": "EUR"
+        }
+    }
+}

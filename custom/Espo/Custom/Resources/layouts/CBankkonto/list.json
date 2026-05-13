@@ -1,0 +1,22 @@
+[
+    {
+        "name": "name",
+        "link": true
+    },
+    {
+        "name": "bankName",
+        "width": 16
+    },
+    {
+        "name": "iban",
+        "width": 16
+    },
+    {
+        "name": "waehrung",
+        "width": 16
+    },
+    {
+        "name": "aktiv",
+        "width": 16
+    }
+]

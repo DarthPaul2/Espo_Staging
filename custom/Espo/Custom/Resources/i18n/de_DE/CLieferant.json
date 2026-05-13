@@ -20,11 +20,13 @@
         "iban": "IBAN",
         "bic": "BIC",
         "bankName": "Bank Name",
-        "zahlung": "Zahlung"
+        "zahlung": "Zahlung",
+        "bankbewegungen": "Bankbewegungen"
     },
     "links": {
         "eingangsrechnungen": "Eingangsrechnungen",
         "eingangsrechnungImporte": "Eingangsrechnung Importe",
-        "zahlung": "Zahlung"
+        "zahlung": "Zahlung",
+        "bankbewegungen": "Bankbewegungen"
     }
 }

@@ -172,6 +172,13 @@
             "entity": "CZahlung",
             "audited": false,
             "isCustom": true
+        },
+        "bankbewegungen": {
+            "type": "hasMany",
+            "foreign": "lieferant",
+            "entity": "CBankbewegung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

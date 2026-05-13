@@ -1,0 +1,84 @@
+{
+    "fields": {
+        "lieferant": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "accountId",
+                        "data": {
+                            "field": "account"
+                        }
+                    },
+                    {
+                        "type": "isEmpty",
+                        "attribute": "rechnungId",
+                        "data": {
+                            "field": "rechnung"
+                        }
+                    }
+                ]
+            }
+        },
+        "eingangsrechnung": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "accountId",
+                        "data": {
+                            "field": "account"
+                        }
+                    },
+                    {
+                        "type": "isEmpty",
+                        "attribute": "rechnungId",
+                        "data": {
+                            "field": "rechnung"
+                        }
+                    }
+                ]
+            }
+        },
+        "account": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "lieferantId",
+                        "data": {
+                            "field": "lieferant"
+                        }
+                    },
+                    {
+                        "type": "isEmpty",
+                        "attribute": "eingangsrechnungId",
+                        "data": {
+                            "field": "eingangsrechnung"
+                        }
+                    }
+                ]
+            }
+        },
+        "rechnung": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "isEmpty",
+                        "attribute": "lieferantId",
+                        "data": {
+                            "field": "lieferant"
+                        }
+                    },
+                    {
+                        "type": "isEmpty",
+                        "attribute": "eingangsrechnungId",
+                        "data": {
+                            "field": "eingangsrechnung"
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

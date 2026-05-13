@@ -1,0 +1,15 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "kanbanViewMode": false,
+    "color": null,
+    "iconClass": null,
+    "relationshipPanels": {
+        "bankbewegungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

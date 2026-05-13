@@ -59,6 +59,7 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         $konten = $this->loadKonten($pdo, $whereDate, $sqlParams);
         $checks = $this->loadChecks($pdo, $whereDate, $sqlParams);
         $topOpenForderungen = $this->loadTopOpenForderungen($pdo);
+        $vorschauNaechsteWochen = $this->loadVorschauNaechsteWochen($pdo);
 
         return [
             'period' => [
@@ -71,6 +72,7 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
             'konten' => $konten,
             'checks' => $checks,
             'topOpenForderungen' => $topOpenForderungen,
+            'vorschauNaechsteWochen' => $vorschauNaechsteWochen,
         ];
     }
 
@@ -158,18 +160,40 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         $aufwandNetto = (float) ($row['aufwand_netto'] ?? 0);
         $umsatzsteuer = (float) ($row['umsatzsteuer'] ?? 0);
         $vorsteuer = (float) ($row['vorsteuer'] ?? 0);
+
+        // Что это:
+        // Подготавливаем Werte für Liquidität und offene Posten.
+        //
+        // Зачем:
+        // Phase 7A.5: Erwartete Liquidität soll als eigene Management-Kennzahl
+        // aus Bankbestand + offenen Forderungen - offenen Verbindlichkeiten berechnet werden.
+
         $zahlungseingaenge = (float) ($row['zahlungseingaenge'] ?? 0);
         $zahlungsausgaenge = (float) ($row['zahlungsausgaenge'] ?? 0);
+
+        $offeneForderungen = (float) ($row['offene_forderungen'] ?? 0);
+        $offeneVerbindlichkeiten = (float) ($row['offene_verbindlichkeiten'] ?? 0);
+        $bankSaldo = (float) ($row['bank_saldo'] ?? 0);
+
+        $erwarteteLiquiditaet = round($bankSaldo + $offeneForderungen - $offeneVerbindlichkeiten, 2);
 
         return [
             'umsatzNetto' => $umsatzNetto,
             'aufwandNetto' => $aufwandNetto,
             'basisErgebnis' => round($umsatzNetto - $aufwandNetto, 2),
 
-            'offeneForderungen' => (float) ($row['offene_forderungen'] ?? 0),
-            'offeneVerbindlichkeiten' => (float) ($row['offene_verbindlichkeiten'] ?? 0),
+            // Что это:
+            // Offene Posten und Bankbestand als Grundlage für erwartete Liquidität.
+            //
+            // Зачем:
+            // Diese Werte werden im Cockpit getrennt angezeigt und zusätzlich
+            // zur Management-Kennzahl "Erwartete Liquidität" zusammengeführt.
 
-            'bankSaldo' => (float) ($row['bank_saldo'] ?? 0),
+            'offeneForderungen' => $offeneForderungen,
+            'offeneVerbindlichkeiten' => $offeneVerbindlichkeiten,
+
+            'bankSaldo' => $bankSaldo,
+            'erwarteteLiquiditaet' => $erwarteteLiquiditaet,
 
             'umsatzsteuer' => $umsatzsteuer,
             'vorsteuer' => $vorsteuer,
@@ -412,10 +436,131 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
 
     /**
      * Что это:
-     * Top offene Forderungen.
+     * Загружает Liquiditätsvorschau für die nächsten 7/14/30 Tage.
      *
      * Зачем:
-     * Для Chef-Dashboard: кто должен деньги и сколько.
+     * Phase 7A.5: Geschäftsführung soll sehen, welche Zahlungseingänge
+     * und Zahlungsausgänge aus offenen Belegen demnächst erwartet werden.
+     *
+     * Datenquellen:
+     * - CRechnung.faellig_am + restbetrag_offen = erwartete Zahlungseingänge
+     * - CEingangsrechnung.faellig_am + restbetrag_offen = erwartete Zahlungsausgänge
+     */
+    private function loadVorschauNaechsteWochen(\PDO $pdo): array
+    {
+        $perioden = [
+            7,
+            14,
+            30,
+        ];
+
+        $result = [];
+
+        foreach ($perioden as $tage) {
+            $eingang = $this->loadErwarteteZahlungseingaenge($pdo, $tage);
+            $ausgang = $this->loadErwarteteZahlungsausgaenge($pdo, $tage);
+
+            $summeEingang = (float) ($eingang['summe'] ?? 0);
+            $summeAusgang = (float) ($ausgang['summe'] ?? 0);
+
+            $result[] = [
+                'tage' => $tage,
+                'label' => 'Nächste ' . $tage . ' Tage',
+                'zahlungseingaenge' => round($summeEingang, 2),
+                'zahlungsausgaenge' => round($summeAusgang, 2),
+                'nettoAusblick' => round($summeEingang - $summeAusgang, 2),
+                'anzahlEingaenge' => (int) ($eingang['anzahl'] ?? 0),
+                'anzahlAusgaenge' => (int) ($ausgang['anzahl'] ?? 0),
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Что это:
+     * Erwartete Zahlungseingänge aus offenen Ausgangsrechnungen.
+     *
+     * Зачем:
+     * Offene CRechnung mit Fälligkeit innerhalb der nächsten X Tage
+     * bilden die erwarteten Kundenzahlungen.
+     */
+    private function loadErwarteteZahlungseingaenge(\PDO $pdo, int $tage): array
+    {
+        $sql = "
+            SELECT
+                ROUND(SUM(restbetrag_offen), 2) AS summe,
+                COUNT(*) AS anzahl
+            FROM c_rechnung
+            WHERE deleted = 0
+            AND buchhaltung_status = 'festgeschrieben'
+            AND status <> 'storniert'
+            AND IFNULL(ist_storniert, 0) = 0
+            AND restbetrag_offen > 0
+            AND faellig_am IS NOT NULL
+            AND faellig_am >= CURDATE()
+            AND faellig_am <= DATE_ADD(CURDATE(), INTERVAL :tage DAY)
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':tage' => $tage,
+        ]);
+
+        return $stmt->fetch(\PDO::FETCH_ASSOC) ?: [
+            'summe' => 0,
+            'anzahl' => 0,
+        ];
+    }
+
+    /**
+     * Что это:
+     * Erwartete Zahlungsausgänge aus offenen Eingangsrechnungen.
+     *
+     * Зачем:
+     * Offene CEingangsrechnung mit Fälligkeit innerhalb der nächsten X Tage
+     * bilden die erwarteten Lieferantenzahlungen.
+     */
+    private function loadErwarteteZahlungsausgaenge(\PDO $pdo, int $tage): array
+    {
+        $sql = "
+            SELECT
+                ROUND(SUM(restbetrag_offen), 2) AS summe,
+                COUNT(*) AS anzahl
+            FROM c_eingangsrechnung
+            WHERE deleted = 0
+            AND status = 'festgeschrieben'
+            AND IFNULL(ist_storniert, 0) = 0
+            AND restbetrag_offen > 0
+            AND faellig_am IS NOT NULL
+            AND faellig_am >= CURDATE()
+            AND faellig_am <= DATE_ADD(CURDATE(), INTERVAL :tage DAY)
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':tage' => $tage,
+        ]);
+
+        return $stmt->fetch(\PDO::FETCH_ASSOC) ?: [
+            'summe' => 0,
+            'anzahl' => 0,
+        ];
+    }
+
+
+    /**
+     * Что это:
+     * Загружает kritische Forderungen вместо простой Top-Liste.
+     *
+     * Зачем:
+     * Phase 7A.5: Geschäftsführung soll nicht просто самые большие offene Forderungen видеть,
+     * а Forderungen, по которым нужно действовать.
+     *
+     * Sortierung:
+     * 1. zuerst kritische Forderungen ab 5.000 €
+     * 2. danach alle weiteren kritischen Forderungen
+     * 3. innerhalb der Gruppen: Mahnstufe / Überfälligkeit / Betrag
      */
     private function loadTopOpenForderungen(\PDO $pdo): array
     {
@@ -428,31 +573,117 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
                 r.restbetrag_offen,
                 r.account_id,
                 a.name AS account_name,
-                r.mahnstufe
+                r.mahnstufe,
+
+                CASE
+                    WHEN r.faellig_am IS NOT NULL AND r.faellig_am < CURDATE()
+                        THEN DATEDIFF(CURDATE(), r.faellig_am)
+                    ELSE 0
+                END AS tage_ueberfaellig,
+
+                CASE
+                    WHEN r.restbetrag_offen >= 5000 THEN 1
+                    ELSE 0
+                END AS ist_grosse_forderung,
+
+                CASE
+                    WHEN r.mahnstufe = 'inkasso' THEN 5
+                    WHEN r.mahnstufe = 'mahnung3' THEN 4
+                    WHEN r.mahnstufe = 'mahnung2' THEN 3
+                    WHEN r.mahnstufe = 'mahnung1' THEN 2
+                    WHEN r.mahnstufe = 'zahlungserinnerung' THEN 1
+                    ELSE 0
+                END AS mahn_prioritaet
+
             FROM c_rechnung r
             LEFT JOIN account a ON a.id = r.account_id AND a.deleted = 0
+
             WHERE r.deleted = 0
-              AND r.buchhaltung_status = 'festgeschrieben'
-              AND r.status <> 'storniert'
-              AND IFNULL(r.ist_storniert, 0) = 0
-              AND r.restbetrag_offen > 0
-            ORDER BY r.restbetrag_offen DESC
-            LIMIT 10
+            AND r.buchhaltung_status = 'festgeschrieben'
+            AND r.status <> 'storniert'
+            AND IFNULL(r.ist_storniert, 0) = 0
+            AND r.restbetrag_offen > 0
+
+            AND (
+                    r.restbetrag_offen >= 5000
+                    OR r.mahnstufe IN ('mahnung2', 'mahnung3', 'inkasso')
+                    OR (r.faellig_am IS NOT NULL AND r.faellig_am < CURDATE())
+            )
+
+            ORDER BY
+                CASE
+                    WHEN r.restbetrag_offen >= 5000 THEN 0
+                    ELSE 1
+                END ASC,
+
+                r.restbetrag_offen DESC,
+
+                mahn_prioritaet DESC,
+                tage_ueberfaellig DESC,
+                r.faellig_am ASC
+
+            LIMIT 20
         ";
 
         $rows = $pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC) ?: [];
 
         return array_map(function ($row) {
+            $restbetragOffen = (float) ($row['restbetrag_offen'] ?? 0);
+            $tageUeberfaellig = (int) ($row['tage_ueberfaellig'] ?? 0);
+            $mahnstufe = $row['mahnstufe'] ?? null;
+
             return [
                 'id' => $row['id'],
                 'rechnungsnummer' => $row['rechnungsnummer'],
                 'belegdatum' => $row['belegdatum'],
                 'faelligAm' => $row['faellig_am'],
-                'restbetragOffen' => (float) ($row['restbetrag_offen'] ?? 0),
+                'restbetragOffen' => $restbetragOffen,
                 'accountId' => $row['account_id'],
                 'accountName' => $row['account_name'],
-                'mahnstufe' => $row['mahnstufe'],
+                'mahnstufe' => $mahnstufe,
+                'tageUeberfaellig' => $tageUeberfaellig,
+                'istGrosseForderung' => ((int) ($row['ist_grosse_forderung'] ?? 0)) === 1,
+                'kritischGrund' => $this->buildKritischeForderungGrund(
+                    $restbetragOffen,
+                    $tageUeberfaellig,
+                    $mahnstufe
+                ),
             ];
         }, $rows);
+    }
+
+    /**
+     * Что это:
+     * Формирует понятное fachliches Label, почему Forderung kritisch ist.
+     *
+     * Зачем:
+     * В Cockpit руководство должно видеть не только сумму,
+     * но и причину, почему по Forderung нужно действовать.
+     */
+    private function buildKritischeForderungGrund(float $restbetragOffen, int $tageUeberfaellig, ?string $mahnstufe): string
+    {
+        $gruende = [];
+
+        if ($restbetragOffen >= 5000) {
+            $gruende[] = 'ab 5.000 €';
+        }
+
+        if ($mahnstufe === 'inkasso') {
+            $gruende[] = 'Inkasso';
+        } elseif ($mahnstufe === 'mahnung3') {
+            $gruende[] = 'Mahnung 3';
+        } elseif ($mahnstufe === 'mahnung2') {
+            $gruende[] = 'Mahnung 2';
+        }
+
+        if ($tageUeberfaellig > 0) {
+            $gruende[] = $tageUeberfaellig . ' Tage überfällig';
+        }
+
+        if (!$gruende) {
+            return 'Prüfen';
+        }
+
+        return implode(' · ', $gruende);
     }
 }

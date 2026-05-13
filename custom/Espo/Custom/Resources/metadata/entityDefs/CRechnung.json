@@ -582,6 +582,13 @@
             "entity": "User",
             "audited": false,
             "isCustom": true
+        },
+        "bankbewegungen": {
+            "type": "hasMany",
+            "foreign": "rechnung",
+            "entity": "CBankbewegung",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

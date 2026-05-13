@@ -71,7 +71,10 @@
                 "steueruebersicht_gesamt",
                 "offene_posten_abstimmung",
                 "management_kennzahlen_grundlage",
-                "gruppe_header"
+                "gruppe_header",
+                "bankbewegungen_uebersicht",
+                "unklare_bankbewegungen",
+                "bankbewegungen_ohne_zahlung"
             ],
             "style": {
                 "festgeschriebene_rechnungen": null,
@@ -107,7 +110,10 @@
                 "steueruebersicht_gesamt": null,
                 "offene_posten_abstimmung": null,
                 "management_kennzahlen_grundlage": null,
-                "gruppe_header": null
+                "gruppe_header": null,
+                "bankbewegungen_uebersicht": null,
+                "unklare_bankbewegungen": null,
+                "bankbewegungen_ohne_zahlung": null
             },
             "default": "gruppe_header",
             "maxLength": 100,

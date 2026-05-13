@@ -7,12 +7,15 @@ use Espo\Core\Exceptions\BadRequest;
 
 /**
  * Что это:
- * Автоматически проставляет zahlungsRichtung по выбранному контрагенту.
+ * Проверяет выбранного контрагента у CZahlung и задаёт Richtung только как Default.
  *
  * Зачем:
- * Чтобы система сама определяла направление оплаты:
- * account   -> eingang
- * lieferant -> ausgang
+ * Kunde/Lieferant определяют сторону контрагента, но не всегда направление денег.
+ * Возможны:
+ * - Kunde + Eingang  = Kunde bezahlt Rechnung
+ * - Kunde + Ausgang  = Rückzahlung an Kunde
+ * - Lieferant + Ausgang = Zahlung an Lieferant
+ * - Lieferant + Eingang = Rückerstattung vom Lieferanten
  */
 class SetZahlungsRichtungByPartner
 {
@@ -20,6 +23,7 @@ class SetZahlungsRichtungByPartner
     {
         $accountId = $entity->get('accountId');
         $lieferantId = $entity->get('lieferantId');
+        $zahlungsRichtung = (string) ($entity->get('zahlungsRichtung') ?? '');
 
         $hasAccount = !empty($accountId);
         $hasLieferant = !empty($lieferantId);
@@ -32,6 +36,17 @@ class SetZahlungsRichtungByPartner
             throw new BadRequest('Es darf nur entweder ein Kunde oder ein Lieferant ausgewählt werden, nicht beide gleichzeitig.');
         }
 
+        if ($zahlungsRichtung !== '' && !in_array($zahlungsRichtung, ['eingang', 'ausgang'], true)) {
+            throw new BadRequest('Zahlungsrichtung muss Eingang oder Ausgang sein.');
+        }
+
+        // Если Richtung уже явно установлена, например из Bankbewegung,
+        // не перезаписываем её.
+        if ($zahlungsRichtung !== '') {
+            return;
+        }
+
+        // Default nur für manuelle Zahlungen ohne gesetzte Richtung.
         if ($hasAccount) {
             $entity->set('zahlungsRichtung', 'eingang');
             return;

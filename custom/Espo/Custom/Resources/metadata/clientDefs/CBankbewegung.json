@@ -1,0 +1,35 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "recordViews": {
+        "detail": "custom:views/c-bankbewegung/record/detail"
+    },
+    "relationshipPanels": {
+        "bankkonto": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "zahlung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "rechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "eingangsrechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "account": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "lieferant": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

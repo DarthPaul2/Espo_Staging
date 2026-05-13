@@ -1,0 +1,50 @@
+[
+    {
+        "name": "buchungstag",
+        "width": 16,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "bankkonto",
+        "width": 16,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "richtung",
+        "width": 16
+    },
+    {
+        "name": "betrag",
+        "width": 16
+    },
+    {
+        "name": "gegenparteiName",
+        "width": 16
+    },
+    {
+        "name": "verwendungszweck",
+        "width": 16
+    },
+    {
+        "name": "status",
+        "width": 16
+    },
+    {
+        "name": "abstimmungsstatus",
+        "width": 16
+    },
+    {
+        "name": "zahlung",
+        "width": 16
+    },
+    {
+        "name": "rechnung",
+        "width": 16
+    },
+    {
+        "name": "eingangsrechnung",
+        "width": 16
+    }
+]

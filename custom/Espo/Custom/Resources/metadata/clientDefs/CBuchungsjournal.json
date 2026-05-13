@@ -1,4 +1,7 @@
 {
+    "recordViews": {
+        "detail": "custom:views/c-buchungsjournal/record/detail"
+    },
     "controller": "controllers/record",
     "boolFilterList": [
         "onlyMy"
