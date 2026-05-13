@@ -297,12 +297,15 @@ define('custom:views/c-auftrag/record/detail', [
                     return;
                 }
 
+                // Что это: сортирует строки Auftragspositionen прямо в DOM по первой колонке Positionsnummer.
+                // Зачем: Espo related panel не отдаёт collection через getView('auftragspositions'), поэтому сортируем уже отрисованную таблицу.
+                this._sortAuftragspositionsDom($panel);
+
                 // Если уже вставлено — выходим
                 if (this.$el.find('div[data-name="auftragspositions-actions"]').length) {
                     console.log('[DEBUG] actions already inserted');
                     return;
                 }
-
                 const $actions = $(`
                     <div data-name="auftragspositions-actions" 
                         style="display: inline-flex; gap: 6px; padding: 5px 8px; margin-bottom: 6px; margin-top: -5px; background: #efda97; border-radius: 6px; border: 1px solid #e5e5e5;">
@@ -331,6 +334,91 @@ define('custom:views/c-auftrag/record/detail', [
             }, 500); // ← задержка гарантирует 100% отрисовку
         },
 
+        // Что это: сортирует DOM-строки related panel Auftragspositionen по видимой Positionsnummer.
+        // Зачем: если Espo не даёт доступ к collection панели, порядок всё равно будет правильный на экране.
+        _sortAuftragspositionsDom: function ($panel) {
+            if (!$panel || !$panel.length) return;
+
+            let tries = 0;
+            const maxTries = 20;
+
+            const parsePositionsNummer = (value) => {
+                const s = String(value || '').trim();
+
+                if (!s) return [999999];
+
+                return s.split('.').map(part => {
+                    const cleaned = String(part || '').trim().replace(/^0+/, '');
+                    const n = parseInt(cleaned || '0', 10);
+
+                    return Number.isFinite(n) ? n : 999999;
+                });
+            };
+
+            const compareKeys = (a, b) => {
+                const aa = parsePositionsNummer(a);
+                const bb = parsePositionsNummer(b);
+                const len = Math.max(aa.length, bb.length);
+
+                for (let i = 0; i < len; i++) {
+                    const va = aa[i] !== undefined ? aa[i] : -1;
+                    const vb = bb[i] !== undefined ? bb[i] : -1;
+
+                    if (va !== vb) {
+                        return va - vb;
+                    }
+                }
+
+                return 0;
+            };
+
+            const apply = () => {
+                const $tbody = $panel.find('table tbody').first();
+
+                if (!$tbody.length) {
+                    if (++tries < maxTries) {
+                        setTimeout(apply, 200);
+                    } else {
+                        console.warn('[CAuftrag/detail] Auftragspositions DOM tbody not found.');
+                    }
+
+                    return;
+                }
+
+                const $rows = $tbody.find('tr')
+                    .not('.no-data')
+                    .filter(function () {
+                        return $(this).find('td').length > 0;
+                    });
+
+                if (!$rows.length) {
+                    if (++tries < maxTries) {
+                        setTimeout(apply, 200);
+                    } else {
+                        console.warn('[CAuftrag/detail] Auftragspositions DOM rows not found.');
+                    }
+
+                    return;
+                }
+
+                const rows = $rows.get();
+
+                rows.sort((ra, rb) => {
+                    const a = ($(ra).find('td').first().text() || '').trim();
+                    const b = ($(rb).find('td').first().text() || '').trim();
+
+                    return compareKeys(a, b);
+                });
+
+                rows.forEach(row => {
+                    $tbody.append(row);
+                });
+
+                console.log('[CAuftrag/detail] Auftragspositions DOM sorted by Positionsnummer.');
+            };
+
+            apply();
+        },
 
 
         _fillFromInvoices: function () {
@@ -354,7 +442,6 @@ define('custom:views/c-auftrag/record/detail', [
                     this.model.fetch({ success: () => this.reRender() });
                 });
         },
-
 
         // --- helpers: где взять фирму у заказа (account|firma|kunde) ---
         _getAccountRef: function () {

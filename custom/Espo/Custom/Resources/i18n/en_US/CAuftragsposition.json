@@ -18,7 +18,10 @@
         "angebotOption13b": "§ 13b UStG",
         "includeInAuftrag": "Im Auftrag",
         "bereitsabgerechnet": "Abgerechnet",
-        "rechnungspositions": "Rechnungspositions"
+        "rechnungspositions": "Rechnungspositions",
+        "positionsNummer": "Pos.Nr",
+        "positionType": "Positionstyp",
+        "titel": "Abschnitt"
     },
     "links": {
         "auftrag": "Auftrag",
@@ -29,5 +32,12 @@
     },
     "labels": {
         "Create CAuftragsposition": "Create Auftragsposition"
+    },
+    "options": {
+        "positionType": {
+            "normal": "Normale Position",
+            "header": "Überschrift",
+            "summary": "Zwischensumme"
+        }
     }
 }

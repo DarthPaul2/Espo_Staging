@@ -1,10 +1,10 @@
 [
     {
-        "name": "material",
+        "name": "positionsNummer",
         "width": 16
     },
     {
-        "name": "description",
+        "name": "material",
         "width": 16
     },
     {
@@ -21,6 +21,14 @@
     },
     {
         "name": "gesamt",
+        "width": 16
+    },
+    {
+        "name": "steuer",
+        "width": 16
+    },
+    {
+        "name": "description",
         "width": 16
     },
     {

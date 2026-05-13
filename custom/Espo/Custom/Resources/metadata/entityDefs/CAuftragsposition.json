@@ -163,6 +163,34 @@
             "type": "bool",
             "default": false,
             "isCustom": true
+        },
+        "positionsNummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "positionType": {
+            "type": "enum",
+            "options": [
+                "normal",
+                "header",
+                "summary"
+            ],
+            "style": {
+                "normal": null,
+                "header": null,
+                "summary": null
+            },
+            "default": "normal",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "titel": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
         }
     },
     "links": {

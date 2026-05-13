@@ -1,5 +1,15 @@
 [
     {
+        "name": "positionsNummer",
+        "width": 6,
+        "align": "left"
+    },
+    {
+        "name": "titel",
+        "width": 5,
+        "align": "left"
+    },
+    {
         "name": "material",
         "width": 30,
         "align": "left"

@@ -56,6 +56,149 @@ class SyncAngebotspositionen
         }
     }
 
+    // Что это: рассчитывает техническую сортировку из видимого номера позиции.
+    // Зачем: positionsNummer 01 -> sortierung 10, 02 -> 20, 1.1 -> 1010, 1.2 -> 1020.
+    private function buildSortierungFromPositionsNummer(?string $positionsNummer, int $fallback): int
+    {
+        $value = trim((string) $positionsNummer);
+
+        if ($value === '') {
+            return $fallback;
+        }
+
+        $parts = explode('.', $value);
+
+        $mainRaw = trim((string) ($parts[0] ?? ''));
+        $subRaw  = trim((string) ($parts[1] ?? ''));
+
+        $main = (int) ltrim($mainRaw, '0');
+        $sub  = $subRaw !== '' ? (int) ltrim($subRaw, '0') : 0;
+
+        if ($main <= 0) {
+            return $fallback;
+        }
+
+        // Простые номера:
+        // 01 -> 10
+        // 02 -> 20
+        // 09 -> 90
+        if ($sub <= 0 && count($parts) === 1) {
+            return $main * 10;
+        }
+
+        // Подпозиции:
+        // 1.1  -> 1010
+        // 1.2  -> 1020
+        // 1.10 -> 1100
+        // 2.1  -> 2010
+        return ($main * 1000) + ($sub * 10);
+    }
+
+    // Что это: разбирает видимый номер позиции вида 1, 1.1, 1.2, 2.10.
+    // Зачем: чтобы сортировать позиции так же, как они видны в Angebot.
+    private function parsePositionsNummer(?string $value): array
+    {
+        $value = trim((string) $value);
+
+        if ($value === '') {
+            return [];
+        }
+
+        return array_map(
+            function ($part) {
+                $part = trim((string) $part);
+
+                return ctype_digit($part) ? (int) $part : $part;
+            },
+            explode('.', $value)
+        );
+    }
+
+    // Что это: сравнивает номера позиций 1, 1.1, 1.2, 1.10, 2.
+    // Зачем: обычная строковая сортировка поставила бы 1.10 перед 1.2, а это неправильно.
+    private function comparePositionsNummer(?string $a, ?string $b): int
+    {
+        $aa = $this->parsePositionsNummer($a);
+        $bb = $this->parsePositionsNummer($b);
+
+        $len = max(count($aa), count($bb));
+
+        for ($i = 0; $i < $len; $i++) {
+            if (!array_key_exists($i, $aa)) return -1;
+            if (!array_key_exists($i, $bb)) return 1;
+
+            $va = $aa[$i];
+            $vb = $bb[$i];
+
+            if ($va === $vb) {
+                continue;
+            }
+
+            if (is_int($va) && is_int($vb)) {
+                return $va <=> $vb;
+            }
+
+            return strnatcasecmp((string) $va, (string) $vb);
+        }
+
+        return 0;
+    }
+
+    // Что это: строит ключ сортировки как в Angebot-JS.
+    // Зачем: header идёт перед подпозициями, summary — после подпозиций.
+    private function getPositionSortKey(Entity $pos): string
+    {
+        $key = trim((string) ($pos->get('positionsNummer') ?: $pos->get('name') ?: ''));
+        $type = strtolower((string) ($pos->get('positionType') ?: 'normal'));
+
+        if ($key !== '') {
+            if ($type === 'header') {
+                return $key . '.0';
+            }
+
+            if ($type === 'summary') {
+                return $key . '.999';
+            }
+        }
+
+        return $key;
+    }
+
+    // Что это: сортирует список позиций Angebot по positionsNummer.
+    // Зачем: Auftrag должен получить позиции точно в том же логическом порядке.
+    private function sortPositionsLikeAngebot(array &$list): void
+    {
+        usort($list, function (Entity $a, Entity $b): int {
+            $aKey = $this->getPositionSortKey($a);
+            $bKey = $this->getPositionSortKey($b);
+
+            if ($aKey !== '' || $bKey !== '') {
+                if ($aKey === '') return 1;
+                if ($bKey === '') return -1;
+
+                $cmp = $this->comparePositionsNummer($aKey, $bKey);
+
+                if ($cmp !== 0) {
+                    return $cmp;
+                }
+            }
+
+            $aSort = $a->get('sortierung');
+            $bSort = $b->get('sortierung');
+
+            if ($aSort !== null && $aSort !== '' && $bSort !== null && $bSort !== '') {
+                $cmp = ((int) $aSort) <=> ((int) $bSort);
+
+                if ($cmp !== 0) {
+                    return $cmp;
+                }
+            }
+
+            return strcmp((string) $a->getId(), (string) $b->getId());
+        });
+    }
+
+
     /* ========================= Core ========================= */
 
     /**
@@ -81,16 +224,32 @@ class SyncAngebotspositionen
             }
         }
 
-        // Источник — все позиции конкретного Angebots
+        // Что это: загружаем позиции Angebot в стабильном порядке.
+        // Зачем: Auftragspositionen должны получить тот же порядок, что и позиции Angebot.
+
         $posList = $this->em->getRepository('CAngebotsposition')
-            ->where(['angebotId' => $angebotId])
-            ->order('sortierung')
+            ->where([
+                'angebotId' => $angebotId,
+                'deleted'   => false,
+            ])
             ->find();
 
         $this->log->warning("[SyncAngebotspositionen] upsert start: auftrag={$auftragId}, angebot={$angebotId}, srcCount=" . count($posList));
 
+        // Что это: fallback-порядок с шагом 10.
+        // Зачем: если у Angebotsposition sortierung пустая, Auftragsposition всё равно получит стабильный порядок.
+
+        $fallbackSortierung = 10;
+
         foreach ($posList as $pos) {
             $posId = (string) $pos->getId();
+            // Что это: рассчитываем sortierung напрямую из positionsNummer.
+            // Зачем: порядок Auftrag должен соответствовать видимому номеру позиции в Angebot.
+            $sortierung = $this->buildSortierungFromPositionsNummer(
+                $pos->get('positionsNummer'),
+                $fallbackSortierung
+            );
+            $fallbackSortierung += 10;
 
             try {
                 // если уже есть — обновляем существующую Auftragsposition
@@ -111,7 +270,10 @@ class SyncAngebotspositionen
                             'rabatt'        => $pos->get('rabatt'),
                             'steuer'        => $pos->get('steuer'),
                             'einkaufspreis' => $pos->get('einkaufspreis'),
-                            'sortierung'    => $pos->get('sortierung'),
+                            'positionsNummer' => $pos->get('positionsNummer'),
+                            'positionType'    => $pos->get('positionType'),
+                            'titel'           => $pos->get('titel'),
+                            'sortierung'      => $sortierung,
                         ]);
                         $this->em->saveEntity($ap, ['skipRecalc' => true]);
                         $updated++;
@@ -140,7 +302,10 @@ class SyncAngebotspositionen
                     'rabatt'        => $pos->get('rabatt'),
                     'steuer'        => $pos->get('steuer'),
                     'einkaufspreis' => $pos->get('einkaufspreis'),
-                    'sortierung'    => $pos->get('sortierung'),
+                    'positionsNummer' => $pos->get('positionsNummer'),
+                    'positionType'    => $pos->get('positionType'),
+                    'titel'           => $pos->get('titel'),
+                    'sortierung'      => $sortierung,
 
                     // по умолчанию включаем в заказ
                     'includeInAuftrag'  => true,
