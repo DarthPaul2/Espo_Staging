@@ -1,0 +1,20 @@
+{
+    "fields": {
+        "titel": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "or",
+                        "value": [
+                            {
+                                "type": "equals",
+                                "attribute": "positionType",
+                                "value": "header"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -20,6 +20,9 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
         liquiditaetChart: null,
 
         selectedYear: null,
+        selectedPeriodMode: 'monat',
+        selectedMonth: null,
+        selectedQuarter: null,
         dashboardData: null,
 
         getTitle: function () {
@@ -44,13 +47,18 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
         setup: function () {
             Dep.prototype.setup.call(this);
 
-            this.selectedYear = new Date().getFullYear();
+            var now = new Date();
+
+            this.selectedYear = now.getFullYear();
+            this.selectedMonth = now.getMonth() + 1;
+            this.selectedQuarter = Math.floor(now.getMonth() / 3) + 1;
+            this.selectedPeriodMode = 'monat';
         },
 
         afterRender: function () {
             Dep.prototype.afterRender.call(this);
 
-            this.renderYearSelect_();
+            this.renderPeriodFilters_();
             this.bindEvents_();
             this.loadDashboard_();
         },
@@ -82,19 +90,121 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             }
         },
 
+        renderPeriodFilters_: function () {
+            this.renderYearSelect_();
+
+            var $root = this.$el || $(this.el);
+
+            $root.find('[data-name="periodMode"]').val(this.selectedPeriodMode);
+            $root.find('[data-name="monthFilter"]').val(String(this.selectedMonth));
+            $root.find('[data-name="quarterFilter"]').val(String(this.selectedQuarter));
+
+            this.updatePeriodFilterVisibility_();
+        },
+
+        // Что это:
+        // Управляет видимостью Month/Quarter Filter.
+        //
+        // Зачем:
+        // В режиме Jahr не нужен ни Monat, ни Quartal — остаётся только выбор года.
+
+        updatePeriodFilterVisibility_: function () {
+            var $root = this.$el || $(this.el);
+
+            if (this.selectedPeriodMode === 'jahr') {
+                $root.find('[data-name="monthFilter"]').addClass('hidden');
+                $root.find('[data-name="quarterFilter"]').addClass('hidden');
+                return;
+            }
+
+            if (this.selectedPeriodMode === 'quartal') {
+                $root.find('[data-name="monthFilter"]').addClass('hidden');
+                $root.find('[data-name="quarterFilter"]').removeClass('hidden');
+                return;
+            }
+
+            $root.find('[data-name="quarterFilter"]').addClass('hidden');
+            $root.find('[data-name="monthFilter"]').removeClass('hidden');
+        },
+
+        getSelectedPeriod_: function () {
+            var year = Number(this.selectedYear || new Date().getFullYear());
+            var mode = this.selectedPeriodMode || 'monat';
+
+            if (mode === 'jahr') {
+                return {
+                    mode: 'jahr',
+                    label: String(year),
+                    dateFrom: this.makeDateString_(year, 1, 1),
+                    dateTo: this.makeDateString_(year, 12, 31)
+                };
+            }
+
+            if (mode === 'quartal') {
+                var quarter = Number(this.selectedQuarter || 1);
+                var startMonth = ((quarter - 1) * 3) + 1;
+                var endMonth = startMonth + 2;
+
+                return {
+                    mode: 'quartal',
+                    label: 'Q' + quarter + ' ' + year,
+                    dateFrom: this.makeDateString_(year, startMonth, 1),
+                    dateTo: this.makeDateString_(year, endMonth, this.getLastDayOfMonth_(year, endMonth))
+                };
+            }
+
+            var month = Number(this.selectedMonth || 1);
+
+            return {
+                mode: 'monat',
+                label: this.getMonthName_(month) + ' ' + year,
+                dateFrom: this.makeDateString_(year, month, 1),
+                dateTo: this.makeDateString_(year, month, this.getLastDayOfMonth_(year, month))
+            };
+        },
+
+        makeDateString_: function (year, month, day) {
+            return [
+                String(year),
+                String(month).padStart(2, '0'),
+                String(day).padStart(2, '0')
+            ].join('-');
+        },
+
+        getLastDayOfMonth_: function (year, month) {
+            return new Date(year, month, 0).getDate();
+        },
+
+        getMonthName_: function (month) {
+            var names = [
+                'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+            ];
+
+            return names[month - 1] || '';
+        },
+
         bindEvents_: function () {
             var self = this;
             var $root = this.$el || $(this.el);
 
-            $root.off('change.kbCockpit', '[data-name="yearFilter"]');
-            $root.on('change.kbCockpit', '[data-name="yearFilter"]', function () {
-                var year = parseInt($(this).val(), 10);
+            $root.off('change.kbCockpitPeriod', '[data-name="periodMode"], [data-name="yearFilter"], [data-name="monthFilter"], [data-name="quarterFilter"]');
+            $root.on('change.kbCockpitPeriod', '[data-name="periodMode"], [data-name="yearFilter"], [data-name="monthFilter"], [data-name="quarterFilter"]', function () {
+                var mode = $root.find('[data-name="periodMode"]').val() || 'monat';
+                var year = parseInt($root.find('[data-name="yearFilter"]').val(), 10);
+                var month = parseInt($root.find('[data-name="monthFilter"]').val(), 10);
+                var quarter = parseInt($root.find('[data-name="quarterFilter"]').val(), 10);
 
-                if (!year || year === self.selectedYear) {
-                    return;
+                if (!year) {
+                    year = new Date().getFullYear();
                 }
 
+                self.selectedPeriodMode = mode;
                 self.selectedYear = year;
+                self.selectedMonth = month || 1;
+                self.selectedQuarter = quarter || 1;
+
+                self.updatePeriodFilterVisibility_();
                 self.loadDashboard_();
             });
 
@@ -170,17 +280,25 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
 
             $root.find('[data-name="cockpitStatus"]').text('Lade Buchhaltungsdaten ...');
 
+            var period = this.getSelectedPeriod_();
+
             return Espo.Ajax.getRequest('CBuchung/action/managementDashboard', {
-                year: this.selectedYear
+                year: this.selectedYear,
+                dateFrom: period.dateFrom,
+                dateTo: period.dateTo,
+                periodMode: period.mode
             }).then(function (data) {
                 self.dashboardData = data || {};
 
                 self.renderAll_();
                 $root.find('[data-name="cockpitStatus"]').text(
                     'Quelle: CBuchung · Zeitraum: ' +
+                    period.label +
+                    ' · Bewegungswerte: ' +
                     self.formatDateGerman_(data.period.dateFrom) +
                     ' – ' +
                     self.formatDateGerman_(data.period.dateTo) +
+                    ' · Offene Posten/Vorschau: aktueller Stand' +
                     ' · Prüfsaldo Soll/Haben: ' +
                     self.formatCurrency_(data.checks.pruefsaldo || 0)
                 );
@@ -195,6 +313,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
 
             this.renderKpi_(data.kpi || {});
             this.renderChecks_(data.checks || {});
+            this.renderChartTitles_();
             this.renderCharts_(data.monthly || []);
             this.renderOpenItems_(data.kpi || {});
             this.renderTax_(data.kpi || {});
@@ -213,26 +332,34 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             this.renderArbeitsliste_(data.kpi || {}, data.checks || {}, data.topOpenForderungen || []);
         },
 
+        // Что это:
+        // Rendert die oberen KPI-Karten im Geschäftsführungs-Cockpit.
+        //
+        // Зачем:
+        // Offene Verbindlichkeiten werden in der Management-Sicht als positiver Betrag angezeigt,
+        // aber farblich als Abzug / zu zahlender Betrag markiert.
+        // Dadurch ist klar: Das ist keine "negative Verbindlichkeit", sondern eine Belastung.
+
         renderKpi_: function (kpi) {
             var $root = this.$el || $(this.el);
+
+            var forderungen = Math.max(0, Number(kpi.offeneForderungen || 0));
+            var verbindlichkeiten = Math.abs(Number(kpi.offeneVerbindlichkeiten || 0));
+            var bankbewegung = Number(kpi.bankSaldo || 0);
+
+            var liquiditaetsbild = bankbewegung + forderungen - verbindlichkeiten;
 
             this.setKpi_($root, 'umsatz', kpi.umsatzNetto);
             this.setKpi_($root, 'aufwand', kpi.aufwandNetto);
             this.setKpi_($root, 'ergebnis', kpi.basisErgebnis, true);
-            this.setKpi_($root, 'bank', kpi.bankSaldo, true);
+            this.setKpi_($root, 'bank', bankbewegung, true);
 
-            this.setKpi_($root, 'forderungen', kpi.offeneForderungen);
-            this.setKpi_($root, 'verbindlichkeiten', kpi.offeneVerbindlichkeiten);
+            this.setKpi_($root, 'forderungen', forderungen);
+            this.setKpiExpense_($root, 'verbindlichkeiten', verbindlichkeiten);
 
-            // Что это:
-            // Bestehende Steuer- und Liquiditätskennzahlen.
-            //
-            // Зачем:
-            // Liquiditätsbewegung bleibt als Zeitraum-Wert erhalten;
-            // Erwartete Liquidität kommt zusätzlich als Zukunfts-/Management-Kennzahl.
             this.setKpi_($root, 'steuer', kpi.steuerSaldo, true, true);
             this.setKpi_($root, 'liquiditaet', kpi.liquiditaetsbewegung, true);
-            this.setKpi_($root, 'erwartete-liquiditaet', kpi.erwarteteLiquiditaet, true);
+            this.setKpi_($root, 'erwartete-liquiditaet', liquiditaetsbild, true);
         },
 
         setKpi_: function ($root, key, value, colorBySign, reverseGoodBad) {
@@ -262,12 +389,54 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             }
         },
 
+        // Что это:
+        // Rendert eine KPI-Zahl als Belastung / Abzug.
+        //
+        // Зачем:
+        // Offene Verbindlichkeiten sollen als positiver Betrag lesbar sein,
+        // aber optisch klar zeigen: Dieser Betrag ist zu zahlen und mindert die Liquidität.
+
+        setKpiExpense_: function ($root, key, value) {
+            var $value = $root.find('[data-kpi="' + key + '"]');
+            var number = Math.abs(Number(value || 0));
+
+            $value.text(this.formatCurrency_(number));
+            $value.removeClass('text-success text-danger text-warning');
+            $value.addClass('text-danger');
+        },
+
+        // Что это:
+        // Rendert die Prüfkacheln im Buchhaltung-Tab.
+        //
+        // Зачем:
+        // Prüfsaldo bleibt echte Journalprüfung.
+        // OP-Abstimmung wird bei Monat/Quartal als Hinweis angezeigt,
+        // weil hier Journal-Zeitraum gegen aktuellen operativen Stand verglichen wird.
+
         renderChecks_: function (checks) {
             var $root = this.$el || $(this.el);
+            var isPeriodView = this.selectedPeriodMode === 'monat' || this.selectedPeriodMode === 'quartal';
 
             this.setCheck_($root, 'pruefsaldo', checks.pruefsaldo);
-            this.setCheck_($root, 'op-forderungen', checks.opForderungenDifferenz);
-            this.setCheck_($root, 'op-verbindlichkeiten', checks.opVerbindlichkeitenDifferenz);
+
+            if (isPeriodView) {
+                this.setInfoCheck_(
+                    $root,
+                    'op-forderungen',
+                    checks.opForderungenDifferenz,
+                    'Aktueller Stand'
+                );
+
+                this.setInfoCheck_(
+                    $root,
+                    'op-verbindlichkeiten',
+                    checks.opVerbindlichkeitenDifferenz,
+                    'Aktueller Stand'
+                );
+            } else {
+                this.setCheck_($root, 'op-forderungen', checks.opForderungenDifferenz);
+                this.setCheck_($root, 'op-verbindlichkeiten', checks.opVerbindlichkeitenDifferenz);
+            }
 
             $root.find('[data-check="summe-soll"]').text(this.formatCurrency_(checks.summeSoll || 0));
             $root.find('[data-check="summe-haben"]').text(this.formatCurrency_(checks.summeHaben || 0));
@@ -294,6 +463,59 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
                 $value.addClass('text-danger');
                 $status.addClass('text-danger');
             }
+        },
+
+        // Что это:
+        // Zeigt eine Prüf-Kachel als Hinweis statt als Fehler.
+        //
+        // Зачем:
+        // Bei Monat/Quartal ist die OP-Differenz keine echte Fehlermeldung,
+        // weil der Journalwert im Zeitraum mit dem aktuellen operativen Stand verglichen wird.
+
+        setInfoCheck_: function ($root, key, value, statusText) {
+            var number = Number(value || 0);
+
+            var $value = $root.find('[data-check="' + key + '"]');
+            var $status = $root.find('[data-check-status="' + key + '"]');
+
+            $value.text(this.formatCurrency_(number));
+            $status.text(statusText || 'Hinweis');
+
+            $value.removeClass('text-success text-danger text-warning text-info');
+            $status.removeClass('text-success text-danger text-warning text-info');
+
+            $value.addClass('text-warning');
+            $status.addClass('text-warning');
+        },
+
+        // Что это:
+        // Setzt sprechende Titel für die beiden Diagramme.
+        //
+        // Зачем:
+        // Der Zeitraumfilter kann Monat, Quartal oder Jahr sein.
+        // Deshalb sollen die Diagrammtitel nicht statisch "nach Monat" heißen,
+        // sondern zur aktuellen Auswahl passen.
+
+        renderChartTitles_: function () {
+            var $root = this.$el || $(this.el);
+            var mode = this.selectedPeriodMode || 'monat';
+
+            var umsatzTitle = 'Wirtschaftliches Ergebnis';
+            var liquiditaetTitle = 'Liquiditätsbewegung';
+
+            if (mode === 'jahr') {
+                umsatzTitle = 'Wirtschaftliches Ergebnis nach Monaten im Jahr';
+                liquiditaetTitle = 'Liquiditätsbewegung nach Monaten im Jahr';
+            } else if (mode === 'quartal') {
+                umsatzTitle = 'Wirtschaftliches Ergebnis nach Monaten im Quartal';
+                liquiditaetTitle = 'Liquiditätsbewegung nach Monaten im Quartal';
+            } else {
+                umsatzTitle = 'Wirtschaftliches Ergebnis im Monat';
+                liquiditaetTitle = 'Liquiditätsbewegung im Monat';
+            }
+
+            $root.find('[data-name="umsatzChartTitle"]').text(umsatzTitle);
+            $root.find('[data-name="liquiditaetChartTitle"]').text(liquiditaetTitle);
         },
 
         renderCharts_: function (monthly) {
@@ -451,27 +673,27 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             var $root = this.$el || $(this.el);
 
             // Что это:
-            // Offene Posten und erwartete Liquidität für Management-Sicht.
+            // Management-Darstellung der offenen Posten.
             //
             // Зачем:
-            // Phase 7A.5: Neben der Netto-Position wird auch die erwartete Liquidität
-            // aus Bankbestand + Forderungen - Verbindlichkeiten angezeigt.
+            // Forderungen und Verbindlichkeiten werden beide als positive Beträge angezeigt.
+            // Verbindlichkeiten sind aber fachlich ein Abzug in der Liquiditätsformel.
 
-            var forderungen = Number(kpi.offeneForderungen || 0);
-            var verbindlichkeiten = Number(kpi.offeneVerbindlichkeiten || 0);
+            var forderungen = Math.max(0, Number(kpi.offeneForderungen || 0));
+            var verbindlichkeiten = Math.abs(Number(kpi.offeneVerbindlichkeiten || 0));
             var bankSaldo = Number(kpi.bankSaldo || 0);
 
             var netto = forderungen - verbindlichkeiten;
-            var erwarteteLiquiditaet = Number(kpi.erwarteteLiquiditaet);
-
-            if (isNaN(erwarteteLiquiditaet)) {
-                erwarteteLiquiditaet = bankSaldo + forderungen - verbindlichkeiten;
-            }
+            var erwarteteLiquiditaet = bankSaldo + forderungen - verbindlichkeiten;
 
             $root.find('[data-open-item="forderungen"]').text(this.formatCurrency_(forderungen));
             $root.find('[data-open-item="verbindlichkeiten"]').text(this.formatCurrency_(verbindlichkeiten));
             $root.find('[data-open-item="netto"]').text(this.formatCurrency_(netto));
             $root.find('[data-open-item="erwartete-liquiditaet"]').text(this.formatCurrency_(erwarteteLiquiditaet));
+
+            $root.find('[data-open-item="verbindlichkeiten"]')
+                .removeClass('text-success text-danger text-warning')
+                .addClass('text-danger');
 
             $root.find('[data-open-item="netto"]')
                 .removeClass('text-success text-danger');
@@ -492,9 +714,9 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             }
 
             this.renderOffenePostenGraph_(
-                Number(kpi.offeneForderungen || 0),
-                Number(kpi.offeneVerbindlichkeiten || 0),
-                Number(kpi.offeneForderungen || 0) - Number(kpi.offeneVerbindlichkeiten || 0)
+                forderungen,
+                verbindlichkeiten,
+                netto
             );
         },
 
@@ -521,6 +743,11 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
 
             $root.find('[data-op-graph-value="forderungen"]').text(this.formatCurrency_(forderungen));
             $root.find('[data-op-graph-value="verbindlichkeiten"]').text(this.formatCurrency_(verbindlichkeiten));
+
+            $root.find('[data-op-graph-value="verbindlichkeiten"]')
+                .removeClass('text-success text-danger text-warning')
+                .addClass('text-danger');
+
             $root.find('[data-op-graph-value="netto"]')
                 .text(this.formatCurrency_(netto))
                 .removeClass('text-success text-danger')
@@ -750,11 +977,36 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             $tbody.html(html);
         },
 
+        // Что это:
+        // Setzt die Spaltenüberschriften der kompakten OP-Abstimmung.
+        //
+        // Зачем:
+        // Im Jahresmodus ist die OP-Abstimmung eine echte Abstimmung über den Jahresstand.
+        // Im Monats- und Quartalsmodus wird dagegen der Journalwert des gewählten Zeitraums
+        // mit dem aktuellen operativen Stand verglichen.
+
+        updateOpCheckHeaders_: function () {
+            var $root = this.$el || $(this.el);
+            var mode = this.selectedPeriodMode || 'monat';
+
+            var journalHeader = 'Journal';
+            var operativHeader = 'Operativ';
+
+            if (mode === 'monat' || mode === 'quartal') {
+                journalHeader = 'Journal Zeitraum';
+                operativHeader = 'Operativ aktueller Stand';
+            }
+
+            $root.find('[data-name="opCheckJournalHeader"]').text(journalHeader);
+            $root.find('[data-name="opCheckOperativHeader"]').text(operativHeader);
+        },
+
         // Что это: kompakte Offene-Posten-Abstimmung für Buchhaltung-Tab.
         // Зачем: бухгалтер видит Journalwert, operativen Restbetrag и Differenz без открытия отдельного Berichts.
         renderOpCheck_: function (kpi, checks) {
             var $root = this.$el || $(this.el);
             var $tbody = $root.find('[data-name="opCheckBody"]');
+            this.updateOpCheckHeaders_();
 
             if (!$tbody.length) {
                 return;
@@ -792,8 +1044,15 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             var html = '';
 
             rows.forEach(function (row) {
+                var isPeriodView = this.selectedPeriodMode === 'monat' || this.selectedPeriodMode === 'quartal';
+
                 var status = Math.abs(Number(row.differenz || 0)) < 0.01 ? 'OK' : 'Abweichung';
                 var statusClass = status === 'OK' ? 'text-success' : 'text-danger';
+
+                if (isPeriodView && status !== 'OK') {
+                    status = 'Aktueller Stand';
+                    statusClass = 'text-warning';
+                }
 
                 html += `
             <tr>
@@ -985,11 +1244,32 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             }
 
             // 2. OP Forderungen
+            // Что это:
+            // Bewertet die OP-Abstimmung Forderungen für die Arbeitsliste.
+            //
+            // Зачем:
+            // Bei Monat/Quartal ist eine Differenz zwischen Journal-Zeitraum
+            // und aktuellem operativem Stand kein Fehler, sondern ein Hinweis.
+
+            var isPeriodView = this.selectedPeriodMode === 'monat' || this.selectedPeriodMode === 'quartal';
+
             if (Math.abs(opForderungenDiff) < 0.01) {
                 items.push(this.makeArbeitsItem_(
                     'success',
                     'OP-Abstimmung Forderungen',
                     'Journal und operative Forderungen stimmen überein.',
+                    offeneForderungenCount + ' Belege · ' + this.formatCurrency_(offeneForderungenSumme),
+                    {
+                        navKind: 'report',
+                        reportType: 'offene_posten_abstimmung',
+                        actionLabel: 'Zur OP-Abstimmung'
+                    }
+                ));
+            } else if (isPeriodView) {
+                items.push(this.makeArbeitsItem_(
+                    'warning',
+                    'OP-Abstimmung Forderungen',
+                    'Aktueller operativer Stand ist unabhängig vom gewählten Zeitraum.',
                     offeneForderungenCount + ' Belege · ' + this.formatCurrency_(offeneForderungenSumme),
                     {
                         navKind: 'report',
@@ -1012,11 +1292,30 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             }
 
             // 3. OP Verbindlichkeiten
+            // Что это:
+            // Bewertet die OP-Abstimmung Verbindlichkeiten für die Arbeitsliste.
+            //
+            // Зачем:
+            // Bei Monat/Quartal ist eine Differenz zwischen Journal-Zeitraum
+            // und aktuellem operativem Stand kein Fehler, sondern ein Hinweis.
+
             if (Math.abs(opVerbindlichkeitenDiff) < 0.01) {
                 items.push(this.makeArbeitsItem_(
                     'success',
                     'OP-Abstimmung Verbindlichkeiten',
                     'Journal und operative Verbindlichkeiten stimmen überein.',
+                    offeneVerbindlichkeitenCount + ' Belege · ' + this.formatCurrency_(offeneVerbindlichkeitenSumme),
+                    {
+                        navKind: 'report',
+                        reportType: 'offene_posten_abstimmung',
+                        actionLabel: 'Zur OP-Abstimmung'
+                    }
+                ));
+            } else if (isPeriodView) {
+                items.push(this.makeArbeitsItem_(
+                    'warning',
+                    'OP-Abstimmung Verbindlichkeiten',
+                    'Aktueller operativer Stand ist unabhängig vom gewählten Zeitraum.',
                     offeneVerbindlichkeitenCount + ' Belege · ' + this.formatCurrency_(offeneVerbindlichkeitenSumme),
                     {
                         navKind: 'report',

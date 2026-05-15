@@ -348,6 +348,43 @@
             font-size: 12px;
             color: #4b5563;
         }
+
+
+        /* Что это:
+        Визуально отделяет operative Hinweise от periodischen Kennzahlen.
+
+        Зачем:
+        Vorschau nächste Wochen und Kritische Forderungen sind aktueller Handlungsbedarf
+        und не зависят от выбранного Monats-/Quartals-/Jahreszeitraum. */
+
+        .kb-cockpit .kb-operative-section {
+            margin-top: 18px;
+            padding: 14px;
+            border: 1px solid #dbeafe;
+            border-left: 5px solid #2563eb;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+        }
+
+        .kb-cockpit .kb-operative-header {
+            margin-bottom: 12px;
+        }
+
+        .kb-cockpit .kb-operative-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .kb-cockpit .kb-operative-subtitle {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        .kb-cockpit .kb-operative-section .kb-small-box:last-child {
+            margin-bottom: 0;
+        }
     </style>
 
     <div class="kb-toolbar">
@@ -357,7 +394,36 @@
         </div>
 
         <div style="display: flex; gap: 8px; align-items: center;">
-            <label style="margin: 0;">Jahr</label>
+            <label style="margin: 0;">Zeitraum</label>
+
+            <select class="form-control input-sm" data-name="periodMode" style="width: 110px;">
+                <option value="monat">Monat</option>
+                <option value="quartal">Quartal</option>
+                <option value="jahr">Jahr</option>
+            </select>
+
+            <select class="form-control input-sm" data-name="monthFilter" style="width: 120px;">
+                <option value="1">Januar</option>
+                <option value="2">Februar</option>
+                <option value="3">März</option>
+                <option value="4">April</option>
+                <option value="5">Mai</option>
+                <option value="6">Juni</option>
+                <option value="7">Juli</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Dezember</option>
+            </select>
+
+            <select class="form-control input-sm hidden" data-name="quarterFilter" style="width: 90px;">
+                <option value="1">Q1</option>
+                <option value="2">Q2</option>
+                <option value="3">Q3</option>
+                <option value="4">Q4</option>
+            </select>
+
             <select class="form-control input-sm" data-name="yearFilter" style="width: 100px;"></select>
 
             <button type="button" class="btn btn-default btn-sm" data-action="kb-cockpit-print">
@@ -398,7 +464,7 @@
             </div>
 
             <div class="kb-kpi-card">
-                <div class="kb-kpi-label">Bankbestand</div>
+                <div class="kb-kpi-label">Bankbewegung Zeitraum</div>
                 <div class="kb-kpi-value" data-kpi="bank">0,00 €</div>
             </div>
 
@@ -408,7 +474,7 @@
             </div>
 
             <div class="kb-kpi-card">
-                <div class="kb-kpi-label">Offene Verbindlichkeiten</div>
+                <div class="kb-kpi-label">Offene Verbindlichkeiten (Abzug)</div>
                 <div class="kb-kpi-value" data-kpi="verbindlichkeiten">0,00 €</div>
             </div>
 
@@ -423,19 +489,23 @@
             </div>
         </div>
         <div class="kb-expected-liquidity-box">
-            <div class="kb-expected-liquidity-label">Erwartete Liquidität</div>
+            <div class="kb-expected-liquidity-label">Liquiditätsbild</div>
             <div class="kb-expected-liquidity-value" data-kpi="erwartete-liquiditaet">0,00 €</div>
             <div class="kb-expected-liquidity-formula">
-                Bankbestand + offene Forderungen - offene Verbindlichkeiten
+                Bankbewegung Zeitraum + offene Forderungen - offene Verbindlichkeiten
             </div>
         </div>
         <div class="kb-chart-box">
-            <div class="kb-box-title">Umsatz / Aufwand-Wirkung / Basis-Ergebnis nach Monat</div>
+            <div class="kb-box-title" data-name="umsatzChartTitle">
+                Wirtschaftliches Ergebnis nach Monaten im Jahr
+            </div>
             <canvas id="kb-chart-umsatz"></canvas>
         </div>
 
         <div class="kb-chart-box">
-            <div class="kb-box-title">Liquidität nach Monat</div>
+            <div class="kb-box-title" data-name="liquiditaetChartTitle">
+                Liquiditätsbewegung nach Monaten im Jahr
+            </div>
             <canvas id="kb-chart-liquiditaet"></canvas>
         </div>
 
@@ -450,7 +520,7 @@
                                 <td class="text-right" data-open-item="forderungen">0,00 €</td>
                             </tr>
                             <tr>
-                                <td>Offene Verbindlichkeiten</td>
+                                <td>Offene Verbindlichkeiten / zu zahlen</td>
                                 <td class="text-right" data-open-item="verbindlichkeiten">0,00 €</td>
                             </tr>
                             <tr>
@@ -519,61 +589,69 @@
             </div>
         </div>
 
-        <div class="kb-small-box">
-            <div class="kb-box-title">Vorschau nächste Wochen</div>
-            <div class="text-muted small" style="margin-bottom: 8px;">
-                Berechnet aus offenen, noch nicht überfälligen Ausgangs- und Eingangsrechnungen nach Fälligkeitsdatum.
-                Überfällige Forderungen bleiben separat unter kritischen Forderungen sichtbar.
+        <div class="kb-operative-section">
+            <div class="kb-operative-header">
+                <div class="kb-operative-title">Aktuelle operative Hinweise</div>
+                <div class="kb-operative-subtitle">
+                    Diese Blöcke sind unabhängig vom gewählten Zeitraum und zeigen den aktuellen Handlungsbedarf.
+                </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Zeitraum</th>
-                            <th class="text-right">Erwartete Eingänge</th>
-                            <th class="text-right">Erwartete Ausgänge</th>
-                            <th class="text-right">Netto-Ausblick</th>
-                            <th>Belege</th>
-                        </tr>
-                    </thead>
-                    <tbody data-name="vorschauNaechsteWochenBody">
-                        <tr>
-                            <td colspan="5" class="text-muted">Noch keine Daten geladen.</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="kb-small-box">
+                <div class="kb-box-title">Vorschau nächste Wochen</div>
+                <div class="text-muted small" style="margin-bottom: 8px;">
+                    Berechnet aus offenen, noch nicht überfälligen Ausgangs- und Eingangsrechnungen nach Fälligkeitsdatum.
+                    Überfällige Forderungen bleiben separat unter kritischen Forderungen sichtbar.
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Zeitraum</th>
+                                <th class="text-right">Erwartete Eingänge</th>
+                                <th class="text-right">Erwartete Ausgänge</th>
+                                <th class="text-right">Netto-Ausblick</th>
+                                <th>Belege</th>
+                            </tr>
+                        </thead>
+                        <tbody data-name="vorschauNaechsteWochenBody">
+                            <tr>
+                                <td colspan="5" class="text-muted">Noch keine Daten geladen.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="kb-small-box">
+                <div class="kb-box-title">Kritische Forderungen</div>
+                <div class="text-muted small" style="margin-bottom: 8px;">
+                    Zuerst Forderungen ab 5.000 €, danach weitere kritische Forderungen nach Mahnstufe und Überfälligkeit.
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Kunde</th>
+                                <th>Rechnung</th>
+                                <th>Fällig am</th>
+                                <th class="text-right">Tage überfällig</th>
+                                <th class="text-right">Offener Betrag</th>
+                                <th>Mahnstufe</th>
+                                <th>Grund / Aktion</th>
+                            </tr>
+                        </thead>
+                        <tbody data-name="topOpenForderungenBody">
+                            <tr>
+                                <td colspan="7" class="text-muted">Noch keine Daten geladen.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <div class="kb-small-box">
-            <div class="kb-box-title">Kritische Forderungen</div>
-            <div class="text-muted small" style="margin-bottom: 8px;">
-                Zuerst Forderungen ab 5.000 €, danach weitere kritische Forderungen nach Mahnstufe und Überfälligkeit.
-            </div>
-
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Kunde</th>
-                            <th>Rechnung</th>
-                            <th>Fällig am</th>
-                            <th class="text-right">Tage überfällig</th>
-                            <th class="text-right">Offener Betrag</th>
-                            <th>Mahnstufe</th>
-                            <th>Grund / Aktion</th>
-                        </tr>
-                    </thead>
-                    <tbody data-name="topOpenForderungenBody">
-                        <tr>
-                            <td colspan="7" class="text-muted">Noch keine Daten geladen.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
 
     <div class="kb-cockpit-tab-panel hidden" data-tab-panel="buha">
@@ -640,8 +718,8 @@
                             <thead>
                                 <tr>
                                     <th>Bereich</th>
-                                    <th class="text-right">Journal</th>
-                                    <th class="text-right">Operativ</th>
+                                    <th class="text-right" data-name="opCheckJournalHeader">Journal</th>
+                                    <th class="text-right" data-name="opCheckOperativHeader">Operativ</th>
                                     <th class="text-right">Differenz</th>
                                     <th class="text-right">Anzahl</th>
                                     <th>Status</th>
@@ -726,8 +804,8 @@
         <div class="kb-small-box">
             <div class="kb-box-title">Hinweise</div>
             <p class="text-muted" style="margin-bottom: 0;">
-                Diese Ansicht ist eine kompakte Prüfsicht. Detailprüfungen erfolgen weiterhin über
-                Summen- und Saldenliste, Kontenblatt, Steuerübersicht gesamt und Offene-Posten-Abstimmung.
+                Diese Ansicht ist eine kompakte Prüfsicht. Detailprüfungen erfolgen weiterhin über Summen- und Saldenliste, Kontenblatt, Steuerübersicht gesamt und Offene-Posten-Abstimmung.
+                OP- und Forderungsblöcke zeigen den aktuellen operativen Stand und sind nicht auf den gewählten Zeitraum begrenzt.
             </p>
         </div>
 

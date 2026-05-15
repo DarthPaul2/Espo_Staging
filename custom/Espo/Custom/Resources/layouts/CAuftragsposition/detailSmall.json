@@ -3,6 +3,19 @@
         "rows": [
             [
                 {
+                    "name": "positionsNummer"
+                },
+                {
+                    "name": "positionType"
+                }
+            ],
+            [
+                {
+                    "name": "titel"
+                }
+            ],
+            [
+                {
                     "name": "material"
                 },
                 {
