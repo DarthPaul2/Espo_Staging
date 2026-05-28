@@ -483,13 +483,48 @@ define('custom:views/c-rechnung/record/detail', [
                 quickLocalRecalc('initial');
             }, this);
 
+            // Что это:
+            // помечает, что пользователь нажал обычное сохранение Rechnung.
+            //
+            // Зачем:
+            // после сохранения мы запускаем server-side пересчёт всех Positionen,
+            // независимо от того, успел ли Espo поймать change-событие checkbox.
+            this._runTaxRecalcAfterSave = false;
+            this._taxRecalcRunning = false;
+
             this.listenTo(this.model, 'change:gesetzOption13b change:gesetzOption12', () => {
+                const isFestgeschrieben =
+                    !!this.model.get('istFestgeschrieben') ||
+                    String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+                if (isFestgeschrieben) return;
+
+                this._runTaxRecalcAfterSave = true;
+
+                L('tax-change: recalc after next save planned', {
+                    gesetzOption13b: this.model.get('gesetzOption13b'),
+                    gesetzOption12: this.model.get('gesetzOption12'),
+                });
+            });
+
+            this.$el.off('click.crecTaxRecalcSave').on('click.crecTaxRecalcSave', '.action[data-action="save"]', () => {
+                const isFestgeschrieben =
+                    !!this.model.get('istFestgeschrieben') ||
+                    String(this.model.get('buchhaltungStatus') || '').toLowerCase() === 'festgeschrieben';
+
+                if (isFestgeschrieben) {
+                    return;
+                }
+
+                this._runTaxRecalcAfterSave = true;
+
                 window.__rechnungTax = {
                     rc: !!this.model.get('gesetzOption13b'),
                     pv: !!this.model.get('gesetzOption12')
                 };
-                L('tax-change', window.__rechnungTax);
-                quickLocalRecalc('tax-change');
+
+                L('save-click: tax-recalc planned', window.__rechnungTax);
+                quickLocalRecalc('save-click');
             });
 
             this._onPositionSaved = (e) => {
@@ -500,6 +535,71 @@ define('custom:views/c-rechnung/record/detail', [
                 hardRefreshFromServer('event-saved');
             };
             window.addEventListener('c-rechnungsposition:saved', this._onPositionSaved);
+
+            // Что это:
+            // после ручного сохранения Rechnung запускает server-side пересчёт всех существующих Positionen.
+            //
+            // Зачем:
+            // steuer/gesamt/netto в уже сохранённых позициях должны измениться автоматически,
+            // без ручного открытия каждой позиции.
+            this.listenTo(this.model, 'sync', () => {
+                if (!this._runTaxRecalcAfterSave) return;
+                if (this._taxRecalcRunning) return;
+
+                const id = this.model.id || this.model.get('id');
+
+                if (!id) return;
+
+                this._runTaxRecalcAfterSave = false;
+                this._taxRecalcRunning = true;
+
+                const notifyId = this.showLoader('Positionen werden nach Steueroption neu berechnet…');
+
+                Espo.Ajax.postRequest('CRechnung/action/recalculatePositionsTax', {
+                    id: id
+                }).then((resp) => {
+                    this.hideLoader(notifyId);
+                    this._taxRecalcRunning = false;
+
+                    if (!resp || resp.success === false) {
+                        this.notify((resp && resp.message) || 'Positionen konnten nicht neu berechnet werden.', 'error');
+                        console.error('[CRechnung/detail] recalculatePositionsTax failed', resp);
+                        return;
+                    }
+
+                    console.log('[CRechnung/detail] recalculatePositionsTax success', resp);
+
+                    this.notify(
+                        (resp.message || 'Positionen wurden neu berechnet.') +
+                        ' Aktualisierte Positionen: ' + (resp.updated || 0),
+                        'success'
+                    );
+
+                    this.model.fetch({
+                        success: () => {
+                            this.reRender();
+                        },
+                        error: () => {
+                            window.location.reload();
+                        }
+                    });
+                }).catch((xhr) => {
+                    this.hideLoader(notifyId);
+                    this._taxRecalcRunning = false;
+
+                    let msg = 'Positionen konnten nicht neu berechnet werden.';
+
+                    try {
+                        msg =
+                            xhr?.responseJSON?.message ||
+                            xhr?.responseJSON?.error ||
+                            msg;
+                    } catch (e) { }
+
+                    this.notify(msg, 'error');
+                    console.error('[CRechnung/detail] recalculatePositionsTax error', xhr);
+                });
+            });
 
             // --- PDF кнопки ---
             this.buttonList = this.buttonList || [];
@@ -1630,6 +1730,7 @@ define('custom:views/c-rechnung/record/detail', [
         // ==== cleanup ====
         onRemove: function () {
             this.$el.off('.crecSave');
+            this.$el.off('.crecTaxRecalcSave');
             window.removeEventListener('c-rechnungsposition:saved', this._onPositionSaved);
 
             if (this._blockCreateRelatedIfUnsaved) {

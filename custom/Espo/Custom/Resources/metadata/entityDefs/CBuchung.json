@@ -112,9 +112,11 @@
                 "normal",
                 "ermaessigt",
                 "13b",
+                "12",
                 "steuerfrei"
             ],
             "style": {
+                "12": null,
                 "normal": null,
                 "ermaessigt": null,
                 "13b": null,

@@ -90,7 +90,7 @@ define('custom:views/c-buchhaltung-auswertung/report/kontenbewegungen', [], func
 
                         <div class="kb-tab-panel" data-tab-panel="gf">
                             <p><strong>Geschäftsführung</strong></p>
-                            <p>Kompakter Überblick über Kontenbewegungen der Phase 1.</p>
+                            <p>Kompakter Überblick über journalisierte Kontenbewegungen.</p>
 
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
@@ -154,75 +154,61 @@ define('custom:views/c-buchhaltung-auswertung/report/kontenbewegungen', [], func
             const zeitraumVon = view.model.get('zeitraumVon') || null;
             const zeitraumBis = view.model.get('zeitraumBis') || null;
 
-            const where = [
-                {
-                    type: 'equals',
-                    attribute: 'quelleTyp',
-                    value: 'ausgangsrechnung'
-                }
-            ];
+            const params = {};
 
             if (zeitraumVon) {
-                where.push({
-                    type: 'greaterThanOrEquals',
-                    attribute: 'belegdatum',
-                    value: zeitraumVon
-                });
+                params.dateFrom = zeitraumVon;
             }
 
             if (zeitraumBis) {
-                where.push({
-                    type: 'lessThanOrEquals',
-                    attribute: 'belegdatum',
-                    value: zeitraumBis
-                });
+                params.dateTo = zeitraumBis;
             }
 
-            view.getCollectionFactory().create('CBuchung', (collection) => {
-                collection.maxSize = 1000;
+            // Что это:
+            // Загружает Kontenbewegungen über Backend-Action.
+            //
+            // Зачем:
+            // Старый collection.fetch() фактически отдавал только первые 200 Buchungen.
+            // Из-за этого Summe Soll/Haben в отчёте могла быть неполной и показывать ложную Differenz.
+            Espo.Ajax.getRequest('CBuchung/action/kontenbewegungenReport', params)
+                .then((response) => {
+                    if (!response || response.success === false) {
+                        console.error('[Kontenbewegungen] backend response failed', response);
+                        view.notify('Fehler beim Laden der Kontenbewegungen', 'error');
+                        this.render(view, []);
+                        return;
+                    }
 
-                collection.data.select = [
-                    'id',
-                    'buchungstext',
-                    'betrag',
-                    'kontoNummer',
-                    'kontoBezeichnung',
-                    'buchungsart',
-                    'belegdatum',
-                    'quelleIdExtern',
-                    'quelleNummer',
-                    'steuerFall',
-                    'phase1Verwendet',
-                    'buchungsjournalId',
-                    'buchungsjournalName'
-                ];
-
-                collection.data.where = where;
-
-                collection.fetch().then(() => {
-                    let list = (collection.models || []).map(model => model.attributes || {});
-
-                    // client-side страховка по bool
-                    list = list.filter(item => item.phase1Verwendet === true);
+                    let list = response.list || [];
 
                     list.sort((a, b) => {
                         const aBeleg = a.belegdatum || '';
                         const bBeleg = b.belegdatum || '';
+
                         if (aBeleg !== bBeleg) {
                             return bBeleg.localeCompare(aBeleg);
                         }
 
                         const aNr = a.quelleNummer || '';
                         const bNr = b.quelleNummer || '';
-                        return bNr.localeCompare(aNr);
+
+                        if (aNr !== bNr) {
+                            return bNr.localeCompare(aNr);
+                        }
+
+                        const aKonto = a.kontoNummer || '';
+                        const bKonto = b.kontoNummer || '';
+
+                        return aKonto.localeCompare(bKonto, 'de', { numeric: true });
                     });
 
                     this.render(view, list);
-                }).catch((err) => {
+                })
+                .catch((err) => {
                     console.error('[Kontenbewegungen] load failed', err);
                     view.notify('Fehler beim Laden der Kontenbewegungen', 'error');
+                    this.render(view, []);
                 });
-            });
         },
 
         render(view, list) {

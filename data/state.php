@@ -1,7 +1,7 @@
 <?php
 return [
-  'cacheTimestamp' => 1779874562,
-  'microtimeState' => 1779874562.993099,
+  'cacheTimestamp' => 1779959563,
+  'microtimeState' => 1779959563.608669,
   'currencyRates' => [
     'EUR' => 1.0
   ],

@@ -42,7 +42,8 @@
             "normal": "Normale Umsatzsteuer",
             "ermaessigt": "Ermäßigte Umsatzsteuer",
             "13b": "§ 13b UStG",
-            "steuerfrei": "Steuerfrei / ohne Vorsteuer"
+            "steuerfrei": "Steuerfrei / ohne Vorsteuer",
+            "12": "§12 UStG"
         }
     },
     "links": {

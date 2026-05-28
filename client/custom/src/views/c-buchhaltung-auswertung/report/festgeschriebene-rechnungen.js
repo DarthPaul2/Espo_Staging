@@ -330,11 +330,13 @@ define('custom:views/c-buchhaltung-auswertung/report/festgeschriebene-rechnungen
                 const festgeschriebenAm = view.escapeHtml_(view.formatDateTimeGerman_(item.festgeschriebenAm));
 
                 let steuerFall = 'normal';
+
                 if (item.gesetzOption13b) {
-                    steuerFall = '13b';
+                    steuerFall = '§13b UStG';
                 } else if (item.gesetzOption12) {
-                    steuerFall = 'ermäßigt';
+                    steuerFall = '§12 UStG / 0 % USt';
                 }
+
                 steuerFall = view.escapeHtml_(steuerFall);
 
                 htmlGf += `

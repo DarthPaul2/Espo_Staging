@@ -89,8 +89,8 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
             SELECT
                 ROUND(SUM(
                     CASE
-                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'credit' THEN betrag
-                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'debit' THEN -betrag
+                        WHEN konto_nummer IN ('4400', '4337', '4290') AND buchungsart = 'credit' THEN betrag
+                        WHEN konto_nummer IN ('4400', '4337', '4290') AND buchungsart = 'debit' THEN -betrag
                         ELSE 0
                     END
                 ), 2) AS umsatz_netto,
@@ -220,8 +220,8 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
 
                 ROUND(SUM(
                     CASE
-                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'credit' THEN betrag
-                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'debit' THEN -betrag
+                        WHEN konto_nummer IN ('4400', '4337', '4290') AND buchungsart = 'credit' THEN betrag
+                        WHEN konto_nummer IN ('4400', '4337', '4290') AND buchungsart = 'debit' THEN -betrag
                         ELSE 0
                     END
                 ), 2) AS umsatz_netto,
@@ -685,5 +685,103 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         }
 
         return implode(' · ', $gruende);
+    }
+
+    /**
+     * GET /CBuchung/action/kontenbewegungenReport
+     *
+     * Что это:
+     * Backend-Quelle für den Bericht "Kontenbewegungen" Ausgangsrechnungen.
+     *
+     * Зачем:
+     * Der alte Frontend-Report lädt über collection.fetch() faktisch nur einen begrenzten Teil
+     * der Buchungen. Dadurch können Summe Soll/Haben und Differenz falsch aussehen.
+     * Dieser Action lädt die Daten direkt per SQL ohne 200-Zeilen-Frontend-Limit.
+     *
+     * Query-Parameter:
+     * - dateFrom=YYYY-MM-DD optional
+     * - dateTo=YYYY-MM-DD optional
+     */
+    public function getActionKontenbewegungenReport($params, $data, $request)
+    {
+        $this->getAcl()->check('CBuchung', 'read');
+
+        $em = $this->getEntityManager();
+        $pdo = $em->getPDO();
+
+        $dateFrom = $request->getQueryParam('dateFrom');
+        $dateTo = $request->getQueryParam('dateTo');
+
+        $whereDate = '';
+        $sqlParams = [];
+
+        if ($dateFrom) {
+            $whereDate .= ' AND b.belegdatum >= :dateFrom';
+            $sqlParams[':dateFrom'] = $dateFrom;
+        }
+
+        if ($dateTo) {
+            $whereDate .= ' AND b.belegdatum <= :dateTo';
+            $sqlParams[':dateTo'] = $dateTo;
+        }
+
+        $sql = "
+            SELECT
+                b.id,
+                b.buchungstext,
+                b.betrag,
+                b.konto_nummer AS kontoNummer,
+                b.konto_bezeichnung AS kontoBezeichnung,
+                b.buchungsart,
+                b.belegdatum,
+                b.quelle_id_extern AS quelleIdExtern,
+                b.quelle_nummer AS quelleNummer,
+                b.steuer_fall AS steuerFall,
+                b.phase1_verwendet AS phase1Verwendet,
+                b.buchungsjournal_id AS buchungsjournalId,
+                j.name AS buchungsjournalName
+            FROM c_buchung b
+            LEFT JOIN c_buchungsjournal j
+                ON j.id = b.buchungsjournal_id
+            AND j.deleted = 0
+            WHERE b.deleted = 0
+            AND b.quelle_typ = 'ausgangsrechnung'
+            AND IFNULL(b.phase1_verwendet, 0) = 1
+            {$whereDate}
+            ORDER BY
+                b.belegdatum DESC,
+                b.quelle_nummer DESC,
+                b.konto_nummer ASC,
+                b.buchungsart ASC
+        ";
+
+        try {
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($sqlParams);
+
+            $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC) ?: [];
+
+            foreach ($rows as &$row) {
+                $row['betrag'] = (float) ($row['betrag'] ?? 0);
+                $row['phase1Verwendet'] = ((int) ($row['phase1Verwendet'] ?? 0)) === 1;
+            }
+
+            return [
+                'success' => true,
+                'total' => count($rows),
+                'list' => $rows,
+            ];
+        } catch (\Throwable $e) {
+            $this->getContainer()->get('log')->error(
+                'CBuchung::getActionKontenbewegungenReport SQL error: ' . $e->getMessage()
+            );
+
+            return [
+                'success' => false,
+                'message' => 'Kontenbewegungen konnten nicht geladen werden.',
+                'list' => [],
+                'total' => 0,
+            ];
+        }
     }
 }

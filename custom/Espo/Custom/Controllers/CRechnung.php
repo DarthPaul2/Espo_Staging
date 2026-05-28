@@ -1301,20 +1301,18 @@ public function postActionFestschreiben($params, $data, $request)
             ];
         }
 
-        if ($gesetzOption12) {
-            return [
-                'success' => false,
-                'message' => 'Rechnungen mit § 12 UStG sind in Phase 1 noch nicht für die Festschreibung freigegeben.'
-            ];
-        }
-
-        // Это отдельная проверка für 13b:
-        // в стартовой модели Phase 1 при 13b Brutto = Netto и USt = 0.
-        if ($gesetzOption13b) {
+        // Что это:
+        // Общая проверка для Sonderfälle ohne Umsatzsteuer.
+        //
+        // Зачем:
+        // §13b и §12 оба должны иметь Brutto = Netto und USt = 0,
+        // но дальше они идут разными Steuerfällen и разными Erlöskonten:
+        // §13b -> 4337, §12 -> 4290.
+        if ($gesetzOption13b || $gesetzOption12) {
             if (round($betragBrutto, 2) !== round($betragNetto, 2)) {
                 return [
                     'success' => false,
-                    'message' => 'Bei § 13b muss der Bruttobetrag dem Nettobetrag entsprechen.'
+                    'message' => 'Bei § 13b / § 12 muss der Bruttobetrag dem Nettobetrag entsprechen.'
                 ];
             }
 
@@ -1340,7 +1338,19 @@ public function postActionFestschreiben($params, $data, $request)
         // -----------------------------
         // 2) Steuerfall bestimmen
         // -----------------------------
-        $steuerFall = $gesetzOption13b ? '13b' : 'normal';
+        // Что это:
+        // Bestimmt den fachlichen Steuerfall für die passende Buchungsregel.
+        //
+        // Зачем:
+        // §12 darf nicht als §13b gebucht werden.
+        // Beide haben zwar 0 % Umsatzsteuer, aber unterschiedliche Erlöskonten.
+        if ($gesetzOption13b) {
+            $steuerFall = '13b';
+        } elseif ($gesetzOption12) {
+            $steuerFall = '12';
+        } else {
+            $steuerFall = 'normal';
+        }
 
         // -----------------------------
         // 3) Passende Buchungsregel suchen
@@ -1455,6 +1465,36 @@ public function postActionFestschreiben($params, $data, $request)
                 'kontoEntity' => $erloesKonto,
                 'buchungstext' => 'Erlös 13b aus Rechnung ' . (string) $rechnung->get('rechnungsnummer'),
                 'steuerFall' => '13b',
+            ];
+        }
+
+        if ($steuerFall === '12') {
+            // Что это:
+            // Forderung aus §12-Rechnung.
+            //
+            // Зачем:
+            // Bei §12 / 0 % USt entsteht eine Forderung in Höhe des Rechnungsbetrags.
+            // Es gibt keine separate Umsatzsteuerbuchung.
+            $buchungenData[] = [
+                'buchungsart' => 'debit',
+                'betrag' => $betragBrutto,
+                'kontoEntity' => $debitKonto,
+                'buchungstext' => 'Forderung aus Rechnung ' . (string) $rechnung->get('rechnungsnummer'),
+                'steuerFall' => '12',
+            ];
+
+            // Что это:
+            // Erlös aus §12-Rechnung.
+            //
+            // Зачем:
+            // §12 wird nicht auf §13b-Konto gebucht, sondern auf das eigene Erlöskonto
+            // aus der Buchungsregel, z. B. 4290 Erlöse 0 % USt.
+            $buchungenData[] = [
+                'buchungsart' => 'credit',
+                'betrag' => $betragNetto,
+                'kontoEntity' => $erloesKonto,
+                'buchungstext' => 'Erlös §12 UStG aus Rechnung ' . (string) $rechnung->get('rechnungsnummer'),
+                'steuerFall' => '12',
             ];
         }
 
@@ -2389,283 +2429,389 @@ public function getActionStornierteBelegeKontrolleReport($params, $data, $reques
     }
 }
 
-// Что это: создаёт neuen korrigierten Nachfolgebeleg zu einer stornierten Rechnung.
-// Зачем: Phase 5 требует не редактировать stornierten Ursprungsbeleg, а создать новый самостоятельный Entwurf-Beleg.
-public function postActionCreateKorrekturNachfolgebeleg($params, $data, $request)
-{
-    // Что это: проверяет право на редактирование Rechnungen.
-    // Зачем: Nachfolgebeleg darf nur von berechtigten Benutzern erstellt werden.
-    $this->getAcl()->check('CRechnung', 'edit');
+    // Что это: создаёт neuen korrigierten Nachfolgebeleg zu einer stornierten Rechnung.
+    // Зачем: Phase 5 требует не редактировать stornierten Ursprungsbeleg, а создать новый самостоятельный Entwurf-Beleg.
+    public function postActionCreateKorrekturNachfolgebeleg($params, $data, $request)
+    {
+        // Что это: проверяет право на редактирование Rechnungen.
+        // Зачем: Nachfolgebeleg darf nur von berechtigten Benutzern erstellt werden.
+        $this->getAcl()->check('CRechnung', 'edit');
 
-    $em = $this->getEntityManager();
+        $em = $this->getEntityManager();
 
-    $id = $data->id ?? null;
-    $korrekturTyp = trim((string)($data->korrekturTyp ?? ''));
-    $korrekturGrund = trim((string)($data->korrekturGrund ?? ''));
+        $id = $data->id ?? null;
+        $korrekturTyp = trim((string)($data->korrekturTyp ?? ''));
+        $korrekturGrund = trim((string)($data->korrekturGrund ?? ''));
 
-    if (!$id) {
-        return [
-            'success' => false,
-            'message' => 'Rechnung-ID fehlt.',
-        ];
-    }
-
-    $allowedTypes = [
-        'inhaltliche_korrektur',
-        'betragskorrektur',
-        'positionskorrektur',
-        'steuerkorrektur',
-        'adresskorrektur',
-        'formelle_korrektur',
-        'sonstige_korrektur',
-    ];
-
-    if (!in_array($korrekturTyp, $allowedTypes, true)) {
-        return [
-            'success' => false,
-            'message' => 'Ungültiger Korrekturtyp.',
-        ];
-    }
-
-    if ($korrekturGrund === '') {
-        return [
-            'success' => false,
-            'message' => 'Korrekturgrund fehlt.',
-        ];
-    }
-
-    // Что это: загружает старую stornierten Rechnung.
-    // Зачем: используем тот же EntityManager-стиль, который уже работает в этом контроллере.
-    $ursprung = $em->getEntity('CRechnung', $id);
-
-    if (!$ursprung) {
-        return [
-            'success' => false,
-            'message' => 'Ursprungsrechnung wurde nicht gefunden.',
-        ];
-    }
-
-    $istStorniert = (bool)($ursprung->get('istStorniert') ?? false);
-    $status = strtolower((string)($ursprung->get('status') ?? ''));
-
-    if (!$istStorniert && $status !== 'storniert') {
-        return [
-            'success' => false,
-            'message' => 'Ein Nachfolgebeleg kann nur für eine stornierte Rechnung erstellt werden.',
-        ];
-    }
-
-    if ($ursprung->get('nachfolgeBelegId')) {
-        return [
-            'success' => false,
-            'message' => 'Für diese Rechnung existiert bereits ein Nachfolgebeleg.',
-        ];
-    }
-
-    // Что это: создаёт новый, ещё не сохранённый Entwurf-Beleg.
-    // Зачем: Nachfolgebeleg должен быть новой самостоятельной Rechnung.
-    $nachfolger = $em->getNewEntity('CRechnung');
-
-    // Basisdaten aus Ursprungsrechnung übernehmen.
-    $fieldsToCopy = [
-        'accountId',
-        'accountName',
-        'angebotId',
-        'angebotName',
-        'auftragId',
-        'auftragName',
-        'objektId',
-        'objektName',
-        'contactId',
-        'contactName',
-
-        'einleitung',
-        'bemerkung',
-        'faelligAm',
-        'leistungsdatumVon',
-        'leistungsdatumBis',
-        'gesetzOption13b',
-        'gesetzOption12',
-        'serviceNummer',
-        'sachbearbeiter',
-        'mahnregelId',
-        'mahnregelName',
-        'rechnungstyp',
-        'belegdatum',
-        'assignedUserId',
-        'assignedUserName',
-    ];
-
-    foreach ($fieldsToCopy as $field) {
-        if ($ursprung->has($field)) {
-            $nachfolger->set($field, $ursprung->get($field));
-        }
-    }
-
-    // Neue Rechnung ist ein frischer Entwurf ohne buchhalterische Wirkung.
-    $nachfolger->set('status', 'offen');
-    $nachfolger->set('buchhaltungStatus', 'entwurf');
-    $nachfolger->set('istFestgeschrieben', false);
-    $nachfolger->set('festgeschriebenAm', null);
-    $nachfolger->set('freigabeAm', null);
-    $nachfolger->set('buchungsjournalId', null);
-    $nachfolger->set('buchungsjournalName', null);
-
-    // Keine Storno-Merkmale auf dem neuen Beleg.
-    $nachfolger->set('istStorniert', false);
-    $nachfolger->set('storniertAm', null);
-    $nachfolger->set('stornoGrund', null);
-    $nachfolger->set('storniertVonId', null);
-    $nachfolger->set('storniertVonName', null);
-
-    // Keine Zahlungswirkung auf dem neuen Entwurf.
-    $nachfolger->set('bezahltAm', null);
-    $nachfolger->set('restbetragOffen', null);
-
-    // PDF muss neu erzeugt werden.
-    $nachfolger->set('pdfUrl', null);
-
-    // Phase-5-Korrekturdaten.
-    $ursprungName =
-        $ursprung->get('rechnungsnummer')
-        ?: $ursprung->get('name')
-        ?: $ursprung->get('id');
-
-    $nachfolger->set('istKorrekturbeleg', true);
-    $nachfolger->set('korrekturTyp', $korrekturTyp);
-    $nachfolger->set('korrekturGrund', $korrekturGrund);
-    $nachfolger->set('ersetztBelegId', $ursprung->get('id'));
-    $nachfolger->set('ersetztBelegName', $ursprungName);
-    $nachfolger->set('nachfolgeBelegId', null);
-    $nachfolger->set('nachfolgeBelegName', null);
-
-    // Name bewusst markieren. Rechnungsnummer kommt über bestehende AutoNumber-Logik.
-    $nachfolger->set('name', 'Korrektur zu ' . $ursprungName);
-
-    // Что это: сохраняет Kopf des neuen Nachfolgebelegs.
-    // Зачем: сначала нужен ID новой Rechnung, чтобы привязать к ней скопированные позиции.
-    $em->saveEntity($nachfolger);
-
-    $nachfolgerId = $nachfolger->get('id');
-
-    if (!$nachfolgerId) {
-        throw new \RuntimeException('Nachfolgebeleg konnte nicht erstellt werden.');
-    }
-
-    // ------------------------------------------------------------
-    // Positionen aus Ursprungsrechnung kopieren
-    // ------------------------------------------------------------
-
-    // Что это: загружает все активные Positionen der stornierten Ursprungsrechnung.
-    // Зачем: Nachfolgebeleg должен получить самостоятельные копии позиций.
-    $positionCollection = $em
-        ->getRDBRepository('CRechnungsposition')
-        ->where([
-            'rechnungId' => $ursprung->get('id'),
-            'deleted' => false,
-        ])
-        ->find();
-
-    $copiedPositions = 0;
-
-    if ($positionCollection && count($positionCollection)) {
-        foreach ($positionCollection as $altePosition) {
-            // Что это: создаёт новую Position для нового Nachfolgebeleg.
-            // Зачем: старая Position остаётся историей, новая может быть исправлена.
-            $neuePosition = $em->getNewEntity('CRechnungsposition');
-
-            // Что это: список полей CRechnungsposition, которые копируются в новый Nachfolgebeleg.
-            // Зачем: новая Rechnung получает самостоятельные позиции, но с тем же содержанием, что у старого stornierten Beleg.
-            $positionFieldsToCopy = [
-                'name',
-                'description',
-
-                'menge',
-                'einheit',
-                'preis',
-                'einkaufspreis',
-                'steuer',
-                'rabatt',
-                'gesamt',
-                'netto',
-
-                'beschreibung',
-
-                'materialId',
-                'materialName',
-
-                'auftragspositionId',
-                'auftragspositionName',
-
-                'positionsNummer',
-                'positionType',
-                'titel',
-                'sortierung',
+        if (!$id) {
+            return [
+                'success' => false,
+                'message' => 'Rechnung-ID fehlt.',
             ];
+        }
 
-            foreach ($positionFieldsToCopy as $field) {
-                if ($altePosition->has($field)) {
-                    $neuePosition->set($field, $altePosition->get($field));
+        $allowedTypes = [
+            'inhaltliche_korrektur',
+            'betragskorrektur',
+            'positionskorrektur',
+            'steuerkorrektur',
+            'adresskorrektur',
+            'formelle_korrektur',
+            'sonstige_korrektur',
+        ];
+
+        if (!in_array($korrekturTyp, $allowedTypes, true)) {
+            return [
+                'success' => false,
+                'message' => 'Ungültiger Korrekturtyp.',
+            ];
+        }
+
+        if ($korrekturGrund === '') {
+            return [
+                'success' => false,
+                'message' => 'Korrekturgrund fehlt.',
+            ];
+        }
+
+        // Что это: загружает старую stornierten Rechnung.
+        // Зачем: используем тот же EntityManager-стиль, который уже работает в этом контроллере.
+        $ursprung = $em->getEntity('CRechnung', $id);
+
+        if (!$ursprung) {
+            return [
+                'success' => false,
+                'message' => 'Ursprungsrechnung wurde nicht gefunden.',
+            ];
+        }
+
+        $istStorniert = (bool)($ursprung->get('istStorniert') ?? false);
+        $status = strtolower((string)($ursprung->get('status') ?? ''));
+
+        if (!$istStorniert && $status !== 'storniert') {
+            return [
+                'success' => false,
+                'message' => 'Ein Nachfolgebeleg kann nur für eine stornierte Rechnung erstellt werden.',
+            ];
+        }
+
+        if ($ursprung->get('nachfolgeBelegId')) {
+            return [
+                'success' => false,
+                'message' => 'Für diese Rechnung existiert bereits ein Nachfolgebeleg.',
+            ];
+        }
+
+        // Что это: создаёт новый, ещё не сохранённый Entwurf-Beleg.
+        // Зачем: Nachfolgebeleg должен быть новой самостоятельной Rechnung.
+        $nachfolger = $em->getNewEntity('CRechnung');
+
+        // Basisdaten aus Ursprungsrechnung übernehmen.
+        $fieldsToCopy = [
+            'accountId',
+            'accountName',
+            'angebotId',
+            'angebotName',
+            'auftragId',
+            'auftragName',
+            'objektId',
+            'objektName',
+            'contactId',
+            'contactName',
+
+            'einleitung',
+            'bemerkung',
+            'faelligAm',
+            'leistungsdatumVon',
+            'leistungsdatumBis',
+            'gesetzOption13b',
+            'gesetzOption12',
+            'serviceNummer',
+            'sachbearbeiter',
+            'mahnregelId',
+            'mahnregelName',
+            'rechnungstyp',
+            'belegdatum',
+            'assignedUserId',
+            'assignedUserName',
+        ];
+
+        foreach ($fieldsToCopy as $field) {
+            if ($ursprung->has($field)) {
+                $nachfolger->set($field, $ursprung->get($field));
+            }
+        }
+
+        // Neue Rechnung ist ein frischer Entwurf ohne buchhalterische Wirkung.
+        $nachfolger->set('status', 'offen');
+        $nachfolger->set('buchhaltungStatus', 'entwurf');
+        $nachfolger->set('istFestgeschrieben', false);
+        $nachfolger->set('festgeschriebenAm', null);
+        $nachfolger->set('freigabeAm', null);
+        $nachfolger->set('buchungsjournalId', null);
+        $nachfolger->set('buchungsjournalName', null);
+
+        // Keine Storno-Merkmale auf dem neuen Beleg.
+        $nachfolger->set('istStorniert', false);
+        $nachfolger->set('storniertAm', null);
+        $nachfolger->set('stornoGrund', null);
+        $nachfolger->set('storniertVonId', null);
+        $nachfolger->set('storniertVonName', null);
+
+        // Keine Zahlungswirkung auf dem neuen Entwurf.
+        $nachfolger->set('bezahltAm', null);
+        $nachfolger->set('restbetragOffen', null);
+
+        // PDF muss neu erzeugt werden.
+        $nachfolger->set('pdfUrl', null);
+
+        // Phase-5-Korrekturdaten.
+        $ursprungName =
+            $ursprung->get('rechnungsnummer')
+            ?: $ursprung->get('name')
+            ?: $ursprung->get('id');
+
+        $nachfolger->set('istKorrekturbeleg', true);
+        $nachfolger->set('korrekturTyp', $korrekturTyp);
+        $nachfolger->set('korrekturGrund', $korrekturGrund);
+        $nachfolger->set('ersetztBelegId', $ursprung->get('id'));
+        $nachfolger->set('ersetztBelegName', $ursprungName);
+        $nachfolger->set('nachfolgeBelegId', null);
+        $nachfolger->set('nachfolgeBelegName', null);
+
+        // Name bewusst markieren. Rechnungsnummer kommt über bestehende AutoNumber-Logik.
+        $nachfolger->set('name', 'Korrektur zu ' . $ursprungName);
+
+        // Что это: сохраняет Kopf des neuen Nachfolgebelegs.
+        // Зачем: сначала нужен ID новой Rechnung, чтобы привязать к ней скопированные позиции.
+        $em->saveEntity($nachfolger);
+
+        $nachfolgerId = $nachfolger->get('id');
+
+        if (!$nachfolgerId) {
+            throw new \RuntimeException('Nachfolgebeleg konnte nicht erstellt werden.');
+        }
+
+        // ------------------------------------------------------------
+        // Positionen aus Ursprungsrechnung kopieren
+        // ------------------------------------------------------------
+
+        // Что это: загружает все активные Positionen der stornierten Ursprungsrechnung.
+        // Зачем: Nachfolgebeleg должен получить самостоятельные копии позиций.
+        $positionCollection = $em
+            ->getRDBRepository('CRechnungsposition')
+            ->where([
+                'rechnungId' => $ursprung->get('id'),
+                'deleted' => false,
+            ])
+            ->find();
+
+        $copiedPositions = 0;
+
+        if ($positionCollection && count($positionCollection)) {
+            foreach ($positionCollection as $altePosition) {
+                // Что это: создаёт новую Position для нового Nachfolgebeleg.
+                // Зачем: старая Position остаётся историей, новая может быть исправлена.
+                $neuePosition = $em->getNewEntity('CRechnungsposition');
+
+                // Что это: список полей CRechnungsposition, которые копируются в новый Nachfolgebeleg.
+                // Зачем: новая Rechnung получает самостоятельные позиции, но с тем же содержанием, что у старого stornierten Beleg.
+                $positionFieldsToCopy = [
+                    'name',
+                    'description',
+
+                    'menge',
+                    'einheit',
+                    'preis',
+                    'einkaufspreis',
+                    'steuer',
+                    'rabatt',
+                    'gesamt',
+                    'netto',
+
+                    'beschreibung',
+
+                    'materialId',
+                    'materialName',
+
+                    'auftragspositionId',
+                    'auftragspositionName',
+
+                    'positionsNummer',
+                    'positionType',
+                    'titel',
+                    'sortierung',
+                ];
+
+                foreach ($positionFieldsToCopy as $field) {
+                    if ($altePosition->has($field)) {
+                        $neuePosition->set($field, $altePosition->get($field));
+                    }
                 }
+
+                // Что это: привязывает новую Position к новой Rechnung.
+                // Зачем: позиция должна принадлежать Nachfolgebeleg, а не старому stornierten Beleg.
+                $neuePosition->set('rechnungId', $nachfolgerId);
+                $neuePosition->set(
+                    'rechnungName',
+                    $nachfolger->get('rechnungsnummer') ?: $nachfolger->get('name') ?: $nachfolgerId
+                );
+
+                $em->saveEntity($neuePosition);
+                $copiedPositions++;
+            }
+        }
+
+        // Что это: переносит стартовые суммы из Ursprung-Rechnung.
+        // Зачем: новый Entwurf сразу выглядит как рабочая Kopie и может быть затем исправлен.
+        $nachfolger->set('betragNetto', round((float)($ursprung->get('betragNetto') ?? 0), 2));
+        $nachfolger->set('betragBrutto', round((float)($ursprung->get('betragBrutto') ?? 0), 2));
+        $nachfolger->set('ustBetrag', round((float)($ursprung->get('ustBetrag') ?? 0), 2));
+
+        // Что это: Entwurf bleibt ohne offene Forderung.
+        // Зачем: restbetragOffen entsteht erst bei eigener Festschreibung.
+        $nachfolger->set('restbetragOffen', null);
+
+        $em->saveEntity($nachfolger);
+
+        $nachfolgerName =
+            $nachfolger->get('rechnungsnummer')
+            ?: $nachfolger->get('name')
+            ?: $nachfolgerId;
+
+        // Что это: записывает Phase-5-Rückverknüpfung на stornierten Ursprungsbeleg.
+        // Зачем: старый Beleg должен показывать, каким Nachfolgebeleg он заменён и почему.
+        $ursprung->set('nachfolgeBelegId', $nachfolgerId);
+        $ursprung->set('nachfolgeBelegName', $nachfolgerName);
+
+        // Что это: записывает Korrektur-Informationen также на старый stornierten Beleg.
+        // Зачем: в старой Rechnung в блоке "Korrektur / Nachfolge" сразу видно причину создания Nachfolgebeleg.
+        $ursprung->set('korrekturTyp', $korrekturTyp);
+        $ursprung->set('korrekturGrund', $korrekturGrund);
+
+        // Важно:
+        // Старый Beleg НЕ является Korrekturbeleg.
+        // Он остаётся Ursprungsbeleg, который был storniert и получил Nachfolger.
+        $ursprung->set('istKorrekturbeleg', false);
+
+        // Что это: сохраняет Rückverknüpfung на уже festgeschriebene/stornierte Ursprungsrechnung.
+        // Зачем: обычное редактирование заблокировано, но системная Phase-5-Verknüpfung разрешена.
+        $em->saveEntity($ursprung, [
+            'allowFestgeschriebenSave' => true,
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Korrigierter Nachfolgebeleg wurde als Entwurf erstellt.',
+            'nachfolgeBelegId' => $nachfolgerId,
+            'nachfolgeBelegName' => $nachfolgerName,
+            'copiedPositions' => $copiedPositions,
+        ];
+    }
+
+    /**
+     * Что это:
+     * ручной server-side пересчёт всех позиций счёта после смены gesetzOption13b / gesetzOption12.
+     *
+     * Зачем:
+     * чтобы не открывать и не сохранять каждую Rechnungsposition вручную.
+     */
+    public function postActionRecalculatePositionsTax($params, $data, $request)
+    {
+        $id = $data->id ?? null;
+
+        if (!$id) {
+            return [
+                'success' => false,
+                'message' => 'Rechnung-ID fehlt.'
+            ];
+        }
+
+        $em = $this->getEntityManager();
+
+        $rechnung = $em->getEntity('CRechnung', $id);
+
+        if (!$rechnung) {
+            return [
+                'success' => false,
+                'message' => 'Rechnung wurde nicht gefunden.'
+            ];
+        }
+
+        $isFestgeschrieben =
+            (bool) ($rechnung->get('istFestgeschrieben') ?? false) ||
+            strtolower((string) ($rechnung->get('buchhaltungStatus') ?? '')) === 'festgeschrieben';
+
+        if ($isFestgeschrieben) {
+            return [
+                'success' => false,
+                'message' => 'Festgeschriebene Rechnungen dürfen nicht neu berechnet werden.'
+            ];
+        }
+
+        $gesetzOption13b = (bool) ($rechnung->get('gesetzOption13b') ?? false);
+        $gesetzOption12 = (bool) ($rechnung->get('gesetzOption12') ?? false);
+
+        $steuerSatz = ($gesetzOption13b || $gesetzOption12) ? 0.0 : 19.0;
+
+        $positionCollection = $em
+            ->getRDBRepository('CRechnungsposition')
+            ->where([
+                'rechnungId' => $id,
+                'deleted' => false,
+            ])
+            ->find();
+
+        $betragNetto = 0.0;
+        $betragBrutto = 0.0;
+        $updated = 0;
+
+        foreach ($positionCollection as $position) {
+            $positionType = strtolower((string) ($position->get('positionType') ?? 'normal'));
+
+            if ($positionType === 'header' || $positionType === 'summary') {
+                continue;
             }
 
-            // Что это: привязывает новую Position к новой Rechnung.
-            // Зачем: позиция должна принадлежать Nachfolgebeleg, а не старому stornierten Beleg.
-            $neuePosition->set('rechnungId', $nachfolgerId);
-            $neuePosition->set(
-                'rechnungName',
-                $nachfolger->get('rechnungsnummer') ?: $nachfolger->get('name') ?: $nachfolgerId
-            );
+            $menge = (float) ($position->get('menge') ?? 0);
+            $preis = (float) ($position->get('preis') ?? 0);
+            $rabatt = (float) ($position->get('rabatt') ?? 0);
 
-            $em->saveEntity($neuePosition);
-            $copiedPositions++;
+            $netto = round($menge * $preis * (1 - ($rabatt / 100)), 2);
+            $gesamt = round($netto * (1 + ($steuerSatz / 100)), 2);
+
+            $position->set('steuer', (string) $steuerSatz);
+            $position->set('netto', $netto);
+            $position->set('gesamt', $gesamt);
+
+            $em->saveEntity($position);
+
+            $betragNetto += $netto;
+            $betragBrutto += $gesamt;
+            $updated++;
         }
+
+        $betragNetto = round($betragNetto, 2);
+        $betragBrutto = round($betragBrutto, 2);
+        $ustBetrag = round($betragBrutto - $betragNetto, 2);
+
+        $rechnung->set('betragNetto', $betragNetto);
+        $rechnung->set('betragBrutto', $betragBrutto);
+        $rechnung->set('ustBetrag', $ustBetrag);
+        $rechnung->set('restbetragOffen', $betragBrutto);
+
+        $em->saveEntity($rechnung, [
+            'skipWorkflow' => true,
+        ]);
+
+        return [
+            'success' => true,
+            'message' => 'Rechnungspositionen wurden neu berechnet.',
+            'updated' => $updated,
+            'betragNetto' => $betragNetto,
+            'betragBrutto' => $betragBrutto,
+            'ustBetrag' => $ustBetrag,
+            'steuerSatz' => $steuerSatz,
+        ];
     }
-
-    // Что это: переносит стартовые суммы из Ursprung-Rechnung.
-    // Зачем: новый Entwurf сразу выглядит как рабочая Kopie и может быть затем исправлен.
-    $nachfolger->set('betragNetto', round((float)($ursprung->get('betragNetto') ?? 0), 2));
-    $nachfolger->set('betragBrutto', round((float)($ursprung->get('betragBrutto') ?? 0), 2));
-    $nachfolger->set('ustBetrag', round((float)($ursprung->get('ustBetrag') ?? 0), 2));
-
-    // Что это: Entwurf bleibt ohne offene Forderung.
-    // Зачем: restbetragOffen entsteht erst bei eigener Festschreibung.
-    $nachfolger->set('restbetragOffen', null);
-
-    $em->saveEntity($nachfolger);
-
-    $nachfolgerName =
-        $nachfolger->get('rechnungsnummer')
-        ?: $nachfolger->get('name')
-        ?: $nachfolgerId;
-
-    // Что это: записывает Phase-5-Rückverknüpfung на stornierten Ursprungsbeleg.
-    // Зачем: старый Beleg должен показывать, каким Nachfolgebeleg он заменён и почему.
-    $ursprung->set('nachfolgeBelegId', $nachfolgerId);
-    $ursprung->set('nachfolgeBelegName', $nachfolgerName);
-
-    // Что это: записывает Korrektur-Informationen также на старый stornierten Beleg.
-    // Зачем: в старой Rechnung в блоке "Korrektur / Nachfolge" сразу видно причину создания Nachfolgebeleg.
-    $ursprung->set('korrekturTyp', $korrekturTyp);
-    $ursprung->set('korrekturGrund', $korrekturGrund);
-
-    // Важно:
-    // Старый Beleg НЕ является Korrekturbeleg.
-    // Он остаётся Ursprungsbeleg, который был storniert и получил Nachfolger.
-    $ursprung->set('istKorrekturbeleg', false);
-
-    // Что это: сохраняет Rückverknüpfung на уже festgeschriebene/stornierte Ursprungsrechnung.
-    // Зачем: обычное редактирование заблокировано, но системная Phase-5-Verknüpfung разрешена.
-    $em->saveEntity($ursprung, [
-        'allowFestgeschriebenSave' => true,
-    ]);
-
-    return [
-        'success' => true,
-        'message' => 'Korrigierter Nachfolgebeleg wurde als Entwurf erstellt.',
-        'nachfolgeBelegId' => $nachfolgerId,
-        'nachfolgeBelegName' => $nachfolgerName,
-        'copiedPositions' => $copiedPositions,
-    ];
-}
 }

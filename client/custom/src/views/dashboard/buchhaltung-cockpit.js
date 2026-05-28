@@ -851,6 +851,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             if (
                 kontoNummer === '3300' ||
                 kontoNummer === '3806' ||
+                kontoNummer === '4290' ||
                 kontoNummer === '4337' ||
                 kontoNummer === '4400'
             ) {
@@ -889,6 +890,10 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
 
             if (kontoNummer === '3806') {
                 return 'Umsatzsteuer: Haben - Soll';
+            }
+
+            if (kontoNummer === '4290') {
+                return '§12-Erlöse 0 % USt: Haben - Soll';
             }
 
             if (kontoNummer === '4337') {
