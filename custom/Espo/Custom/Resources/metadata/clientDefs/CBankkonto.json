@@ -1,11 +1,14 @@
 {
+    "recordViews": {
+        "detail": "custom:views/c-bankkonto/record/detail"
+    },
     "controller": "controllers/record",
     "boolFilterList": [
         "onlyMy"
     ],
     "kanbanViewMode": false,
-    "color": null,
-    "iconClass": null,
+    "color": "#fb0303",
+    "iconClass": "fas fa-building-columns",
     "relationshipPanels": {
         "bankbewegungen": {
             "layout": null,

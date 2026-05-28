@@ -89,8 +89,8 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
             SELECT
                 ROUND(SUM(
                     CASE
-                        WHEN konto_nummer = '4400' AND buchungsart = 'credit' THEN betrag
-                        WHEN konto_nummer = '4400' AND buchungsart = 'debit' THEN -betrag
+                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'credit' THEN betrag
+                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'debit' THEN -betrag
                         ELSE 0
                     END
                 ), 2) AS umsatz_netto,
@@ -220,8 +220,8 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
 
                 ROUND(SUM(
                     CASE
-                        WHEN konto_nummer = '4400' AND buchungsart = 'credit' THEN betrag
-                        WHEN konto_nummer = '4400' AND buchungsart = 'debit' THEN -betrag
+                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'credit' THEN betrag
+                        WHEN konto_nummer IN ('4400', '4337') AND buchungsart = 'debit' THEN -betrag
                         ELSE 0
                     END
                 ), 2) AS umsatz_netto,

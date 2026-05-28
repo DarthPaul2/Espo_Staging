@@ -1,0 +1,6 @@
+{
+    "application_id": "32ead842-7070-4157-a430-3fbb4b3984c6",
+    "private_key_path": "/var/www/espocrm-staging/secure/enablebanking/32ead842-7070-4157-a430-3fbb4b3984c6.pem",
+    "account_uid": "14ea653a-886b-4feb-9a23-121ea942b73c",
+    "api_origin": "https://api.enablebanking.com"
+}

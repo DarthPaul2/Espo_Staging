@@ -5,6 +5,10 @@
         "align": "left"
     },
     {
+        "name": "titel",
+        "width": 16
+    },
+    {
         "name": "material",
         "width": 16
     },

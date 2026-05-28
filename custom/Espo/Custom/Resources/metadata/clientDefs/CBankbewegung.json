@@ -31,5 +31,8 @@
             "layout": null,
             "selectPrimaryFilterName": null
         }
-    }
+    },
+    "kanbanViewMode": false,
+    "color": "#fb6d6d",
+    "iconClass": "fas fa-arrow-right-arrow-left"
 }

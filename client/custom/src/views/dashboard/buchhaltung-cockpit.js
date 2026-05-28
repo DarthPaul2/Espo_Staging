@@ -52,7 +52,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             this.selectedYear = now.getFullYear();
             this.selectedMonth = now.getMonth() + 1;
             this.selectedQuarter = Math.floor(now.getMonth() / 3) + 1;
-            this.selectedPeriodMode = 'monat';
+            this.selectedPeriodMode = 'jahr';
         },
 
         afterRender: function () {
@@ -851,6 +851,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             if (
                 kontoNummer === '3300' ||
                 kontoNummer === '3806' ||
+                kontoNummer === '4337' ||
                 kontoNummer === '4400'
             ) {
                 return haben - soll;
@@ -888,6 +889,10 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
 
             if (kontoNummer === '3806') {
                 return 'Umsatzsteuer: Haben - Soll';
+            }
+
+            if (kontoNummer === '4337') {
+                return '§13b-Erlöse: Haben - Soll';
             }
 
             if (kontoNummer === '4400') {
