@@ -114,12 +114,13 @@
             ],
             "style": {
                 "entwurf": null,
-                "freigabe": null,
-                "festgeschrieben": null
+                "freigabe": "success",
+                "festgeschrieben": "primary"
             },
             "default": "entwurf",
             "maxLength": 100,
-            "isCustom": true
+            "isCustom": true,
+            "displayAsLabel": true
         },
         "festgeschriebenAm": {
             "notNull": false,
@@ -273,6 +274,51 @@
             "readOnly": true,
             "options": [],
             "isCustom": true
+        },
+        "belegTyp": {
+            "type": "enum",
+            "options": [
+                "eingangsrechnung",
+                "gutschrift",
+                "stornorechnung",
+                "schlussrechnung",
+                "abschlagsrechnung",
+                "rechnungskorrektur"
+            ],
+            "style": {
+                "eingangsrechnung": null,
+                "gutschrift": null,
+                "stornorechnung": null,
+                "schlussrechnung": null,
+                "abschlagsrechnung": null,
+                "rechnungskorrektur": null
+            },
+            "default": "eingangsrechnung",
+            "maxLength": 100,
+            "isCustom": true
+        },
+        "bezugsRechnungsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "isCustom": true
+        },
+        "buchungsWirkung": {
+            "type": "enum",
+            "options": [
+                "normal_buchen",
+                "gegenbuchung",
+                "manuell_pruefen"
+            ],
+            "style": {
+                "normal_buchen": "success",
+                "gegenbuchung": "warning",
+                "manuell_pruefen": "info"
+            },
+            "default": "normal_buchen",
+            "maxLength": 100,
+            "isCustom": true,
+            "displayAsLabel": true
         }
     },
     "links": {
@@ -353,7 +399,12 @@
     },
     "collection": {
         "orderBy": "createdAt",
-        "order": "desc"
+        "order": "desc",
+        "textFilterFields": [
+            "name"
+        ],
+        "fullTextSearch": false,
+        "countDisabled": false
     },
     "indexes": {
         "name": {
@@ -380,5 +431,6 @@
                 "id"
             ]
         }
-    }
+    },
+    "optimisticConcurrencyControl": false
 }

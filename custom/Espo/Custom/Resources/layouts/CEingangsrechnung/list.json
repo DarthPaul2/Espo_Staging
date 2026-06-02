@@ -6,6 +6,11 @@
         "align": "left"
     },
     {
+        "name": "belegTyp",
+        "width": 12,
+        "align": "left"
+    },
+    {
         "name": "eingangsrechnungsnummer",
         "width": 12,
         "align": "left"

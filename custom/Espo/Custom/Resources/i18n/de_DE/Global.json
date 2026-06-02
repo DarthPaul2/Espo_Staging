@@ -13,8 +13,10 @@
         "CMelderGesamtPdf": "Melderprüflisten Gesamt-PDFs",
         "CMelderQuartal": "Melderprüflisten Quartale",
         "CBuchhaltungAuswertung": "Buchhaltung Auswertungen",
-        "CEingangsrechnungImport": "Import Eingangsrechnungen",
-        "CBankkonto": "Bankkonten"
+        "CEingangsrechnungImport": "Import Eingangsbelege",
+        "CBankkonto": "Bankkonten",
+        "CEingangsrechnung": "Eingangsbelege",
+        "CEingangsrechnungsposition": "Eingangsbeleg-Positionen"
     },
     "Global": {
         "Today": "",
@@ -26,6 +28,8 @@
         "CFormular": "Formularbericht",
         "CMelderQuartal": "Melderprüfliste Quartal",
         "CBuchhaltungAuswertung": "Buchhaltung Auswertung",
-        "CEingangsrechnungImport": "Import Eingangsrechnung"
+        "CEingangsrechnungImport": "Import Eingangsbeleg",
+        "CEingangsrechnung": "Eingangsbeleg",
+        "CEingangsrechnungsposition": "Eingangsbeleg-Position"
     }
 }

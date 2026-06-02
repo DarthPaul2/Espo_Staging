@@ -19,7 +19,7 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
 
             const uebernehmenButton = {
                 name: 'alsEingangsrechnungUebernehmen',
-                label: 'Als Eingangsrechnung übernehmen',
+                label: this.getUebernehmenButtonLabel_(),
                 style: 'success',
                 action: 'alsEingangsrechnungUebernehmen'
             };
@@ -103,6 +103,52 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
             });
         },
 
+        uebernehmenAllowedTypes_: ['eingangsrechnung', 'gutschrift', 'rechnungskorrektur', 'stornorechnung'],
+
+        getUebernehmenButtonLabel_: function () {
+            const typ = this.model ? (this.model.get('dokumentTyp') || 'unbekannt') : 'unbekannt';
+            const labels = {
+                'gutschrift':         'Als Gutschrift übernehmen',
+                'rechnungskorrektur': 'Als Rechnungskorrektur übernehmen',
+                'stornorechnung':     'Als Stornorechnung übernehmen',
+            };
+            return labels[typ] || 'Als Eingangsrechnung übernehmen';
+        },
+
+        updateUebernehmenButton_: function () {
+            const typ = this.model ? (this.model.get('dokumentTyp') || 'unbekannt') : 'unbekannt';
+            const $btn = this.$el.find('[data-action="alsEingangsrechnungUebernehmen"]');
+
+            if (!$btn.length) {
+                return;
+            }
+
+            // Тип должен быть из разрешённых
+            if (!this.uebernehmenAllowedTypes_.includes(typ)) {
+                $btn.hide();
+                return;
+            }
+
+            // Должна быть ненулевая общая сумма
+            const betragBrutto = parseFloat(this.model.get('betragBrutto') || 0);
+            if (!betragBrutto || betragBrutto <= 0) {
+                $btn.hide();
+                return;
+            }
+
+            // Должен быть хотя бы распознанный поставщик
+            const hasLieferant =
+                this.model.get('matchedLieferantId') ||
+                (this.model.get('recognizedLieferantName') || '').trim();
+            if (!hasLieferant) {
+                $btn.hide();
+                return;
+            }
+
+            $btn.show();
+            $btn.text(this.getUebernehmenButtonLabel_());
+        },
+
         isAlreadyTransferred_: function () {
             // Что это: проверка, был ли Import уже перенесён в echten CEingangsrechnung.
             // Зачем: после первого erfolgreichen Transfer повторное Übernehmen запрещаем.
@@ -154,6 +200,7 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
             this.normalizeInnerRecordGrid_();
             this.renderDocumentPreview_();
             this.disableEditButtonIfTransferred_();
+            this.updateUebernehmenButton_();
         },
 
         actionSave: function () {
@@ -262,6 +309,7 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                     recognizedBic: recognized.recognizedBic || null,
                     recognizedBankName: recognized.recognizedBankName || null,
                     lieferantenRechnungsnummer: recognized.lieferantenRechnungsnummer || null,
+                    bezugsRechnungsnummer: recognized.bezugsRechnungsnummer || null,
                     belegdatum: recognized.belegdatum || null,
                     eingangsdatum: recognized.eingangsdatum || null,
                     faelligAm: recognized.faelligAm || null,
@@ -625,16 +673,22 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
 
             const dokumentTyp = this.model.get('dokumentTyp') || 'unbekannt';
 
-            if (dokumentTyp !== 'eingangsrechnung') {
-                Espo.Ui.error('Dieses Dokument wurde nicht als Eingangsrechnung erkannt. Übernahme ist nicht erlaubt.');
+            if (!this.uebernehmenAllowedTypes_.includes(dokumentTyp)) {
+                Espo.Ui.info(
+                    'Dieser Dokumenttyp (' + dokumentTyp + ') muss manuell geprüft werden ' +
+                    'und wird nicht automatisch übernommen.'
+                );
                 return;
             }
+
             const matchedLieferantId = this.model.get('matchedLieferantId') || null;
             const matchedLieferantName =
                 this.model.get('matchedLieferantName') ||
                 this.model.get('recognizedLieferantName') ||
                 null;
             const lieferantenRechnungsnummer = this.model.get('lieferantenRechnungsnummer') || '';
+            const bezugsRechnungsnummer = this.model.get('bezugsRechnungsnummer') || null;
+            const buchungsWirkung = (dokumentTyp === 'eingangsrechnung') ? 'normal_buchen' : 'manuell_pruefen';
             const belegdatum = this.model.get('belegdatum') || null;
             const eingangsdatum = this.model.get('eingangsdatum') || null;
             const faelligAm = this.model.get('faelligAm') || null;
@@ -743,9 +797,12 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                 importId: this.model.id,
 
                 eingangsrechnung: {
+                    belegTyp: dokumentTyp,
+                    buchungsWirkung: buchungsWirkung,
                     lieferantId: matchedLieferantId,
                     lieferantName: matchedLieferantName,
                     lieferantenRechnungsnummer: lieferantenRechnungsnummer,
+                    bezugsRechnungsnummer: bezugsRechnungsnummer,
                     belegdatum: belegdatum,
                     eingangsdatum: eingangsdatum,
                     faelligAm: faelligAm,

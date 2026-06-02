@@ -58,9 +58,12 @@ define('custom:views/c-eingangsrechnung/record/edit', ['views/record/edit'], fun
             const data = payload.eingangsrechnung || {};
 
             const patch = {
+                belegTyp: data.belegTyp || 'eingangsrechnung',
+                buchungsWirkung: data.buchungsWirkung || 'manuell_pruefen',
                 lieferantId: data.lieferantId || null,
                 lieferantName: data.lieferantName || null,
                 lieferantenRechnungsnummer: data.lieferantenRechnungsnummer || null,
+                bezugsRechnungsnummer: data.bezugsRechnungsnummer || null,
                 belegdatum: data.belegdatum || null,
                 eingangsdatum: data.eingangsdatum || null,
                 faelligAm: data.faelligAm || null,
@@ -72,7 +75,7 @@ define('custom:views/c-eingangsrechnung/record/edit', ['views/record/edit'], fun
                 status: data.status || 'entwurf'
             };
 
-            this.model.set(patch, { silent: false });
+            this.model.set(patch, { silent: true });
 
             // Что это: payload держим в view до первого сохранения.
             // Зачем: после сохранения шапки создать позиции.
@@ -90,8 +93,11 @@ define('custom:views/c-eingangsrechnung/record/edit', ['views/record/edit'], fun
             // Зачем: после model.set(...) значения должны сразу стать видны в create/edit-форме.
 
             const fields = [
+                'belegTyp',
+                'buchungsWirkung',
                 'lieferant',
                 'lieferantenRechnungsnummer',
+                'bezugsRechnungsnummer',
                 'belegdatum',
                 'eingangsdatum',
                 'faelligAm',
@@ -113,26 +119,68 @@ define('custom:views/c-eingangsrechnung/record/edit', ['views/record/edit'], fun
         },
 
         actionSave: function () {
-            // Что это: перехват обычной кнопки Speichern.
-            // Зачем: сначала сохранить шапку, потом создать позиции из import,
-            // затем пометить CEingangsrechnungImport как übernommen.
+            // Что это: полностью кастомное сохранение новой CEingangsrechnung из Import.
+            // Зачем: не отдаём управление стандартному redirect Espo слишком рано.
+            // Сначала сохраняем шапку, потом создаём позиции, потом помечаем Import,
+            // и только после этого сами открываем detail-страницу.
 
-            const parentActionSave = Dep.prototype.actionSave;
+            // Для обычного редактирования существующей записи оставляем стандартное поведение.
+            if (!this.model.isNew() || !this.importTransferPayload_) {
+                const parentActionSave = Dep.prototype.actionSave;
 
-            if (!parentActionSave) {
-                return;
-            }
+                if (!parentActionSave) {
+                    return;
+                }
 
-            return Promise.resolve(parentActionSave.apply(this, arguments))
-                .then(() => this.createImportedPositionenIfNeeded_())
-                .then(() => this.markImportAsTransferredIfNeeded_())
-                .then(() => this.cleanupImportTransferState_())
-                .catch(e => {
+                return Promise.resolve(parentActionSave.apply(this, arguments)).catch(e => {
                     if (e === 'notModified' || (e && e.message === 'notModified')) {
                         return;
                     }
                     throw e;
                 });
+            }
+
+            this.notify('Speichern...');
+
+            return Promise.resolve()
+                .then(() => this.saveImportedEingangsrechnungManually_())
+                .then(() => this.createImportedPositionenIfNeeded_())
+                .then(() => this.markImportAsTransferredIfNeeded_())
+                .then(() => this.cleanupImportTransferState_())
+                .then(() => {
+                    this.notify(false);
+                    Espo.Ui.success('Eingangsrechnung und Positionen wurden erfolgreich erstellt.');
+                    this.openCreatedRecordView_();
+                })
+                .catch(e => {
+                    this.notify(false);
+
+                    if (e === 'notModified' || (e && e.message === 'notModified')) {
+                        return;
+                    }
+
+                    console.error('[CEingangsrechnung/edit] save failed', e);
+                    Espo.Ui.error('Die Eingangsrechnung konnte nicht vollständig erstellt werden.');
+                    throw e;
+                });
+        },
+
+        saveImportedEingangsrechnungManually_: async function () {
+            // Что это: ручное сохранение шапки новой CEingangsrechnung без раннего Redirects von Espo.
+            // Зачем: сначала получить ID записи, а уже потом создавать позиции и только потом öffnen detail view.
+
+            const attrs = _.clone(this.model.attributes || {});
+
+            const response = await Espo.Ajax.postRequest('CEingangsrechnung', attrs);
+
+            if (!response || !response.id) {
+                throw new Error('CEingangsrechnung konnte nicht gespeichert werden.');
+            }
+
+            this.model.set(response, { silent: true });
+            this.model.id = response.id;
+
+            return response;
         },
 
         createImportedPositionenIfNeeded_: async function () {
@@ -229,6 +277,23 @@ define('custom:views/c-eingangsrechnung/record/edit', ['views/record/edit'], fun
 
             sessionStorage.removeItem('ceingangsrechnungImportTransfer');
             this.importTransferPayload_ = null;
+        },
+
+        openCreatedRecordView_: function () {
+            // Что это: открывает detail-страницу только после полного завершения Import-Übernahme.
+            // Зачем: relation-panel должен увидеть уже созданные Positionen.
+
+            const eingangsrechnungId = this.model.id;
+
+            if (!eingangsrechnungId) {
+                return;
+            }
+
+            window.location.hash = '#CEingangsrechnung/view/' + eingangsrechnungId;
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 150);
         },
 
         formatCurrentDateTime_: function () {

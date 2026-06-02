@@ -47,6 +47,16 @@ class CEingangsrechnung extends Base
                 ];
             }
 
+            // Schutzregel Phase 2A: buchungsWirkung prüfen.
+            // Leeres Feld → 'normal_buchen' (Abwärtskompatibilität für bestehende Eingangsrechnungen).
+            $buchungsWirkung = (string) ($eingangsrechnung->get('buchungsWirkung') ?: 'normal_buchen');
+            if (in_array($buchungsWirkung, ['manuell_pruefen', 'gegenbuchung'], true)) {
+                return [
+                    'success' => false,
+                    'message' => 'Für diesen Belegtyp ist die Buchungswirkung noch nicht für Freigabe/Festschreibung freigegeben. Bitte fachlich prüfen.'
+                ];
+            }
+
             if (!$eingangsrechnung->get('lieferantId')) {
                 return [
                     'success' => false,
@@ -148,13 +158,7 @@ class CEingangsrechnung extends Base
                     ];
                 }
 
-                if ($einzelpreisNetto < 0) {
-                    return [
-                        'success' => false,
-                        'message' => 'Mindestens eine Position hat einen ungültigen Einzelpreis.'
-                    ];
-                }
-
+                // Einzelpreis darf negativ sein (Rabatt-/Guthabenzeilen wie bei Telekom-Rechnungen).
                 $basisNetto = round($menge * $einzelpreisNetto, 2);
 
                 if ($rabattProzent > 0) {
@@ -164,13 +168,7 @@ class CEingangsrechnung extends Base
                 } else {
                     $recalculatedGesamtNetto = $basisNetto;
                 }
-
-                if ($recalculatedGesamtNetto < 0) {
-                    return [
-                        'success' => false,
-                        'message' => 'Mindestens eine Position hat einen ungültigen Gesamtbetrag.'
-                    ];
-                }
+                // Einzelne Position darf negativ sein — der Gesamtbetrag des Belegs wird auf Ebene des Dokuments geprüft.
             }
 
             $eingangsrechnung->set('status', 'freigabe');
@@ -320,6 +318,16 @@ class CEingangsrechnung extends Base
                 ];
             }
 
+            // Schutzregel Phase 2A: buchungsWirkung prüfen (zweite Sicherheit vor Festschreibung).
+            // Leeres Feld → 'normal_buchen' (Abwärtskompatibilität für bestehende Eingangsrechnungen).
+            $buchungsWirkung = (string) ($eingangsrechnung->get('buchungsWirkung') ?: 'normal_buchen');
+            if (in_array($buchungsWirkung, ['manuell_pruefen', 'gegenbuchung'], true)) {
+                return [
+                    'success' => false,
+                    'message' => 'Für diesen Belegtyp ist die Buchungswirkung noch nicht für Freigabe/Festschreibung freigegeben. Bitte fachlich prüfen.'
+                ];
+            }
+
             if (!$eingangsrechnung->get('lieferantId')) {
                 return [
                     'success' => false,
@@ -397,13 +405,7 @@ class CEingangsrechnung extends Base
                     ];
                 }
 
-                if ($einzelpreisNetto < 0) {
-                    return [
-                        'success' => false,
-                        'message' => 'Mindestens eine Position hat einen ungültigen Einzelpreis.'
-                    ];
-                }
-
+                // Einzelpreis darf negativ sein (Rabatt-/Guthabenzeilen wie bei Telekom-Rechnungen).
                 $basisNetto = round($menge * $einzelpreisNetto, 2);
 
                 if ($rabattProzent > 0) {
@@ -413,13 +415,7 @@ class CEingangsrechnung extends Base
                 } else {
                     $recalculatedGesamtNetto = $basisNetto;
                 }
-
-                if ($recalculatedGesamtNetto < 0) {
-                    return [
-                        'success' => false,
-                        'message' => 'Mindestens eine Position hat nach Rabatt einen negativen Gesamtbetrag.'
-                    ];
-                }
+                // Einzelne Position darf negativ sein — Gesamtbetrag wird auf Dokumentebene geprüft.
 
                 // Что это: für Festschreibung берём neu berechneten Netto-Gesamtbetrag inkl. Rabatt.
                 // Зачем: Journal, Steuer und Verbindlichkeit müssen Rabatt korrekt berücksichtigen.

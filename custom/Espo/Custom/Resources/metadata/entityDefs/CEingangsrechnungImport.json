@@ -240,16 +240,32 @@
                 "eingangsrechnung",
                 "angebot",
                 "lieferschein",
-                "unbekannt"
+                "unbekannt",
+                "gutschrift",
+                "stornorechnung",
+                "schlussrechnung",
+                "abschlagsrechnung",
+                "rechnungskorrektur"
             ],
             "style": {
                 "eingangsrechnung": null,
                 "angebot": null,
                 "lieferschein": null,
-                "unbekannt": null
+                "unbekannt": null,
+                "gutschrift": null,
+                "stornorechnung": null,
+                "schlussrechnung": null,
+                "abschlagsrechnung": null,
+                "rechnungskorrektur": null
             },
             "default": "unbekannt",
             "maxLength": 100,
+            "isCustom": true
+        },
+        "bezugsRechnungsnummer": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
             "isCustom": true
         }
     },

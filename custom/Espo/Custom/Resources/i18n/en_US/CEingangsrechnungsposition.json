@@ -5,7 +5,7 @@
         "menge": "Menge",
         "einheit": "Einheit",
         "einzelpreisNetto": "Preis (Netto)",
-        "gesamtNetto": "Gesamt",
+        "gesamtNetto": "Gesamt (netto)",
         "kostenart": "Kostenart",
         "beschreibung": "Beschreibung",
         "eingangsrechnung": "Eingangsrechnung",
@@ -18,7 +18,7 @@
         "material": "Material"
     },
     "labels": {
-        "Create CEingangsrechnungsposition": "Create Eingangsrechnungsposition"
+        "Create CEingangsrechnungsposition": "Erstellen Eingangsbeleg-Position"
     },
     "options": {
         "einheit": {

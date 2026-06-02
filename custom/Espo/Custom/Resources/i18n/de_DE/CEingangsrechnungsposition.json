@@ -1,6 +1,6 @@
 {
     "labels": {
-        "Create CEingangsrechnungsposition": "Eingangsrechnungsposition erstellen"
+        "Create CEingangsrechnungsposition": "Erstellen Eingangsbeleg-Position"
     },
     "fields": {
         "positionsnummer": "Pos.Nr",
@@ -9,7 +9,7 @@
         "menge": "Menge",
         "einheit": "Einheit",
         "einzelpreisNetto": "Preis (Netto)",
-        "gesamtNetto": "Gesamt",
+        "gesamtNetto": "Gesamt (netto)",
         "kostenart": "Kostenart",
         "beschreibung": "Beschreibung",
         "eingangsrechnung": "Eingangsrechnung",

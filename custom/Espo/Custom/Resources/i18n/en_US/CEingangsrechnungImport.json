@@ -32,7 +32,8 @@
         "recognizedBic": "Erkannte BIC",
         "recognizedBankName": "Erkannte Bank",
         "eingangsrechnungImportPositions": "Eingangsrechnung Import Positions",
-        "dokumentTyp": "DokumentTyp"
+        "dokumentTyp": "DokumentTyp",
+        "bezugsRechnungsnummer": "Referenz Nr."
     },
     "links": {
         "matchedLieferant": "Lieferant",
@@ -41,7 +42,7 @@
         "eingangsrechnungImportPositions": "Eingangsrechnung Import Positions"
     },
     "labels": {
-        "Create CEingangsrechnungImport": "Erstellen Import Eingangsrechnung"
+        "Create CEingangsrechnungImport": "Erstellen Import Eingangsbeleg"
     },
     "options": {
         "status": {
@@ -62,7 +63,12 @@
             "eingangsrechnung": "Eingangsrechnung",
             "angebot": "Angebot",
             "lieferschein": "Lieferschein",
-            "unbekannt": "Unbekannt"
+            "unbekannt": "Unbekannt",
+            "gutschrift": "Gutschrift",
+            "stornorechnung": "Stornorechnung",
+            "schlussrechnung": "Schlussrechnung",
+            "abschlagsrechnung": "Abschlagsrechnung",
+            "rechnungskorrektur": "Rechnungskorrektur"
         }
     }
 }

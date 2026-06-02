@@ -103,6 +103,9 @@
                     "name": "lieferantenRechnungsnummer"
                 },
                 {
+                    "name": "bezugsRechnungsnummer"
+                },
+                {
                     "name": "belegdatum"
                 },
                 {

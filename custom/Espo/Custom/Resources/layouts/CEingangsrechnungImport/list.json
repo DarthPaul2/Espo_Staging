@@ -12,7 +12,7 @@
     },
     {
         "name": "status",
-        "width": 12,
+        "width": 11,
         "align": "left"
     },
     {
@@ -26,7 +26,16 @@
     },
     {
         "name": "betragBrutto",
-        "width": 11,
+        "width": 10,
         "align": "left"
+    },
+    {
+        "name": "dokumentTyp",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "eingangsrechnung",
+        "width": 16
     }
 ]

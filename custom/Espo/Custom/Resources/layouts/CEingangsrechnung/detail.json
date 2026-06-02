@@ -14,9 +14,11 @@
             ],
             [
                 {
+                    "name": "belegTyp"
+                },
+                {
                     "name": "steuerfall"
                 },
-                false,
                 {
                     "name": "status"
                 },
@@ -26,12 +28,14 @@
             ],
             [
                 {
+                    "name": "buchungsWirkung"
+                },
+                {
                     "name": "belegdatum"
                 },
                 {
                     "name": "eingangsdatum"
                 },
-                false,
                 {
                     "name": "faelligAm"
                 }

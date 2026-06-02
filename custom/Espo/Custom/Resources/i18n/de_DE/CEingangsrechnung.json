@@ -1,6 +1,6 @@
 {
     "labels": {
-        "Create CEingangsrechnung": "Eingangsrechnung erstellen"
+        "Create CEingangsrechnung": "Erstellen Eingangsbeleg"
     },
     "fields": {
         "eingangsrechnungsnummer": "Eingangsrech.-Nr.",
@@ -22,7 +22,7 @@
         "festgeschriebenVon": "Festgeschrieben von",
         "freigabeAm": "Freigabe am",
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
-        "importe": "Importe",
+        "importe": "Eingangsrechnungs-Import",
         "ausgleiche": "Ausgleiche",
         "zahlungsstatus": "Zahlungsstatus",
         "restbetragOffen": "Offener Restbetrag",
@@ -37,7 +37,10 @@
         "nachfolgeBelegId": "Nachfolgebeleg ID",
         "nachfolgeBelegName": "Nachfolgebeleg",
         "ersetztBelegName": "Ersetzt Beleg",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "belegTyp": "Belegtyp",
+        "bezugsRechnungsnummer": "Referenz Nr.",
+        "buchungsWirkung": "Buchungswirkung"
     },
     "options": {
         "steuerfall": {
@@ -65,6 +68,19 @@
             "formelle_korrektur": "Formelle Korrektur",
             "sonstige_korrektur": "Sonstige Korrektur",
             "keine_korrektur": "  "
+        },
+        "belegTyp": {
+            "eingangsrechnung": "Eingangsrechnung",
+            "gutschrift": "Gutschrift",
+            "stornorechnung": "Stornorechnung",
+            "schlussrechnung": "Schlussrechnung",
+            "abschlagsrechnung": "Abschlagsrechnung",
+            "rechnungskorrektur": "Rechnungskorrektur"
+        },
+        "buchungsWirkung": {
+            "normal_buchen": "Normal buchen",
+            "gegenbuchung": "Gegenbuchung",
+            "manuell_pruefen": "Manuell prüfen"
         }
     },
     "links": {
@@ -72,7 +88,7 @@
         "buchungsjournal": "Buchungsjournal",
         "festgeschriebenVon": "Festgeschrieben von",
         "eingangsrechnungspositionen": "Eingangsrechnungspositionen",
-        "importe": "Importe",
+        "importe": "Eingangsrechnungs-Import",
         "ausgleiche": "Ausgleiche",
         "storniertVon": "Storniert von",
         "bankbewegungen": "Bankbewegungen"

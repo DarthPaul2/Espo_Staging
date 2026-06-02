@@ -6,7 +6,7 @@
     },
     {
         "name": "name",
-        "width": 35,
+        "width": 37,
         "align": "left"
     },
     {
@@ -21,7 +21,8 @@
     },
     {
         "name": "rabattProzent",
-        "width": 20
+        "width": 12,
+        "align": "left"
     },
     {
         "name": "einzelpreisNetto",
@@ -30,7 +31,7 @@
     },
     {
         "name": "gesamtNetto",
-        "width": 11,
+        "width": 15,
         "align": "left"
     }
 ]

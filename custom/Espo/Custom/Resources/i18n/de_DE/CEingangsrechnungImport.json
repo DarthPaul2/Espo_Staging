@@ -1,6 +1,6 @@
 {
     "labels": {
-        "Create CEingangsrechnungImport": "Erstellen Import Eingangsrechnung"
+        "Create CEingangsrechnungImport": "Erstellen Import Eingangsbeleg"
     },
     "fields": {
         "status": "Status",
@@ -36,7 +36,8 @@
         "recognizedBic": "Erkannte BIC",
         "recognizedBankName": "Erkannte Bank",
         "eingangsrechnungImportPositions": "Eingangsrechnung Import Positions",
-        "dokumentTyp": "DokumentTyp"
+        "dokumentTyp": "DokumentTyp",
+        "bezugsRechnungsnummer": "Referenz Nr."
     },
     "options": {
         "status": {
@@ -57,7 +58,12 @@
             "eingangsrechnung": "Eingangsrechnung",
             "angebot": "Angebot",
             "lieferschein": "Lieferschein",
-            "unbekannt": "Unbekannt"
+            "unbekannt": "Unbekannt",
+            "gutschrift": "Gutschrift",
+            "stornorechnung": "Stornorechnung",
+            "schlussrechnung": "Schlussrechnung",
+            "abschlagsrechnung": "Abschlagsrechnung",
+            "rechnungskorrektur": "Rechnungskorrektur"
         }
     },
     "links": {
