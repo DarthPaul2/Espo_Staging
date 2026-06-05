@@ -40,7 +40,8 @@
         "bankbewegungen": "Bankbewegungen",
         "belegTyp": "Belegtyp",
         "bezugsRechnungsnummer": "Referenz Nr.",
-        "buchungsWirkung": "Buchungswirkung"
+        "buchungsWirkung": "Buchungswirkung",
+        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg"
     },
     "options": {
         "steuerfall": {
@@ -91,7 +92,8 @@
         "importe": "Eingangsrechnungs-Import",
         "ausgleiche": "Ausgleiche",
         "storniertVon": "Storniert von",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg"
     },
     "tooltips": {
         "ersetztBelegId": "Der Lesername der alten Eingangsrechnung.",

@@ -10,6 +10,9 @@
                 },
                 {
                     "name": "lieferantenRechnungsnummer"
+                },
+                {
+                    "name": "bezugsRechnungsnummer"
                 }
             ],
             [

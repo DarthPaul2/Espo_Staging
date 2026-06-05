@@ -651,6 +651,36 @@ define('custom:views/c-rechnung/record/detail', [
                 });
             }
             document.addEventListener('click', this._blockCreateRelatedIfUnsaved, true);
+
+            // Nach Speichern Workflow-Blöcke wiederherstellen.
+            this.listenTo(this.model, 'sync', function () {
+                setTimeout(() => this._reRenderWorkflowBlocks_(), 100);
+            });
+        },
+
+        actionEdit: function () {
+            this._hideWorkflowBlocks_();
+            if (Dep.prototype.actionEdit) {
+                Dep.prototype.actionEdit.call(this);
+            }
+        },
+
+        actionCancelEdit: function () {
+            if (Dep.prototype.actionCancelEdit) {
+                Dep.prototype.actionCancelEdit.call(this);
+            }
+            setTimeout(() => this._reRenderWorkflowBlocks_(), 50);
+        },
+
+        _hideWorkflowBlocks_: function () {
+            this.$el.find('[data-name="buchhaltung-workflow-actions"]').remove();
+            this.$el.find('[data-name="rechnung-storno-info"]').remove();
+        },
+
+        _reRenderWorkflowBlocks_: function () {
+            this._renderBuchhaltungWorkflowButtons();
+            this._renderStornoInfoBlock();
+            this._applyActionLocksDeferred();
         },
 
         // Это выполняется после отрисовки detail view.

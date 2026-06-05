@@ -219,37 +219,51 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
     }
 
     // ---------- CLIENTS INTO SELECT ----------
-    async function loadClientsIntoSelect() {
+    async function loadClientsIntoSelect(suggestedClientId) {
         const sel = $('kundenSelect');
         if (!sel) return;
-        if (sel.dataset && sel.dataset.loaded === '1') return;
 
-        showLoader('Kundenliste wird geladen…');
-        try {
-            const list = await fetchJson(BASE_URL + '/api/whatsapp/clients');
+        // Если список ещё не загружен — грузим
+        if (!sel.dataset || sel.dataset.loaded !== '1') {
+            showLoader('Kundenliste wird geladen…');
+            try {
+                const list = await fetchJson(BASE_URL + '/api/whatsapp/clients');
 
-            sel.innerHTML = '<option value="">Bitte wählen...</option>';
+                sel.innerHTML = '<option value="">Bitte wählen...</option>';
 
-            (Array.isArray(list) ? list : [])
-                .filter(x => x && x.id != null && x.name)
-                .forEach(function (c) {
-                    const opt = document.createElement('option');
-                    opt.value = String(c.id);
-                    opt.textContent = c.name;
-                    sel.appendChild(opt);
-                });
+                (Array.isArray(list) ? list : [])
+                    .filter(x => x && x.id != null && x.name)
+                    .forEach(function (c) {
+                        const opt = document.createElement('option');
+                        opt.value = String(c.id);
+                        opt.textContent = c.name;
+                        sel.appendChild(opt);
+                    });
 
-            if (sel.dataset) sel.dataset.loaded = '1';
-        } finally {
-            hideLoader();
+                if (sel.dataset) sel.dataset.loaded = '1';
+            } finally {
+                hideLoader();
+            }
+        }
+
+        // Автоподстановка клиента если ИИ нашёл совпадение
+        if (suggestedClientId) {
+            sel.value = String(suggestedClientId);
+            if (sel.value === String(suggestedClientId)) {
+                selectedKundenId = String(suggestedClientId);
+                selectedKundenName = sel.options[sel.selectedIndex]?.textContent || null;
+                if (selectedKundenName && typeof upsertKundeInEditor === 'function') {
+                    upsertKundeInEditor(selectedKundenName);
+                }
+            }
         }
     }
 
-    function openReportModal() {
+    function openReportModal(suggestedClientId) {
         const m = $('reportModal');
         if (!m) return;
         m.style.display = 'block';
-        loadClientsIntoSelect().catch(function (e) { console.error(e); });
+        loadClientsIntoSelect(suggestedClientId).catch(function (e) { console.error(e); });
     }
 
     function closeReportModal() {
@@ -318,6 +332,8 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
         showLoader('KI Bericht wird erstellt…');
         try {
             const data = await fetchJson(BASE_URL + '/api/whatsapp/' + msgId + '/bericht_text');
+            console.log('[DEBUG] bericht_text response:', data);
+            console.log('[DEBUG] suggested_client:', data.suggested_client);
 
             _currentReportMeta = {
                 techniker: data.techniker || 'Unbekannt',
@@ -332,7 +348,8 @@ Espo.define('custom:whatsapp-admin-page', [], function () {
             if (editor) editor.value = data.bericht_text || '';
 
             renderReportImages(_currentReportMeta.bilder);
-            openReportModal();
+            const suggestedId = data.suggested_client ? data.suggested_client.id : null;
+            openReportModal(suggestedId);
         } finally {
             hideLoader();
         }

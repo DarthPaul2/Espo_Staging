@@ -41,6 +41,10 @@
         "bankbewegungen": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "gegenbelegEingangsrechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     },
     "kanbanViewMode": false

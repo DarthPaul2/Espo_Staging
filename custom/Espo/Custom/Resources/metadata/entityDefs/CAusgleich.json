@@ -149,6 +149,9 @@
             "rowsMin": 2,
             "cutHeight": 200,
             "isCustom": true
+        },
+        "gegenbelegAusgleiche": {
+            "type": "link"
         }
     },
     "links": {
@@ -187,6 +190,13 @@
         "eingangsrechnung": {
             "type": "belongsTo",
             "foreign": "ausgleiche",
+            "entity": "CEingangsrechnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "gegenbelegAusgleiche": {
+            "type": "belongsTo",
+            "foreign": "gegenbelegEingangsrechnung",
             "entity": "CEingangsrechnung",
             "audited": false,
             "isCustom": true

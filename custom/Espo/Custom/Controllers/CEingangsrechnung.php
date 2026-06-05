@@ -50,7 +50,7 @@ class CEingangsrechnung extends Base
             // Schutzregel Phase 2A: buchungsWirkung prüfen.
             // Leeres Feld → 'normal_buchen' (Abwärtskompatibilität für bestehende Eingangsrechnungen).
             $buchungsWirkung = (string) ($eingangsrechnung->get('buchungsWirkung') ?: 'normal_buchen');
-            if (in_array($buchungsWirkung, ['manuell_pruefen', 'gegenbuchung'], true)) {
+            if (in_array($buchungsWirkung, ['manuell_pruefen'], true)) {
                 return [
                     'success' => false,
                     'message' => 'Für diesen Belegtyp ist die Buchungswirkung noch nicht für Freigabe/Festschreibung freigegeben. Bitte fachlich prüfen.'
@@ -85,7 +85,8 @@ class CEingangsrechnung extends Base
                 ];
             }
 
-            if (!$eingangsrechnung->get('faelligAm')) {
+            // faelligAm ist für Gegenbuchungen (Gutschrift/Stornorechnung) nicht erforderlich.
+            if (!$eingangsrechnung->get('faelligAm') && $buchungsWirkung !== 'gegenbuchung') {
                 return [
                     'success' => false,
                     'message' => 'Fälligkeitsdatum fehlt.'
@@ -321,7 +322,7 @@ class CEingangsrechnung extends Base
             // Schutzregel Phase 2A: buchungsWirkung prüfen (zweite Sicherheit vor Festschreibung).
             // Leeres Feld → 'normal_buchen' (Abwärtskompatibilität für bestehende Eingangsrechnungen).
             $buchungsWirkung = (string) ($eingangsrechnung->get('buchungsWirkung') ?: 'normal_buchen');
-            if (in_array($buchungsWirkung, ['manuell_pruefen', 'gegenbuchung'], true)) {
+            if (in_array($buchungsWirkung, ['manuell_pruefen'], true)) {
                 return [
                     'success' => false,
                     'message' => 'Für diesen Belegtyp ist die Buchungswirkung noch nicht für Freigabe/Festschreibung freigegeben. Bitte fachlich prüfen.'
@@ -356,7 +357,8 @@ class CEingangsrechnung extends Base
                 ];
             }
 
-            if (!$eingangsrechnung->get('faelligAm')) {
+            // faelligAm ist für Gegenbuchungen (Gutschrift/Stornorechnung) nicht erforderlich.
+            if (!$eingangsrechnung->get('faelligAm') && $buchungsWirkung !== 'gegenbuchung') {
                 return [
                     'success' => false,
                     'message' => 'Fälligkeitsdatum fehlt.'
@@ -514,35 +516,73 @@ class CEingangsrechnung extends Base
 
             // Что это: подготавливаем Buchungszeilen vor DB-Transaktion.
             $buchungenData = [];
+            $ereNummer = (string) $eingangsrechnung->get('eingangsrechnungsnummer');
 
-            // Aufwand (Debit)
-            $buchungenData[] = [
-                'buchungsart' => 'debit',
-                'betrag' => $betragNetto,
-                'kontoEntity' => $aufwandKonto,
-                'buchungstext' => 'Aufwand aus Eingangsrechnung ' . (string) $eingangsrechnung->get('eingangsrechnungsnummer'),
-                'steuerFall' => $regelSteuerFall,
-            ];
+            if ($buchungsWirkung === 'gegenbuchung') {
+                // Gegenbuchung (Gutschrift / Stornorechnung): umgekehrte Richtungen.
+                // SOLL Verbindlichkeit, HABEN Vorsteuer, HABEN Aufwand.
 
-            // Vorsteuer (Debit) — только если не steuerfrei
-            if ($regelSteuerFall !== 'steuerfrei') {
+                // Verbindlichkeit (Debit) — Schuld wird verringert
                 $buchungenData[] = [
                     'buchungsart' => 'debit',
-                    'betrag' => $steuerBetrag,
-                    'kontoEntity' => $vorsteuerKonto,
-                    'buchungstext' => 'Vorsteuer aus Eingangsrechnung ' . (string) $eingangsrechnung->get('eingangsrechnungsnummer'),
+                    'betrag' => $betragBrutto,
+                    'kontoEntity' => $verbindlichkeitKonto,
+                    'buchungstext' => 'Verbindlichkeit aus Gegenbuchung ' . $ereNummer,
+                    'steuerFall' => $regelSteuerFall,
+                ];
+
+                // Vorsteuer (Credit) — Vorsteueranspruch wird verringert
+                if ($regelSteuerFall !== 'steuerfrei') {
+                    $buchungenData[] = [
+                        'buchungsart' => 'credit',
+                        'betrag' => $steuerBetrag,
+                        'kontoEntity' => $vorsteuerKonto,
+                        'buchungstext' => 'Vorsteuer aus Gegenbuchung ' . $ereNummer,
+                        'steuerFall' => $regelSteuerFall,
+                    ];
+                }
+
+                // Aufwand (Credit) — Aufwand wird verringert
+                $buchungenData[] = [
+                    'buchungsart' => 'credit',
+                    'betrag' => $betragNetto,
+                    'kontoEntity' => $aufwandKonto,
+                    'buchungstext' => 'Aufwand aus Gegenbuchung ' . $ereNummer,
+                    'steuerFall' => $regelSteuerFall,
+                ];
+            } else {
+                // normal_buchen: Standard-Eingangsrechnung.
+                // SOLL Aufwand, SOLL Vorsteuer, HABEN Verbindlichkeit.
+
+                // Aufwand (Debit)
+                $buchungenData[] = [
+                    'buchungsart' => 'debit',
+                    'betrag' => $betragNetto,
+                    'kontoEntity' => $aufwandKonto,
+                    'buchungstext' => 'Aufwand aus Eingangsrechnung ' . $ereNummer,
+                    'steuerFall' => $regelSteuerFall,
+                ];
+
+                // Vorsteuer (Debit) — только если не steuerfrei
+                if ($regelSteuerFall !== 'steuerfrei') {
+                    $buchungenData[] = [
+                        'buchungsart' => 'debit',
+                        'betrag' => $steuerBetrag,
+                        'kontoEntity' => $vorsteuerKonto,
+                        'buchungstext' => 'Vorsteuer aus Eingangsrechnung ' . $ereNummer,
+                        'steuerFall' => $regelSteuerFall,
+                    ];
+                }
+
+                // Verbindlichkeit (Credit)
+                $buchungenData[] = [
+                    'buchungsart' => 'credit',
+                    'betrag' => $betragBrutto,
+                    'kontoEntity' => $verbindlichkeitKonto,
+                    'buchungstext' => 'Verbindlichkeit aus Eingangsrechnung ' . $ereNummer,
                     'steuerFall' => $regelSteuerFall,
                 ];
             }
-
-            // Verbindlichkeit (Credit)
-            $buchungenData[] = [
-                'buchungsart' => 'credit',
-                'betrag' => $betragBrutto,
-                'kontoEntity' => $verbindlichkeitKonto,
-                'buchungstext' => 'Verbindlichkeit aus Eingangsrechnung ' . (string) $eingangsrechnung->get('eingangsrechnungsnummer'),
-                'steuerFall' => $regelSteuerFall,
-            ];
 
             // Что это: проверяем баланс до записи в БД.
             $sumDebit = 0.0;
@@ -566,8 +606,12 @@ class CEingangsrechnung extends Base
                 ];
             }
 
-            // Что это: Journalnummer für Phase 2.
-            $journalNummer = 'EJR-' . date('Ymd-His') . '-' . substr($eingangsrechnung->getId(), -6);
+            // Journalnummer und Buchungstext je nach buchungsWirkung.
+            $journalPrefix = ($buchungsWirkung === 'gegenbuchung') ? 'EGS-' : 'EJR-';
+            $journalNummer = $journalPrefix . date('Ymd-His') . '-' . substr($eingangsrechnung->getId(), -6);
+            $journalText = ($buchungsWirkung === 'gegenbuchung')
+                ? 'Gegenbuchung ' . $ereNummer
+                : 'Festschreibung Eingangsrechnung ' . $ereNummer;
 
             if (!$pdo->inTransaction()) {
                 $pdo->beginTransaction();
@@ -579,7 +623,7 @@ class CEingangsrechnung extends Base
             $journal->set('name', $journalNummer);
             $journal->set('journalNummer', $journalNummer);
             $journal->set('belegdatum', $eingangsrechnung->get('belegdatum'));
-            $journal->set('buchungstext', 'Festschreibung Eingangsrechnung ' . (string) $eingangsrechnung->get('eingangsrechnungsnummer'));
+            $journal->set('buchungstext', $journalText);
             $journal->set('quelleTyp', 'CEingangsrechnung');
             $journal->set('quelleIdExtern', $eingangsrechnung->getId());
             $journal->set('quelleNummer', $eingangsrechnung->get('eingangsrechnungsnummer'));
@@ -642,20 +686,102 @@ class CEingangsrechnung extends Base
             $eingangsrechnung->set('steuerBetrag', $steuerBetrag);
             $eingangsrechnung->set('betragBrutto', $betragBrutto);
 
-            // Что это:
-            // стартовый offener Restbetrag после первой Festschreibung Eingangsrechnung.
-            //
-            // Зачем:
-            // в момент Festschreibung документ уже бухгалтерски зафиксирован,
-            // но ещё не оплачен, значит весь Bruttobetrag пока остаётся offen.
-            $eingangsrechnung->set('restbetragOffen', $betragBrutto);
+            if ($buchungsWirkung === 'gegenbuchung') {
+                // Gegenbuchung: Auto-Verrechnung mit Originalbeleg wenn eindeutig und sicher möglich.
+                $bezugsNr      = trim((string) ($eingangsrechnung->get('bezugsRechnungsnummer') ?? ''));
+                $lieferantId   = $eingangsrechnung->get('lieferantId');
+                $verrechnungOk = false;
 
-            // Что это:
-            // стартовый operativer Zahlungsstatus Eingangsrechnung.
-            //
-            // Зачем:
-            // после Festschreibung и до первой оплаты Eingangsrechnung должна считаться offen.
-            $eingangsrechnung->set('zahlungsstatus', 'offen');
+                if ($bezugsNr !== '' && $lieferantId) {
+                    $originalList = $em
+                        ->getRDBRepository('CEingangsrechnung')
+                        ->where([
+                            'lieferantenRechnungsnummer' => $bezugsNr,
+                            'lieferantId'               => $lieferantId,
+                            'status'                    => 'festgeschrieben',
+                            'deleted'                   => false,
+                            'id!='                      => $eingangsrechnung->getId(),
+                        ])
+                        ->find();
+
+                    if ($originalList && count($originalList) === 1) {
+                        $original         = $originalList[0];
+                        $originalRest     = round((float) ($original->get('restbetragOffen') ?? 0), 2);
+                        $gutschriftBrutto = round($betragBrutto, 2);
+
+                        if ($gutschriftBrutto > 0 && $gutschriftBrutto <= $originalRest) {
+                            $neuerRest    = round($originalRest - $gutschriftBrutto, 2);
+                            $ausgleichTyp = ($neuerRest <= 0) ? 'voll' : 'teil';
+                            $gutschriftNr = (string) ($eingangsrechnung->get('eingangsrechnungsnummer') ?? '');
+                            $originalNr   = (string) ($original->get('eingangsrechnungsnummer') ?? '');
+                            $ausgleichsnr = 'AGS-GS-' . date('Ymd-His') . '-' . substr($eingangsrechnung->getId(), -4);
+
+                            // CAusgleich anlegen — ohne CZahlung, ohne Bankbewegung.
+                            $ausgleich = $em->getNewEntity('CAusgleich');
+                            $ausgleich->set('name',             'Verrechnung ' . $gutschriftNr . ' → ' . $originalNr);
+                            $ausgleich->set('ausgleichsnummer', $ausgleichsnr);
+                            $ausgleich->set('typ',              'gutschrift_verrechnung');
+                            $ausgleich->set('ausgleichTyp',     $ausgleichTyp);
+                            $ausgleich->set('richtung',         'verbindlichkeitsausgleich');
+                            $ausgleich->set('ausgleichsdatum',  date('Y-m-d'));
+                            $ausgleich->set('betrag',           $gutschriftBrutto);
+                            $ausgleich->set('restbetragNachAusgleich', max(0.0, $neuerRest));
+                            $ausgleich->set('ausgleichStatus',  'aktiv');
+                            $ausgleich->set('istAktiv',         true);
+                            // Link Originalbeleg (n:1 → CEingangsrechnung)
+                            $ausgleich->set('eingangsrechnungId',   $original->getId());
+                            $ausgleich->set('eingangsrechnungName', $originalNr);
+                            // Link Gutschrift (n:1 → CEingangsrechnung, Spalte: gegenbeleg_ausgleiche_id)
+                            $ausgleich->set('gegenbelegAusgleicheId',   $eingangsrechnung->getId());
+                            $ausgleich->set('gegenbelegAusgleicheName', $gutschriftNr);
+                            $ausgleich->set('bemerkung',
+                                'Automatische Gutschrift-Verrechnung am ' . date('Y-m-d H:i:s') . '. ' .
+                                'Gutschrift: ' . $gutschriftNr . '. Originalbeleg: ' . $originalNr . '. ' .
+                                'Betrag: ' . number_format($gutschriftBrutto, 2, ',', '.') . ' EUR.'
+                            );
+                            $em->saveEntity($ausgleich);
+
+                            // Originalbeleg aktualisieren.
+                            $original->set('restbetragOffen', $neuerRest <= 0 ? 0.0 : $neuerRest);
+                            $original->set('zahlungsstatus',  $neuerRest <= 0 ? 'bezahlt' : 'teilweise_bezahlt');
+
+                            $erklaerung =
+                                date('d.m.Y H:i') . ' — Automatische Gutschrift-Verrechnung: ' .
+                                'Diese Eingangsrechnung wurde durch die Gutschrift ' . $gutschriftNr .
+                                ' (Lieferanten-Belegnummer: ' . (string) ($eingangsrechnung->get('lieferantenRechnungsnummer') ?? '') . ')' .
+                                ' ' . ($neuerRest <= 0 ? 'vollständig' : 'teilweise') . ' verrechnet. ' .
+                                'Verrechneter Betrag: ' . number_format($gutschriftBrutto, 2, ',', '.') . ' EUR. ' .
+                                'Restbetrag vor Verrechnung: ' . number_format($originalRest, 2, ',', '.') . ' EUR, ' .
+                                'danach: ' . number_format(max(0.0, $neuerRest), 2, ',', '.') . ' EUR. ' .
+                                'Zahlungsstatus: ' . ($neuerRest <= 0 ? 'bezahlt' : 'teilweise bezahlt') . '. ' .
+                                'Ausgleichsbeleg: ' . $ausgleichsnr . '.';
+
+                            $altBemerkung = trim((string) ($original->get('bemerkung') ?? ''));
+                            $original->set('bemerkung', $altBemerkung !== ''
+                                ? $altBemerkung . "\n\n" . $erklaerung
+                                : $erklaerung
+                            );
+
+                            $em->saveEntity($original, ['allowFestgeschriebenSave' => true]);
+
+                            // Gutschrift vollständig verrechnet.
+                            $eingangsrechnung->set('restbetragOffen', 0.0);
+                            $eingangsrechnung->set('zahlungsstatus',  'bezahlt');
+                            $verrechnungOk = true;
+                        }
+                    }
+                }
+
+                // Kein sicherer Auto-Ausgleich → Gutschrift bleibt offen.
+                if (!$verrechnungOk) {
+                    $eingangsrechnung->set('restbetragOffen', $betragBrutto);
+                    $eingangsrechnung->set('zahlungsstatus',  'offen');
+                }
+            } else {
+                // normal_buchen: Restbetrag offen, Zahlung noch ausstehend.
+                $eingangsrechnung->set('restbetragOffen', $betragBrutto);
+                $eingangsrechnung->set('zahlungsstatus',  'offen');
+            }
 
             $eingangsrechnung->set('status', 'festgeschrieben');
             $eingangsrechnung->set('festgeschriebenAm', date('Y-m-d H:i:s'));

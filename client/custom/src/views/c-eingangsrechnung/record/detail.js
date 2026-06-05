@@ -9,6 +9,11 @@ define('custom:views/c-eingangsrechnung/record/detail', [
 
             this._blockCreateRelatedIfLocked = this._blockCreateRelatedIfLocked.bind(this);
             document.addEventListener('click', this._blockCreateRelatedIfLocked, true);
+
+            // Nach Speichern Workflow-Blöcke wiederherstellen.
+            this.listenTo(this.model, 'sync', function () {
+                setTimeout(() => this._reRenderWorkflowBlocks_(), 100);
+            });
         },
 
         // Что это:
@@ -18,8 +23,40 @@ define('custom:views/c-eingangsrechnung/record/detail', [
         // Зачем:
         // Phase 7A.3: бухгалтер должен сразу видеть, есть ли оригинальный Beleg
         // к Eingangsrechnung, и иметь кнопку "Beleg anzeigen".
+        actionEdit: function () {
+            this._hideWorkflowBlocks_();
+            if (Dep.prototype.actionEdit) {
+                Dep.prototype.actionEdit.call(this);
+            }
+        },
+
+        actionCancelEdit: function () {
+            if (Dep.prototype.actionCancelEdit) {
+                Dep.prototype.actionCancelEdit.call(this);
+            }
+            setTimeout(() => this._reRenderWorkflowBlocks_(), 50);
+        },
+
+        _hideWorkflowBlocks_: function () {
+            this.$el.find('[data-name="eingangsrechnung-workflow-actions"]').remove();
+            this.$el.find('[data-name="eingangsrechnung-storno-action"]').remove();
+            this.$el.find('[data-name="eingangsrechnung-korrektur-action"]').remove();
+            this.$el.find('[data-name="eingangsrechnung-belegsicht"]').remove();
+        },
+
+        _reRenderWorkflowBlocks_: function () {
+            this._renderWorkflowButtons();
+            this._applyActionLocksDeferred();
+            this._renderStornoActionButton();
+            this._renderStornoInfoBlock();
+            this._renderKorrekturNachfolgeActionButton();
+            this._updateStornoActionButtonState();
+            this._renderBelegsichtBlock();
+        },
+
         afterRender: function () {
             Dep.prototype.afterRender.call(this);
+
             this._renderWorkflowButtons();
             this._applyActionLocksDeferred();
             this._renderStornoActionButton();

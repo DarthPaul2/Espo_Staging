@@ -59,7 +59,7 @@ define('custom:views/c-eingangsrechnung/record/edit', ['views/record/edit'], fun
 
             const patch = {
                 belegTyp: data.belegTyp || 'eingangsrechnung',
-                buchungsWirkung: data.buchungsWirkung || 'manuell_pruefen',
+                buchungsWirkung: data.buchungsWirkung || 'normal_buchen',
                 lieferantId: data.lieferantId || null,
                 lieferantName: data.lieferantName || null,
                 lieferantenRechnungsnummer: data.lieferantenRechnungsnummer || null,

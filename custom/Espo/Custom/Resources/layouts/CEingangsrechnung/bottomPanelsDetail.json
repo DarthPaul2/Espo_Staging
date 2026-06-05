@@ -11,5 +11,11 @@
     },
     "importe": {
         "index": 1
+    },
+    "ausgleiche": {
+        "index": 2
+    },
+    "gegenbelegEingangsrechnung": {
+        "index": 3
     }
 }

@@ -21,6 +21,10 @@
         "eingangsrechnung": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "gegenbelegAusgleiche": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

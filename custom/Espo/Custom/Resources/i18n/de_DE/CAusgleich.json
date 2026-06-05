@@ -18,7 +18,8 @@
         "istAktiv": "Aktiv",
         "ausgleichsnummer": "Ausgleich-Nr.",
         "storniertAm": "Storniert am",
-        "stornoGrund": "Storno-Grund"
+        "stornoGrund": "Storno-Grund",
+        "gegenbelegAusgleiche": "Gegenbeleg-Ausgleiche"
     },
     "options": {
         "richtung": {
@@ -37,6 +38,7 @@
     "links": {
         "zahlung": "Zahlung",
         "rechnung": "Rechnung",
-        "eingangsrechnung": "Eingangsrechnung"
+        "eingangsrechnung": "Eingangsrechnung",
+        "gegenbelegAusgleiche": "Gegenbeleg-Ausgleiche"
     }
 }

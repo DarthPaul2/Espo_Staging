@@ -1,8 +1,8 @@
 <?php
 return [
   'actualDatabaseType' => 'mysql',
-  'actualDatabaseVersion' => '8.0.45',
-  'microtimeInternal' => 1770191537.939181,
+  'actualDatabaseVersion' => '8.0.46',
+  'microtimeInternal' => 1780466684.753819,
   'instanceId' => 'ab6f82be-80a7-4ab3-98dd-fe0eef820244',
   'smtpPassword' => NULL,
   'logger' => [
