@@ -174,7 +174,10 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                     const raw = (p.beschreibung || '').trim();
                     beschreibung = (raw.toLowerCase() === 'position') ? '' : raw;
                 } else {
-                    const namePart = p.name || p.materialName || '';
+                    const rawName = p.name || '';
+                    const namePart = (rawName.toLowerCase() === 'position')
+                        ? (p.materialName || '')
+                        : (rawName || p.materialName || '');
                     const descPart = (p.beschreibung || p.materialDescription || '');
 
                     beschreibung = namePart;
@@ -245,11 +248,11 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             this.USE_PDF_V2 = true;
 
 
-            this.once('after:render', () => this._applyPdfLinkLabel(), this);
+            this.on('after:render', () => this._applyPdfLinkLabel(), this);
             this.listenTo(this.model, 'change:pdfUrl', () => {
                 setTimeout(() => this._applyPdfLinkLabel(), 0);
             });
-            this.once('after:render', () => this._applyGaebLinkLabel(), this);
+            this.on('after:render', () => this._applyGaebLinkLabel(), this);
             this.listenTo(this.model, 'change:gaebUrl', () => {
                 setTimeout(() => this._applyGaebLinkLabel(), 0);
             });
@@ -460,8 +463,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 });
             };
 
-            this.loadPositionsFromPanel()
-                .catch(() => this.loadPositionsViaRest(id))
+            this.loadPositionsViaRest(id)
                 .then(proceed)
                 .catch(err => {
                     // ошибка ещё до AJAX (позиции не загрузились)
@@ -486,8 +488,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
 
             const notifyId = this.notify('PDF wird erzeugt und gespeichert…', 'loading');
 
-            this.loadPositionsFromPanel()
-                .catch(() => this.loadPositionsViaRest(espoId))
+            this.loadPositionsViaRest(espoId)
                 .then(rows => {
                     const pos = this.buildPositionsForPdf(rows);
                     if (!pos.length) {
@@ -621,8 +622,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             Loader.showFor(this, 'PDF (mit Preis) wird erzeugt und gespeichert…');
             const notifyId = this.notify('PDF (mit Preis) wird erzeugt und gespeichert…', 'loading');
 
-            this.loadPositionsFromPanel()
-                .catch(() => this.loadPositionsViaRest(espoId))
+            this.loadPositionsViaRest(espoId)
                 .then(rows => {
                     const pos = this.buildPositionsForPdf(rows);
                     if (!pos.length) {
@@ -857,7 +857,7 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
 
         // ==== PDF-Link anpassen ====
         _applyPdfLinkLabel: function () {
-            const nr = this.model.get('angebotsnummer');
+            const pdfUrl = this.model.get('pdfUrl');
             const $field = this.$el.find('[data-name="pdfUrl"]');
             if (!$field.length) return;
 
@@ -865,33 +865,24 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 ? $field.find('.value, .link-container').first()
                 : $field;
 
-            if (!nr) {
+            if (!pdfUrl) {
                 $value.text('Keine PDF gespeichert');
                 return;
             }
-
-            const downloadUrl = this.USE_PDF_V2
-                ? `${this.FLASK_BASE}/angebote_v2/download_pdf/${encodeURIComponent(nr)}`
-
-                // ℹ️ Download erfolgt weiterhin über den alten Endpunkt.
-                // Das PDF liegt unabhängig vom Erzeugungsweg (V1/V2)
-                // im gleichen Zielverzeichnis.
-                // Der Download-Endpunkt stammt aus routes_angebote_rechnung.py.
-                : `${this.FLASK_BASE}/angebote/download_pdf/${encodeURIComponent(nr)}`;
 
             const label = '📄 PDF herunterladen';
 
             let $a = $value.find('a[href]');
             if ($a.length) {
-                $a.attr({ href: downloadUrl, target: '_self', rel: 'noopener' }).text(label);
+                $a.attr({ href: pdfUrl, target: '_blank', rel: 'noopener' }).text(label);
             } else {
-                $value.empty().append($('<a>').attr({ href: downloadUrl, target: '_self', rel: 'noopener' }).text(label));
+                $value.empty().append($('<a>').attr({ href: pdfUrl, target: '_blank', rel: 'noopener' }).text(label));
             }
         },
 
 
         _applyGaebLinkLabel: function () {
-            const nr = this.model.get('angebotsnummer');
+            const gaebUrl = this.model.get('gaebUrl');
             const $field = this.$el.find('[data-name="gaebUrl"]');
             if (!$field.length) return;
 
@@ -899,25 +890,18 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 ? $field.find('.value, .link-container').first()
                 : $field;
 
-            if (!nr) {
+            if (!gaebUrl) {
                 $value.text('Keine GAEB gespeichert');
                 return;
             }
-
-            const downloadGaebUrl = this.USE_PDF_V2
-                ? `${this.FLASK_BASE}/angebote_v2/download_gaeb/${encodeURIComponent(nr)}`
-
-                // ℹ️ GAEB-Download nutzt weiterhin den bestehenden V1-Endpunkt.
-                // Einheitliche GAEB-Logik aus routes_angebote_rechnung.py.
-                : `${this.FLASK_BASE}/angebote/download_gaeb/${encodeURIComponent(nr)}`;
 
             const label = '🧾 GAEB X84 herunterladen';
 
             let $a = $value.find('a[href]');
             if ($a.length) {
-                $a.attr({ href: downloadGaebUrl, target: '_self', rel: 'noopener' }).text(label);
+                $a.attr({ href: gaebUrl, target: '_blank', rel: 'noopener' }).text(label);
             } else {
-                $value.empty().append($('<a>').attr({ href: downloadGaebUrl, target: '_self', rel: 'noopener' }).text(label));
+                $value.empty().append($('<a>').attr({ href: gaebUrl, target: '_blank', rel: 'noopener' }).text(label));
             }
         }
 

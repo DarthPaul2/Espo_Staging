@@ -27,8 +27,8 @@
 .hb-nav li a {
     display: block;
     padding: 1px 16px;
-    font-size: 18px;
-    color: #444;
+    font-size: 15px;
+    color: #6a7290;
     text-decoration: none;
     border-left: 3px solid transparent;
     line-height: 1.2;
