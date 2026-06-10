@@ -314,8 +314,6 @@
         }
 
         .kb-cockpit .kb-expected-liquidity-box {
-            max-width: 760px;
-            margin: 0 auto 18px auto;
             padding: 18px 26px;
             border: 1px solid #bbf7d0;
             border-left: 7px solid #16a34a;
@@ -347,6 +345,53 @@
         .kb-cockpit .kb-expected-liquidity-formula {
             font-size: 12px;
             color: #4b5563;
+        }
+
+        .kb-cockpit .kb-summary-row {
+            display: flex;
+            gap: 16px;
+            align-items: stretch;
+            margin-bottom: 18px;
+        }
+
+        .kb-cockpit .kb-fakturiert-box {
+            flex: 0 0 auto;
+            width: 260px;
+            padding: 14px 20px;
+            border: 1px solid #bae6fd;
+            border-left: 7px solid #0284c7;
+            border-right: 7px solid #0284c7;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%);
+            box-shadow: 0 3px 12px rgba(2, 132, 199, 0.12);
+            text-align: center;
+        }
+
+        .kb-cockpit .kb-fakturiert-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #075985;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .kb-cockpit .kb-fakturiert-value {
+            font-size: 26px;
+            line-height: 1.1;
+            font-weight: 800;
+            color: #0369a1;
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+
+        .kb-cockpit .kb-fakturiert-formula {
+            font-size: 11px;
+            color: #4b5563;
+        }
+
+        .kb-cockpit .kb-expected-liquidity-box {
+            flex: 1 1 auto;
         }
 
 
@@ -488,11 +533,18 @@
                 <div class="kb-kpi-value" data-kpi="liquiditaet">0,00 €</div>
             </div>
         </div>
-        <div class="kb-expected-liquidity-box">
-            <div class="kb-expected-liquidity-label">Liquiditätsbild</div>
-            <div class="kb-expected-liquidity-value" data-kpi="erwartete-liquiditaet">0,00 €</div>
-            <div class="kb-expected-liquidity-formula">
-                Bankbewegung Zeitraum + offene Forderungen - offene Verbindlichkeiten
+        <div class="kb-summary-row">
+            <div class="kb-fakturiert-box">
+                <div class="kb-fakturiert-label">Fakturiert (brutto)</div>
+                <div class="kb-fakturiert-value" data-kpi="fakturiert">0,00 €</div>
+                <div class="kb-fakturiert-formula">Alle Rechnungen im Zeitraum</div>
+            </div>
+            <div class="kb-expected-liquidity-box">
+                <div class="kb-expected-liquidity-label">Liquiditätsbild</div>
+                <div class="kb-expected-liquidity-value" data-kpi="erwartete-liquiditaet">0,00 €</div>
+                <div class="kb-expected-liquidity-formula">
+                    Bankbewegung Zeitraum + offene Forderungen - offene Verbindlichkeiten
+                </div>
             </div>
         </div>
         <div class="kb-chart-box">

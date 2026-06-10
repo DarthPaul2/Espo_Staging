@@ -55,6 +55,7 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         }
 
         $kpi = $this->loadKpi($pdo, $whereDate, $sqlParams);
+        $kpi['fakturiertBrutto'] = $this->loadFakturiertBrutto($pdo, $dateFrom, $dateTo);
         $monthly = $this->loadMonthly($pdo, $whereDate, $sqlParams);
         $konten = $this->loadKonten($pdo, $whereDate, $sqlParams);
         $checks = $this->loadChecks($pdo, $whereDate, $sqlParams);
@@ -783,5 +784,35 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
                 'total' => 0,
             ];
         }
+    }
+
+    /**
+     * Что это:
+     * Gesamtsumme aller ausgestellten Rechnungen (brutto) im Zeitraum.
+     *
+     * Зачем:
+     * Zeigt im Cockpit wie viel im Zeitraum fakturiert wurde —
+     * unabhängig von Zahlungsstatus oder Buchungsstatus.
+     */
+    private function loadFakturiertBrutto(\PDO $pdo, ?string $dateFrom, ?string $dateTo): float
+    {
+        $where = 'WHERE deleted = 0 AND ist_storniert = 0';
+        $params = [];
+
+        if ($dateFrom) {
+            $where .= ' AND belegdatum >= :dateFrom';
+            $params[':dateFrom'] = $dateFrom;
+        }
+        if ($dateTo) {
+            $where .= ' AND belegdatum <= :dateTo';
+            $params[':dateTo'] = $dateTo;
+        }
+
+        $sql = "SELECT ROUND(COALESCE(SUM(betrag_brutto), 0), 2) AS total FROM c_rechnung $where";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return (float) ($row['total'] ?? 0);
     }
 }

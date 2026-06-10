@@ -75,14 +75,20 @@
 .hb-main h2 {
     font-size: 22px;
     color: #2c3e6a;
-    margin: 32px 0 10px 0;
-    padding-bottom: 6px;
+    margin: 48px 0 12px 0;
+    padding: 14px 0 8px 0;
+    border-top: 3px solid #3e5db0;
     border-bottom: 1px solid #e0e4f0;
+}
+.hb-main h2:first-of-type {
+    margin-top: 8px;
 }
 .hb-main h3 {
     font-size: 18px;
     color: #3a4a7a;
-    margin: 22px 0 8px 0;
+    margin: 28px 0 8px 0;
+    padding-left: 10px;
+    border-left: 3px solid #a0aed0;
 }
 .hb-main h4 { font-size: 16px; color: #555; margin: 16px 0 6px 0; font-weight: 600; }
 
@@ -224,6 +230,14 @@ kbd {
                     <li class="muted"><a href="#de-cockpit">→ Finanz-Cockpit (Dashboard)</a></li>
                     <li class="muted"><a href="#de-buchungsjournal">→ Buchungsjournal</a></li>
                     <li class="muted"><a href="#de-auswertung">→ Auswertungen</a></li>
+                    <li class="hb-nav-sep"></li>
+                    <li class="section" style="font-size:15px;font-weight:700;color:#1a6b3c;"><a href="#de-zusatz" style="color:#1a6b3c;">⚙ Zusatzfunktionen</a></li>
+                    <li><a href="#de-whatsapp" style="color:#1a6b3c;">→ WhatsApp &amp; KI-Berichte</a></li>
+                    <li style="padding-left:28px;"><a href="#de-wa-eingang" style="color:#1a6b3c;">· Eingehende Nachrichten</a></li>
+                    <li style="padding-left:28px;"><a href="#de-wa-bericht" style="color:#1a6b3c;">· KI-Berichtserstellung</a></li>
+                    <li style="padding-left:28px;"><a href="#de-wa-medien" style="color:#1a6b3c;">· Medien &amp; Annotierung</a></li>
+                    <li style="padding-left:28px;"><a href="#de-wa-sammelbericht" style="color:#1a6b3c;">· Sammelbericht</a></li>
+                    <li><a href="#de-nas" style="color:#9b3a6b;">→ KleSec NAS</a></li>
                 </ul>
             </div>
             <div class="hb-content-ru" style="display:none">
@@ -268,6 +282,14 @@ kbd {
                     <li class="muted"><a href="#ru-cockpit">→ Finanz-Cockpit (Dashboard)</a></li>
                     <li class="muted"><a href="#ru-buchungsjournal">→ Журнал проводок</a></li>
                     <li class="muted"><a href="#ru-auswertung">→ Отчёты</a></li>
+                    <li class="hb-nav-sep"></li>
+                    <li class="section" style="font-size:15px;font-weight:700;color:#1a6b3c;"><a href="#ru-zusatz" style="color:#1a6b3c;">⚙ Доп. функции</a></li>
+                    <li><a href="#ru-whatsapp" style="color:#1a6b3c;">→ WhatsApp и ИИ-отчёты</a></li>
+                    <li style="padding-left:28px;"><a href="#ru-wa-eingang" style="color:#1a6b3c;">· Входящие сообщения</a></li>
+                    <li style="padding-left:28px;"><a href="#ru-wa-bericht" style="color:#1a6b3c;">· Создание ИИ-отчёта</a></li>
+                    <li style="padding-left:28px;"><a href="#ru-wa-medien" style="color:#1a6b3c;">· Медиа и аннотации</a></li>
+                    <li style="padding-left:28px;"><a href="#ru-wa-sammelbericht" style="color:#1a6b3c;">· Сводный отчёт</a></li>
+                    <li><a href="#ru-nas" style="color:#9b3a6b;">→ KleSec NAS</a></li>
                 </ul>
             </div>
         </div>
@@ -1047,6 +1069,90 @@ kbd {
                 </tbody>
             </table>
 
+            <!-- ZUSATZFUNKTIONEN -->
+            <h2 id="de-zusatz">11. Zusatzfunktionen</h2>
+            <p>Eigenentwickelte Module, die das EspoCRM-System um KI-gestützte Feldfunktionen und Infrastruktur erweitern.</p>
+
+            <h3 id="de-whatsapp">11.1 WhatsApp &amp; KI-Berichte</h3>
+            <p>Das WhatsApp-Modul verbindet die Arbeit im Feld direkt mit dem Büro. Techniker senden Nachrichten, Fotos, Videos und Sprachmemos über WhatsApp vom Einsatzort — das System empfängt alles automatisch, gruppiert es und bereitet es für die Berichterstellung vor. Die eigentliche Stärke liegt in der KI-gestützten Verarbeitung: Ein Klick genügt, um aus rohen Feldnachrichten einen fertigen technischen Bericht zu erzeugen.</p>
+            <div class="hb-tip">Das Modul ist unter <strong>klesec.pagekite.me/whatsapp_admin</strong> erreichbar — separat vom EspoCRM-Interface.</div>
+
+            <h4 id="de-wa-eingang" style="margin-top:22px;color:#1a3a5c;">11.1.1 Eingehende Nachrichten</h4>
+            <p>Sobald ein Techniker eine WhatsApp-Nachricht sendet, landet sie automatisch im System — ohne manuelle Eingabe im Büro.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Wie funktioniert der Empfang?</h4>
+            <ul>
+                <li>Jeder Techniker ist im System mit seiner <strong>WhatsApp-Nummer</strong> hinterlegt (unter Stammdaten → Techniker).</li>
+                <li>Eingehende Nachrichten werden über den <strong>Meta WhatsApp Business API Webhook</strong> empfangen und sofort dem richtigen Techniker zugeordnet.</li>
+                <li>Nachrichten, die innerhalb von <strong>5 Minuten</strong> vom selben Techniker eingehen, werden automatisch zu einer <strong>Gruppe</strong> zusammengefasst — das entspricht normalerweise einem Einsatz oder einer Tätigkeit.</li>
+            </ul>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Unterstützte Medientypen</h4>
+            <table class="hb-table">
+                <thead><tr><th>Typ</th><th>Verarbeitung</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Text</strong></td><td>Direkt gespeichert, fließt in den KI-Bericht ein</td></tr>
+                    <tr><td><strong>Fotos</strong></td><td>Gespeichert, im Bericht-Editor anzeigbar und annotierbar</td></tr>
+                    <tr><td><strong>Videos</strong></td><td>Gespeichert, als Link im Bericht verfügbar</td></tr>
+                    <tr><td><strong>Sprachmemos (Audio)</strong></td><td>Automatisch durch <strong>Whisper KI</strong> transkribiert — der Text fließt direkt in den Bericht ein, als wäre er getippt worden</td></tr>
+                    <tr><td><strong>Dokumente</strong></td><td>Gespeichert und dem Protokoll beigefügt</td></tr>
+                </tbody>
+            </table>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Übersichtstabelle</h4>
+            <p>Die Hauptansicht zeigt alle eingegangenen Nachrichtengruppen mit Datum, Techniker, Nachrichtenvorschau und verfügbaren Medien. Über Filterfelder lässt sich nach Techniker und Datum eingrenzen.</p>
+
+            <h4 id="de-wa-bericht" style="margin-top:22px;color:#1a3a5c;">11.1.2 KI-Berichtserstellung</h4>
+            <p>Das Herzstück des Moduls: Aus den rohen WhatsApp-Nachrichten eines Technikers wird automatisch ein strukturierter technischer Bericht generiert — in professioneller Sprache, fertig für den Kunden.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Schritt für Schritt</h4>
+            <ol>
+                <li>In der Übersicht die gewünschte Nachrichtengruppe aufrufen → Schaltfläche <kbd>KI Bericht</kbd> klicken.</li>
+                <li>Das System sendet alle Textnachrichten und Sprach-Transkriptionen der Gruppe an das <strong>Groq Llama KI-Modell</strong>. Das Modell analysiert den Inhalt und erstellt daraus einen strukturierten Bericht in technischer Fachsprache.</li>
+                <li>Der generierte Text erscheint im <strong>Bericht-Editor</strong>. Er kann direkt bearbeitet, ergänzt oder gekürzt werden.</li>
+                <li>Kunden auswählen: Das System schlägt automatisch den passenden Kunden vor — zunächst durch Schlüsselwort-Abgleich im Nachrichtentext, bei Unklarheit durch einen zweiten KI-Aufruf.</li>
+                <li>Bei Bedarf Fotos aus der Nachrichtengruppe dem Bericht hinzufügen oder entfernen.</li>
+                <li><kbd>PDF Vorschau</kbd> — sofortige Vorschau des fertigen Berichts als PDF, mit Firmen-Logo, Kopf- und Fußzeile.</li>
+                <li><kbd>PDF Speichern</kbd> — Bericht wird als <strong>Protokoll</strong> in der Datenbank abgelegt, PDF-Datei gespeichert.</li>
+            </ol>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Was die KI leistet</h4>
+            <table class="hb-table">
+                <thead><tr><th>KI-Funktion</th><th>Beschreibung</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Whisper (OpenAI)</strong></td><td>Transkribiert Sprachmemos automatisch in Text — Dialekte und Fachbegriffe werden erkannt</td></tr>
+                    <tr><td><strong>Groq Llama (LLM)</strong></td><td>Wandelt rohe Feldnotizen in einen professionellen technischen Bericht um — strukturiert, fehlerfrei, in korrekter Fachsprache</td></tr>
+                    <tr><td><strong>KI-Kundenzuordnung</strong></td><td>Erkennt anhand des Nachrichteninhalts automatisch, um welchen Kunden oder welches Objekt es sich handelt</td></tr>
+                </tbody>
+            </table>
+            <div class="hb-tip">Der Techniker muss im Feld nichts formatieren oder strukturieren — er schreibt oder spricht einfach. Die KI übernimmt die Aufbereitung.</div>
+
+            <h4 id="de-wa-medien" style="margin-top:22px;color:#1a3a5c;">11.1.3 Medien &amp; Annotierung</h4>
+            <p>Fotos, die mit den WhatsApp-Nachrichten eingehen, können direkt im Bericht-Editor bearbeitet und mit technischen Anmerkungen versehen werden — ohne externe Software.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Annotierungs-Editor</h4>
+            <ul>
+                <li>Bild anklicken → <kbd>Annotieren</kbd> öffnet den Zeichen-Editor direkt im Browser.</li>
+                <li>Verfügbare Werkzeuge: <strong>Freihand-Zeichnung</strong>, <strong>Pfeile</strong>, <strong>Radierer</strong>, Rückgängig-Funktion.</li>
+                <li>Farbe und Linienstärke frei wählbar.</li>
+                <li>Zu jedem Bild kann ein kurzer <strong>Kommentar</strong> eingegeben werden (erscheint unter dem Bild im PDF).</li>
+                <li>Das annotierte Bild ersetzt das Original im Bericht — das Original bleibt unverändert gespeichert.</li>
+            </ul>
+            <p>Typischer Anwendungsfall: Techniker fotografiert einen Schaden → Sachbearbeiter markiert die betroffene Stelle mit einem roten Pfeil und fügt eine Erklärung hinzu → das markierte Foto erscheint im PDF-Bericht für den Kunden.</p>
+
+            <h4 id="de-wa-sammelbericht" style="margin-top:22px;color:#1a3a5c;">11.1.4 Sammelbericht</h4>
+            <p>Wenn ein Techniker an einem Tag mehrere Einsätze hat (mehrere Nachrichtengruppen), können diese zu einem einzigen <strong>Sammelbericht</strong> zusammengefasst werden — ein PDF-Dokument, das alle Tätigkeiten des Tages übersichtlich darstellt.</p>
+            <ul>
+                <li>Mehrere Nachrichtengruppen auswählen → <kbd>Sammelbericht erstellen</kbd>.</li>
+                <li>Das System prüft auf Konflikte (z.B. unterschiedliche Kunden im selben Bericht).</li>
+                <li>Kunde auswählen → alle Einzel-Berichte werden in einem PDF zusammengeführt.</li>
+                <li>Der Sammelbericht wird als eigenständiges Dokument gespeichert und bleibt mit den Einzel-Protokollen verknüpft.</li>
+            </ul>
+
+            <h3 id="de-nas">11.2 KleSec NAS</h3>
+            <p>Direkter Zugriff auf den internen Netzwerkspeicher der Firma. Der Link öffnet das NAS-Interface im Browser — dort sind Firmendokumente, Bilder, Backups und geteilte Dateien abgelegt.</p>
+            <p>Erreichbar über den Menüpunkt <strong>KleSec NAS</strong> in der Navigation — kein separates Login nötig, sofern man sich im Firmennetzwerk oder per VPN befindet.</p>
+
         </div><!-- Ende DE -->
 
 
@@ -1749,7 +1855,90 @@ kbd {
                 </tbody>
             </table>
 
-            <!-- НАПОМИНАНИЯ -->
+            <!-- ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ -->
+            <h2 id="ru-zusatz">11. Дополнительные функции</h2>
+            <p>Собственные модули, расширяющие систему EspoCRM функциями полевой работы с ИИ и инфраструктурой.</p>
+
+            <h3 id="ru-whatsapp">11.1 WhatsApp и ИИ-отчёты</h3>
+            <p>Модуль WhatsApp соединяет работу на объекте напрямую с офисом. Техники отправляют сообщения, фотографии, видео и голосовые записи через WhatsApp с места работы — система получает всё автоматически, группирует и подготавливает к созданию отчёта. Главная сила модуля — в обработке с помощью искусственного интеллекта: одного клика достаточно, чтобы из сырых полевых сообщений получить готовый технический отчёт.</p>
+            <div class="hb-tip">Модуль доступен по адресу <strong>klesec.pagekite.me/whatsapp_admin</strong> — отдельно от интерфейса EspoCRM.</div>
+
+            <h4 id="ru-wa-eingang" style="margin-top:22px;color:#1a3a5c;">11.1.1 Входящие сообщения</h4>
+            <p>Как только техник отправляет сообщение в WhatsApp — оно автоматически появляется в системе, без ручного ввода в офисе.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Как работает получение?</h4>
+            <ul>
+                <li>У каждого техника в системе записан его <strong>номер WhatsApp</strong> (Stammdaten → Techniker).</li>
+                <li>Входящие сообщения принимаются через <strong>Webhook Meta WhatsApp Business API</strong> и сразу привязываются к нужному технику по номеру телефона.</li>
+                <li>Сообщения, поступившие в течение <strong>5 минут</strong> от одного техника, автоматически объединяются в одну <strong>группу</strong> — как правило, это один выезд или одна выполненная работа.</li>
+            </ul>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Поддерживаемые типы медиа</h4>
+            <table class="hb-table">
+                <thead><tr><th>Тип</th><th>Обработка</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Текст</strong></td><td>Сохраняется напрямую, попадает в ИИ-отчёт</td></tr>
+                    <tr><td><strong>Фотографии</strong></td><td>Сохраняются, отображаются и аннотируются в редакторе отчёта</td></tr>
+                    <tr><td><strong>Видео</strong></td><td>Сохраняется, доступно как ссылка в отчёте</td></tr>
+                    <tr><td><strong>Голосовые сообщения (аудио)</strong></td><td>Автоматически расшифровываются через <strong>ИИ Whisper</strong> — текст расшифровки попадает в отчёт так же, как если бы техник его написал</td></tr>
+                    <tr><td><strong>Документы</strong></td><td>Сохраняются и прикрепляются к протоколу</td></tr>
+                </tbody>
+            </table>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Таблица обзора</h4>
+            <p>Главный экран показывает все входящие группы сообщений с датой, техником, превью текста и доступными медиафайлами. Фильтры позволяют сузить список по технику и дате.</p>
+
+            <h4 id="ru-wa-bericht" style="margin-top:22px;color:#1a3a5c;">11.1.2 Создание ИИ-отчёта</h4>
+            <p>Главная возможность модуля: из сырых WhatsApp-сообщений техника автоматически создаётся структурированный технический отчёт — на профессиональном языке, готовый для клиента.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Пошагово</h4>
+            <ol>
+                <li>В таблице открыть нужную группу сообщений → нажать <kbd>KI Bericht</kbd>.</li>
+                <li>Система отправляет все тексты и расшифровки голосовых сообщений группы в <strong>языковую модель Groq Llama</strong>. Модель анализирует содержание и составляет из него структурированный отчёт на техническом языке.</li>
+                <li>Сгенерированный текст появляется в <strong>редакторе отчёта</strong>. Его можно свободно редактировать, дополнять или сокращать.</li>
+                <li>Выбор клиента: система автоматически предлагает подходящего клиента — сначала через сопоставление ключевых слов в тексте сообщений, при неоднозначности — через повторный запрос к ИИ.</li>
+                <li>При необходимости добавить или убрать фотографии из группы сообщений.</li>
+                <li><kbd>PDF Vorschau</kbd> — мгновенный предпросмотр готового отчёта в формате PDF с логотипом фирмы, шапкой и подвалом.</li>
+                <li><kbd>PDF Speichern</kbd> — отчёт сохраняется как <strong>Protokoll</strong> в базе данных, PDF-файл записывается.</li>
+            </ol>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Что делает ИИ</h4>
+            <table class="hb-table">
+                <thead><tr><th>ИИ-функция</th><th>Описание</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Whisper (OpenAI)</strong></td><td>Автоматически расшифровывает голосовые сообщения в текст — распознаёт диалекты и технические термины</td></tr>
+                    <tr><td><strong>Groq Llama (LLM)</strong></td><td>Преобразует сырые полевые записи в профессиональный технический отчёт — структурированный, без ошибок, в правильной деловой речи</td></tr>
+                    <tr><td><strong>ИИ-подбор клиента</strong></td><td>По содержанию сообщений автоматически определяет, о каком клиенте или объекте идёт речь</td></tr>
+                </tbody>
+            </table>
+            <div class="hb-tip">Технику в поле ничего не нужно форматировать или структурировать — он просто пишет или говорит. ИИ берёт на себя всю обработку.</div>
+
+            <h4 id="ru-wa-medien" style="margin-top:22px;color:#1a3a5c;">11.1.3 Медиа и аннотации</h4>
+            <p>Фотографии, поступившие с сообщениями, можно редактировать прямо в редакторе отчёта и снабжать техническими пометками — без стороннего программного обеспечения.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Редактор аннотаций</h4>
+            <ul>
+                <li>Нажать на фото → <kbd>Annotieren</kbd> открывает графический редактор прямо в браузере.</li>
+                <li>Доступные инструменты: <strong>свободное рисование</strong>, <strong>стрелки</strong>, <strong>ластик</strong>, отмена действия.</li>
+                <li>Цвет и толщина линии — на выбор.</li>
+                <li>К каждому фото можно добавить короткий <strong>комментарий</strong> (отображается под фото в PDF).</li>
+                <li>Аннотированное фото заменяет оригинал в отчёте — сам оригинал сохраняется без изменений.</li>
+            </ul>
+            <p>Типичный пример: техник фотографирует повреждение → сотрудник офиса отмечает проблемное место красной стрелкой и добавляет пояснение → помеченное фото попадает в PDF-отчёт для клиента.</p>
+
+            <h4 id="ru-wa-sammelbericht" style="margin-top:22px;color:#1a3a5c;">11.1.4 Сводный отчёт (Sammelbericht)</h4>
+            <p>Если у техника за день было несколько выездов (несколько групп сообщений), их можно объединить в один <strong>сводный отчёт</strong> — один PDF-документ, в котором наглядно показаны все выполненные работы за день.</p>
+            <ul>
+                <li>Выбрать несколько групп сообщений → <kbd>Sammelbericht erstellen</kbd>.</li>
+                <li>Система проверяет наличие конфликтов (например, разные клиенты в одном отчёте).</li>
+                <li>Выбрать клиента → все отдельные отчёты объединяются в одном PDF.</li>
+                <li>Сводный отчёт сохраняется как самостоятельный документ и остаётся связан с отдельными протоколами.</li>
+            </ul>
+
+            <h3 id="ru-nas">11.2 KleSec NAS</h3>
+            <p>Прямой доступ к внутреннему сетевому хранилищу фирмы. Ссылка открывает интерфейс NAS в браузере — там хранятся документы фирмы, изображения, резервные копии и общие файлы.</p>
+            <p>Доступно через пункт меню <strong>KleSec NAS</strong> в навигации — отдельный логин не нужен, если вы в корпоративной сети или подключены через VPN.</p>
+
         </div><!-- Ende RU -->
 
     </div><!-- hb-main -->
