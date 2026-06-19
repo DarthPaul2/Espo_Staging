@@ -1,5 +1,1 @@
-[
-    "account",
-    "auftragsnummer",
-    "status"
-]
+["account", "auftragsnummer", "status", "leistungsdatumVon", "leistungsdatumBis"]

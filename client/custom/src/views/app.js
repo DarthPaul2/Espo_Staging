@@ -16,6 +16,22 @@ define('custom:views/app', ['views/app', 'custom:global/loader'], function (Dep,
 
             // 🔹 Делаем Loader доступным глобально
             window.GlobalLoader = Loader;
+
+            // 🤖 Роль пользователя для KI-Assistent (читается из kb-ai-chat.js)
+            var currentUser = this.getUser();
+            var userRole = 'mitarbeiter';
+            if (currentUser) {
+                if (currentUser.get('isAdmin')) {
+                    userRole = 'admin';
+                } else {
+                    var rolesNames = currentUser.get('rolesNames') || {};
+                    var roleValues = Object.keys(rolesNames).map(function (k) { return rolesNames[k]; });
+                    if (roleValues.indexOf('Buchhaltung') !== -1) {
+                        userRole = 'buchhaltung';
+                    }
+                }
+            }
+            window._kbUserRole = userRole;
         }
     });
 });

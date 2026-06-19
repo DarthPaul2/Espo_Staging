@@ -5,5 +5,9 @@
     "client/custom/css/customstyle.css",
     "client/custom/custom.css",
     "client/custom/css/kb-buchhaltung-auswertung.css"
+  ],
+  "scriptList": [
+    "__APPEND__",
+    "client/custom/js/kb-ai-chat.js"
   ]
 }

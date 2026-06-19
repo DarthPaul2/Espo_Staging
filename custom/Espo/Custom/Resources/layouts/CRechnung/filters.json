@@ -2,5 +2,6 @@
     "account",
     "rechnungsnummer",
     "status",
+    "belegdatum",
     "createdAt"
 ]
