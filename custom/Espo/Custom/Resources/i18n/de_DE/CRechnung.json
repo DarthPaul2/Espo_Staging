@@ -124,6 +124,12 @@
     "massActions": {
         "downloadPdfZip": "PDF speichern (ZIP)"
     },
+    "presetFilters": {
+        "offen":        "Offen",
+        "bezahlt":      "Bezahlt",
+        "ueberfaellig": "Überfällig",
+        "festgeschrieben": "Festgeschrieben"
+    },
     "tooltips": {
         "istFestgeschrieben": "ist Festgeschrieben",
         "nachfolgeBelegId": "speichert die technische ID des neuen Nachfolgebelegs auf dem alten, stornierten Beleg.",

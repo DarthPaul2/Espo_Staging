@@ -2,6 +2,11 @@
     "labels": {
         "Create CEingangsrechnung": "Erstellen Eingangsbeleg"
     },
+    "presetFilters": {
+        "offen": "Offen",
+        "bezahlt": "Bezahlt",
+        "ueberfaellig": "Überfällig"
+    },
     "fields": {
         "eingangsrechnungsnummer": "Eingangsrech.-Nr.",
         "lieferantenRechnungsnummer": "Lief.-Rechnung-Nr.",

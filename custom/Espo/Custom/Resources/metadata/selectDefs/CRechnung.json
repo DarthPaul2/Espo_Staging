@@ -1,0 +1,8 @@
+{
+    "primaryFilterClassNameMap": {
+        "offen": "Espo\\Custom\\Select\\CRechnung\\PrimaryFilters\\Offen",
+        "bezahlt": "Espo\\Custom\\Select\\CRechnung\\PrimaryFilters\\Bezahlt",
+        "ueberfaellig": "Espo\\Custom\\Select\\CRechnung\\PrimaryFilters\\Ueberfaellig",
+        "festgeschrieben": "Espo\\Custom\\Select\\CRechnung\\PrimaryFilters\\Festgeschrieben"
+    }
+}

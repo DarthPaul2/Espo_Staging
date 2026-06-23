@@ -19,6 +19,15 @@
     "boolFilterList": [
         "onlyMy"
     ],
+    "filterList": [
+        {"name": "offen",        "style": "primary"},
+        {"name": "bezahlt",      "style": "success"},
+        {"name": "ueberfaellig", "style": "danger"},
+        {"name": "festgeschrieben", "style": "primary"}
+    ],
+    "views": {
+        "list": "custom:views/c-rechnung/list"
+    },
     "relationshipPanels": {
         "0": {
             "name": "rechnungspositions",

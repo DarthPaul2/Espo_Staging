@@ -1,0 +1,12 @@
+{
+    "boolFilterClassNameMap": {
+        "onlyOffen": "Espo\\Custom\\Select\\Bool\\Filters\\CEingangsrechnung\\OnlyOffen",
+        "onlyBezahlt": "Espo\\Custom\\Select\\Bool\\Filters\\CEingangsrechnung\\OnlyBezahlt",
+        "onlyUeberfaellig": "Espo\\Custom\\Select\\Bool\\Filters\\CEingangsrechnung\\OnlyUeberfaellig"
+    },
+    "primaryFilterClassNameMap": {
+        "offen": "Espo\\Custom\\Select\\CEingangsrechnung\\PrimaryFilters\\Offen",
+        "bezahlt": "Espo\\Custom\\Select\\CEingangsrechnung\\PrimaryFilters\\Bezahlt",
+        "ueberfaellig": "Espo\\Custom\\Select\\CEingangsrechnung\\PrimaryFilters\\Ueberfaellig"
+    }
+}

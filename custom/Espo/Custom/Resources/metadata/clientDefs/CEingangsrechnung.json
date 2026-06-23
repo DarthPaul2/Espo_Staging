@@ -3,7 +3,15 @@
         "detail": "custom:views/c-eingangsrechnung/record/detail",
         "edit": "custom:views/c-eingangsrechnung/record/edit"
     },
+    "views": {
+        "list": "custom:views/c-eingangsrechnung/list"
+    },
     "controller": "controllers/record",
+    "filterList": [
+        {"name": "offen", "style": "primary"},
+        {"name": "bezahlt", "style": "success"},
+        {"name": "ueberfaellig", "style": "danger"}
+    ],
     "boolFilterList": [
         "onlyMy"
     ],

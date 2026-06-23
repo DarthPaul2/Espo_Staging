@@ -81,16 +81,16 @@
         "quelleTyp": {
             "type": "enum",
             "options": [
-                "CRechnung",
+                "ausgangsrechnung",
                 "CEingangsrechnung",
                 "CZahlung"
             ],
             "style": {
-                "CRechnung": null,
+                "ausgangsrechnung": null,
                 "CEingangsrechnung": null,
                 "CZahlung": null
             },
-            "default": "CRechnung",
+            "default": "ausgangsrechnung",
             "maxLength": 100,
             "isCustom": true
         },
