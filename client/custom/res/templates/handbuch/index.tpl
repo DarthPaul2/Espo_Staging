@@ -209,7 +209,8 @@ kbd {
                     <li class="section"><a href="#de-werkzeuge">Werkzeuge</a></li>
                     <li><a href="#de-werkzeug">→ Werkzeug</a></li>
                     <li><a href="#de-ausgabe">→ Werkzeugausgabe</a></li>
-                    <li><a href="#de-wartung">→ Wartung</a></li>
+                    <li class="section"><a href="#de-wartung">Wartung</a></li>
+                    <li><a href="#de-wartung">→ Wartungen</a></li>
                     <li class="hb-nav-sep"></li>
                     <li class="section purple"><a href="#de-mahnwesen">Mahnwesen</a></li>
                     <li class="purple"><a href="#de-mahnung">→ Mahnungen</a></li>
@@ -261,7 +262,8 @@ kbd {
                     <li class="section"><a href="#ru-werkzeuge">Инструменты</a></li>
                     <li><a href="#ru-werkzeug">→ Werkzeug</a></li>
                     <li><a href="#ru-ausgabe">→ Ausgabe</a></li>
-                    <li><a href="#ru-wartung">→ Wartung</a></li>
+                    <li class="section"><a href="#ru-wartung">Обслуживание</a></li>
+                    <li><a href="#ru-wartung">→ Wartungen</a></li>
                     <li class="hb-nav-sep"></li>
                     <li class="section purple"><a href="#ru-mahnwesen">Напоминания</a></li>
                     <li class="purple"><a href="#ru-mahnung">→ Mahnungen</a></li>
@@ -644,7 +646,8 @@ kbd {
             </ul>
             <p><strong>Rückgabe:</strong> Ausgabedatensatz öffnen → <kbd>Bearbeiten</kbd> → <strong>Zurückgegeben am</strong> eintragen → Status auf <strong>Zurückgegeben</strong> → <kbd>Speichern</kbd></p>
 
-            <h3 id="de-wartung">5.3 Wartung</h3>
+            <!-- WARTUNG -->
+            <h2 id="de-wartung">6. Wartung</h2>
             <p>Planung regelmäßiger Wartungen von Anlagen beim Kunden (BMA, EMA, Video, Zutritt). Bei Fälligkeit erstellt das System automatisch eine Aufgabe und benachrichtigt den Verantwortlichen.</p>
             <p><strong>Menü → Wartungen</strong></p>
             <table>
@@ -663,9 +666,9 @@ kbd {
             <div class="hb-tip">Filter <strong>Fälligkeitsstatus = Fällig</strong> in der Liste zeigt alle Objekte, die jetzt gewartet werden müssen.</div>
 
             <!-- MAHNWESEN -->
-            <h2 id="de-mahnwesen">6. Mahnwesen</h2>
+            <h2 id="de-mahnwesen">7. Mahnwesen</h2>
 
-            <h3 id="de-mahnung">6.1 Mahnungen</h3>
+            <h3 id="de-mahnung">7.1 Mahnungen</h3>
             <p>Das System erstellt Mahnungen für überfällige Rechnungen automatisch. Der Buchhalter prüft und versendet sie.</p>
             <p><strong>Menü → Mahnungen</strong></p>
             <table>
@@ -692,14 +695,14 @@ kbd {
             </ul>
 
             <!-- ARBEITSZEIT -->
-            <h2 id="de-arbeitszeit">7. Arbeitszeiterfassung</h2>
+            <h2 id="de-arbeitszeit">8. Arbeitszeiterfassung</h2>
 
-            <h3 id="de-az">7.1 Arbeitszeiten</h3>
+            <h3 id="de-az">8.1 Arbeitszeiten</h3>
             <p>Arbeitsstunden der Techniker — Daten kommen automatisch aus der mobilen App. Der Techniker meldet sich in der App an und ab, die Daten werden synchronisiert.</p>
             <p><strong>Menü → Arbeitszeiten</strong></p>
             <p>Anzeige: Datum, Beginn/Ende, Gesamtdauer, Nettozeit (ohne Pausen), Überstunden, GPS-Koordinaten. Monats- und Jahresübersichten in den jeweiligen Registerkarten verfügbar.</p>
 
-            <h3 id="de-stundenbericht">7.2 Stundenbericht</h3>
+            <h3 id="de-stundenbericht">8.2 Stundenbericht</h3>
             <p>Zusammenfassender Bericht über ausgeführte Arbeiten — wird vom Techniker in der App ausgefüllt. Enthält Objekt, verwendete Materialien, Notdienst und Beträge.</p>
             <p><strong>Menü → Stundenberichte</strong></p>
             <table>
@@ -716,7 +719,7 @@ kbd {
                 <li>Abschließend: Status auf <strong>Archiviert</strong> setzen</li>
             </ul>
 
-            <h3 id="de-abwesenheit">7.3 Abwesenheit</h3>
+            <h3 id="de-abwesenheit">8.3 Abwesenheit</h3>
             <p>Erfassung von Abwesenheiten — Urlaub, Krankheit, Freizeitausgleich. Wird im Teamkalender angezeigt.</p>
             <p><strong>Menü → Abwesenheiten</strong></p>
             <ul class="hb-steps">
@@ -726,14 +729,14 @@ kbd {
             </ul>
 
             <!-- BERICHTE & BRIEFE -->
-            <h2 id="de-berichte">8. Technische Berichte &amp; Briefe</h2>
+            <h2 id="de-berichte">9. Technische Berichte &amp; Briefe</h2>
 
-            <h3 id="de-melder">8.1 Melder Quartal</h3>
+            <h3 id="de-melder">9.1 Melder Quartal</h3>
             <p>Quartalsberichte der technischen Inspektion von Brand- und Einbruchmeldeanlagen. Werden vom Techniker in der App ausgefüllt und automatisch im System gespeichert.</p>
             <p><strong>Menü → Melder Quartale</strong></p>
             <p>In der Objekt- oder Kundenkarte ist unter <strong>Melder Gesamt PDFs</strong> der jährliche Gesamtbericht aller Quartale verfügbar.</p>
 
-            <h3 id="de-briefe">8.2 Briefe</h3>
+            <h3 id="de-briefe">9.2 Briefe</h3>
             <p>Ausgehende Korrespondenz — verknüpft mit Kunden, Aufträgen oder Rechnungen.</p>
             <p><strong>Menü → Briefe</strong></p>
             <ul class="hb-steps">
@@ -743,8 +746,8 @@ kbd {
             </ul>
 
             <!-- ZAHLUNGEN & BANK -->
-            <h2 id="de-bank">9. Zahlungen &amp; Bank</h2>
-            <h3 id="de-bankkonto">9.1 Bankkonten</h3>
+            <h2 id="de-bank">10. Zahlungen &amp; Bank</h2>
+            <h3 id="de-bankkonto">10.1 Bankkonten</h3>
             <p>Bankkonten der Firma Klesec, über die Ein- und Auszahlungen laufen. Wird einmalig vom Buchhalter eingerichtet.</p>
             <p><strong>Menü → Bankkonten</strong></p>
             <ul class="hb-steps">
@@ -753,7 +756,7 @@ kbd {
                 <li><kbd>Speichern</kbd></li>
             </ul>
 
-            <h3 id="de-zahlung">9.2 Zahlungen</h3>
+            <h3 id="de-zahlung">10.2 Zahlungen</h3>
             <p>Aufzeichnung einer Zahlung — eingehend (Kunde zahlt uns) oder ausgehend (wir zahlen Lieferant). Die Verknüpfung mit der Rechnung erfolgt über den Ausgleich — danach wird der Zahlungsstatus automatisch aktualisiert.</p>
             <p><strong>Menü → Zahlungen</strong></p>
             <table>
@@ -768,7 +771,7 @@ kbd {
                 <li>Zahlung mit Rechnung verknüpfen: Registerkarte <strong>Ausgleiche</strong> → <kbd>Erstellen</kbd> → Rechnung und Betrag auswählen</li>
             </ul>
 
-            <h3 id="de-bankbewegung">9.3 Bankbewegungen</h3>
+            <h3 id="de-bankbewegung">10.3 Bankbewegungen</h3>
             <p>Eine Bankbewegung entspricht genau einer Zeile im Kontoauszug — einer realen Transaktion auf dem Firmenkonto. Bankbewegungen werden aus der Bank importiert und dienen als Grundlage, um Zahlungseingänge und -ausgänge mit Rechnungen, Lieferanten und Kunden abzugleichen.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Wie kommen Bankbewegungen ins System?</h4>
@@ -841,7 +844,7 @@ kbd {
                 </tbody>
             </table>
 
-            <h3 id="de-ausgleich">9.4 Ausgleiche</h3>
+            <h3 id="de-ausgleich">10.4 Ausgleiche</h3>
             <p>Der Ausgleich ist das Bindeglied zwischen einer <strong>Zahlung</strong> und einer <strong>Rechnung</strong> (ausgehend) oder <strong>Eingangsrechnung</strong> (eingehend). Er dokumentiert, welcher Betrag einer Zahlung gegen welchen Beleg verrechnet wurde — und aktualisiert dadurch den Zahlungsstatus des Belegs automatisch.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Wann wird ein Ausgleich erstellt?</h4>
@@ -894,9 +897,9 @@ kbd {
             <div class="hb-tip"><strong>Wichtig:</strong> Ein stornierter Ausgleich erhält den Status „Storniert" und wird bei der Berechnung des Zahlungsstatus der Rechnung nicht mehr berücksichtigt.</div>
 
             <!-- BUCHHALTUNG -->
-            <h2 id="de-buchhaltung">10. Buchhaltung</h2>
+            <h2 id="de-buchhaltung">11. Buchhaltung</h2>
 
-            <h3 id="de-cockpit">10.0 Finanz-Cockpit</h3>
+            <h3 id="de-cockpit">11.0 Finanz-Cockpit</h3>
             <p>Zentrale Übersichtstafel mit allen wichtigen Kennzahlen, Grafiken und Prüfindikatoren — für Geschäftsführung und Buchhaltung auf einen Blick.</p>
             <p><strong>Startseite (Dashboard) → Dashlet „Buchhaltung Cockpit"</strong></p>
             <div class="hb-tip">Das Cockpit liest ausschließlich Buchungsdaten — es verändert nichts im System.</div>
@@ -937,7 +940,7 @@ kbd {
             <h4 style="margin-top:16px;color:#2c3e6a;">Arbeitsliste (Auffälligkeiten)</h4>
             <p>Unter beiden Registerkarten erscheint automatisch eine farblich hervorgehobene <strong>Arbeitsliste</strong>: Sie zeigt alle offenen Punkte, die Aufmerksamkeit erfordern — z. B. unklare Bankbewegungen, unausgeglichene Belege, OP-Differenzen oder kritische Forderungen. Jeder Eintrag enthält einen direkten Link zur betreffenden Auswertung.</p>
 
-            <h3 id="de-buchungsjournal">10.1 Buchungsjournal</h3>
+            <h3 id="de-buchungsjournal">11.1 Buchungsjournal</h3>
             <p><strong>Menü → Buchungsjournale</strong></p>
             <div class="hb-tip">Buchungsjournale werden vollautomatisch erstellt — normale Mitarbeiter müssen hier nichts tun. Dieser Bereich ist für die Buchhaltung zur Kontrolle und Prüfung.</div>
 
@@ -987,7 +990,7 @@ kbd {
                 </tbody>
             </table>
 
-            <h3 id="de-auswertung">10.2 Buchhaltung Auswertungen</h3>
+            <h3 id="de-auswertung">11.2 Buchhaltung Auswertungen</h3>
             <p><strong>Menü → Buchhaltung Auswertungen</strong></p>
             <p>Vorkonfigurierte Berichte — jeden Bericht öffnen, Zeitraum (Von/Bis) einstellen und <kbd>Aktualisieren</kbd> klicken.</p>
 
@@ -1070,14 +1073,14 @@ kbd {
             </table>
 
             <!-- ZUSATZFUNKTIONEN -->
-            <h2 id="de-zusatz">11. Zusatzfunktionen</h2>
+            <h2 id="de-zusatz">12. Zusatzfunktionen</h2>
             <p>Eigenentwickelte Module, die das EspoCRM-System um KI-gestützte Feldfunktionen und Infrastruktur erweitern.</p>
 
-            <h3 id="de-whatsapp">11.1 WhatsApp &amp; KI-Berichte</h3>
+            <h3 id="de-whatsapp">12.1 WhatsApp &amp; KI-Berichte</h3>
             <p>Das WhatsApp-Modul verbindet die Arbeit im Feld direkt mit dem Büro. Techniker senden Nachrichten, Fotos, Videos und Sprachmemos über WhatsApp vom Einsatzort — das System empfängt alles automatisch, gruppiert es und bereitet es für die Berichterstellung vor. Die eigentliche Stärke liegt in der KI-gestützten Verarbeitung: Ein Klick genügt, um aus rohen Feldnachrichten einen fertigen technischen Bericht zu erzeugen.</p>
             <div class="hb-tip">Das Modul ist unter <strong>klesec.pagekite.me/whatsapp_admin</strong> erreichbar — separat vom EspoCRM-Interface.</div>
 
-            <h4 id="de-wa-eingang" style="margin-top:22px;color:#1a3a5c;">11.1.1 Eingehende Nachrichten</h4>
+            <h4 id="de-wa-eingang" style="margin-top:22px;color:#1a3a5c;">12.1.1 Eingehende Nachrichten</h4>
             <p>Sobald ein Techniker eine WhatsApp-Nachricht sendet, landet sie automatisch im System — ohne manuelle Eingabe im Büro.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Wie funktioniert der Empfang?</h4>
@@ -1102,7 +1105,7 @@ kbd {
             <h4 style="margin-top:18px;color:#2c3e6a;">Übersichtstabelle</h4>
             <p>Die Hauptansicht zeigt alle eingegangenen Nachrichtengruppen mit Datum, Techniker, Nachrichtenvorschau und verfügbaren Medien. Über Filterfelder lässt sich nach Techniker und Datum eingrenzen.</p>
 
-            <h4 id="de-wa-bericht" style="margin-top:22px;color:#1a3a5c;">11.1.2 KI-Berichtserstellung</h4>
+            <h4 id="de-wa-bericht" style="margin-top:22px;color:#1a3a5c;">12.1.2 KI-Berichtserstellung</h4>
             <p>Das Herzstück des Moduls: Aus den rohen WhatsApp-Nachrichten eines Technikers wird automatisch ein strukturierter technischer Bericht generiert — in professioneller Sprache, fertig für den Kunden.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Schritt für Schritt</h4>
@@ -1127,7 +1130,7 @@ kbd {
             </table>
             <div class="hb-tip">Der Techniker muss im Feld nichts formatieren oder strukturieren — er schreibt oder spricht einfach. Die KI übernimmt die Aufbereitung.</div>
 
-            <h4 id="de-wa-medien" style="margin-top:22px;color:#1a3a5c;">11.1.3 Medien &amp; Annotierung</h4>
+            <h4 id="de-wa-medien" style="margin-top:22px;color:#1a3a5c;">12.1.3 Medien &amp; Annotierung</h4>
             <p>Fotos, die mit den WhatsApp-Nachrichten eingehen, können direkt im Bericht-Editor bearbeitet und mit technischen Anmerkungen versehen werden — ohne externe Software.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Annotierungs-Editor</h4>
@@ -1140,7 +1143,7 @@ kbd {
             </ul>
             <p>Typischer Anwendungsfall: Techniker fotografiert einen Schaden → Sachbearbeiter markiert die betroffene Stelle mit einem roten Pfeil und fügt eine Erklärung hinzu → das markierte Foto erscheint im PDF-Bericht für den Kunden.</p>
 
-            <h4 id="de-wa-sammelbericht" style="margin-top:22px;color:#1a3a5c;">11.1.4 Sammelbericht</h4>
+            <h4 id="de-wa-sammelbericht" style="margin-top:22px;color:#1a3a5c;">12.1.4 Sammelbericht</h4>
             <p>Wenn ein Techniker an einem Tag mehrere Einsätze hat (mehrere Nachrichtengruppen), können diese zu einem einzigen <strong>Sammelbericht</strong> zusammengefasst werden — ein PDF-Dokument, das alle Tätigkeiten des Tages übersichtlich darstellt.</p>
             <ul>
                 <li>Mehrere Nachrichtengruppen auswählen → <kbd>Sammelbericht erstellen</kbd>.</li>
@@ -1149,7 +1152,7 @@ kbd {
                 <li>Der Sammelbericht wird als eigenständiges Dokument gespeichert und bleibt mit den Einzel-Protokollen verknüpft.</li>
             </ul>
 
-            <h3 id="de-nas">11.2 KleSec NAS</h3>
+            <h3 id="de-nas">12.2 KleSec NAS</h3>
             <p>Direkter Zugriff auf den internen Netzwerkspeicher der Firma. Der Link öffnet das NAS-Interface im Browser — dort sind Firmendokumente, Bilder, Backups und geteilte Dateien abgelegt.</p>
             <p>Erreichbar über den Menüpunkt <strong>KleSec NAS</strong> in der Navigation — kein separates Login nötig, sofern man sich im Firmennetzwerk oder per VPN befindet.</p>
 
@@ -1462,7 +1465,8 @@ kbd {
             </ul>
             <p><strong>Возврат:</strong> Открыть запись о выдаче → <kbd>Bearbeiten</kbd> → заполнить <strong>Zurückgegeben am</strong> → статус <strong>Zurückgegeben</strong> → <kbd>Speichern</kbd></p>
 
-            <h3 id="ru-wartung">5.3 Техническое обслуживание (Wartung)</h3>
+            <!-- ОБСЛУЖИВАНИЕ -->
+            <h2 id="ru-wartung">6. Техническое обслуживание (Wartung)</h2>
             <p>Планирование регулярного обслуживания систем у клиентов (BMA, EMA, Video, Zutritt). При наступлении срока — автоматическое создание задачи и уведомление.</p>
             <p><strong>Меню → Wartungen</strong></p>
             <ul class="hb-steps">
@@ -1474,9 +1478,9 @@ kbd {
             <div class="hb-tip">Фильтр <strong>Fälligkeitsstatus = Fällig</strong> в списке покажет все объекты, которые нужно обслужить сейчас.</div>
 
             <!-- РАБОЧЕЕ ВРЕМЯ -->
-            <h2 id="ru-mahnwesen">6. Напоминания об оплате (Mahnwesen)</h2>
+            <h2 id="ru-mahnwesen">7. Напоминания об оплате (Mahnwesen)</h2>
 
-            <h3 id="ru-mahnung">6.1 Напоминания (Mahnung)</h3>
+            <h3 id="ru-mahnung">7.1 Напоминания (Mahnung)</h3>
             <p>Система автоматически создаёт напоминания для просроченных счетов. Бухгалтер проверяет и отправляет.</p>
             <p><strong>Меню → Mahnungen</strong></p>
             <table>
@@ -1495,14 +1499,14 @@ kbd {
             </ul>
 
             <!-- ИНСТРУМЕНТЫ -->
-            <h2 id="ru-arbeitszeit">7. Учёт рабочего времени</h2>
+            <h2 id="ru-arbeitszeit">8. Учёт рабочего времени</h2>
 
-            <h3 id="ru-az">7.1 Рабочее время (Arbeitszeit)</h3>
+            <h3 id="ru-az">8.1 Рабочее время (Arbeitszeit)</h3>
             <p>Данные приходят автоматически из мобильного приложения. Техник отмечается в приложении — данные синхронизируются с системой.</p>
             <p><strong>Меню → Arbeitszeiten</strong></p>
             <p>Отображается: дата, начало/конец, продолжительность, чистое время, переработки, GPS-координаты. Сводки по месяцам и годам — в соответствующих вкладках.</p>
 
-            <h3 id="ru-stundenbericht">7.2 Отчёты по часам (Stundenbericht)</h3>
+            <h3 id="ru-stundenbericht">8.2 Отчёты по часам (Stundenbericht)</h3>
             <p>Сводный отчёт о выполненных работах — заполняется техником в приложении. Содержит объект, материалы, Notdienst, суммы.</p>
             <p><strong>Меню → Stundenberichte</strong></p>
             <ul class="hb-steps">
@@ -1512,7 +1516,7 @@ kbd {
                 <li>По завершении: статус <strong>Archiviert</strong></li>
             </ul>
 
-            <h3 id="ru-abwesenheit">7.3 Отсутствие (Abwesenheit)</h3>
+            <h3 id="ru-abwesenheit">8.3 Отсутствие (Abwesenheit)</h3>
             <p>Учёт отсутствий — отпуск, больничный, отгул. Отображается в общем календаре.</p>
             <p><strong>Меню → Abwesenheiten</strong></p>
             <ul class="hb-steps">
@@ -1522,14 +1526,14 @@ kbd {
             </ul>
 
             <!-- ОТЧЁТЫ И ПИСЬМА -->
-            <h2 id="ru-berichte">8. Технические отчёты и переписка</h2>
+            <h2 id="ru-berichte">9. Технические отчёты и переписка</h2>
 
-            <h3 id="ru-melder">8.1 Квартальные проверки (Melder Quartal)</h3>
+            <h3 id="ru-melder">9.1 Квартальные проверки (Melder Quartal)</h3>
             <p>Квартальные отчёты технического осмотра систем. Заполняются техником в приложении, автоматически появляются в системе.</p>
             <p><strong>Меню → Melder Quartale</strong></p>
             <p>В карточке объекта или клиента: вкладка <strong>Melder Gesamt PDFs</strong> — сводный PDF за год.</p>
 
-            <h3 id="ru-briefe">8.2 Переписка (Briefe)</h3>
+            <h3 id="ru-briefe">9.2 Переписка (Briefe)</h3>
             <p>Исходящие письма, привязанные к клиентам, заказам или счетам.</p>
             <p><strong>Меню → Briefe</strong></p>
             <ul class="hb-steps">
@@ -1538,14 +1542,14 @@ kbd {
                 <li><kbd>Speichern</kbd> → <kbd>PDF erstellen</kbd> → отправить → статус <strong>Final</strong></li>
             </ul>
 
-            <h2 id="ru-bank">9. Платежи и банк</h2>
-            <h3 id="ru-bankkonto">9.1 Банковские счета (Bankkonto)</h3>
+            <h2 id="ru-bank">10. Платежи и банк</h2>
+            <h3 id="ru-bankkonto">10.1 Банковские счета (Bankkonto)</h3>
             <p>Банковские счета компании Klesec. Настраиваются один раз бухгалтером.</p>
             <p><strong>Меню → Bankkonten</strong></p>
 
             <!-- ПРОЦЕСС ПРОДАЖ -->
 
-            <h3 id="ru-zahlung">9.2 Платежи (Zahlung)</h3>
+            <h3 id="ru-zahlung">10.2 Платежи (Zahlung)</h3>
             <p>Запись о платеже — входящем (клиент заплатил нам) или исходящем (мы заплатили поставщику).</p>
             <p><strong>Меню → Zahlungen</strong></p>
             <ul class="hb-steps">
@@ -1555,7 +1559,7 @@ kbd {
                 <li>Привязать к счёту: вкладка <strong>Ausgleiche</strong> → <kbd>Erstellen</kbd> → выбрать счёт и сумму</li>
             </ul>
 
-            <h3 id="ru-bankbewegung">9.3 Банковские движения (Bankbewegung)</h3>
+            <h3 id="ru-bankbewegung">10.3 Банковские движения (Bankbewegung)</h3>
             <p>Каждое банковское движение — это одна строка банковской выписки, то есть одна реальная транзакция на счёте фирмы. Движения импортируются из банка и служат основой для сопоставления платежей с счетами, поставщиками и клиентами.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Как движения попадают в систему?</h4>
@@ -1627,7 +1631,7 @@ kbd {
                 </tbody>
             </table>
 
-            <h3 id="ru-ausgleich">9.4 Зачёт требований (Ausgleich)</h3>
+            <h3 id="ru-ausgleich">10.4 Зачёт требований (Ausgleich)</h3>
             <p>Ausgleich — это связующее звено между <strong>Платежом (Zahlung)</strong> и <strong>Счётом-фактурой (Rechnung)</strong> или <strong>Входящим документом (Eingangsrechnung)</strong>. Он фиксирует, какой суммой платежа и против какого документа был произведён зачёт — и автоматически обновляет статус оплаты документа.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Когда создаётся Ausgleich?</h4>
@@ -1680,9 +1684,9 @@ kbd {
             <div class="hb-tip"><strong>Важно:</strong> Аннулированный Ausgleich получает статус «Storniert» и больше не учитывается при расчёте статуса оплаты документа.</div>
 
             <!-- БУХГАЛТЕРИЯ -->
-            <h2 id="ru-buchhaltung">10. Бухгалтерия</h2>
+            <h2 id="ru-buchhaltung">11. Бухгалтерия</h2>
 
-            <h3 id="ru-cockpit">10.0 Финансовая панель (Finanz-Cockpit)</h3>
+            <h3 id="ru-cockpit">11.0 Финансовая панель (Finanz-Cockpit)</h3>
             <p>Центральный дашборд со всеми ключевыми показателями, графиками и индикаторами проверки — для руководства и бухгалтерии одним взглядом.</p>
             <p><strong>Главная страница (Dashboard) → Dashlet «Buchhaltung Cockpit»</strong></p>
             <div class="hb-tip">Cockpit только читает данные проводок — ничего в системе не изменяет.</div>
@@ -1723,7 +1727,7 @@ kbd {
             <h4 style="margin-top:16px;color:#2c3e6a;">Список задач (Arbeitsliste)</h4>
             <p>Под обеими вкладками автоматически появляется цветной <strong>список задач</strong>: все открытые пункты, требующие внимания — неразмеченные банковские движения, незакрытые документы, расхождения ОП или критические дебиторы. Каждый пункт содержит прямую ссылку на соответствующий отчёт.</p>
 
-            <h3 id="ru-buchungsjournal">10.1 Журнал проводок (Buchungsjournal)</h3>
+            <h3 id="ru-buchungsjournal">11.1 Журнал проводок (Buchungsjournal)</h3>
             <p><strong>Меню → Buchungsjournale</strong></p>
             <div class="hb-tip">Журналы создаются полностью автоматически — обычным сотрудникам здесь ничего делать не нужно. Раздел предназначен для бухгалтера — контроль и проверка проводок.</div>
 
@@ -1773,7 +1777,7 @@ kbd {
                 </tbody>
             </table>
 
-            <h3 id="ru-auswertung">10.2 Отчёты бухгалтерии (Buchhaltung Auswertung)</h3>
+            <h3 id="ru-auswertung">11.2 Отчёты бухгалтерии (Buchhaltung Auswertung)</h3>
             <p><strong>Меню → Buchhaltung Auswertungen</strong></p>
             <p>Преднастроенные отчёты — открыть нужный, задать период (Von/Bis) и нажать <kbd>Aktualisieren</kbd>.</p>
 
@@ -1856,14 +1860,14 @@ kbd {
             </table>
 
             <!-- ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ -->
-            <h2 id="ru-zusatz">11. Дополнительные функции</h2>
+            <h2 id="ru-zusatz">12. Дополнительные функции</h2>
             <p>Собственные модули, расширяющие систему EspoCRM функциями полевой работы с ИИ и инфраструктурой.</p>
 
-            <h3 id="ru-whatsapp">11.1 WhatsApp и ИИ-отчёты</h3>
+            <h3 id="ru-whatsapp">12.1 WhatsApp и ИИ-отчёты</h3>
             <p>Модуль WhatsApp соединяет работу на объекте напрямую с офисом. Техники отправляют сообщения, фотографии, видео и голосовые записи через WhatsApp с места работы — система получает всё автоматически, группирует и подготавливает к созданию отчёта. Главная сила модуля — в обработке с помощью искусственного интеллекта: одного клика достаточно, чтобы из сырых полевых сообщений получить готовый технический отчёт.</p>
             <div class="hb-tip">Модуль доступен по адресу <strong>klesec.pagekite.me/whatsapp_admin</strong> — отдельно от интерфейса EspoCRM.</div>
 
-            <h4 id="ru-wa-eingang" style="margin-top:22px;color:#1a3a5c;">11.1.1 Входящие сообщения</h4>
+            <h4 id="ru-wa-eingang" style="margin-top:22px;color:#1a3a5c;">12.1.1 Входящие сообщения</h4>
             <p>Как только техник отправляет сообщение в WhatsApp — оно автоматически появляется в системе, без ручного ввода в офисе.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Как работает получение?</h4>
@@ -1888,7 +1892,7 @@ kbd {
             <h4 style="margin-top:18px;color:#2c3e6a;">Таблица обзора</h4>
             <p>Главный экран показывает все входящие группы сообщений с датой, техником, превью текста и доступными медиафайлами. Фильтры позволяют сузить список по технику и дате.</p>
 
-            <h4 id="ru-wa-bericht" style="margin-top:22px;color:#1a3a5c;">11.1.2 Создание ИИ-отчёта</h4>
+            <h4 id="ru-wa-bericht" style="margin-top:22px;color:#1a3a5c;">12.1.2 Создание ИИ-отчёта</h4>
             <p>Главная возможность модуля: из сырых WhatsApp-сообщений техника автоматически создаётся структурированный технический отчёт — на профессиональном языке, готовый для клиента.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Пошагово</h4>
@@ -1913,7 +1917,7 @@ kbd {
             </table>
             <div class="hb-tip">Технику в поле ничего не нужно форматировать или структурировать — он просто пишет или говорит. ИИ берёт на себя всю обработку.</div>
 
-            <h4 id="ru-wa-medien" style="margin-top:22px;color:#1a3a5c;">11.1.3 Медиа и аннотации</h4>
+            <h4 id="ru-wa-medien" style="margin-top:22px;color:#1a3a5c;">12.1.3 Медиа и аннотации</h4>
             <p>Фотографии, поступившие с сообщениями, можно редактировать прямо в редакторе отчёта и снабжать техническими пометками — без стороннего программного обеспечения.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Редактор аннотаций</h4>
@@ -1926,7 +1930,7 @@ kbd {
             </ul>
             <p>Типичный пример: техник фотографирует повреждение → сотрудник офиса отмечает проблемное место красной стрелкой и добавляет пояснение → помеченное фото попадает в PDF-отчёт для клиента.</p>
 
-            <h4 id="ru-wa-sammelbericht" style="margin-top:22px;color:#1a3a5c;">11.1.4 Сводный отчёт (Sammelbericht)</h4>
+            <h4 id="ru-wa-sammelbericht" style="margin-top:22px;color:#1a3a5c;">12.1.4 Сводный отчёт (Sammelbericht)</h4>
             <p>Если у техника за день было несколько выездов (несколько групп сообщений), их можно объединить в один <strong>сводный отчёт</strong> — один PDF-документ, в котором наглядно показаны все выполненные работы за день.</p>
             <ul>
                 <li>Выбрать несколько групп сообщений → <kbd>Sammelbericht erstellen</kbd>.</li>
@@ -1935,7 +1939,7 @@ kbd {
                 <li>Сводный отчёт сохраняется как самостоятельный документ и остаётся связан с отдельными протоколами.</li>
             </ul>
 
-            <h3 id="ru-nas">11.2 KleSec NAS</h3>
+            <h3 id="ru-nas">12.2 KleSec NAS</h3>
             <p>Прямой доступ к внутреннему сетевому хранилищу фирмы. Ссылка открывает интерфейс NAS в браузере — там хранятся документы фирмы, изображения, резервные копии и общие файлы.</p>
             <p>Доступно через пункт меню <strong>KleSec NAS</strong> в навигации — отдельный логин не нужен, если вы в корпоративной сети или подключены через VPN.</p>
 

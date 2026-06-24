@@ -48,5 +48,8 @@
             "layout": null,
             "selectPrimaryFilterName": null
         }
-    }
+    },
+    "kanbanViewMode": false,
+    "color": "#c914f2",
+    "iconClass": "fas fa-align-justify"
 }

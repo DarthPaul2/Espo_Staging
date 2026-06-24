@@ -3,8 +3,8 @@
     "boolFilterList": [
         "onlyMy"
     ],
-    "color": "#000000",
-    "iconClass": "fas fa-money-bill-trend-up",
+    "color": "#f91414",
+    "iconClass": "fas fa-align-justify",
     "relationshipPanels": {
         "rechnungs": {
             "layout": null,
@@ -14,5 +14,6 @@
             "layout": null,
             "selectPrimaryFilterName": null
         }
-    }
+    },
+    "kanbanViewMode": false
 }
