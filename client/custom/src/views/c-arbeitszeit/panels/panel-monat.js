@@ -126,8 +126,8 @@ define('custom:views/c-arbeitszeit/panels/panel-monat', ['view'], function (Dep)
                 if (!resp.ok) throw new Error(`Request fehlgeschlagen: ${resp.status}`);
 
                 const data = await resp.json();
-                if (data.success && Array.isArray(data.rows)) {
-                    this._renderTable(data.rows);
+                if (data.success) {
+                    this._renderTable(data);
                     this.notify('Daten geladen.', 'success');
                 } else {
                     $c.html('<div class="text-muted">Keine Daten gefunden.</div>');
@@ -138,10 +138,12 @@ define('custom:views/c-arbeitszeit/panels/panel-monat', ['view'], function (Dep)
             }
         },
 
-        _renderTable(rows) {
+        _renderTable(data) {
             const $c = this.$el.find('[data-name="table"]');
             $c.removeClass().empty();
-            if (!Array.isArray(rows) || rows.length === 0) {
+
+            const rows = data.rows || [];
+            if (rows.length === 0) {
                 $c.html('<div class="text-muted">Keine Daten gefunden.</div>');
                 return;
             }
@@ -152,52 +154,107 @@ define('custom:views/c-arbeitszeit/panels/panel-monat', ['view'], function (Dep)
                 return t ? t.slice(0, 5) : '—';
             };
 
-            const trs = rows.map(r => `
-                <tr>
-                    <td>${r.datum || '—'}</td>
-                    <td>${fmtTime(r.startzeit)}</td>
-                    <td>${fmtTime(r.endzeit)}</td>
-                    <td>${r.dauer ?? '—'}</td>
-                    <td>${r.netto ?? '—'}</td>
-                    <td>${r.ueberstunden ?? (r.netto && r.netto > 480 ? r.netto - 480 : '—')}</td>
-                    <td>${r.wochenende ? (r.netto ?? '—') : '—'}</td>
-                </tr>
-            `).join('');
+            const fmtBilanz = (min) => {
+                if (min === null || min === undefined) return '—';
+                const sign = min >= 0 ? '+' : '-';
+                const h = Math.floor(Math.abs(min) / 60);
+                const m = Math.abs(min) % 60;
+                return `${sign}${h}h ${String(m).padStart(2, '0')}min`;
+            };
+
+            const bilanz    = data.bilanz_min ?? 0;
+            const sollH     = Math.floor((data.soll_min ?? 0) / 60);
+            const nettoH    = Math.floor((data.netto_min ?? 0) / 60);
+            const nettoM    = (data.netto_min ?? 0) % 60;
+            const bilanzCls = bilanz > 0 ? 'az-bilanz-plus' : (bilanz < 0 ? 'az-bilanz-minus' : '');
+
+            const abw     = data.abwesenheiten || [];
+            const typName = t => t === 'K' ? 'Krank' : 'Urlaub';
+            const abwHtml = abw.length === 0 ? '' : `
+                <div style="margin-top:12px;">
+                    <strong><i class="fas fa-umbrella-beach"></i> Abwesenheiten:</strong>
+                    <table class="table table-sm table-bordered az-stat-table" style="margin-top:6px;max-width:500px;">
+                        <thead><tr><th>Typ</th><th>Von</th><th>Bis</th><th>Bezeichnung</th></tr></thead>
+                        <tbody>
+                            ${abw.map(a => `
+                                <tr class="${a.typ === 'K' ? 'az-krank-row' : 'az-urlaub-row'}">
+                                    <td><span class="label ${a.typ === 'K' ? 'label-danger' : 'label-info'}">${typName(a.typ)}</span></td>
+                                    <td>${a.date_start_date || '—'}</td>
+                                    <td>${a.date_end_date || '—'}</td>
+                                    <td>${a.name || '—'}</td>
+                                </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>`;
 
             $c.html(`
                 <div class="table-responsive az-panel az-monat">
                     <table class="table table-hover table-bordered az-stat-table">
+                    <colgroup>
+                        <col style="width:27%">
+                        <col style="width:13%">
+                        <col style="width:13%">
+                        <col style="width:13%">
+                        <col style="width:13%">
+                        <col style="width:13%">
+                    </colgroup>
                     <thead>
                         <tr>
-                        <th>Datum</th>
-                        <th>Startzeit</th>
-                        <th>Endzeit</th>
-                        <th>Dauer</th>
-                        <th>Netto</th>
-                        <th>Überstunden</th>
-                        <th>Feiertag/Wochenende</th>
+                            <th style="text-align:center;">Datum</th>
+                            <th style="text-align:center;">Start</th>
+                            <th style="text-align:center;">Ende</th>
+                            <th style="text-align:center;">Netto</th>
+                            <th style="text-align:center;">Mehr-/Minderstunden</th>
+                            <th style="text-align:center;">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         ${rows.map(r => {
-                const weekend = r.wochenende ? 'weekend' : '';
-                const ue = (r.ueberstunden ?? (r.netto && r.netto > 480 ? r.netto - 480 : null));
-                return `
-                            <tr class="${weekend}">
-                            <td>${r.datum || '—'}</td>
-                            <td>${fmtTime(r.startzeit)}</td>
-                            <td>${fmtTime(r.endzeit)}</td>
-                            <td class="az-cell-right">${r.dauer ?? '—'}</td>
-                            <td class="az-cell-right">${r.netto ?? '—'}</td>
-                            <td class="az-cell-right">${ue ?? '—'}</td>
-                            <td class="az-cell-center">${r.wochenende ? `<span class="az-badge az-badge-wf">${r.netto ?? '—'}</span>` : '—'}</td>
+                            const s = r.status || 'gearbeitet';
+                            let rowStyle = '';
+                            let statusBadge = '';
+                            let tagBilanzHtml = '<td style="text-align:center;">—</td>';
+
+                            if (s === 'urlaub')   { rowStyle = 'background:#e8f4fd;'; statusBadge = '<span class="label label-info">Urlaub</span>'; }
+                            if (s === 'krank')    { rowStyle = 'background:#fdf0f0;'; statusBadge = '<span class="label label-danger">Krank</span>'; }
+                            if (s === 'fehlend')  { rowStyle = 'background:#fff3cd;'; statusBadge = '<span class="label label-warning">Fehlend !</span>';
+                                tagBilanzHtml = '<td style="text-align:center;color:#c0392b;font-weight:bold;">−8h 00min</td>';
+                            }
+                            if (s === 'feiertag') { rowStyle = 'background:#f0f0f0;color:#888;'; statusBadge = `<span class="label label-default">${r.name || 'Feiertag'}</span>`; }
+
+                            if (s === 'gearbeitet') {
+                                const netto = parseInt(r.netto) || 0;
+                                const diff  = netto - 480;
+                                const sign  = diff >= 0 ? '+' : '−';
+                                const h     = Math.floor(Math.abs(diff) / 60);
+                                const m     = Math.abs(diff) % 60;
+                                const color = diff > 0 ? '#27ae60' : (diff < 0 ? '#c0392b' : '#555');
+                                tagBilanzHtml = `<td style="text-align:center;color:${color};font-weight:bold;">${sign}${h}h ${String(m).padStart(2,'0')}min</td>`;
+                            }
+
+                            return `
+                            <tr style="${rowStyle}">
+                                <td style="text-align:left;">${r.datum || '—'}</td>
+                                <td style="text-align:center;">${fmtTime(r.startzeit)}</td>
+                                <td style="text-align:center;">${fmtTime(r.endzeit)}</td>
+                                <td style="text-align:center;">${r.netto ?? '—'}</td>
+                                ${tagBilanzHtml}
+                                <td style="text-align:center;">${statusBadge || '—'}</td>
                             </tr>`;
-            }).join('')}
+                        }).join('')}
                     </tbody>
+                    <tfoot>
+                        <tr class="az-summary-row">
+                            <td colspan="3"><strong>Arbeitstage: ${data.arbeitstage ?? '—'} | Urlaub/Krank: ${data.urlaubstage ?? 0}</strong></td>
+                            <td class="az-cell-right"><strong>Ist: ${nettoH}h ${String(nettoM).padStart(2,'0')}min</strong></td>
+                            <td class="az-cell-right ${bilanzCls}"><strong>${fmtBilanz(bilanz)}</strong></td>
+                            <td class="az-cell-right"><strong>Soll: ${sollH}h</strong></td>
+                        </tr>
+                    </tfoot>
                     </table>
                 </div>
-                `);
-
+                ${abwHtml}
+            `);
         },
 
         async _mapEspoUserToFlaskTechnikerId(userId) {

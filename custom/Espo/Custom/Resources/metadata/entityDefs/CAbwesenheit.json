@@ -35,14 +35,13 @@
         },
         "dateStart": {
             "type": "datetimeOptional",
-            "view": "crm:views/meeting/fields/date-start",
             "required": true,
             "default": "javascript: return this.dateTime.getNow(15);",
             "audited": true
         },
         "dateEnd": {
             "type": "datetimeOptional",
-            "view": "crm:views/meeting/fields/date-end",
+            "view": "custom:views/c-abwesenheit/fields/date-end",
             "required": true,
             "after": "dateStart",
             "suppressValidationList": [

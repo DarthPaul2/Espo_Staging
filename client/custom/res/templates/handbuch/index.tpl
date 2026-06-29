@@ -192,7 +192,8 @@ kbd {
                 <h3>Inhalt</h3>
                 <ul>
                     <li class="section"><a href="#de-intro">Einführung</a></li>
-                    <li><a href="#de-stammdaten">Stammdaten</a></li>
+                    <li class="hb-nav-sep"></li>
+                    <li class="section"><a href="#de-stammdaten">Stammdaten</a></li>
                     <li><a href="#de-account">→ Kunden</a></li>
                     <li><a href="#de-contact">→ Ansprechpartner</a></li>
                     <li><a href="#de-lieferant">→ Lieferanten</a></li>
@@ -239,13 +240,15 @@ kbd {
                     <li style="padding-left:28px;"><a href="#de-wa-medien" style="color:#1a6b3c;">· Medien &amp; Annotierung</a></li>
                     <li style="padding-left:28px;"><a href="#de-wa-sammelbericht" style="color:#1a6b3c;">· Sammelbericht</a></li>
                     <li><a href="#de-nas" style="color:#9b3a6b;">→ KleSec NAS</a></li>
+                    <li><a href="#de-ki-assistent" style="color:#4f46e5;display:flex;align-items:center;gap:6px;">→ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="18" height="18" style="border-radius:50%;flex-shrink:0;"><defs><radialGradient id="kn-de-bg" cx="45%" cy="38%" r="60%"><stop offset="0%" stop-color="#e0eeff"/><stop offset="100%" stop-color="#b8d4fa"/></radialGradient><radialGradient id="kn-de-sk" cx="38%" cy="28%" r="70%"><stop offset="0%" stop-color="#fdd5a0"/><stop offset="100%" stop-color="#e8874a"/></radialGradient><radialGradient id="kn-de-ck" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5a070" stop-opacity="0.55"/><stop offset="100%" stop-color="#f5a070" stop-opacity="0"/></radialGradient></defs><circle cx="34" cy="34" r="34" fill="url(#kn-de-bg)"/><path d="M8 68 C9 52 20 49 28 48 L34 52 L40 48 C48 49 59 52 60 68Z" fill="#2563eb"/><path d="M28 48 L34 52 L40 48 L40 55 L28 55Z" fill="#f0f4ff"/><rect x="29" y="43" width="10" height="7" rx="4" fill="url(#kn-de-sk)"/><ellipse cx="34" cy="31" rx="15.5" ry="15" fill="url(#kn-de-sk)"/><ellipse cx="18.8" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="18.8" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><ellipse cx="49.2" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="49.2" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><path d="M19 24 Q18 13 34 12 Q50 13 49 24 Q46 17 42 16 Q38 13 34 14 Q30 13 26 16 Q22 17 19 24Z" fill="#c8a84b"/><ellipse cx="22" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><ellipse cx="28" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="34" cy="13.5" rx="4" ry="3.5" fill="#c8a84b"/><ellipse cx="40" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="46" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><path d="M24.5 24.5 Q27.5 22.5 31 24" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M37 24 Q40.5 22.5 43.5 24.5" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="28" cy="30" rx="4.5" ry="4.2" fill="#fff"/><ellipse cx="40" cy="30" rx="4.5" ry="4.2" fill="#fff"/><circle cx="28.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="40.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="28.8" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="41" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="29.8" cy="29.5" r="0.9" fill="#fff"/><circle cx="42" cy="29.5" r="0.9" fill="#fff"/><rect x="22.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><rect x="34.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><line x1="33.5" y1="29.5" x2="34.5" y2="29.5" stroke="#2d2d2d" stroke-width="1.5"/><line x1="22.5" y1="29" x2="19" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><line x1="45.5" y1="29" x2="49" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><ellipse cx="34" cy="37" rx="3.2" ry="2.2" fill="#d0733a"/><path d="M22 39 Q22 47 34 48 Q46 47 46 39 Q43 43 34 44 Q25 43 22 39Z" fill="#b8922a"/><path d="M24 38 Q24 40 22 39 Q23 37 24 38Z" fill="#b8922a"/><path d="M44 38 Q44 40 46 39 Q45 37 44 38Z" fill="#b8922a"/><path d="M26 41 Q30 44 34 44 Q38 44 42 41 Q38 43.5 34 43.5 Q30 43.5 26 41Z" fill="#d4af50" opacity="0.4"/><ellipse cx="22" cy="37" rx="4" ry="3" fill="url(#kn-de-ck)"/><ellipse cx="46" cy="37" rx="4" ry="3" fill="url(#kn-de-ck)"/><path d="M26 41.5 Q34 50 42 41.5" fill="#b04820"/><path d="M27.5 42 Q34 48 40.5 42 Q34 46 27.5 42Z" fill="#fff"/></svg>KI-Assistent</a></li>
                 </ul>
             </div>
             <div class="hb-content-ru" style="display:none">
                 <h3>Содержание</h3>
                 <ul>
                     <li class="section"><a href="#ru-intro">Введение</a></li>
-                    <li><a href="#ru-stammdaten">Справочники</a></li>
+                    <li class="hb-nav-sep"></li>
+                    <li class="section"><a href="#ru-stammdaten">Справочники</a></li>
                     <li><a href="#ru-account">→ Клиенты</a></li>
                     <li><a href="#ru-contact">→ Контакты</a></li>
                     <li><a href="#ru-lieferant">→ Поставщики</a></li>
@@ -292,6 +295,7 @@ kbd {
                     <li style="padding-left:28px;"><a href="#ru-wa-medien" style="color:#1a6b3c;">· Медиа и аннотации</a></li>
                     <li style="padding-left:28px;"><a href="#ru-wa-sammelbericht" style="color:#1a6b3c;">· Сводный отчёт</a></li>
                     <li><a href="#ru-nas" style="color:#9b3a6b;">→ KleSec NAS</a></li>
+                    <li><a href="#ru-ki-assistent" style="color:#4f46e5;display:flex;align-items:center;gap:6px;">→ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="18" height="18" style="border-radius:50%;flex-shrink:0;"><defs><radialGradient id="kn-ru-bg" cx="45%" cy="38%" r="60%"><stop offset="0%" stop-color="#e0eeff"/><stop offset="100%" stop-color="#b8d4fa"/></radialGradient><radialGradient id="kn-ru-sk" cx="38%" cy="28%" r="70%"><stop offset="0%" stop-color="#fdd5a0"/><stop offset="100%" stop-color="#e8874a"/></radialGradient><radialGradient id="kn-ru-ck" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5a070" stop-opacity="0.55"/><stop offset="100%" stop-color="#f5a070" stop-opacity="0"/></radialGradient></defs><circle cx="34" cy="34" r="34" fill="url(#kn-ru-bg)"/><path d="M8 68 C9 52 20 49 28 48 L34 52 L40 48 C48 49 59 52 60 68Z" fill="#2563eb"/><path d="M28 48 L34 52 L40 48 L40 55 L28 55Z" fill="#f0f4ff"/><rect x="29" y="43" width="10" height="7" rx="4" fill="url(#kn-ru-sk)"/><ellipse cx="34" cy="31" rx="15.5" ry="15" fill="url(#kn-ru-sk)"/><ellipse cx="18.8" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="18.8" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><ellipse cx="49.2" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="49.2" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><path d="M19 24 Q18 13 34 12 Q50 13 49 24 Q46 17 42 16 Q38 13 34 14 Q30 13 26 16 Q22 17 19 24Z" fill="#c8a84b"/><ellipse cx="22" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><ellipse cx="28" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="34" cy="13.5" rx="4" ry="3.5" fill="#c8a84b"/><ellipse cx="40" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="46" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><path d="M24.5 24.5 Q27.5 22.5 31 24" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M37 24 Q40.5 22.5 43.5 24.5" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="28" cy="30" rx="4.5" ry="4.2" fill="#fff"/><ellipse cx="40" cy="30" rx="4.5" ry="4.2" fill="#fff"/><circle cx="28.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="40.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="28.8" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="41" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="29.8" cy="29.5" r="0.9" fill="#fff"/><circle cx="42" cy="29.5" r="0.9" fill="#fff"/><rect x="22.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><rect x="34.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><line x1="33.5" y1="29.5" x2="34.5" y2="29.5" stroke="#2d2d2d" stroke-width="1.5"/><line x1="22.5" y1="29" x2="19" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><line x1="45.5" y1="29" x2="49" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><ellipse cx="34" cy="37" rx="3.2" ry="2.2" fill="#d0733a"/><path d="M22 39 Q22 47 34 48 Q46 47 46 39 Q43 43 34 44 Q25 43 22 39Z" fill="#b8922a"/><path d="M24 38 Q24 40 22 39 Q23 37 24 38Z" fill="#b8922a"/><path d="M44 38 Q44 40 46 39 Q45 37 44 38Z" fill="#b8922a"/><path d="M26 41 Q30 44 34 44 Q38 44 42 41 Q38 43.5 34 43.5 Q30 43.5 26 41Z" fill="#d4af50" opacity="0.4"/><ellipse cx="22" cy="37" rx="4" ry="3" fill="url(#kn-ru-ck)"/><ellipse cx="46" cy="37" rx="4" ry="3" fill="url(#kn-ru-ck)"/><path d="M26 41.5 Q34 50 42 41.5" fill="#b04820"/><path d="M27.5 42 Q34 48 40.5 42 Q34 46 27.5 42Z" fill="#fff"/></svg>KI-Ассистент</a></li>
                 </ul>
             </div>
         </div>
@@ -1156,6 +1160,36 @@ kbd {
             <p>Direkter Zugriff auf den internen Netzwerkspeicher der Firma. Der Link öffnet das NAS-Interface im Browser — dort sind Firmendokumente, Bilder, Backups und geteilte Dateien abgelegt.</p>
             <p>Erreichbar über den Menüpunkt <strong>KleSec NAS</strong> in der Navigation — kein separates Login nötig, sofern man sich im Firmennetzwerk oder per VPN befindet.</p>
 
+            <!-- KI-ASSISTENT -->
+            <h3 id="de-ki-assistent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="34" height="34" style="vertical-align:middle;margin-right:9px;border-radius:50%;"><defs><radialGradient id="ki-de-bg" cx="45%" cy="38%" r="60%"><stop offset="0%" stop-color="#e0eeff"/><stop offset="100%" stop-color="#b8d4fa"/></radialGradient><radialGradient id="ki-de-sk" cx="38%" cy="28%" r="70%"><stop offset="0%" stop-color="#fdd5a0"/><stop offset="100%" stop-color="#e8874a"/></radialGradient><radialGradient id="ki-de-ck" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5a070" stop-opacity="0.55"/><stop offset="100%" stop-color="#f5a070" stop-opacity="0"/></radialGradient></defs><circle cx="34" cy="34" r="34" fill="url(#ki-de-bg)"/><path d="M8 68 C9 52 20 49 28 48 L34 52 L40 48 C48 49 59 52 60 68Z" fill="#2563eb"/><path d="M28 48 L34 52 L40 48 L40 55 L28 55Z" fill="#f0f4ff"/><rect x="29" y="43" width="10" height="7" rx="4" fill="url(#ki-de-sk)"/><ellipse cx="34" cy="31" rx="15.5" ry="15" fill="url(#ki-de-sk)"/><ellipse cx="18.8" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="18.8" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><ellipse cx="49.2" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="49.2" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><path d="M19 24 Q18 13 34 12 Q50 13 49 24 Q46 17 42 16 Q38 13 34 14 Q30 13 26 16 Q22 17 19 24Z" fill="#c8a84b"/><ellipse cx="22" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><ellipse cx="28" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="34" cy="13.5" rx="4" ry="3.5" fill="#c8a84b"/><ellipse cx="40" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="46" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><path d="M24.5 24.5 Q27.5 22.5 31 24" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M37 24 Q40.5 22.5 43.5 24.5" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="28" cy="30" rx="4.5" ry="4.2" fill="#fff"/><ellipse cx="40" cy="30" rx="4.5" ry="4.2" fill="#fff"/><circle cx="28.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="40.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="28.8" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="41" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="29.8" cy="29.5" r="0.9" fill="#fff"/><circle cx="42" cy="29.5" r="0.9" fill="#fff"/><rect x="22.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><rect x="34.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><line x1="33.5" y1="29.5" x2="34.5" y2="29.5" stroke="#2d2d2d" stroke-width="1.5"/><line x1="22.5" y1="29" x2="19" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><line x1="45.5" y1="29" x2="49" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><ellipse cx="34" cy="37" rx="3.2" ry="2.2" fill="#d0733a"/><path d="M22 39 Q22 47 34 48 Q46 47 46 39 Q43 43 34 44 Q25 43 22 39Z" fill="#b8922a"/><path d="M24 38 Q24 40 22 39 Q23 37 24 38Z" fill="#b8922a"/><path d="M44 38 Q44 40 46 39 Q45 37 44 38Z" fill="#b8922a"/><path d="M26 41 Q30 44 34 44 Q38 44 42 41 Q38 43.5 34 43.5 Q30 43.5 26 41Z" fill="#d4af50" opacity="0.4"/><ellipse cx="22" cy="37" rx="4" ry="3" fill="url(#ki-de-ck)"/><ellipse cx="46" cy="37" rx="4" ry="3" fill="url(#ki-de-ck)"/><path d="M26 41.5 Q34 50 42 41.5" fill="#b04820"/><path d="M27.5 42 Q34 48 40.5 42 Q34 46 27.5 42Z" fill="#fff"/></svg>12.3 KI-Assistent</h3>
+            <p>Der KleSec KI-Assistent ist ein in EspoCRM eingebetteter Chat-Assistent auf Basis von Claude (Anthropic). Er beantwortet Fragen zu Unternehmensdaten in natürlicher Sprache und lädt alle Informationen in Echtzeit direkt aus dem System.</p>
+            <div class="hb-tip">Der Assistent arbeitet <strong>ausschließlich lesend</strong> — er erstellt, ändert oder löscht keine Datensätze.</div>
+
+            <h4 style="margin-top:20px;color:#2c3e6a;">Zugriff</h4>
+            <p>Das blaue Chat-Symbol unten rechts im EspoCRM-Fenster. Ein Klick öffnet das Chat-Fenster — kein separater Login, kein zusätzliches Tool erforderlich.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Was kann der Assistent?</h4>
+            <p>Er versteht freie Fragen und sucht die Antwort direkt in den Systemdaten. Zwei Arbeitsweisen:</p>
+            <ul>
+                <li><strong>Suchen / Anzeigen</strong> — „Zeige alle offenen Rechnungen von Müller GmbH" → listet die Datensätze und gibt einen direkten Link in EspoCRM</li>
+                <li><strong>Berechnen / Erklären</strong> — „Wie viel haben wir diesen Monat fakturiert?" → berechnet die Summe und erläutert das Ergebnis im Klartext</li>
+            </ul>
+            <p>Weitere Beispiele: Aufträge nach Kunde suchen, überfällige Wartungen auflisten, Stundenbericht eines Technikers prüfen, Zahlungsstatus einer Rechnung abfragen, Top-Kunden nach Umsatz ermitteln.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Zugriff nach Rolle</h4>
+            <table>
+                <tr><th>Rolle</th><th>Verfügbare Daten</th></tr>
+                <tr><td>Alle Mitarbeiter</td><td>Angebote, Aufträge, Lieferscheine, Materialien, Kunden, Lieferanten, Stundenberichte, Objekte, Wartungen, Arbeitszeiten, Abwesenheiten</td></tr>
+                <tr><td>Buchhaltung / Geschäftsführung / Admin</td><td>Zusätzlich: Rechnungen, Eingangsrechnungen, Zahlungen, Bankbewegungen, Ausgleiche, Mahnungen, Buchungsjournal, Finanzberichte &amp; Auswertungen</td></tr>
+            </table>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Hinweise zur Nutzung</h4>
+            <ul>
+                <li>Der Chat merkt sich die letzten 4 Nachrichten als Gesprächskontext — bei Themenwechsel empfiehlt sich ein Neustart über das 🗑️-Symbol im Chatfenster</li>
+                <li>Jede Datenanfrage lädt aktuelle Zahlen frisch aus dem System — keine veralteten Werte aus dem Verlauf</li>
+                <li>EspoCRM-Fachbegriffe wie <em>Festschreibung</em>, <em>Ausgleich</em> oder <em>Mahnstufe</em> bleiben stets auf Deutsch</li>
+            </ul>
+
         </div><!-- Ende DE -->
 
 
@@ -1942,6 +1976,36 @@ kbd {
             <h3 id="ru-nas">12.2 KleSec NAS</h3>
             <p>Прямой доступ к внутреннему сетевому хранилищу фирмы. Ссылка открывает интерфейс NAS в браузере — там хранятся документы фирмы, изображения, резервные копии и общие файлы.</p>
             <p>Доступно через пункт меню <strong>KleSec NAS</strong> в навигации — отдельный логин не нужен, если вы в корпоративной сети или подключены через VPN.</p>
+
+            <!-- КИ-АССИСТЕНТ -->
+            <h3 id="ru-ki-assistent"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="34" height="34" style="vertical-align:middle;margin-right:9px;border-radius:50%;"><defs><radialGradient id="ki-ru-bg" cx="45%" cy="38%" r="60%"><stop offset="0%" stop-color="#e0eeff"/><stop offset="100%" stop-color="#b8d4fa"/></radialGradient><radialGradient id="ki-ru-sk" cx="38%" cy="28%" r="70%"><stop offset="0%" stop-color="#fdd5a0"/><stop offset="100%" stop-color="#e8874a"/></radialGradient><radialGradient id="ki-ru-ck" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5a070" stop-opacity="0.55"/><stop offset="100%" stop-color="#f5a070" stop-opacity="0"/></radialGradient></defs><circle cx="34" cy="34" r="34" fill="url(#ki-ru-bg)"/><path d="M8 68 C9 52 20 49 28 48 L34 52 L40 48 C48 49 59 52 60 68Z" fill="#2563eb"/><path d="M28 48 L34 52 L40 48 L40 55 L28 55Z" fill="#f0f4ff"/><rect x="29" y="43" width="10" height="7" rx="4" fill="url(#ki-ru-sk)"/><ellipse cx="34" cy="31" rx="15.5" ry="15" fill="url(#ki-ru-sk)"/><ellipse cx="18.8" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="18.8" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><ellipse cx="49.2" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="49.2" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><path d="M19 24 Q18 13 34 12 Q50 13 49 24 Q46 17 42 16 Q38 13 34 14 Q30 13 26 16 Q22 17 19 24Z" fill="#c8a84b"/><ellipse cx="22" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><ellipse cx="28" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="34" cy="13.5" rx="4" ry="3.5" fill="#c8a84b"/><ellipse cx="40" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="46" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><path d="M24.5 24.5 Q27.5 22.5 31 24" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M37 24 Q40.5 22.5 43.5 24.5" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="28" cy="30" rx="4.5" ry="4.2" fill="#fff"/><ellipse cx="40" cy="30" rx="4.5" ry="4.2" fill="#fff"/><circle cx="28.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="40.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="28.8" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="41" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="29.8" cy="29.5" r="0.9" fill="#fff"/><circle cx="42" cy="29.5" r="0.9" fill="#fff"/><rect x="22.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><rect x="34.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><line x1="33.5" y1="29.5" x2="34.5" y2="29.5" stroke="#2d2d2d" stroke-width="1.5"/><line x1="22.5" y1="29" x2="19" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><line x1="45.5" y1="29" x2="49" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><ellipse cx="34" cy="37" rx="3.2" ry="2.2" fill="#d0733a"/><path d="M22 39 Q22 47 34 48 Q46 47 46 39 Q43 43 34 44 Q25 43 22 39Z" fill="#b8922a"/><path d="M24 38 Q24 40 22 39 Q23 37 24 38Z" fill="#b8922a"/><path d="M44 38 Q44 40 46 39 Q45 37 44 38Z" fill="#b8922a"/><path d="M26 41 Q30 44 34 44 Q38 44 42 41 Q38 43.5 34 43.5 Q30 43.5 26 41Z" fill="#d4af50" opacity="0.4"/><ellipse cx="22" cy="37" rx="4" ry="3" fill="url(#ki-ru-ck)"/><ellipse cx="46" cy="37" rx="4" ry="3" fill="url(#ki-ru-ck)"/><path d="M26 41.5 Q34 50 42 41.5" fill="#b04820"/><path d="M27.5 42 Q34 48 40.5 42 Q34 46 27.5 42Z" fill="#fff"/></svg>12.3 KI-Ассистент</h3>
+            <p>KleSec KI-Ассистент — встроенный в EspoCRM чат-помощник на базе Claude (Anthropic). Он отвечает на вопросы о данных компании на естественном языке и загружает все данные в реальном времени напрямую из системы.</p>
+            <div class="hb-tip">Ассистент работает <strong>только на чтение</strong> — он не создаёт, не изменяет и не удаляет записи.</div>
+
+            <h4 style="margin-top:20px;color:#2c3e6a;">Как открыть</h4>
+            <p>Синяя кнопка чата в правом нижнем углу окна EspoCRM. Один клик — чат открыт. Отдельный логин и дополнительные инструменты не нужны.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Что умеет ассистент?</h4>
+            <p>Понимает вопросы в свободной форме и ищет ответ напрямую в данных системы. Два режима работы:</p>
+            <ul>
+                <li><strong>Поиск / показ</strong> — «Покажи все открытые счета Müller GmbH» → выводит список записей и даёт прямую ссылку в EspoCRM</li>
+                <li><strong>Расчёт / анализ</strong> — «Сколько мы выставили в этом месяце?» → считает сумму и объясняет результат текстом</li>
+            </ul>
+            <p>Другие примеры: найти заказы по клиенту, вывести просроченные обслуживания, проверить отчёт по часам техника, узнать статус оплаты счёта, определить топ-клиентов по обороту.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Доступ по роли</h4>
+            <table>
+                <tr><th>Роль</th><th>Доступные данные</th></tr>
+                <tr><td>Все сотрудники</td><td>Предложения, заказы, накладные, материалы, клиенты, поставщики, отчёты по часам, объекты, обслуживание, рабочее время, отсутствия</td></tr>
+                <tr><td>Бухгалтерия / Руководство / Admin</td><td>Дополнительно: счета, входящие счета, платежи, банковские движения, зачёты, напоминания, журнал проводок, финансовые отчёты</td></tr>
+            </table>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Важные особенности</h4>
+            <ul>
+                <li>Чат запоминает последние 4 сообщения как контекст разговора — при смене темы рекомендуется сбросить чат кнопкой 🗑️ в окне чата</li>
+                <li>Каждый запрос данных загружает актуальные цифры из системы — устаревших значений из истории диалога нет</li>
+                <li>EspoCRM-термины (<em>Festschreibung</em>, <em>Ausgleich</em>, <em>Mahnstufe</em>) всегда остаются на немецком</li>
+            </ul>
 
         </div><!-- Ende RU -->
 

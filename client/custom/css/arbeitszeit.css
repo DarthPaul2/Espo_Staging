@@ -173,3 +173,30 @@
     /* можно поменять цвет */
     border-collapse: collapse !important;
 }
+/* Bilanz — Überstunden */
+.az-bilanz-plus {
+    background-color: #fff8dc !important;
+    color: #856404;
+    font-weight: 600;
+}
+
+/* Bilanz — Minusstunden */
+.az-bilanz-minus {
+    background-color: #fce8e8 !important;
+    color: #cc0000;
+    font-weight: 600;
+}
+
+/* Zusammenfassungszeile */
+.az-summary-row td {
+    background-color: #f0f0f0 !important;
+    border-top: 2px solid #999 !important;
+}
+
+/* Abwesenheiten */
+.az-urlaub-row td {
+    background-color: #e8f4fd !important;
+}
+.az-krank-row td {
+    background-color: #fdf0f0 !important;
+}

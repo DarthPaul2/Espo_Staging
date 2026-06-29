@@ -97,7 +97,7 @@ define('custom:views/c-arbeitszeit/panels/panel-jahr', ['view'], function (Dep) 
                     year: year
                 });
 
-                this._renderTable(res && res.rows ? res.rows : []);
+                this._renderTable(res || {});
                 this.notify('Daten geladen.', 'success');
             } catch (e) {
                 console.error('[panel-jahr] Fehler:', e);
@@ -106,58 +106,99 @@ define('custom:views/c-arbeitszeit/panels/panel-jahr', ['view'], function (Dep) 
             }
         },
 
-        _renderTable(rows) {
+        _renderTable(res) {
             const $c = this.$el.find('[data-name="table"]');
-            if (!Array.isArray(rows) || rows.length === 0) {
+            const rows = res.rows || [];
+            if (rows.length === 0) {
                 $c.html('<div class="text-muted">Keine Daten gefunden.</div>');
                 return;
             }
 
             const monthName = m => {
-                const names = [
-                    '', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-                    'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
-                ];
+                const names = ['', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                    'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
                 return names[Number(m)] || m;
             };
 
-            const trs = rows.map(r => `
-                <tr>
-                    <td>${monthName(r.monat)}</td>
-                    <td>${r.summeDauer ?? '—'}</td>
-                    <td>${r.summeNetto ?? '—'}</td>
-                    <td>${r.summeUeberstunden ?? '—'}</td>
-                    <td>${r.summeFeiertagWochenende ?? '—'}</td>
-                </tr>
-            `).join('');
+            const fmtBilanz = (min) => {
+                if (min === null || min === undefined) return '—';
+                const sign = min >= 0 ? '+' : '-';
+                const h = Math.floor(Math.abs(min) / 60);
+                const m = Math.abs(min) % 60;
+                return `${sign}${h}h ${String(m).padStart(2, '0')}min`;
+            };
+
+            const gesamtBilanz    = res.gesamt_bilanz ?? 0;
+            const gesamtBilanzCls = gesamtBilanz > 0 ? 'az-bilanz-plus' : (gesamtBilanz < 0 ? 'az-bilanz-minus' : '');
+            const gesamtSollH     = Math.floor((res.gesamt_soll ?? 0) / 60);
+            const gesamtNettoH    = Math.floor((res.gesamt_netto ?? 0) / 60);
+            const gesamtNettoM    = (res.gesamt_netto ?? 0) % 60;
+
+            const abw     = res.abwesenheiten || [];
+            const typName = t => t === 'K' ? 'Krank' : 'Urlaub';
+            const abwHtml = abw.length === 0 ? '' : `
+                <div style="margin-top:16px;">
+                    <strong><i class="fas fa-umbrella-beach"></i> Abwesenheiten im Jahr:</strong>
+                    <table class="table table-sm table-bordered az-stat-table" style="margin-top:6px;max-width:500px;">
+                        <thead><tr><th>Typ</th><th>Von</th><th>Bis</th><th>Bezeichnung</th></tr></thead>
+                        <tbody>
+                            ${abw.map(a => `
+                                <tr class="${a.typ === 'K' ? 'az-krank-row' : 'az-urlaub-row'}">
+                                    <td><span class="label ${a.typ === 'K' ? 'label-danger' : 'label-info'}">${typName(a.typ)}</span></td>
+                                    <td>${a.date_start_date || '—'}</td>
+                                    <td>${a.date_end_date || '—'}</td>
+                                    <td>${a.name || '—'}</td>
+                                </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>`;
 
             $c.html(`
                 <div class="table-responsive az-panel az-jahr">
                     <table class="table table-hover table-bordered az-stat-table">
                     <thead>
                         <tr>
-                        <th>Monat</th>
-                        <th>Summe Dauer</th>
-                        <th>Summe Netto</th>
-                        <th>Überstunden</th>
-                        <th>Wochenende/Feiertag</th>
+                            <th>Monat</th>
+                            <th>Arbeitstage</th>
+                            <th>Urlaub/Krank</th>
+                            <th>Soll</th>
+                            <th>Netto</th>
+                            <th>Bilanz</th>
+                            <th>WE/Feiertag</th>
                         </tr>
                     </thead>
                     <tbody>
-                        ${rows.map(r => `
-                        <tr>
-                            <td>${monthName(r.monat)}</td>
-                            <td class="az-cell-right">${r.summeDauer ?? '—'}</td>
-                            <td class="az-cell-right">${r.summeNetto ?? '—'}</td>
-                            <td class="az-cell-right">${r.summeUeberstunden ?? '—'}</td>
-                            <td class="az-cell-right">${r.summeFeiertagWochenende ?? '—'}</td>
-                        </tr>
-                        `).join('')}
+                        ${rows.map(r => {
+                            const bilanz    = r.bilanz_min ?? 0;
+                            const bilanzCls = bilanz > 0 ? 'az-bilanz-plus' : (bilanz < 0 ? 'az-bilanz-minus' : '');
+                            const sollH     = Math.floor((r.soll_min ?? 0) / 60);
+                            const nettoH    = Math.floor((r.summeNetto ?? 0) / 60);
+                            const nettoM    = (r.summeNetto ?? 0) % 60;
+                            return `
+                            <tr>
+                                <td><strong>${monthName(r.monat)}</strong></td>
+                                <td class="az-cell-right">${r.arbeitstage ?? '—'}</td>
+                                <td class="az-cell-right">${r.urlaubstage ?? 0}</td>
+                                <td class="az-cell-right">${sollH}h</td>
+                                <td class="az-cell-right">${nettoH}h ${String(nettoM).padStart(2,'0')}min</td>
+                                <td class="az-cell-right ${bilanzCls}">${fmtBilanz(bilanz)}</td>
+                                <td class="az-cell-right">${Math.floor((r.summeFeiertagWochenende ?? 0) / 60)}h</td>
+                            </tr>`;
+                        }).join('')}
                     </tbody>
+                    <tfoot>
+                        <tr class="az-summary-row">
+                            <td colspan="3"><strong>Gesamt</strong></td>
+                            <td class="az-cell-right"><strong>${gesamtSollH}h</strong></td>
+                            <td class="az-cell-right"><strong>${gesamtNettoH}h ${String(gesamtNettoM).padStart(2,'0')}min</strong></td>
+                            <td class="az-cell-right ${gesamtBilanzCls}"><strong>${fmtBilanz(gesamtBilanz)}</strong></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                     </table>
                 </div>
-                `);
-
+                ${abwHtml}
+            `);
         },
     });
 });
