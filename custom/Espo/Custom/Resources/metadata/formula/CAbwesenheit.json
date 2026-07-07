@@ -1,3 +1,3 @@
 {
-    "beforeSaveCustomScript": "// grün für Urlaub (U), rosa für Krankheit (K)\nif (typ == 'U') {\n    color = '#00994d';\n    calendarTitle = name + ' - ' + typ;\n} else if (typ == 'K') {\n    color = '#b30000';\n    calendarTitle = name + ' - ' + typ;\n} else {\n    calendarTitle = name;\n}\n"
+    "beforeSaveCustomScript": "if (typ == 'U') {\n    color = '#00994d';\n    calendarTitle = string\\concatenate(name, ' - Urlaub');\n} else if (typ == 'K') {\n    color = '#e6b94b';\n    calendarTitle = string\\concatenate(name, ' - Krankheit');\n} else if (typ == 'unbezahlterUrlaub') {\n    color = '#e07800';\n    calendarTitle = string\\concatenate(name, ' - Unbez. Urlaub');\n} else if (typ == 'freizeitausgleich') {\n    color = '#5bc0de';\n    calendarTitle = string\\concatenate(name, ' - Freizeitausgleich');\n} else {\n    calendarTitle = name;\n}\n"
 }

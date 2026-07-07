@@ -1,0 +1,17 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#364cf0",
+    "iconClass": "far fa-compass",
+    "createDisabled": true,
+    "searchPanelDisabled": true,
+    "views": {
+        "list": "custom:views/c-mitarbeiterkompass-bericht/list"
+    },
+    "recordViews": {
+        "detail": "custom:views/c-mitarbeiterkompass-bericht/record/detail"
+    },
+    "kanbanViewMode": false
+}

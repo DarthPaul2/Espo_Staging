@@ -1,8 +1,16 @@
-define('custom:views/calendar/calendar', ['views/calendar'], function (Dep) {
-
-    console.log('[CUSTOM CALENDAR] loaded');
+define('custom:views/calendar/calendar', ['crm:views/calendar/calendar'], function (Dep) {
 
     return Dep.extend({
+
+        convertToFcEvent: function (o) {
+            const event = Dep.prototype.convertToFcEvent.call(this, o);
+
+            if (o.scope === 'CAbwesenheit' && o.calendarTitle) {
+                event.title = o.calendarTitle;
+            }
+
+            return event;
+        },
 
         getCalendarOptions: function () {
             const options = Dep.prototype.getCalendarOptions.call(this);
@@ -10,10 +18,6 @@ define('custom:views/calendar/calendar', ['views/calendar'], function (Dep) {
             const origTransform = options.eventDataTransform;
 
             options.eventDataTransform = function (eventData) {
-                if (eventData && (eventData.scope === 'Task' || eventData.entityType === 'Task')) {
-                    console.log('[TASK EVENTDATA RAW]', JSON.parse(JSON.stringify(eventData)));
-                }
-                // сохраним стандартное поведение Espo
                 if (typeof origTransform === 'function') {
                     eventData = origTransform(eventData) || eventData;
                 }
@@ -27,7 +31,6 @@ define('custom:views/calendar/calendar', ['views/calendar'], function (Dep) {
 
                     if (!isTask) return eventData;
 
-                    // Espo может отдавать разные поля. Берём всё, что похоже на старт/финиш.
                     const startRaw =
                         eventData.dateStartDate || eventData.dateStart ||
                         eventData.startDate || eventData.start;
@@ -38,7 +41,6 @@ define('custom:views/calendar/calendar', ['views/calendar'], function (Dep) {
                         eventData.endDate || eventData.end;
 
                     if (startRaw && endRaw && window.moment) {
-                        // FullCalendar: end — EXCLUSIVE, поэтому +1 день
                         eventData.start = moment(startRaw).format();
                         eventData.end = moment(endRaw).add(1, 'days').format();
                         eventData.allDay = true;

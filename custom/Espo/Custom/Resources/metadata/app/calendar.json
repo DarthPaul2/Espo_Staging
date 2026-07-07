@@ -4,5 +4,9 @@
     "Call",
     "Task",
     "CAbwesenheit"
+  ],
+  "additionalAttributeList": [
+    "calendarTitle",
+    "color"
   ]
 }

@@ -1,0 +1,27 @@
+{
+    "fields": {
+        "jahr": "Jahr",
+        "antwortenAnzahl": "Anzahl Antworten",
+        "generiertAm": "Erstellt am",
+        "pdfFile": "PDF-Bericht",
+        "kmi": "KMI",
+        "kfi": "KFI",
+        "koi": "KOI",
+        "kti": "KTI",
+        "kki": "KKI",
+        "kbi": "KBI",
+        "kgi": "KGI",
+        "ampelStatus": "Ampel Status"
+    },
+    "links": [],
+    "labels": {
+        "Create CMitarbeiterkompassBericht": "Create Mitarbeiterkompass Bericht"
+    },
+    "options": {
+        "ampelStatus": {
+            "grün": "grün",
+            "gelb": "gelb",
+            "rot": "rot"
+        }
+    }
+}

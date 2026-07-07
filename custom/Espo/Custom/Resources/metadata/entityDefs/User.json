@@ -139,6 +139,14 @@
             "entity": "CEingangsrechnung",
             "audited": false,
             "isCustom": true
+        },
+        "cMitarbeiterkompassBerichts": {
+            "type": "hasMany",
+            "relationName": "cMitarbeiterkompassBerichtEmpfaenger",
+            "foreign": "empfaenger",
+            "entity": "CMitarbeiterkompassBericht",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

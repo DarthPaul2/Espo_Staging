@@ -1,0 +1,39 @@
+{
+    "labels": {
+        "Create CMitarbeiterkompassBericht": "Mitarbeiterkompass Bericht erstellen"
+    },
+    "fields": {
+        "jahr": "Jahr",
+        "halbjahr": "Halbjahr",
+        "antwortenAnzahl": "Anzahl Antworten",
+        "generiertAm": "Erstellt am",
+        "pdfFile": "PDF-Bericht",
+        "kmi": "KMI",
+        "kfi": "KFI",
+        "koi": "KOI",
+        "kti": "KTI",
+        "kki": "KKI",
+        "kbi": "KBI",
+        "kgi": "KGI",
+        "ampelStatus": "Ampel Status",
+        "welleStatus": "Wellen-Status",
+        "empfaenger": "Empfänger"
+    },
+    "options": {
+        "ampelStatus": {
+            "grün": "grün",
+            "gelb": "gelb",
+            "rot": "rot"
+        },
+        "halbjahr": {
+            "H1": "1. Halbjahr",
+            "H2": "2. Halbjahr"
+        },
+        "welleStatus": {
+            "neu": "Neu",
+            "versendet": "Einladungen versendet",
+            "geschlossen": "Geschlossen",
+            "ausgewertet": "Ausgewertet"
+        }
+    }
+}

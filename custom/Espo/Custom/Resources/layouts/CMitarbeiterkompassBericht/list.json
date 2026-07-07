@@ -1,0 +1,43 @@
+[
+    {
+        "name": "name",
+        "width": 30,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "createdAt",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "jahr",
+        "width": 10,
+        "align": "left"
+    },
+    {
+        "name": "halbjahr",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "welleStatus",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "antwortenAnzahl",
+        "width": 13,
+        "align": "left"
+    },
+    {
+        "name": "ampelStatus",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "pdfFile",
+        "width": 25,
+        "align": "left"
+    }
+]

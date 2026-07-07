@@ -37,7 +37,8 @@
         "CZahlung": "Zahlung",
         "CAusgleich": "Ausgleich",
         "CBankkonto": "Bankkonto",
-        "CBankbewegung": "Bankbewegung"
+        "CBankbewegung": "Bankbewegung",
+        "CMitarbeiterkompassBericht": "Mitarbeiterkompass Bericht"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -77,7 +78,8 @@
         "CZahlung": "Zahlungen",
         "CAusgleich": "Ausgleiche",
         "CBankkonto": "Bankkonten",
-        "CBankbewegung": "Bankbewegungen"
+        "CBankbewegung": "Bankbewegungen",
+        "CMitarbeiterkompassBericht": "Mitarbeiterkompass Berichte"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

@@ -1,0 +1,84 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "jahr"
+                }
+            ],
+            [
+                {
+                    "name": "halbjahr"
+                },
+                {
+                    "name": "welleStatus"
+                }
+            ],
+            [
+                {
+                    "name": "antwortenAnzahl"
+                },
+                false
+            ],
+            [
+                {
+                    "name": "empfaenger"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "ampelStatus"
+                },
+                {
+                    "name": "kgi"
+                }
+            ],
+            [
+                {
+                    "name": "kmi"
+                },
+                {
+                    "name": "kfi"
+                }
+            ],
+            [
+                {
+                    "name": "koi"
+                },
+                {
+                    "name": "kti"
+                }
+            ],
+            [
+                {
+                    "name": "kki"
+                },
+                {
+                    "name": "kbi"
+                }
+            ],
+            [
+                {
+                    "name": "pdfFile"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": "Ergebnis"
+    }
+]

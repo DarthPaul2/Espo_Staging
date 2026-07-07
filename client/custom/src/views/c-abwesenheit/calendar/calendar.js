@@ -4,17 +4,12 @@ define('custom:views/c-abwesenheit/calendar/calendar', ['views/meeting/calendar/
 
         buildEventObject: function (model) {
             let ev = Base.prototype.buildEventObject.call(this, model);
-
-            const name = model.get('name') || '';
-            const typ = model.get('typ') || '';
-
-            // Человекочитаемая метка (если есть перевод)
-            const typLabel = this.getLanguage().translateOption(typ, 'typ', 'CAbwesenheit') || typ;
-
-            ev.title = name && typLabel ? (name + ' - ' + typLabel) : name;
-
+            console.log('[CAbwesenheit calendar] model attributes:', JSON.parse(JSON.stringify(model.attributes || {})));
+            console.log('[CAbwesenheit calendar] ev.title:', ev.title);
+            ev.title = model.get('calendarTitle') || model.get('name') || '';
             return ev;
         }
 
     });
+
 });

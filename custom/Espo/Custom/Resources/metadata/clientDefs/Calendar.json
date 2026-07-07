@@ -1,3 +1,4 @@
 {
-    "view": "custom:views/calendar/calendar"
+    "view": "custom:views/calendar/calendar",
+    "calendarView": "custom:views/calendar/calendar"
 }
