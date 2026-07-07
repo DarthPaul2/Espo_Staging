@@ -100,10 +100,14 @@ define('custom:views/c-mitarbeiterkompass-bericht/record/detail', [
             const periode = this._periode();
             if (!periode) return;
 
-            if (!confirm('Welle wirklich schließen? Danach können keine Antworten mehr eingereicht werden.')) {
-                return;
-            }
+            Espo.Ui.confirm(
+                'Welle wirklich schließen? Danach können keine Antworten mehr eingereicht werden.',
+                { confirmText: 'Schließen', cancelText: 'Abbrechen', confirmStyle: 'danger' },
+                () => this._doWelleSchliessen(periode)
+            );
+        },
 
+        _doWelleSchliessen: function (periode) {
             const notifyId = this.notify('Welle wird geschlossen …', 'loading');
 
             fetch(this.FLASK_BASE + '/mitarbeiterkompass/admin/wellen/' + periode + '/schliessen', {
