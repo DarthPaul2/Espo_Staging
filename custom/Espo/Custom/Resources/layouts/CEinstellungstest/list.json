@@ -1,0 +1,69 @@
+[
+    {
+        "name": "name",
+        "width": 13,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "kandidatVorname",
+        "width": 11,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "kandidatNachname",
+        "width": 12,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "gestartetAm",
+        "width": 13,
+        "align": "left"
+    },
+    {
+        "name": "punkteAllgemeinbildung",
+        "width": 16
+    },
+    {
+        "name": "punkteLogischesDenken",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "punkteMathematik",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "punkteRaeumlichesDenken",
+        "width": 17,
+        "align": "left"
+    },
+    {
+        "name": "punkteTechnischesVerstaendnis",
+        "width": 21,
+        "align": "left"
+    },
+    {
+        "name": "punkteWirtschaft",
+        "width": 20,
+        "align": "left"
+    },
+    {
+        "name": "gesamtpunkte",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "bewertung",
+        "width": 11,
+        "align": "left"
+    },
+    {
+        "name": "pdfBericht",
+        "width": 14,
+        "align": "left"
+    }
+]

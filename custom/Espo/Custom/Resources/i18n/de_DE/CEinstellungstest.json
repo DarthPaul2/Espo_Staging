@@ -1,0 +1,39 @@
+{
+  "labels": {
+    "Create CEinstellungstest": "Einstellungstest erstellen"
+  },
+  "fields": {
+    "name": "Bezeichnung",
+    "kandidatVorname": "Vorname",
+    "kandidatNachname": "Nachname",
+    "kandidatGeburtsjahr": "Geburtsjahr",
+    "position": "Position",
+    "testStatus": "Test-Status",
+    "zugangslink": "Zugangslink",
+    "gesamtpunkte": "Gesamtpunkte",
+    "bewertung": "Bewertung",
+    "punkteAllgemeinbildung": "Allgemeinbildung",
+    "punkteWirtschaft": "Wirtschaft & Arbeitswelt",
+    "punkteMathematik": "Mathematik",
+    "punkteLogischesDenken": "Logisches Denken",
+    "punkteRaeumlichesDenken": "Räumliches Denken",
+    "punkteTechnischesVerstaendnis": "Technisches Verständnis",
+    "gestartetAm": "Gestartet am",
+    "abgeschlossenAm": "Abgeschlossen am",
+    "tatsaechlicheDauerMinuten": "Dauer (Minuten)",
+    "pdfBericht": "PDF-Bericht"
+  },
+  "options": {
+    "testStatus": {
+      "offen": "Offen",
+      "laeuft": "Läuft",
+      "abgeschlossen": "Abgeschlossen"
+    },
+    "bewertung": {
+      "sehr_gut": "Sehr gut",
+      "gut": "Gut",
+      "befriedigend": "Befriedigend",
+      "nicht_ausreichend": "Nicht ausreichend"
+    }
+  }
+}

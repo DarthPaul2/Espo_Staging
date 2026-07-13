@@ -1,0 +1,74 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "kandidatVorname"
+                },
+                {
+                    "name": "kandidatNachname"
+                },
+                {
+                    "name": "kandidatGeburtsjahr"
+                }
+            ],
+            [
+                {
+                    "name": "position"
+                },
+                {
+                    "name": "testStatus"
+                },
+                {
+                    "name": "gesamtpunkte"
+                },
+                {
+                    "name": "bewertung"
+                }
+            ],
+            [
+                {
+                    "name": "punkteAllgemeinbildung"
+                },
+                {
+                    "name": "punkteLogischesDenken"
+                },
+                {
+                    "name": "punkteMathematik"
+                }
+            ],
+            [
+                {
+                    "name": "punkteRaeumlichesDenken"
+                },
+                {
+                    "name": "punkteTechnischesVerstaendnis"
+                },
+                {
+                    "name": "punkteWirtschaft"
+                }
+            ],
+            [
+                {
+                    "name": "gestartetAm"
+                },
+                {
+                    "name": "abgeschlossenAm"
+                },
+                {
+                    "name": "tatsaechlicheDauerMinuten"
+                }
+            ],
+            [
+                {
+                    "name": "pdfBericht"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

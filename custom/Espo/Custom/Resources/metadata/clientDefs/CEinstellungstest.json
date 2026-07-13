@@ -1,0 +1,15 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#0ad323",
+    "iconClass": "far fa-hourglass-half",
+    "createDisabled": true,
+    "views": {
+        "list": "custom:views/c-einstellungstest/list"
+    },
+    "recordViews": {
+        "detail": "custom:views/c-einstellungstest/record/detail"
+    }
+}

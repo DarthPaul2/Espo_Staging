@@ -14,9 +14,13 @@ define('custom:views/c-mitarbeiterkompass-bericht/record/detail', [
             Dep.prototype.afterRender.call(this);
 
             this.stopListening(this.model, 'change:welleStatus');
-            this.listenTo(this.model, 'change:welleStatus', () => this._renderWelleActions());
+            this.listenTo(this.model, 'change:welleStatus', () => {
+                this._renderWelleActions();
+                this._renderTeilnahmeStatus();
+            });
 
             this._renderWelleActions();
+            this._renderTeilnahmeStatus();
         },
 
         _periode: function () {
@@ -65,6 +69,61 @@ define('custom:views/c-mitarbeiterkompass-bericht/record/detail', [
                 $bar.on('click', '[data-action="makSchliessen"]', () => this._welleSchliessen());
                 $bar.on('click', '[data-action="makBericht"]', () => this._berichtGenerieren());
             }, 400);
+        },
+
+        _renderTeilnahmeStatus: function () {
+            const periode = this._periode();
+            const status = this.model.get('welleStatus');
+            this.$el.find('[data-name="mak-teilnahme-panel"]').remove();
+
+            if (!periode || status === 'neu') {
+                return;
+            }
+
+            fetch(this.FLASK_BASE + '/mitarbeiterkompass/admin/wellen/' + periode + '/empfaenger', {
+                headers: { 'X-Mak-Admin-Key': this.MAK_ADMIN_KEY }
+            })
+                .then((r) => r.json())
+                .then((data) => {
+                    if (!data.success) {
+                        console.error('[Mitarbeiterkompass] Teilnahmestatus: Antwort ohne success', data);
+                        return;
+                    }
+                    this._insertTeilnahmePanel(data.empfaenger || []);
+                })
+                .catch((err) => {
+                    console.error('[Mitarbeiterkompass] Teilnahmestatus konnte nicht geladen werden', err);
+                });
+        },
+
+        _insertTeilnahmePanel: function (empfaenger) {
+            const beantwortet = empfaenger.filter((e) => e.status === 'used').length;
+
+            const rows = empfaenger.map((e) => {
+                const done = e.status === 'used';
+                const badge = done
+                    ? '<span style="background:#dcfce7; color:#166534; font-size:.78em; font-weight:600; ' +
+                      'padding:2px 9px; border-radius:999px;">✓ Beantwortet</span>'
+                    : '<span style="background:#fef3c7; color:#92400e; font-size:.78em; font-weight:600; ' +
+                      'padding:2px 9px; border-radius:999px;">Ausstehend</span>';
+                return (
+                    '<div style="display:flex; align-items:center; justify-content:space-between; ' +
+                    'padding:6px 0; border-bottom:1px solid #eee;">' +
+                    '<span style="font-size:.92em;">' + (e.name || e.email || '—') + '</span>' + badge +
+                    '</div>'
+                );
+            }).join('');
+
+            const $panel = $(
+                '<div data-name="mak-teilnahme-panel" style="max-width:420px; margin-top:24px; margin-bottom:14px; ' +
+                'background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.06); padding:12px 16px;">' +
+                '<div style="font-weight:700; margin-bottom:6px;">Teilnahmestatus — ' +
+                beantwortet + ' von ' + empfaenger.length + ' beantwortet</div>' +
+                rows +
+                '</div>'
+            );
+
+            this.$el.append($panel);
         },
 
         _sendErinnerungen: function () {
