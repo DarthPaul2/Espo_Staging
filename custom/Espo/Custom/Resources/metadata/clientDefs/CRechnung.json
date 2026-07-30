@@ -1,5 +1,6 @@
 {
     "controller": "controllers/record",
+    "duplicateDisabled": true,
     "recordViews": {
         "edit": "custom:views/c-rechnung/record/edit",
         "detail": "custom:views/c-rechnung/record/detail"

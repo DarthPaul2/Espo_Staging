@@ -49,6 +49,35 @@ class PreventEditAfterFestschreibung
         }
 
         // Что это:
+        // специальное узкое разрешение für das Nachtragen des Stornobeleg-PDFs.
+        //
+        // Зачем:
+        // der Stornobeleg wird asynchron (nach dem Stornieren) vom Flask-Backend
+        // erzeugt und die URL per API zurückgeschrieben. Alle anderen Felder
+        // bleiben nach Festschreibung geschützt.
+        if (
+            $entity->isAttributeChanged('stornobelegUrl')
+            && $stored->get('istStorniert')
+        ) {
+            $onlyStornobelegUrlChanged = true;
+            $technicalFields = ['stornobelegUrl', 'modifiedAt', 'modifiedById', 'modifiedByName'];
+
+            foreach ($entity->getAttributeList() as $field) {
+                if (in_array($field, $technicalFields, true)) {
+                    continue;
+                }
+                if ($entity->isAttributeChanged($field)) {
+                    $onlyStornobelegUrlChanged = false;
+                    break;
+                }
+            }
+
+            if ($onlyStornobelegUrlChanged) {
+                return;
+            }
+        }
+
+        // Что это:
         // специальное узкое разрешение для Mahnwesen.
         //
         // Зачем:

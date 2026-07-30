@@ -25,6 +25,17 @@
                     }
                 ]
             }
+        },
+        "stornobelegUrl": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "status",
+                        "value": "storniert"
+                    }
+                ]
+            }
         }
     }
 }

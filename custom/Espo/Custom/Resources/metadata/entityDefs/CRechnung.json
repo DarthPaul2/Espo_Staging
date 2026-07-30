@@ -457,6 +457,10 @@
             "options": [],
             "tooltip": true,
             "isCustom": true
+        },
+        "stornobelegUrl": {
+            "type": "url",
+            "isCustom": true
         }
     },
     "links": {

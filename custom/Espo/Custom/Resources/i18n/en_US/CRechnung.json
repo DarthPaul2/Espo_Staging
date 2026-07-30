@@ -54,7 +54,8 @@
         "ersetztBelegName": "Ersetzt Beleg",
         "nachfolgeBelegId": "Nachfolgebeleg ID",
         "nachfolgeBelegName": "Nachfolgebeleg",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "stornobelegUrl": "Stornobeleg"
     },
     "links": {
         "account": "Account",

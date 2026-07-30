@@ -1958,6 +1958,15 @@ public function postActionFestschreiben($params, $data, $request)
                 $pdo->commit();
             }
 
+            // Что это:
+            // Anstoß der Stornobeleg-PDF-Generierung im Flask-Backend.
+            //
+            // Зачем:
+            // der Kunde braucht nach dem Storno sofort ein Dokument.
+            // Fire-and-forget: schlägt die Erzeugung fehl, bleibt das Storno trotzdem gültig,
+            // es fehlt dann nur die stornobelegUrl (kann später nachträglich erzeugt werden).
+            $this->triggerStornobelegPdf($rechnung->getId());
+
             return [
                 'success' => true,
                 'message' => 'Rechnung wurde erfolgreich storniert.',
@@ -1986,6 +1995,51 @@ public function postActionFestschreiben($params, $data, $request)
                 'success' => false,
                 'message' => 'Storno konnte nicht abgeschlossen werden. Es wurden keine endgültigen Änderungen übernommen.'
             ];
+        }
+    }
+
+    /**
+     * Что это:
+     * Ruft nach erfolgreichem Storno das Flask-Backend auf, damit ein Stornobeleg-PDF
+     * erzeugt und als stornobelegUrl an die Rechnung zurückgeschrieben wird.
+     *
+     * Зачем:
+     * fire-and-forget nach demselben Muster wie TriggerAuftragRecalc.php —
+     * ein Fehler hier darf das bereits abgeschlossene Storno nicht mehr zurückrollen.
+     */
+    private function triggerStornobelegPdf(string $rechnungId): void
+    {
+        $flaskBase = rtrim(getenv('KLESEC_API_BASE') ?: 'https://klesec.pagekite.me/api', '/');
+        $basicAuth = getenv('KLESEC_API_BASIC') ?: null;
+        $url = $flaskBase . '/rechnung/' . rawurlencode($rechnungId) . '/stornobeleg_pdf';
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_CUSTOMREQUEST  => 'POST',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 15,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+        ]);
+        $headers = ['Accept: application/json'];
+        if ($basicAuth) {
+            $headers[] = 'Authorization: Basic ' . $basicAuth;
+        }
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $resp = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $err = curl_error($ch);
+        curl_close($ch);
+
+        if ($code >= 200 && $code < 300) {
+            $this->getContainer()->get('log')->debug(
+                "[StornobelegPdf] Rechnung {$rechnungId} → OK ({$code})"
+            );
+        } else {
+            $this->getContainer()->get('log')->warning(
+                "[StornobelegPdf] Rechnung {$rechnungId} → FAILED code={$code} err={$err} resp=" . substr((string) $resp, 0, 300)
+            );
         }
     }
 

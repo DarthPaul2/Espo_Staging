@@ -54,6 +54,9 @@
                     "name": "leistungsdatumBis"
                 },
                 {
+                    "name": "stornobelegUrl"
+                },
+                {
                     "name": "pdfUrl"
                 }
             ],

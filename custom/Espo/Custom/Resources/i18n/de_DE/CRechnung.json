@@ -58,7 +58,8 @@
         "ersetztBelegName": "Ersetzt Beleg",
         "nachfolgeBelegId": "Nachfolgebeleg ID",
         "nachfolgeBelegName": "Nachfolgebeleg",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "stornobelegUrl": "Stornobeleg"
     },
     "links": {
         "account": "Account",
@@ -125,8 +126,8 @@
         "downloadPdfZip": "PDF speichern (ZIP)"
     },
     "presetFilters": {
-        "offen":        "Offen",
-        "bezahlt":      "Bezahlt",
+        "offen": "Offen",
+        "bezahlt": "Bezahlt",
         "ueberfaellig": "Überfällig",
         "festgeschrieben": "Festgeschrieben"
     },
