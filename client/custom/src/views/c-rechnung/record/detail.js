@@ -346,6 +346,9 @@ define('custom:views/c-rechnung/record/detail', [
             this.once('after:render', () => this._applyPdfLinkLabel(), this);
             this.listenTo(this.model, 'change:pdfUrl', () => setTimeout(() => this._applyPdfLinkLabel(), 0));
 
+            this.once('after:render', () => this._applyStornobelegLinkLabel(), this);
+            this.listenTo(this.model, 'change:stornobelegUrl', () => setTimeout(() => this._applyStornobelegLinkLabel(), 0));
+
             // --- локальный пересчёт и подстановка в поля ---
             const bumpTotalsFields = (netto, brutto) => {
                 this.model.set({ betragNetto: netto, betragBrutto: brutto });
@@ -1786,6 +1789,29 @@ define('custom:views/c-rechnung/record/detail', [
             }
 
             const label = '📄 Gespeicherte Datei anzeigen';
+            let $a = $value.find('a[href]');
+            if ($a.length) {
+                $a.attr({ href: url, target: '_blank', rel: 'noopener' }).text(label);
+            } else {
+                $value.empty().append(
+                    $('<a>').attr({ href: url, target: '_blank', rel: 'noopener' }).text(label)
+                );
+            }
+        },
+
+        // ==== Stornobeleg link label ====
+        _applyStornobelegLinkLabel: function () {
+            const url = this.model.get('stornobelegUrl');
+            const $field = this.$el.find('[data-name="stornobelegUrl"]');
+            if (!$field.length) return;
+
+            const $value = $field.find('.value, .link-container').first().length
+                ? $field.find('.value, .link-container').first()
+                : $field;
+
+            if (!url) return;
+
+            const label = '📄 Stornobeleg anzeigen';
             let $a = $value.find('a[href]');
             if ($a.length) {
                 $a.attr({ href: url, target: '_blank', rel: 'noopener' }).text(label);
