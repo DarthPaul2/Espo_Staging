@@ -9,9 +9,11 @@ use RuntimeException;
 
 class CZahlung extends Base
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     public function postActionFreigeben($params, $data, $request)
     {
-        $this->getAcl()->check('CZahlung', 'edit');
+        $this->acl->check('CZahlung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -59,7 +61,7 @@ class CZahlung extends Base
                 'message' => $e->getMessage(),
             ];
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CZahlung::postActionFreigeben error: ' . $e->getMessage()
             );
 
@@ -72,7 +74,7 @@ class CZahlung extends Base
 
     public function postActionZurueckZuEntwurf($params, $data, $request)
     {
-        $this->getAcl()->check('CZahlung', 'edit');
+        $this->acl->check('CZahlung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -135,7 +137,7 @@ class CZahlung extends Base
                 'status' => $zahlung->get('status'),
             ];
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CZahlung::postActionZurueckZuEntwurf error: ' . $e->getMessage()
             );
 
@@ -157,7 +159,7 @@ class CZahlung extends Base
      */
     public function postActionFestschreiben($params, $data, $request)
     {
-        $this->getAcl()->check('CZahlung', 'edit');
+        $this->acl->check('CZahlung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -532,7 +534,7 @@ class CZahlung extends Base
 
             // Что это:
             // Финально фиксируем саму Zahlung.
-            $user = $this->getUser();
+            $user = $this->user;
 
             $zahlung->set('status', 'festgeschrieben');
             $zahlung->set('istFestgeschrieben', true);
@@ -569,7 +571,7 @@ class CZahlung extends Base
                     $pdo->rollBack();
                 }
             } catch (\Throwable $rollbackError) {
-                $this->getContainer()->get('log')->error(
+                $GLOBALS['log']->error(
                     'CZahlung::postActionFestschreiben rollback error: ' . $rollbackError->getMessage()
                 );
             }
@@ -584,12 +586,12 @@ class CZahlung extends Base
                     $pdo->rollBack();
                 }
             } catch (\Throwable $rollbackError) {
-                $this->getContainer()->get('log')->error(
+                $GLOBALS['log']->error(
                     'CZahlung::postActionFestschreiben rollback error: ' . $rollbackError->getMessage()
                 );
             }
 
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CZahlung::postActionFestschreiben error: ' . $e->getMessage()
             );
 
@@ -611,7 +613,7 @@ class CZahlung extends Base
      */
     public function postActionStornieren($params, $data, $request)
     {
-        $this->getAcl()->check('CZahlung', 'edit');
+        $this->acl->check('CZahlung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -957,12 +959,12 @@ class CZahlung extends Base
                     $pdo->rollBack();
                 }
             } catch (\Throwable $rollbackError) {
-                $this->getContainer()->get('log')->error(
+                $GLOBALS['log']->error(
                     'CZahlung::postActionStornieren rollback error: ' . $rollbackError->getMessage()
                 );
             }
 
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CZahlung::postActionStornieren error: ' . $e->getMessage()
             );
 
@@ -1382,7 +1384,7 @@ class CZahlung extends Base
 // чтобы отчет стабильно показывал реально сторнированные оплаты.
 public function getActionStornierteZahlungenReport($params, $data, $request)
 {
-    $this->getAcl()->check('CZahlung', 'read');
+    $this->acl->check('CZahlung', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -1455,7 +1457,7 @@ public function getActionStornierteZahlungenReport($params, $data, $request)
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CZahlung::getActionStornierteZahlungenReport error: ' . $e->getMessage()
         );
 
@@ -1474,7 +1476,7 @@ public function getActionStornierteZahlungenReport($params, $data, $request)
 // чтобы отчёт стабильно показывал реально сторнированные Ausgleiche.
 public function getActionStornierteAusgleicheReport($params, $data, $request)
 {
-    $this->getAcl()->check('CAusgleich', 'read');
+    $this->acl->check('CAusgleich', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -1544,7 +1546,7 @@ public function getActionStornierteAusgleicheReport($params, $data, $request)
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CZahlung::getActionStornierteAusgleicheReport error: ' . $e->getMessage()
         );
 

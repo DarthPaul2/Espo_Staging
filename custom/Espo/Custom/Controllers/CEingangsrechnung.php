@@ -6,13 +6,15 @@ use Espo\Core\Templates\Controllers\Base;
 
 class CEingangsrechnung extends Base
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     /**
      * Это action для fachlicher Freigabe входящего счета.
      * Он проверяет документ и переводит его в статус "freigabe".
      */
     public function postActionFreigeben($params, $data, $request)
     {
-        $this->getAcl()->check('CEingangsrechnung', 'edit');
+        $this->acl->check('CEingangsrechnung', 'edit');
 
         $id = $params['id'] ?? null;
 
@@ -187,7 +189,7 @@ class CEingangsrechnung extends Base
                 'freigabeAm' => $eingangsrechnung->get('freigabeAm'),
             ];
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CEingangsrechnung::postActionFreigeben error: ' . $e->getMessage()
             );
 
@@ -203,7 +205,7 @@ class CEingangsrechnung extends Base
      */
     public function postActionZurueckZuEntwurf($params, $data, $request)
     {
-        $this->getAcl()->check('CEingangsrechnung', 'edit');
+        $this->acl->check('CEingangsrechnung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -265,7 +267,7 @@ class CEingangsrechnung extends Base
                 'status' => $eingangsrechnung->get('status'),
             ];
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CEingangsrechnung::postActionZurueckZuEntwurf error: ' . $e->getMessage()
             );
 
@@ -282,7 +284,7 @@ class CEingangsrechnung extends Base
      */
     public function postActionFestschreiben($params, $data, $request)
     {
-        $this->getAcl()->check('CEingangsrechnung', 'edit');
+        $this->acl->check('CEingangsrechnung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -680,7 +682,7 @@ class CEingangsrechnung extends Base
             }
 
             // Что это: финально фиксируем сам документ.
-            $user = $this->getUser();
+            $user = $this->user;
 
             $eingangsrechnung->set('betragNetto', $betragNetto);
             $eingangsrechnung->set('steuerBetrag', $steuerBetrag);
@@ -818,12 +820,12 @@ class CEingangsrechnung extends Base
                     $pdo->rollBack();
                 }
             } catch (\Throwable $rollbackError) {
-                $this->getContainer()->get('log')->error(
+                $GLOBALS['log']->error(
                     'CEingangsrechnung::postActionFestschreiben rollback error: ' . $rollbackError->getMessage()
                 );
             }
 
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CEingangsrechnung::postActionFestschreiben error: ' . $e->getMessage()
             );
 
@@ -845,7 +847,7 @@ class CEingangsrechnung extends Base
      */
     public function postActionStornieren($params, $data, $request)
     {
-        $this->getAcl()->check('CEingangsrechnung', 'edit');
+        $this->acl->check('CEingangsrechnung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -1010,7 +1012,7 @@ class CEingangsrechnung extends Base
                 throw new \RuntimeException('Storno-Buchungen konnten nicht vollständig erstellt werden.');
             }
 
-            $user = $this->getUser();
+            $user = $this->user;
 
             // Что это:
             // Eingangsrechnung fachlich in stornierten Zustand setzen.
@@ -1057,12 +1059,12 @@ class CEingangsrechnung extends Base
                     $pdo->rollBack();
                 }
             } catch (\Throwable $rollbackError) {
-                $this->getContainer()->get('log')->error(
+                $GLOBALS['log']->error(
                     'CEingangsrechnung::postActionStornieren rollback error: ' . $rollbackError->getMessage()
                 );
             }
 
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CEingangsrechnung::postActionStornieren error: ' . $e->getMessage()
             );
 
@@ -1075,7 +1077,7 @@ class CEingangsrechnung extends Base
 
     public function getActionFestgeschriebeneEingangsrechnungenReport($params, $data, $request)
 {
-    $this->getAcl()->check('CEingangsrechnung', 'read');
+    $this->acl->check('CEingangsrechnung', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -1135,7 +1137,7 @@ class CEingangsrechnung extends Base
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CEingangsrechnung::getActionFestgeschriebeneEingangsrechnungenReport error: ' . $e->getMessage()
         );
 
@@ -1180,7 +1182,7 @@ class CEingangsrechnung extends Base
      */
     public function getActionStornierteEingangsrechnungenReport($params, $data, $request)
     {
-        $this->getAcl()->check('CEingangsrechnung', 'read');
+        $this->acl->check('CEingangsrechnung', 'read');
 
         $em = $this->getEntityManager();
         $pdo = $em->getPDO();
@@ -1253,7 +1255,7 @@ class CEingangsrechnung extends Base
 
             return $rows;
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CEingangsrechnung::getActionStornierteEingangsrechnungenReport error: ' . $e->getMessage()
             );
 
@@ -1278,7 +1280,7 @@ class CEingangsrechnung extends Base
  */
 public function getActionKorrekturkettenReport($params, $data, $request)
 {
-    $this->getAcl()->check('CEingangsrechnung', 'read');
+    $this->acl->check('CEingangsrechnung', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -1395,7 +1397,7 @@ public function getActionKorrekturkettenReport($params, $data, $request)
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CEingangsrechnung::getActionKorrekturkettenReport error: ' . $e->getMessage()
         );
 
@@ -1420,7 +1422,7 @@ public function getActionKorrekturkettenReport($params, $data, $request)
  */
 public function getActionStornierteBelegeKontrolleReport($params, $data, $request)
 {
-    $this->getAcl()->check('CEingangsrechnung', 'read');
+    $this->acl->check('CEingangsrechnung', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -1512,7 +1514,7 @@ public function getActionStornierteBelegeKontrolleReport($params, $data, $reques
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CEingangsrechnung::getActionStornierteBelegeKontrolleReport error: ' . $e->getMessage()
         );
 
@@ -1535,7 +1537,7 @@ public function getActionStornierteBelegeKontrolleReport($params, $data, $reques
      */
     public function postActionCreateKorrekturNachfolgebeleg($params, $data, $request)
     {
-        $this->getAcl()->check('CEingangsrechnung', 'edit');
+        $this->acl->check('CEingangsrechnung', 'edit');
 
         $em = $this->getEntityManager();
 

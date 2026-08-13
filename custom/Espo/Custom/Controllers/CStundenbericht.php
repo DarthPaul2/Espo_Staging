@@ -6,10 +6,12 @@ use Espo\Core\Templates\Controllers\Base;
 
 class CStundenbericht extends Base
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     public function postActionDownloadPdfZip($params, $data, $request)
     {
         // права: чтение Stundenberichte
-        $this->getAcl()->check('CStundenbericht', 'read');
+        $this->acl->check('CStundenbericht', 'read');
 
         $ids = null;
 

@@ -7,6 +7,8 @@ use Espo\ORM\Entity;
 
 class CRechnung extends Base
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     /**
      * GET /CRechnung/action/bezahltUmsatzByMonth
      *
@@ -63,7 +65,7 @@ class CRechnung extends Base
             return $rows;
 
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CRechnung::bezahltUmsatzByMonth SQL error: ' . $e->getMessage()
             );
 
@@ -148,13 +150,13 @@ class CRechnung extends Base
                 'offenBrutto'   => (float) ($row['offenBrutto']   ?? 0),
             ];
 
-            $this->getContainer()->get('log')->info(
+            $GLOBALS['log']->info(
                 'CRechnung::rechnungStatusSummary result: ' . json_encode($result)
             );
 
             return $result;
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CRechnung::rechnungStatusSummary SQL error: ' . $e->getMessage()
             );
 
@@ -291,14 +293,14 @@ class CRechnung extends Base
         }
 
         // логируем, чтобы точно видеть, что вернула статистика по месяцам
-        $this->getContainer()->get('log')->info(
+        $GLOBALS['log']->info(
             'CRechnung::monatlicheStatistik result: ' . json_encode($rows)
         );
 
         return $rows;
 
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error("monatlicheStatistik error: " . $e->getMessage());
+        $GLOBALS['log']->error("monatlicheStatistik error: " . $e->getMessage());
         return ['success' => false, 'error' => 'SQL error'];
     }
 }
@@ -346,7 +348,7 @@ class CRechnung extends Base
 
             return $rows;
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error("jahresStatistik error: " . $e->getMessage());
+            $GLOBALS['log']->error("jahresStatistik error: " . $e->getMessage());
             return ['success' => false, 'error' => 'SQL error'];
         }
     }
@@ -388,14 +390,14 @@ class CRechnung extends Base
                 $row['cnt']          = (int)   ($row['cnt']          ?? 0);
             }
 
-            $this->getContainer()->get('log')->info(
+            $GLOBALS['log']->info(
                 'CRechnung::umsatzGestelltByMonth result: ' . json_encode($rows)
             );
 
             return $rows;
 
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CRechnung::umsatzGestelltByMonth SQL error: ' . $e->getMessage()
             );
 
@@ -438,14 +440,14 @@ class CRechnung extends Base
                 $row['cnt']          = (int)   ($row['cnt']          ?? 0);
             }
 
-            $this->getContainer()->get('log')->info(
+            $GLOBALS['log']->info(
                 'CRechnung::umsatzGestelltByYear result: ' . json_encode($rows)
             );
 
             return $rows;
 
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CRechnung::umsatzGestelltByYear SQL error: ' . $e->getMessage()
             );
 
@@ -459,7 +461,7 @@ class CRechnung extends Base
     public function postActionDownloadPdfZip($params, $data, $request)
 {
     // права: чтение счетов
-    $this->getAcl()->check('CRechnung', 'read');
+    $this->acl->check('CRechnung', 'read');
 
     $ids = null;
 
@@ -864,7 +866,7 @@ if (!is_array($ids) || !count($ids)) {
 // Он проверяет, можно ли перевести Rechnung в статус "freigabe".
 public function postActionFreigeben($params, $data, $request)
 {
-    $this->getAcl()->check('CRechnung', 'edit');
+    $this->acl->check('CRechnung', 'edit');
 
     $id = $params['id'] ?? null;
 
@@ -1022,7 +1024,7 @@ public function postActionFreigeben($params, $data, $request)
             ];
         }
 
-        $user = $this->getUser();
+        $user = $this->user;
 
         $rechnung->set('buchhaltungStatus', 'freigabe');
         $rechnung->set('freigabeAm', date('Y-m-d H:i:s'));
@@ -1042,7 +1044,7 @@ public function postActionFreigeben($params, $data, $request)
             'freigabeAm' => $rechnung->get('freigabeAm'),
         ];
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CRechnung::postActionFreigeben error: ' . $e->getMessage()
         );
 
@@ -1060,7 +1062,7 @@ public function postActionFreigeben($params, $data, $request)
 public function postActionZurueckZuEntwurf($params, $data, $request)
 {
     // Это проверка прав: нужен доступ на редактирование счета.
-    $this->getAcl()->check('CRechnung', 'edit');
+    $this->acl->check('CRechnung', 'edit');
 
     // Это получение ID счета из URL-параметров или из POST-body.
     $id = $params['id'] ?? null;
@@ -1131,7 +1133,7 @@ public function postActionZurueckZuEntwurf($params, $data, $request)
             'buchhaltungStatus' => $rechnung->get('buchhaltungStatus'),
         ];
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CRechnung::postActionZurueckZuEntwurf error: ' . $e->getMessage()
         );
 
@@ -1150,7 +1152,7 @@ public function postActionZurueckZuEntwurf($params, $data, $request)
 public function postActionFestschreiben($params, $data, $request)
 {
     // Это проверка прав: нужен доступ на редактирование счета.
-    $this->getAcl()->check('CRechnung', 'edit');
+    $this->acl->check('CRechnung', 'edit');
 
     // Это получение ID счета из URL-параметров или из POST-body.
     $id = $params['id'] ?? null;
@@ -1605,7 +1607,7 @@ public function postActionFestschreiben($params, $data, $request)
         // -----------------------------
         // 10) Rechnung final festschreiben
         // -----------------------------
-        $user = $this->getUser();
+        $user = $this->user;
 
         // Это сохраняет вычисленные суммы обратно в Rechnung,
         // чтобы после Festschreibung ustBetrag не оставался NULL.
@@ -1673,12 +1675,12 @@ public function postActionFestschreiben($params, $data, $request)
                 $pdo->rollBack();
             }
         } catch (\Throwable $rollbackError) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CRechnung::postActionFestschreiben rollback error: ' . $rollbackError->getMessage()
             );
         }
 
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CRechnung::postActionFestschreiben error: ' . $e->getMessage()
         );
 
@@ -1700,7 +1702,7 @@ public function postActionFestschreiben($params, $data, $request)
      */
     public function postActionStornieren($params, $data, $request)
     {
-        $this->getAcl()->check('CRechnung', 'edit');
+        $this->acl->check('CRechnung', 'edit');
 
         $id = $params['id'] ?? null;
         if (!$id && isset($data->id)) {
@@ -1931,7 +1933,7 @@ public function postActionFestschreiben($params, $data, $request)
                 throw new \RuntimeException('Storno-Buchungen konnten nicht vollständig erstellt werden.');
             }
 
-            $user = $this->getUser();
+            $user = $this->user;
 
             // Что это:
             // Rechnung fachlich in stornierten Zustand setzen.
@@ -1982,12 +1984,12 @@ public function postActionFestschreiben($params, $data, $request)
                     $pdo->rollBack();
                 }
             } catch (\Throwable $rollbackError) {
-                $this->getContainer()->get('log')->error(
+                $GLOBALS['log']->error(
                     'CRechnung::postActionStornieren rollback error: ' . $rollbackError->getMessage()
                 );
             }
 
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CRechnung::postActionStornieren error: ' . $e->getMessage()
             );
 
@@ -2033,11 +2035,11 @@ public function postActionFestschreiben($params, $data, $request)
         curl_close($ch);
 
         if ($code >= 200 && $code < 300) {
-            $this->getContainer()->get('log')->debug(
+            $GLOBALS['log']->debug(
                 "[StornobelegPdf] Rechnung {$rechnungId} → OK ({$code})"
             );
         } else {
-            $this->getContainer()->get('log')->warning(
+            $GLOBALS['log']->warning(
                 "[StornobelegPdf] Rechnung {$rechnungId} → FAILED code={$code} err={$err} resp=" . substr((string) $resp, 0, 300)
             );
         }
@@ -2130,7 +2132,7 @@ public function postActionFestschreiben($params, $data, $request)
      */
     public function getActionStornierteRechnungenReport($params, $data, $request)
 {
-    $this->getAcl()->check('CRechnung', 'read');
+    $this->acl->check('CRechnung', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -2202,7 +2204,7 @@ public function postActionFestschreiben($params, $data, $request)
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CRechnung::getActionStornierteRechnungenReport error: ' . $e->getMessage()
         );
 
@@ -2226,7 +2228,7 @@ public function postActionFestschreiben($params, $data, $request)
  */
 public function getActionKorrekturkettenReport($params, $data, $request)
 {
-    $this->getAcl()->check('CRechnung', 'read');
+    $this->acl->check('CRechnung', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -2354,7 +2356,7 @@ public function getActionKorrekturkettenReport($params, $data, $request)
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CRechnung::getActionKorrekturkettenReport error: ' . $e->getMessage()
         );
 
@@ -2379,7 +2381,7 @@ public function getActionKorrekturkettenReport($params, $data, $request)
  */
 public function getActionStornierteBelegeKontrolleReport($params, $data, $request)
 {
-    $this->getAcl()->check('CRechnung', 'read');
+    $this->acl->check('CRechnung', 'read');
 
     $em = $this->getEntityManager();
     $pdo = $em->getPDO();
@@ -2471,7 +2473,7 @@ public function getActionStornierteBelegeKontrolleReport($params, $data, $reques
 
         return $rows;
     } catch (\Throwable $e) {
-        $this->getContainer()->get('log')->error(
+        $GLOBALS['log']->error(
             'CRechnung::getActionStornierteBelegeKontrolleReport error: ' . $e->getMessage()
         );
 
@@ -2489,7 +2491,7 @@ public function getActionStornierteBelegeKontrolleReport($params, $data, $reques
     {
         // Что это: проверяет право на редактирование Rechnungen.
         // Зачем: Nachfolgebeleg darf nur von berechtigten Benutzern erstellt werden.
-        $this->getAcl()->check('CRechnung', 'edit');
+        $this->acl->check('CRechnung', 'edit');
 
         $em = $this->getEntityManager();
 

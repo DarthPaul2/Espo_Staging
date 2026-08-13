@@ -55,10 +55,7 @@ class PreventEditAfterFestschreibung
         // der Stornobeleg wird asynchron (nach dem Stornieren) vom Flask-Backend
         // erzeugt und die URL per API zurückgeschrieben. Alle anderen Felder
         // bleiben nach Festschreibung geschützt.
-        if (
-            $entity->isAttributeChanged('stornobelegUrl')
-            && $stored->get('istStorniert')
-        ) {
+        if ($stored->get('istStorniert')) {
             $onlyStornobelegUrlChanged = true;
             $technicalFields = ['stornobelegUrl', 'modifiedAt', 'modifiedById', 'modifiedByName'];
 

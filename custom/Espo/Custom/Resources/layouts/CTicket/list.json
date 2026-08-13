@@ -1,0 +1,27 @@
+[
+    {
+        "name": "name",
+        "link": true,
+        "width": 25
+    },
+    {
+        "name": "prioritaet",
+        "width": 12
+    },
+    {
+        "name": "ticketStatus",
+        "width": 14
+    },
+    {
+        "name": "createdBy",
+        "width": 16
+    },
+    {
+        "name": "assignedUser",
+        "width": 16
+    },
+    {
+        "name": "createdAt",
+        "width": 16
+    }
+]

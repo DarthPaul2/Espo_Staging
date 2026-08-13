@@ -5,6 +5,8 @@ namespace Espo\Custom\Controllers;
 class CBuchung extends \Espo\Core\Templates\Controllers\Base
 
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     /**
      * GET /CBuchung/action/managementDashboard
      *
@@ -705,7 +707,7 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
      */
     public function getActionKontenbewegungenReport($params, $data, $request)
     {
-        $this->getAcl()->check('CBuchung', 'read');
+        $this->acl->check('CBuchung', 'read');
 
         $em = $this->getEntityManager();
         $pdo = $em->getPDO();
@@ -773,7 +775,7 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
                 'list' => $rows,
             ];
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CBuchung::getActionKontenbewegungenReport SQL error: ' . $e->getMessage()
             );
 

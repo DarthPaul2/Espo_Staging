@@ -1,0 +1,30 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "prioritaet"
+                }
+            ],
+            [
+                {
+                    "name": "ticketStatus"
+                },
+                {
+                    "name": "bereichLink"
+                }
+            ],
+            [
+                {
+                    "name": "beschreibung",
+                    "fullWidth": true
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

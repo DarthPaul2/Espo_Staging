@@ -2,7 +2,7 @@
 return [
   'actualDatabaseType' => 'mysql',
   'actualDatabaseVersion' => '8.0.46',
-  'microtimeInternal' => 1780466684.753819,
+  'microtimeInternal' => 1786607933.318556,
   'instanceId' => 'ab6f82be-80a7-4ab3-98dd-fe0eef820244',
   'smtpPassword' => NULL,
   'logger' => [
@@ -34,5 +34,7 @@ return [
     'password' => 'klesec.481263!!',
     'driver' => 'pdo_mysql'
   ],
-  'isInstalled' => true
+  'isInstalled' => true,
+  'adminUpgrade' => false,
+  'adminExtensionUpload' => true
 ];

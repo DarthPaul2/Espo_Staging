@@ -1,0 +1,25 @@
+{
+    "labels": {
+        "Create CTicket": "Erstellen Ticket",
+        "CTicket": "Tickets"
+    },
+    "fields": {
+        "name": "Titel",
+        "beschreibung": "Beschreibung",
+        "prioritaet": "Priorität",
+        "ticketStatus": "Status",
+        "bereichLink": "Bereich / Link"
+    },
+    "options": {
+        "prioritaet": {
+            "niedrig": "Niedrig",
+            "normal": "Normal",
+            "hoch": "Hoch"
+        },
+        "ticketStatus": {
+            "offen": "Offen",
+            "inBearbeitung": "In Bearbeitung",
+            "erledigt": "Erledigt"
+        }
+    }
+}

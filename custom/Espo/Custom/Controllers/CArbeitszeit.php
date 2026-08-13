@@ -6,6 +6,8 @@ use Espo\Core\Api\Request;
 
 class CArbeitszeit extends Base
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     private \DateTimeZone $_berlin;
     private \DateTimeZone $_utc;
 

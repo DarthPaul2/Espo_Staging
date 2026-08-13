@@ -6,9 +6,13 @@ use Espo\ORM\EntityManager;
 
 class TaskRepeatGenerator
 {
+    public function __construct(private EntityManager $entityManager)
+    {
+    }
+
     public function run(): void
     {
-        $em = $this->getEntityManager();
+        $em = $this->entityManager;
 
         // 1. Берём все задачи с включённым повторением
         $tasks = $em->getRepository('Task')->where([
@@ -104,10 +108,5 @@ class TaskRepeatGenerator
 
             $em->saveEntity($new);
         }
-    }
-
-    protected function getEntityManager(): EntityManager
-    {
-        return \Espo\Core\Container::getInstance()->get('entityManager');
     }
 }

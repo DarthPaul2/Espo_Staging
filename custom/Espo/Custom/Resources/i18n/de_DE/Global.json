@@ -16,7 +16,8 @@
         "CEingangsrechnungImport": "Import Eingangsbelege",
         "CBankkonto": "Bankkonten",
         "CEingangsrechnung": "Eingangsbelege",
-        "CEingangsrechnungsposition": "Eingangsbeleg-Positionen"
+        "CEingangsrechnungsposition": "Eingangsbeleg-Positionen",
+        "CTicket": "Ticket"
     },
     "Global": {
         "Today": "",
@@ -30,6 +31,7 @@
         "CBuchhaltungAuswertung": "Buchhaltung Auswertung",
         "CEingangsrechnungImport": "Import Eingangsbeleg",
         "CEingangsrechnung": "Eingangsbeleg",
-        "CEingangsrechnungsposition": "Eingangsbeleg-Position"
+        "CEingangsrechnungsposition": "Eingangsbeleg-Position",
+        "CTicket": "Ticket"
     }
 }

@@ -1,0 +1,9 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#e67e22",
+    "iconClass": "fas fa-ticket-alt",
+    "kanbanViewMode": false
+}

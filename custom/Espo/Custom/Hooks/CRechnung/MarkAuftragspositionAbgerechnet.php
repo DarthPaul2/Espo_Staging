@@ -2,16 +2,19 @@
 namespace Espo\Custom\Hooks\CRechnung;
 
 use Espo\ORM\Entity;
+use Espo\ORM\EntityManager;
 
 class MarkAuftragspositionAbgerechnet
 {
+    public function __construct(private EntityManager $entityManager)
+    {
+    }
+
     /* ====== helper: мягкий лог ====== */
     protected function logSafe(Entity $entity, string $msg, array $ctx = []): void
     {
         try {
-            $em = $entity->getEntityManager();
-            if (!$em) return;
-            $log = $em->getContainer()->get('log');
+            $log = $GLOBALS['log'];
             $log->warning('[CRechnung.MarkAuftragspositionAbgerechnet] ' . $msg . ' ' . json_encode($ctx, JSON_UNESCAPED_UNICODE));
         } catch (\Throwable $e) {
             // ignore
@@ -21,7 +24,7 @@ class MarkAuftragspositionAbgerechnet
     /* ====== центральная логика: проставить флажки по всем позициям счета ====== */
     protected function applyForRechnung(Entity $rechnung): void
     {
-        $em = $rechnung->getEntityManager();
+        $em = $this->entityManager;
         if (!$em) return;
 
         // Работает только для Teilrechnung и не для "storniert"
@@ -71,7 +74,7 @@ class MarkAuftragspositionAbgerechnet
     /* ====== снять флаг у позиции заказа, если активных Teilrechnungen больше нет ====== */
     protected function unmarkIfNoTeilrechnungenLeft(Entity $ctxEntity, string $auftragsPosId): void
     {
-        $em = $ctxEntity->getEntityManager();
+        $em = $this->entityManager;
         if (!$em) return;
 
         if (!$this->hasAnyActiveTeilrechnungForAuftragsposition($ctxEntity, $auftragsPosId)) {
@@ -86,7 +89,7 @@ class MarkAuftragspositionAbgerechnet
 
     protected function hasAnyActiveTeilrechnungForAuftragsposition(Entity $ctxEntity, string $auftragsPosId): bool
     {
-        $em = $ctxEntity->getEntityManager();
+        $em = $this->entityManager;
         if (!$em) return false;
 
         // Находим все позиции счетов, сославшиеся на данную Auftragsposition
@@ -168,7 +171,7 @@ class MarkAuftragspositionAbgerechnet
             $posId = $data['foreignId'] ?? $data['id'] ?? $data['relatedId'] ?? null;
             if (!$posId) return;
 
-            $em  = $rechnung->getEntityManager();
+            $em  = $this->entityManager;
             $pos = $em->getEntity('CRechnungsposition', $posId);
             if (!$pos) return;
 

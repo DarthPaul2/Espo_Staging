@@ -6,6 +6,8 @@ use Espo\Core\Templates\Controllers\Base;
 
 class CBuchungsjournal extends Base
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     /**
      * Что это:
      * SQL-отчёт по сторнированным Kontenbewegungen.
@@ -17,7 +19,7 @@ class CBuchungsjournal extends Base
      */
     public function getActionStornierteKontenbewegungenReport($params, $data, $request)
     {
-        $this->getAcl()->check('CBuchungsjournal', 'read');
+        $this->acl->check('CBuchungsjournal', 'read');
 
         $em = $this->getEntityManager();
         $pdo = $em->getPDO();
@@ -80,7 +82,7 @@ class CBuchungsjournal extends Base
 
             return $rows;
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CBuchungsjournal::getActionStornierteKontenbewegungenReport error: ' . $e->getMessage()
             );
 
@@ -102,7 +104,7 @@ class CBuchungsjournal extends Base
      */
     public function getActionStornierteJournaleReport($params, $data, $request)
     {
-        $this->getAcl()->check('CBuchungsjournal', 'read');
+        $this->acl->check('CBuchungsjournal', 'read');
 
         $em = $this->getEntityManager();
         $pdo = $em->getPDO();
@@ -177,7 +179,7 @@ class CBuchungsjournal extends Base
 
             return $rows;
         } catch (\Throwable $e) {
-            $this->getContainer()->get('log')->error(
+            $GLOBALS['log']->error(
                 'CBuchungsjournal::getActionStornierteJournaleReport error: ' . $e->getMessage()
             );
 

@@ -10,6 +10,8 @@ use Espo\Custom\Hooks\CAuftrag\SyncAngebotspositionen;
 
 class CAuftrag extends Base
 {
+    use \Espo\Custom\Traits\HasEntityManagerCompat;
+
     /**
      * Кнопка: "Aus Angeboten übernehmen"
      */
@@ -21,8 +23,8 @@ class CAuftrag extends Base
         }
 
         /** @var EntityManager $em */
-        $em  = $this->getContainer()->get('entityManager');
-        $log = $this->getContainer()->get('log');
+        $em  = $this->getEntityManager();
+        $log = $GLOBALS['log'];
 
         $auftrag = $em->getEntity('CAuftrag', $auftragId);
         if (!$auftrag) {
@@ -100,8 +102,8 @@ class CAuftrag extends Base
         }
 
         /** @var EntityManager $em */
-        $em  = $this->getContainer()->get('entityManager');
-        $log = $this->getContainer()->get('log');
+        $em  = $this->getEntityManager();
+        $log = $GLOBALS['log'];
 
         $auftrag = $em->getEntity('CAuftrag', $auftragId);
         if (!$auftrag) {
