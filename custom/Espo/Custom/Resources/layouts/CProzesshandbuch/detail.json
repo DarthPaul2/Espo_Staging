@@ -1,0 +1,30 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "bereich"
+                }
+            ],
+            [
+                {
+                    "name": "prozessStatus"
+                },
+                {
+                    "name": "ticket"
+                }
+            ],
+            [
+                {
+                    "name": "beschreibung",
+                    "fullWidth": true
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

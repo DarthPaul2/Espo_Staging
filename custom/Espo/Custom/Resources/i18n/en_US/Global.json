@@ -40,7 +40,8 @@
         "CBankbewegung": "Bankbewegung",
         "CMitarbeiterkompassBericht": "Mitarbeiterkompass Bericht",
         "CEinstellungstest": "Einstellungstest",
-        "CTicket": "Ticket"
+        "CTicket": "Ticket",
+        "CProzesshandbuch": "Prozesshandbuch"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -83,7 +84,8 @@
         "CBankbewegung": "Bankbewegungen",
         "CMitarbeiterkompassBericht": "Mitarbeiterkompass Berichte",
         "CEinstellungstest": "Einstellungstests",
-        "CTicket": "Ticket"
+        "CTicket": "Ticket",
+        "CProzesshandbuch": "Prozesshandbücher"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

@@ -1,0 +1,27 @@
+[
+    {
+        "name": "name",
+        "link": true,
+        "width": 25
+    },
+    {
+        "name": "bereich",
+        "width": 14
+    },
+    {
+        "name": "prozessStatus",
+        "width": 14
+    },
+    {
+        "name": "ticket",
+        "width": 16
+    },
+    {
+        "name": "createdBy",
+        "width": 16
+    },
+    {
+        "name": "createdAt",
+        "width": 16
+    }
+]

@@ -17,7 +17,8 @@
         "CBankkonto": "Bankkonten",
         "CEingangsrechnung": "Eingangsbelege",
         "CEingangsrechnungsposition": "Eingangsbeleg-Positionen",
-        "CTicket": "Ticket"
+        "CTicket": "Ticket",
+        "CProzesshandbuch": "Prozesshandbücher"
     },
     "Global": {
         "Today": "",
@@ -32,6 +33,7 @@
         "CEingangsrechnungImport": "Import Eingangsbeleg",
         "CEingangsrechnung": "Eingangsbeleg",
         "CEingangsrechnungsposition": "Eingangsbeleg-Position",
-        "CTicket": "Ticket"
+        "CTicket": "Ticket",
+        "CProzesshandbuch": "Prozesshandbuch"
     }
 }

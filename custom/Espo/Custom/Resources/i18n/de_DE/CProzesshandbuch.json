@@ -1,0 +1,23 @@
+{
+    "labels": {
+        "Create CProzesshandbuch": "Erstellen Prozesshandbuch",
+        "CProzesshandbuch": "Prozesshandbuch"
+    },
+    "fields": {
+        "name": "Titel",
+        "beschreibung": "Beschreibung",
+        "prozessStatus": "Status",
+        "bereich": "Bereich",
+        "ticket": "Ticket"
+    },
+    "tooltips": {
+        "bereich": "Optional: zu welchem Bereich des Systems gehört dieser Prozess (z. B. Buchhaltung, Angebote, Techniker, Arbeitszeiten) — hilft bei der Einordnung, hat aber keine technische Funktion."
+    },
+    "options": {
+        "prozessStatus": {
+            "vorgeschlagen": "Vorgeschlagen",
+            "inBearbeitung": "In Bearbeitung",
+            "fertig": "Fertig"
+        }
+    }
+}
