@@ -1,5 +1,7 @@
 data/.backup/
 data/config.php
+data/config.php.bak-*
+data/config-internal.php.bak-*
 data/cache/
 data/logs/
 data/upload/

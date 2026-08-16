@@ -29,7 +29,7 @@ return [
     'host' => 'localhost',
     'port' => 3306,
     'charset' => 'utf8mb4',
-    'dbname' => 'espocrm',
+    'dbname' => 'espocrm_test',
     'user' => 'pavel',
     'password' => 'klesec.481263!!',
     'driver' => 'pdo_mysql'

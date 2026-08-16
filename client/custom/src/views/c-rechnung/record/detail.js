@@ -209,7 +209,10 @@ define('custom:views/c-rechnung/record/detail', [
                     const raw = (p.beschreibung || '').trim();
                     beschreibung = (raw.toLowerCase() === 'position') ? '' : raw;
                 } else {
-                    const namePart = p.name || p.materialName || '';
+                    const rawName = (p.name || '').trim();
+                    const namePart = (rawName && rawName.toLowerCase() !== 'position')
+                        ? rawName
+                        : (p.materialName || rawName || '');
                     const descPart = (p.beschreibung || p.materialDescription || '');
 
                     beschreibung = namePart;
