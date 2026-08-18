@@ -8,6 +8,7 @@
   ],
   "scriptList": [
     "__APPEND__",
-    "client/custom/js/kb-ai-chat.js"
+    "client/custom/js/kb-ai-chat.js",
+    "client/custom/js/kb-test-navbar-color.js"
   ]
 }
