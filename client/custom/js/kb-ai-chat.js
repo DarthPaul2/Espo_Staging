@@ -7,6 +7,7 @@
     var history     = [];
     var widgetReady = false;
     var _userRole   = 'mitarbeiter';
+    var _userId     = '';
 
     // ─── Styles ──────────────────────────────────────────────────
     function injectStyles() {
@@ -75,11 +76,19 @@
             .then(function(data) {
                 var u = data && data.user;
                 if (!u) return;
+                _userId = u.id || '';
                 if (u.isAdmin || u.type === 'admin') {
                     _userRole = 'admin';
                 } else {
                     var roles = Object.values(u.rolesNames || {});
-                    if (roles.indexOf('Buchhaltung') !== -1) _userRole = 'buchhaltung';
+                    var teams = Object.values(u.teamsNames || {});
+                    if (roles.indexOf('Geschäftsleitung') !== -1) {
+                        _userRole = 'geschaeftsfuehrung';
+                    } else if (roles.indexOf('Buchhaltung') !== -1) {
+                        _userRole = 'buchhaltung';
+                    } else if (teams.indexOf('IT & Entwicklung') !== -1) {
+                        _userRole = 'it_entwicklung';
+                    }
                 }
                 console.log('[KB] user_role detected:', _userRole);
             })
@@ -291,6 +300,7 @@
                     messages: history,
                     espo_base_url: window.location.origin,
                     user_role: _userRole,
+                    user_id: _userId,
                 }),
             })
             .then(function (r) { return r.json(); })

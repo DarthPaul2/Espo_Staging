@@ -1,5 +1,28 @@
 {
+    "fields": {
+        "cUrlaubTage": {
+            "type": "int",
+            "readOnly": true,
+            "min": 0,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "cKrankTage": {
+            "type": "int",
+            "readOnly": true,
+            "min": 0,
+            "tooltip": true,
+            "isCustom": true
+        }
+    },
     "links": {
+        "cAbwesenheits": {
+            "type": "hasMany",
+            "foreign": "assignedUser",
+            "entity": "CAbwesenheit",
+            "audited": false,
+            "isCustom": true
+        },
         "cArbeitszeiten": {
             "type": "hasMany",
             "foreign": "techniker",

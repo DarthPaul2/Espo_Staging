@@ -1,5 +1,7 @@
 {
     "fields": {
+        "cUrlaubTage": "Urlaub (Tage, akt. Jahr)",
+        "cKrankTage": "Krank (Tage, akt. Jahr)",
         "cArbeitszeiten": "Arbeitszeiten",
         "cAuftrags": "Auftrags",
         "cWartungs": "Wartungs",
@@ -21,7 +23,12 @@
         "cStornierteRechnungen": "Stornierte Rechnungen",
         "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen"
     },
+    "tooltips": {
+        "cUrlaubTage": "Summe der Urlaubs-Werktage (Mo-Fr, Typ 'U' in Abwesenheiten) im laufenden Kalenderjahr. Wird automatisch beim Speichern/Löschen einer Abwesenheit neu berechnet.",
+        "cKrankTage": "Summe der Krankheitstage (Typ 'K' in Abwesenheiten) im laufenden Kalenderjahr. Wird automatisch beim Speichern/Löschen einer Abwesenheit neu berechnet."
+    },
     "links": {
+        "cAbwesenheits": "Abwesenheiten",
         "cArbeitszeiten": "Arbeitszeiten",
         "cAuftrags": "Auftrags",
         "cWartungs": "Wartungs",
