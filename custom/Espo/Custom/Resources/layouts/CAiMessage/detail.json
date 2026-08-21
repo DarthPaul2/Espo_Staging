@@ -1,0 +1,22 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "conversation"
+                },
+                {
+                    "name": "role"
+                }
+            ],
+            [
+                {
+                    "name": "content",
+                    "fullWidth": true
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

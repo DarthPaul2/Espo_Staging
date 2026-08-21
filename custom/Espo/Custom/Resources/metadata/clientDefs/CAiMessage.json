@@ -1,0 +1,8 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#6c5ce7",
+    "iconClass": "fas fa-comment-dots"
+}

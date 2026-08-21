@@ -40,6 +40,14 @@
             'padding:2px 7px;border-radius:4px;opacity:0;pointer-events:none;',
             'transition:opacity .15s;z-index:10;}',
             '.kb-new:hover::after{opacity:1;}',
+            '.kb-expand{position:relative;background:none;border:none;color:rgba(255,255,255,.65);',
+            'font-size:17px;cursor:pointer;line-height:1;padding:0 5px;transition:color .15s;}',
+            '.kb-expand:hover{color:#fff;}',
+            '.kb-expand::after{content:"Im Vollbild öffnen";position:absolute;bottom:-26px;right:0;',
+            'background:#1e293b;color:#fff;font-size:11px;white-space:nowrap;',
+            'padding:2px 7px;border-radius:4px;opacity:0;pointer-events:none;',
+            'transition:opacity .15s;z-index:10;}',
+            '.kb-expand:hover::after{opacity:1;}',
             '.kb-msgs{flex:1;overflow-y:auto;padding:12px;',
             'display:flex;flex-direction:column;gap:8px;}',
             '.kb-msg{max-width:86%;padding:8px 12px;border-radius:10px;',
@@ -197,6 +205,7 @@
             '      KleSec KI-Assistent',
             '    </span>',
             '    <span style="display:flex;gap:6px;align-items:center;">',
+            '      <button class="kb-expand" id="kb-expand">⤢</button>',
             '      <button class="kb-new" id="kb-new">🗑️</button>',
             '      <button class="kb-close" id="kb-close">✕</button>',
             '    </span>',
@@ -218,6 +227,7 @@
         var snd   = document.getElementById('kb-snd');
         var cls   = document.getElementById('kb-close');
         var newBtn = document.getElementById('kb-new');
+        var expandBtn = document.getElementById('kb-expand');
 
         // ─── Helpers ─────────────────────────────────────────────
 
@@ -335,6 +345,27 @@
             history = [];
             msgs.innerHTML = '';
             welcome();
+        });
+        expandBtn.addEventListener('click', function () {
+            // Aktuelle Historie an die Vollbild-Seite übergeben (siehe custom:views/ai-chat/index) —
+            // dort wird daraus eine gespeicherte Konversation. localStorage statt URL-Parameter,
+            // weil die Historie beliebig lang sein kann.
+            var quelleTyp = null, quelleId = null, quelleLabel = null;
+            var m = /#(\w+)\/view\/([\w-]+)/.exec(window.location.hash);
+            if (m) {
+                quelleTyp = m[1];
+                quelleId = m[2];
+                quelleLabel = m[1] + ' #' + m[2];
+            }
+            try {
+                localStorage.setItem('kbAiSeed', JSON.stringify({
+                    history: history,
+                    quelleTyp: quelleTyp,
+                    quelleId: quelleId,
+                    quelle: quelleLabel,
+                }));
+            } catch (e) {}
+            window.open('#custom:ai-chat-full', '_blank');
         });
         snd.addEventListener('click', send);
         inp.addEventListener('keydown', function (e) {

@@ -1,0 +1,12 @@
+{
+    "labels": {
+        "Create CAiConversation": "Erstellen KI-Unterhaltung",
+        "CAiConversation": "KI-Unterhaltungen"
+    },
+    "fields": {
+        "name": "Titel",
+        "lastMessageAt": "Letzte Nachricht",
+        "quelleTyp": "Quelle (Entität)",
+        "quelleId": "Quelle (ID)"
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "labels": {
+        "Create CAiMessage": "Erstellen KI-Nachricht",
+        "CAiMessage": "KI-Nachrichten"
+    },
+    "fields": {
+        "name": "Titel",
+        "conversation": "Unterhaltung",
+        "role": "Rolle",
+        "content": "Inhalt"
+    },
+    "options": {
+        "role": {
+            "user": "Benutzer",
+            "assistant": "Assistent"
+        }
+    }
+}
