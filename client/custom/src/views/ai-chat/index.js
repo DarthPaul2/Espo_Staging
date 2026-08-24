@@ -6,6 +6,20 @@ Espo.define('custom:views/ai-chat/index', ['view'], function (Dep) {
     var AI_CHAT_KEY = '866a34aae36bee0a730e892ee9585552b202613ce1c5f963f505eb6e164eb3ea';
     var SEED_STORAGE_KEY = 'kbAiSeed';
 
+    // Netzwerkfehler beim Senden/Speichern — zufällig einer davon statt immer derselben
+    // trockenen Meldung (Pavels Wunsch, mit Humor/Slang auf Pagekite schimpfen).
+    var NETWORK_ERRORS = [
+        'Wegen deinem scheiß Pagekite gab\'s grad \'nen Netzwerkfehler! Versuch\'s nochmal.',
+        'Wird mal Zeit für \'ne eigene Subdomain, Alter — Netzwerkfehler, probier\'s nochmal.',
+        'Pagekite spinnt schon wieder. Netzwerkfehler, einfach nochmal senden.',
+        'Der Pagekite-Tunnel ist grad kurz eingeknickt — nochmal versuchen, klappt bestimmt.',
+        'Keine Ahnung was da schiefging, aber wahrscheinlich mal wieder Pagekite. Einfach nochmal.',
+    ];
+
+    function randomNetworkError() {
+        return NETWORK_ERRORS[Math.floor(Math.random() * NETWORK_ERRORS.length)];
+    }
+
     // {time} = tageszeitabhängiger Gruß, {name} = Vorname — jedes Mal, wenn der Begrüßungsschirm
     // erscheint, wird zufällig einer davon gewählt (siehe renderGreeting/showWelcome). Einträge
     // mit männlicher/weiblicher Grammatik ({m}/{f}) werden anhand von salutationName aus
@@ -172,6 +186,60 @@ Espo.define('custom:views/ai-chat/index', ['view'], function (Dep) {
                 msgsEl.scrollTop = msgsEl.scrollHeight;
             }
 
+            // Bestätigen-Button für einen Prozesshandbuch-Entwurf (siehe
+            // routes_ai_assistant.py::ai_chat_prozesshandbuch_speichern) — schickt beim Klick
+            // GENAU den zuvor gezeigten Entwurf, kein erneuter KI-Aufruf.
+            function addDraftButton(draft) {
+                hideWelcome();
+                var wrap = document.createElement('div');
+                wrap.className = 'aic-msg bot';
+                wrap.style.padding = '0';
+                wrap.style.background = 'none';
+
+                var btn = document.createElement('button');
+                btn.className = 'aic-draft-save';
+                btn.textContent = '💾 Ins Prozesshandbuch speichern';
+
+                btn.addEventListener('click', function () {
+                    btn.disabled = true;
+                    btn.textContent = '...';
+                    fetch(FLASK_BASE + '/ai-chat/prozesshandbuch/speichern', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-AI-Chat-Key': AI_CHAT_KEY },
+                        body: JSON.stringify({
+                            titel: draft.titel || '',
+                            bereich: draft.bereich || '',
+                            beschreibung: draft.beschreibung || '',
+                            user_id: userId,
+                            espo_base_url: window.location.origin,
+                        }),
+                    })
+                        .then(function (r) { return r.json(); })
+                        .then(function (data) {
+                            if (data && data.success) {
+                                var done = document.createElement('span');
+                                done.className = 'aic-draft-done';
+                                done.innerHTML = '✅ Gespeichert' + (data.espo_url
+                                    ? ' — <a href="' + data.espo_url + '" target="_blank">im EspoCRM öffnen</a>' : '');
+                                wrap.replaceChild(done, btn);
+                            } else {
+                                btn.disabled = false;
+                                btn.textContent = '💾 Ins Prozesshandbuch speichern';
+                                addMsg('bot', 'Fehler beim Speichern: ' + ((data && data.error) || 'unbekannt'));
+                            }
+                        })
+                        .catch(function () {
+                            btn.disabled = false;
+                            btn.textContent = '💾 Ins Prozesshandbuch speichern';
+                            addMsg('bot', randomNetworkError());
+                        });
+                });
+
+                wrap.appendChild(btn);
+                msgsEl.appendChild(wrap);
+                msgsEl.scrollTop = msgsEl.scrollHeight;
+            }
+
             function typing(on) {
                 var el = $el.find('#aic-typing')[0];
                 if (on) {
@@ -314,6 +382,9 @@ Espo.define('custom:views/ai-chat/index', ['view'], function (Dep) {
                             loadConversations();
                         }
                         addMsg('bot', (data && data.reply) ? data.reply : 'Keine Antwort.');
+                        if (data && data.prozesshandbuch_draft) {
+                            addDraftButton(data.prozesshandbuch_draft);
+                        }
                         sessionMsgCount++;
                         maybeAddBreakJoke();
                         maybeAddMoneyJoke();
@@ -321,7 +392,7 @@ Espo.define('custom:views/ai-chat/index', ['view'], function (Dep) {
                     .catch(function () {
                         typing(false);
                         setLoading(false);
-                        addMsg('bot', 'Verbindungsfehler. Bitte erneut versuchen.');
+                        addMsg('bot', randomNetworkError());
                     });
             }
 

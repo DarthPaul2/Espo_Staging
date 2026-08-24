@@ -2,12 +2,27 @@
     'use strict';
 
     var FLASK_URL   = 'https://klesec.pagekite.me/api/ai-chat';
+    var SAVE_URL    = FLASK_URL + '/prozesshandbuch/speichern';
     var AI_CHAT_KEY = '866a34aae36bee0a730e892ee9585552b202613ce1c5f963f505eb6e164eb3ea';
     var MAX_HISTORY = 6;
     var history     = [];
     var widgetReady = false;
     var _userRole   = 'mitarbeiter';
     var _userId     = '';
+
+    // Netzwerkfehler beim Senden/Speichern — zufällig einer davon statt immer derselben
+    // trockenen Meldung (Pavels Wunsch, mit Humor/Slang auf Pagekite schimpfen).
+    var NETWORK_ERRORS = [
+        'Wegen deinem scheiß Pagekite gab\'s grad \'nen Netzwerkfehler! Versuch\'s nochmal.',
+        'Wird mal Zeit für \'ne eigene Subdomain, Alter — Netzwerkfehler, probier\'s nochmal.',
+        'Pagekite spinnt schon wieder. Netzwerkfehler, einfach nochmal senden.',
+        'Der Pagekite-Tunnel ist grad kurz eingeknickt — nochmal versuchen, klappt bestimmt.',
+        'Keine Ahnung was da schiefging, aber wahrscheinlich mal wieder Pagekite. Einfach nochmal.',
+    ];
+
+    function randomNetworkError() {
+        return NETWORK_ERRORS[Math.floor(Math.random() * NETWORK_ERRORS.length)];
+    }
 
     // ─── Styles ──────────────────────────────────────────────────
     function injectStyles() {
@@ -69,6 +84,11 @@
             'padding:8px 14px;cursor:pointer;font-size:14px;white-space:nowrap;}',
             '.kb-snd:hover{background:#1d4ed8;}',
             '.kb-snd:disabled{background:#94a3b8;cursor:default;}',
+            '.kb-draft-save{align-self:flex-start;background:#16a34a;color:#fff;border:none;',
+            'border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;}',
+            '.kb-draft-save:hover{background:#15803d;}',
+            '.kb-draft-save:disabled{background:#94a3b8;cursor:default;}',
+            '.kb-draft-done{align-self:flex-start;font-size:13px;color:#16a34a;padding:4px 2px;}',
         ].join('');
         document.head.appendChild(s);
     }
@@ -287,6 +307,59 @@
             msgs.scrollTop = msgs.scrollHeight;
         }
 
+        // Zeigt den Bestätigen-Button für einen Prozesshandbuch-Entwurf (siehe
+        // routes_ai_assistant.py::ai_chat_prozesshandbuch_speichern) — schickt beim Klick
+        // GENAU den Entwurf, den die KI zuvor gezeigt hat, kein erneuter KI-Aufruf.
+        function addDraftButton(draft) {
+            var wrap = document.createElement('div');
+            wrap.className = 'kb-msg bot';
+            wrap.style.padding = '0';
+            wrap.style.background = 'none';
+
+            var btn = document.createElement('button');
+            btn.className = 'kb-draft-save';
+            btn.textContent = '💾 Ins Prozesshandbuch speichern';
+
+            btn.addEventListener('click', function () {
+                btn.disabled = true;
+                btn.textContent = '...';
+                fetch(SAVE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-AI-Chat-Key': AI_CHAT_KEY },
+                    body: JSON.stringify({
+                        titel: draft.titel || '',
+                        bereich: draft.bereich || '',
+                        beschreibung: draft.beschreibung || '',
+                        user_id: _userId,
+                        espo_base_url: window.location.origin,
+                    }),
+                })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data && data.success) {
+                        var done = document.createElement('span');
+                        done.className = 'kb-draft-done';
+                        done.innerHTML = '✅ Gespeichert' + (data.espo_url
+                            ? ' — <a href="' + data.espo_url + '" target="_blank">im EspoCRM öffnen</a>' : '');
+                        wrap.replaceChild(done, btn);
+                    } else {
+                        btn.disabled = false;
+                        btn.textContent = '💾 Ins Prozesshandbuch speichern';
+                        addMsg('bot', 'Fehler beim Speichern: ' + ((data && data.error) || 'unbekannt'));
+                    }
+                })
+                .catch(function () {
+                    btn.disabled = false;
+                    btn.textContent = '💾 Ins Prozesshandbuch speichern';
+                    addMsg('bot', randomNetworkError());
+                });
+            });
+
+            wrap.appendChild(btn);
+            msgs.appendChild(wrap);
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+
         // ─── API ─────────────────────────────────────────────────
 
         function send() {
@@ -320,10 +393,13 @@
                 history.push({ role: 'assistant', content: reply });
                 if (history.length > MAX_HISTORY) history = history.slice(-MAX_HISTORY);
                 addMsg('bot', reply);
+                if (data && data.prozesshandbuch_draft) {
+                    addDraftButton(data.prozesshandbuch_draft);
+                }
             })
             .catch(function () {
                 typing(false); setLoading(false);
-                addMsg('bot', 'Verbindungsfehler. Bitte erneut versuchen.');
+                addMsg('bot', randomNetworkError());
             });
         }
 

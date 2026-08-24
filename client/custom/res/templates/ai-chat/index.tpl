@@ -159,7 +159,16 @@
 .aic-msg.bot { align-self: flex-start; background: #f1f5f9; color: #1e293b; border-radius: 12px 12px 12px 2px; }
 .aic-msg a { color: #3d5a99; }
 .aic-msg.user a { color: #cdd9f0; }
+.aic-draft-save { align-self: flex-start; background: #16a34a; color: #fff; border: none; border-radius: 8px; padding: 9px 16px; cursor: pointer; font-size: 14px; }
+.aic-draft-save:hover { background: #15803d; }
+.aic-draft-save:disabled { background: #94a3b8; cursor: default; }
+.aic-draft-done { align-self: flex-start; font-size: 14px; color: #16a34a; padding: 4px 2px; }
 .aic-typing { align-self: flex-start; background: #f1f5f9; color: #64748b; padding: 8px 14px; border-radius: 12px; font-style: italic; font-size: 13px; }
+
+.aic-draft-save { align-self: flex-start; background: #16a34a; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.aic-draft-save:hover { background: #15803d; }
+.aic-draft-save:disabled { background: #94a3b8; cursor: default; }
+.aic-draft-done { align-self: flex-start; font-size: 13px; color: #16a34a; padding: 4px 2px; }
 
 .aic-foot { padding: 12px 16px; border-top: 1px solid #e2e8f0; display: flex; gap: 10px; flex-shrink: 0; }
 .aic-inp { flex: 1; border: 1px solid #cbd5e1; border-radius: 8px; padding: 10px 12px; font-size: 15px; resize: none; outline: none; font-family: inherit; line-height: 1.4; }

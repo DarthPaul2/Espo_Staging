@@ -232,6 +232,7 @@ kbd {
                     <li class="muted"><a href="#de-cockpit">→ Finanz-Cockpit (Dashboard)</a></li>
                     <li class="muted"><a href="#de-buchungsjournal">→ Buchungsjournal</a></li>
                     <li class="muted"><a href="#de-auswertung">→ Auswertungen</a></li>
+                    <li class="muted"><a href="#de-buchungsregel">→ Buchungsregeln</a></li>
                     <li class="hb-nav-sep"></li>
                     <li class="section" style="font-size:15px;font-weight:700;color:#1a6b3c;"><a href="#de-zusatz" style="color:#1a6b3c;">⚙ Zusatzfunktionen</a></li>
                     <li><a href="#de-whatsapp" style="color:#1a6b3c;">→ WhatsApp &amp; KI-Berichte</a></li>
@@ -241,6 +242,10 @@ kbd {
                     <li style="padding-left:28px;"><a href="#de-wa-sammelbericht" style="color:#1a6b3c;">· Sammelbericht</a></li>
                     <li><a href="#de-nas" style="color:#9b3a6b;">→ KleSec NAS</a></li>
                     <li><a href="#de-ki-assistent" style="color:#4f46e5;display:flex;align-items:center;gap:6px;">→ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="18" height="18" style="border-radius:50%;flex-shrink:0;"><defs><radialGradient id="kn-de-bg" cx="45%" cy="38%" r="60%"><stop offset="0%" stop-color="#e0eeff"/><stop offset="100%" stop-color="#b8d4fa"/></radialGradient><radialGradient id="kn-de-sk" cx="38%" cy="28%" r="70%"><stop offset="0%" stop-color="#fdd5a0"/><stop offset="100%" stop-color="#e8874a"/></radialGradient><radialGradient id="kn-de-ck" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5a070" stop-opacity="0.55"/><stop offset="100%" stop-color="#f5a070" stop-opacity="0"/></radialGradient></defs><circle cx="34" cy="34" r="34" fill="url(#kn-de-bg)"/><path d="M8 68 C9 52 20 49 28 48 L34 52 L40 48 C48 49 59 52 60 68Z" fill="#2563eb"/><path d="M28 48 L34 52 L40 48 L40 55 L28 55Z" fill="#f0f4ff"/><rect x="29" y="43" width="10" height="7" rx="4" fill="url(#kn-de-sk)"/><ellipse cx="34" cy="31" rx="15.5" ry="15" fill="url(#kn-de-sk)"/><ellipse cx="18.8" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="18.8" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><ellipse cx="49.2" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="49.2" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><path d="M19 24 Q18 13 34 12 Q50 13 49 24 Q46 17 42 16 Q38 13 34 14 Q30 13 26 16 Q22 17 19 24Z" fill="#c8a84b"/><ellipse cx="22" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><ellipse cx="28" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="34" cy="13.5" rx="4" ry="3.5" fill="#c8a84b"/><ellipse cx="40" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="46" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><path d="M24.5 24.5 Q27.5 22.5 31 24" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M37 24 Q40.5 22.5 43.5 24.5" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="28" cy="30" rx="4.5" ry="4.2" fill="#fff"/><ellipse cx="40" cy="30" rx="4.5" ry="4.2" fill="#fff"/><circle cx="28.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="40.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="28.8" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="41" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="29.8" cy="29.5" r="0.9" fill="#fff"/><circle cx="42" cy="29.5" r="0.9" fill="#fff"/><rect x="22.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><rect x="34.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><line x1="33.5" y1="29.5" x2="34.5" y2="29.5" stroke="#2d2d2d" stroke-width="1.5"/><line x1="22.5" y1="29" x2="19" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><line x1="45.5" y1="29" x2="49" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><ellipse cx="34" cy="37" rx="3.2" ry="2.2" fill="#d0733a"/><path d="M22 39 Q22 47 34 48 Q46 47 46 39 Q43 43 34 44 Q25 43 22 39Z" fill="#b8922a"/><path d="M24 38 Q24 40 22 39 Q23 37 24 38Z" fill="#b8922a"/><path d="M44 38 Q44 40 46 39 Q45 37 44 38Z" fill="#b8922a"/><path d="M26 41 Q30 44 34 44 Q38 44 42 41 Q38 43.5 34 43.5 Q30 43.5 26 41Z" fill="#d4af50" opacity="0.4"/><ellipse cx="22" cy="37" rx="4" ry="3" fill="url(#kn-de-ck)"/><ellipse cx="46" cy="37" rx="4" ry="3" fill="url(#kn-de-ck)"/><path d="M26 41.5 Q34 50 42 41.5" fill="#b04820"/><path d="M27.5 42 Q34 48 40.5 42 Q34 46 27.5 42Z" fill="#fff"/></svg>KI-Assistent</a></li>
+                    <li><a href="#de-tickets" style="color:#1a6b3c;">→ Tickets</a></li>
+                    <li><a href="#de-einstellungstest" style="color:#1a6b3c;">→ Einstellungstest</a></li>
+                    <li><a href="#de-mitarbeiterkompass" style="color:#1a6b3c;">→ Mitarbeiterkompass</a></li>
+                    <li><a href="#de-mail-assistent" style="color:#1a6b3c;">→ KI-Mail-Assistent (Outlook)</a></li>
                 </ul>
             </div>
             <div class="hb-content-ru" style="display:none">
@@ -287,6 +292,7 @@ kbd {
                     <li class="muted"><a href="#ru-cockpit">→ Finanz-Cockpit (Dashboard)</a></li>
                     <li class="muted"><a href="#ru-buchungsjournal">→ Журнал проводок</a></li>
                     <li class="muted"><a href="#ru-auswertung">→ Отчёты</a></li>
+                    <li class="muted"><a href="#ru-buchungsregel">→ Правила проводок</a></li>
                     <li class="hb-nav-sep"></li>
                     <li class="section" style="font-size:15px;font-weight:700;color:#1a6b3c;"><a href="#ru-zusatz" style="color:#1a6b3c;">⚙ Доп. функции</a></li>
                     <li><a href="#ru-whatsapp" style="color:#1a6b3c;">→ WhatsApp и ИИ-отчёты</a></li>
@@ -296,6 +302,10 @@ kbd {
                     <li style="padding-left:28px;"><a href="#ru-wa-sammelbericht" style="color:#1a6b3c;">· Сводный отчёт</a></li>
                     <li><a href="#ru-nas" style="color:#9b3a6b;">→ KleSec NAS</a></li>
                     <li><a href="#ru-ki-assistent" style="color:#4f46e5;display:flex;align-items:center;gap:6px;">→ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="18" height="18" style="border-radius:50%;flex-shrink:0;"><defs><radialGradient id="kn-ru-bg" cx="45%" cy="38%" r="60%"><stop offset="0%" stop-color="#e0eeff"/><stop offset="100%" stop-color="#b8d4fa"/></radialGradient><radialGradient id="kn-ru-sk" cx="38%" cy="28%" r="70%"><stop offset="0%" stop-color="#fdd5a0"/><stop offset="100%" stop-color="#e8874a"/></radialGradient><radialGradient id="kn-ru-ck" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5a070" stop-opacity="0.55"/><stop offset="100%" stop-color="#f5a070" stop-opacity="0"/></radialGradient></defs><circle cx="34" cy="34" r="34" fill="url(#kn-ru-bg)"/><path d="M8 68 C9 52 20 49 28 48 L34 52 L40 48 C48 49 59 52 60 68Z" fill="#2563eb"/><path d="M28 48 L34 52 L40 48 L40 55 L28 55Z" fill="#f0f4ff"/><rect x="29" y="43" width="10" height="7" rx="4" fill="url(#kn-ru-sk)"/><ellipse cx="34" cy="31" rx="15.5" ry="15" fill="url(#kn-ru-sk)"/><ellipse cx="18.8" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="18.8" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><ellipse cx="49.2" cy="32" rx="3" ry="4" fill="#e8874a"/><ellipse cx="49.2" cy="32" rx="1.5" ry="2.3" fill="#fdd5a0"/><path d="M19 24 Q18 13 34 12 Q50 13 49 24 Q46 17 42 16 Q38 13 34 14 Q30 13 26 16 Q22 17 19 24Z" fill="#c8a84b"/><ellipse cx="22" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><ellipse cx="28" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="34" cy="13.5" rx="4" ry="3.5" fill="#c8a84b"/><ellipse cx="40" cy="15" rx="4.5" ry="4" fill="#dbbe6a"/><ellipse cx="46" cy="19" rx="4" ry="4.5" fill="#c8a84b"/><path d="M24.5 24.5 Q27.5 22.5 31 24" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M37 24 Q40.5 22.5 43.5 24.5" stroke="#a07c20" stroke-width="1.8" fill="none" stroke-linecap="round"/><ellipse cx="28" cy="30" rx="4.5" ry="4.2" fill="#fff"/><ellipse cx="40" cy="30" rx="4.5" ry="4.2" fill="#fff"/><circle cx="28.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="40.5" cy="30.5" r="2.8" fill="#2d6a4f"/><circle cx="28.8" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="41" cy="30.8" r="1.5" fill="#0d1a12"/><circle cx="29.8" cy="29.5" r="0.9" fill="#fff"/><circle cx="42" cy="29.5" r="0.9" fill="#fff"/><rect x="22.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><rect x="34.5" y="26" width="11" height="8.5" rx="2.8" fill="none" stroke="#2d2d2d" stroke-width="1.5"/><line x1="33.5" y1="29.5" x2="34.5" y2="29.5" stroke="#2d2d2d" stroke-width="1.5"/><line x1="22.5" y1="29" x2="19" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><line x1="45.5" y1="29" x2="49" y2="30" stroke="#2d2d2d" stroke-width="1.3"/><ellipse cx="34" cy="37" rx="3.2" ry="2.2" fill="#d0733a"/><path d="M22 39 Q22 47 34 48 Q46 47 46 39 Q43 43 34 44 Q25 43 22 39Z" fill="#b8922a"/><path d="M24 38 Q24 40 22 39 Q23 37 24 38Z" fill="#b8922a"/><path d="M44 38 Q44 40 46 39 Q45 37 44 38Z" fill="#b8922a"/><path d="M26 41 Q30 44 34 44 Q38 44 42 41 Q38 43.5 34 43.5 Q30 43.5 26 41Z" fill="#d4af50" opacity="0.4"/><ellipse cx="22" cy="37" rx="4" ry="3" fill="url(#kn-ru-ck)"/><ellipse cx="46" cy="37" rx="4" ry="3" fill="url(#kn-ru-ck)"/><path d="M26 41.5 Q34 50 42 41.5" fill="#b04820"/><path d="M27.5 42 Q34 48 40.5 42 Q34 46 27.5 42Z" fill="#fff"/></svg>KI-Ассистент</a></li>
+                    <li><a href="#ru-tickets" style="color:#1a6b3c;">→ Тикеты</a></li>
+                    <li><a href="#ru-einstellungstest" style="color:#1a6b3c;">→ Тест при приёме</a></li>
+                    <li><a href="#ru-mitarbeiterkompass" style="color:#1a6b3c;">→ Компас сотрудника</a></li>
+                    <li><a href="#ru-mail-assistent" style="color:#1a6b3c;">→ KI-Mail-Assistent (Outlook)</a></li>
                 </ul>
             </div>
         </div>
@@ -332,6 +342,7 @@ kbd {
             </table>
             <div class="hb-tip">Die meisten Nummern (Rechnungen, Aufträge, Angebote) werden <strong>automatisch vergeben</strong> — keine manuelle Eingabe erforderlich.</div>
             <div class="hb-warn">Festgeschriebene Datensätze können <strong>nicht mehr geändert</strong> werden. Dies ist ein buchhalterisches Erfordernis.</div>
+            <div class="hb-tip">📎 Nicht verwechseln: Dieses <strong>Handbuch</strong> erklärt die Bedienung von EspoCRM. Das Modul <strong>„Prozesshandbuch"</strong> (Menü → Prozesshandbücher) ist etwas anderes — dort werden Klesec-eigene Geschäftsprozesse dokumentiert („wie machen WIR X bei uns"), nicht die Bedienung von Espo selbst.</div>
 
             <!-- STAMMDATEN -->
             <!-- STAMMDATEN -->
@@ -706,6 +717,16 @@ kbd {
             <p><strong>Menü → Arbeitszeiten</strong></p>
             <p>Anzeige: Datum, Beginn/Ende, Gesamtdauer, Nettozeit (ohne Pausen), Überstunden, GPS-Koordinaten. Monats- und Jahresübersichten in den jeweiligen Registerkarten verfügbar.</p>
 
+            <h4 style="margin-top:18px;color:#2c3e6a;">Monats- und Jahresübersicht: Soll, Netto, Bilanz</h4>
+            <p>In den Registerkarten <strong>Monatsübersicht</strong> und <strong>Jahresübersicht</strong> berechnet das System für jeden Techniker automatisch, ob er über oder unter seiner Soll-Arbeitszeit liegt:</p>
+            <table>
+                <tr><th>Größe</th><th>Berechnung</th></tr>
+                <tr><td><strong>Soll</strong></td><td>(Arbeitstage im Zeitraum − Tage mit Urlaub/Krankheit) × 8 Stunden</td></tr>
+                <tr><td><strong>Netto</strong></td><td>Tatsächlich geleistete Arbeitszeit ohne Pausen, aus den erfassten Arbeitszeiten summiert</td></tr>
+                <tr><td><strong>Bilanz</strong></td><td>Netto − Soll — positiv bei Überstunden, negativ bei zu wenig geleisteten Stunden</td></tr>
+            </table>
+            <div class="hb-tip">Urlaubs- und Krankheitstage (aus Abwesenheit) verringern automatisch die Soll-Zeit — an diesen Tagen wird keine Arbeitszeit erwartet.</div>
+
             <h3 id="de-stundenbericht">8.2 Stundenbericht</h3>
             <p>Zusammenfassender Bericht über ausgeführte Arbeiten — wird vom Techniker in der App ausgefüllt. Enthält Objekt, verwendete Materialien, Notdienst und Beträge.</p>
             <p><strong>Menü → Stundenberichte</strong></p>
@@ -1076,6 +1097,19 @@ kbd {
                 </tbody>
             </table>
 
+            <h3 id="de-buchungsregel">11.3 Buchungsregeln</h3>
+            <p>Legt fest, auf welche Konten (Debitor, Erlös, Steuer, Aufwand, Vorsteuer, Verbindlichkeit, Bank, Kasse) das System bei der Festschreibung eines Belegs automatisch bucht — abhängig von Belegquelle (Ausgangsrechnung / Eingangsrechnung / Zahlung), Dokumenttyp und Steuerfall.</p>
+            <p><strong>Menü → Buchungsregeln</strong></p>
+            <table>
+                <tr><th>Feld</th><th>Bedeutung</th></tr>
+                <tr><td><strong>Quelle Typ</strong></td><td>Woher die Buchung stammt: Ausgangsrechnung, Eingangsrechnung oder Zahlung</td></tr>
+                <tr><td><strong>Dokument Typ</strong></td><td>z. B. Einzelrechnung, Teilrechnung, Zahlungseingang, Gutschrift usw.</td></tr>
+                <tr><td><strong>Steuer Fall</strong></td><td>Normale/ermäßigte USt, § 13b, § 12, steuerfrei</td></tr>
+                <tr><td><strong>Debitkonto / Erlöskonto / Steuerkonto</strong> u.&nbsp;a.</td><td>Die konkreten Konten aus dem Kontenplan, die für diese Kombination bebucht werden</td></tr>
+                <tr><td><strong>Aktiv</strong></td><td>Nur aktive Regeln werden angewendet</td></tr>
+            </table>
+            <div class="hb-warn">⚠️ Dieser Bereich wird einmalig vom Buchhalter eingerichtet. Normale Mitarbeiter müssen hier nichts ändern — falsche Regeln führen zu falschen Buchungssätzen bei jeder Festschreibung.</div>
+
             <!-- ZUSATZFUNKTIONEN -->
             <h2 id="de-zusatz">12. Zusatzfunktionen</h2>
             <p>Eigenentwickelte Module, die das EspoCRM-System um KI-gestützte Feldfunktionen und Infrastruktur erweitern.</p>
@@ -1190,6 +1224,77 @@ kbd {
                 <li>EspoCRM-Fachbegriffe wie <em>Festschreibung</em>, <em>Ausgleich</em> oder <em>Mahnstufe</em> bleiben stets auf Deutsch</li>
             </ul>
 
+            <h3 id="de-tickets">12.4 Tickets</h3>
+            <p>Einfaches internes Ticketsystem für Anfragen, Aufgaben oder Probleme, die in kein anderes Modul passen (z.&nbsp;B. IT-Anfragen, interne Anliegen).</p>
+            <p><strong>Menü → Tickets</strong></p>
+            <table>
+                <tr><th>Feld</th><th>Bedeutung</th></tr>
+                <tr><td><strong>Titel</strong></td><td>Kurze Bezeichnung des Anliegens</td></tr>
+                <tr><td><strong>Beschreibung</strong></td><td>Details</td></tr>
+                <tr><td><strong>Priorität</strong></td><td>Niedrig / Normal / Hoch</td></tr>
+                <tr><td><strong>Status</strong></td><td>Offen / In Bearbeitung / Erledigt</td></tr>
+                <tr><td><strong>Bereich / Link</strong></td><td>Optionaler Link auf einen betroffenen Datensatz oder Bereich</td></tr>
+                <tr><td><strong>Assigned User</strong></td><td>Verantwortlicher Mitarbeiter</td></tr>
+            </table>
+            <ul class="hb-steps">
+                <li>Menü <strong>Tickets</strong> → <kbd>Erstellen</kbd></li>
+                <li>Titel, Beschreibung, Priorität, ggf. Assigned User und Bereich/Link ausfüllen</li>
+                <li><kbd>Speichern</kbd></li>
+                <li>Status im weiteren Verlauf auf <strong>In Bearbeitung</strong> bzw. <strong>Erledigt</strong> setzen</li>
+            </ul>
+
+            <h3 id="de-einstellungstest">12.5 Einstellungstest</h3>
+            <p>Online-Eignungstest für Bewerber (Allgemeinbildung, Wirtschaft &amp; Arbeitswelt, Mathematik, logisches und räumliches Denken, technisches Verständnis). Der Test selbst läuft über einen separaten Zugangslink außerhalb von EspoCRM — hier wird nur der Datensatz mit Ergebnis und PDF-Bericht verwaltet.</p>
+            <p><strong>Menü → Einstellungstests</strong></p>
+            <table>
+                <tr><th>Status</th><th>Bedeutung</th></tr>
+                <tr><td>Offen</td><td>Test angelegt, Bewerber hat noch nicht begonnen</td></tr>
+                <tr><td>Läuft</td><td>Bewerber hat den Test gestartet</td></tr>
+                <tr><td>Abgeschlossen</td><td>Test beendet, Punkte liegen vor</td></tr>
+            </table>
+            <ul class="hb-steps">
+                <li>In der Listenansicht oben <kbd>Neuen Test erstellen</kbd> klicken</li>
+                <li>Bezeichnung (z.&nbsp;B. Name des Bewerbers) und Position eingeben → <kbd>Erstellen</kbd></li>
+                <li>Das System zeigt danach den Zugangslink an — diesen an den Bewerber weitergeben (persönlich, WhatsApp oder E-Mail)</li>
+                <li>Solange der Test offen oder läuft, ist der Link jederzeit über die Datensatzkarte abrufbar (Schaltfläche <kbd>Kopieren</kbd>)</li>
+                <li>Nach Abschluss durch den Bewerber wechselt der Status automatisch auf <strong>Abgeschlossen</strong></li>
+                <li>Auf der Karte <kbd>Bericht generieren</kbd> klicken — erzeugt den PDF-Auswertungsbericht mit Gesamtpunkten und Einzelwerten je Kategorie</li>
+            </ul>
+            <div class="hb-tip">Es wird dabei keine E-Mail automatisch an den Bewerber verschickt — der Zugangslink muss manuell weitergegeben werden.</div>
+
+            <h3 id="de-mitarbeiterkompass">12.6 Mitarbeiterkompass</h3>
+            <p>Halbjährliche, vollständig anonyme Mitarbeiterbefragung. Misst sechs Indizes — Motivation (KMI), Führung (KFI), Organisation (KOI), Team (KTI), Kommunikation (KKI), Bindung (KBI) — sowie einen Gesamtindex (KGI). Einzelne Antworten sind nie einer Person zuordenbar.</p>
+            <p><strong>Menü → Mitarbeiterkompass Berichte</strong></p>
+            <table>
+                <tr><th>Wellen-Status</th><th>Bedeutung</th></tr>
+                <tr><td>Neu</td><td>Welle gerade angelegt</td></tr>
+                <tr><td>Einladungen versendet</td><td>Einladungen sind per E-Mail an die Empfänger raus</td></tr>
+                <tr><td>Geschlossen</td><td>Keine weiteren Antworten mehr möglich</td></tr>
+                <tr><td>Ausgewertet</td><td>Bericht wurde generiert</td></tr>
+            </table>
+            <ul class="hb-steps">
+                <li>In der Listenansicht <kbd>Neue Welle anlegen</kbd> klicken</li>
+                <li>Jahr und Halbjahr wählen, Empfänger aus der Mitarbeiterliste auswählen (nur Mitarbeiter mit hinterlegter E-Mail sind wählbar)</li>
+                <li><kbd>Erstellen &amp; einladen</kbd> — legt die Welle an und verschickt die Einladungen automatisch per E-Mail</li>
+                <li>Auf der Berichtskarte laufend sichtbar: Teilnahmestatus (wer hat schon geantwortet)</li>
+                <li>Bei Bedarf <kbd>Erinnerungen an Unbeantwortete senden</kbd></li>
+                <li>Wenn genug Antworten vorliegen: <kbd>Welle schließen</kbd> — danach sind keine weiteren Antworten mehr möglich</li>
+                <li><kbd>Bericht generieren</kbd> — berechnet die Indizes und erzeugt den PDF-Managementbericht</li>
+            </ul>
+            <div class="hb-tip">Der komplette Fragebogen (27 Fragen + 3 offene Fragen) steht direkt in der Listenansicht des Moduls unter „Über diese Seite &amp; Fragebogen".</div>
+
+            <h3 id="de-mail-assistent">12.7 KI-Mail-Assistent (Outlook)</h3>
+            <p>Läuft komplett außerhalb von EspoCRM, direkt auf den Outlook-Postfächern über Microsoft Graph — kein Espo-Login, keine eigene Oberfläche. Sichtbar wird er über automatisch angelegte Espo-Aufgaben, KI-Antwortentwürfe in Outlook und eine tägliche Zusammenfassungs-Mail.</p>
+            <table>
+                <tr><th>Was er automatisch macht</th><th>Details</th></tr>
+                <tr><td><strong>Klassifizieren</strong></td><td>Jede neue Mail wird einer Kategorie zugeordnet (Kundenanfrage, Angebot, Buchhaltung, Termin, Intern, Spam) und kurz zusammengefasst</td></tr>
+                <tr><td><strong>Fristen &amp; Termine erkennen</strong></td><td>Nur eindeutige, bereits bestätigte Verpflichtungen — legt dafür automatisch eine <strong>Aufgabe (Task)</strong> in EspoCRM für die zuständige Person an</td></tr>
+                <tr><td><strong>Antwortentwürfe</strong></td><td>Für ausgewählte Mails wird ein KI-Entwurf direkt im Outlook-Ordner <strong>Entwürfe</strong> abgelegt — wird <strong>nie automatisch versendet</strong>, nur zur Kontrolle und Bearbeitung. Unbearbeitete Entwürfe werden nach 7 Tagen automatisch gelöscht</td></tr>
+                <tr><td><strong>Tages-Zusammenfassung</strong></td><td>Täglich um 17:00 Uhr eine persönliche E-Mail „📋 KleSec Tages-Zusammenfassung" mit den Mails des Tages, erkannten Terminen und noch unbeantworteten (überfälligen) Mails</td></tr>
+            </table>
+            <div class="hb-tip">Aktuell aktiv für: <strong>schiller@</strong> (Tobias Schiller), <strong>rally@</strong> (Bianca Rally), die gemeinsamen Postfächer <strong>info@ / service@ / rechnung@</strong>, sowie <strong>it@</strong> (Pavel, nur zum Testen). Bei den Technikern ist der Assistent derzeit noch deaktiviert.</div>
+            <div class="hb-warn">⚠️ In EspoCRM ist der Assistent nur indirekt sichtbar — über Aufgaben mit dem Hinweis „Automatisch aus einer E-Mail erkannt (KI-Mail-Assistent)" in der Beschreibung.</div>
+
         </div><!-- Ende DE -->
 
 
@@ -1210,6 +1315,7 @@ kbd {
             </table>
             <div class="hb-tip">Большинство номеров (счета, заказы, предложения) генерируются <strong>автоматически</strong> — вводить вручную не нужно.</div>
             <div class="hb-warn">Зафиксированные записи (festgeschrieben) <strong>нельзя изменить</strong>. Это бухгалтерское требование.</div>
+            <div class="hb-tip">📎 Не путать: этот <strong>Handbuch</strong> объясняет, как пользоваться EspoCRM. Модуль <strong>«Prozesshandbuch»</strong> (Меню → Prozesshandbücher) — это другое: там документируются собственные бизнес-процессы Klesec («как МЫ делаем X у себя»), а не инструкция по работе с самим Espo.</div>
 
             <!-- СПРАВОЧНИКИ -->
             <h2 id="ru-stammdaten">2. Основные справочники (Stammdaten)</h2>
@@ -1539,6 +1645,16 @@ kbd {
             <p>Данные приходят автоматически из мобильного приложения. Техник отмечается в приложении — данные синхронизируются с системой.</p>
             <p><strong>Меню → Arbeitszeiten</strong></p>
             <p>Отображается: дата, начало/конец, продолжительность, чистое время, переработки, GPS-координаты. Сводки по месяцам и годам — в соответствующих вкладках.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Сводка по месяцам и годам: Soll, Netto, Bilanz</h4>
+            <p>На вкладках <strong>Monatsübersicht</strong> и <strong>Jahresübersicht</strong> система автоматически рассчитывает для каждого техника, работает ли он больше или меньше нормы:</p>
+            <table>
+                <tr><th>Величина</th><th>Расчёт</th></tr>
+                <tr><td><strong>Soll (норма)</strong></td><td>(Рабочие дни в периоде − дни отпуска/больничного) × 8 часов</td></tr>
+                <tr><td><strong>Netto (факт)</strong></td><td>Фактически отработанное время без перерывов, сумма из зафиксированных Arbeitszeiten</td></tr>
+                <tr><td><strong>Bilanz (баланс)</strong></td><td>Netto − Soll — положительное значение означает переработку, отрицательное — недоработку</td></tr>
+            </table>
+            <div class="hb-tip">Дни отпуска и больничного (из Abwesenheit) автоматически уменьшают норму (Soll) — в эти дни рабочее время не ожидается.</div>
 
             <h3 id="ru-stundenbericht">8.2 Отчёты по часам (Stundenbericht)</h3>
             <p>Сводный отчёт о выполненных работах — заполняется техником в приложении. Содержит объект, материалы, Notdienst, суммы.</p>
@@ -1893,6 +2009,19 @@ kbd {
                 </tbody>
             </table>
 
+            <h3 id="ru-buchungsregel">11.3 Правила проводок (Buchungsregel)</h3>
+            <p>Определяет, на какие счета (дебитор, доход, налог, расходы, входящий НДС, обязательства, банк, касса) система автоматически проводит операцию при фиксации документа — в зависимости от источника (исходящий счёт / входящий счёт / платёж), типа документа и налогового случая.</p>
+            <p><strong>Меню → Buchungsregeln</strong></p>
+            <table>
+                <tr><th>Поле</th><th>Значение</th></tr>
+                <tr><td><strong>Quelle Typ</strong></td><td>Источник проводки: исходящий счёт, входящий счёт или платёж</td></tr>
+                <tr><td><strong>Dokument Typ</strong></td><td>Например: обычный счёт, частичный счёт, поступление оплаты, кредит-нота и т.&nbsp;д.</td></tr>
+                <tr><td><strong>Steuer Fall</strong></td><td>Обычная/пониженная ставка НДС, §13b, §12, без НДС</td></tr>
+                <tr><td><strong>Debitkonto / Erlöskonto / Steuerkonto</strong> и др.</td><td>Конкретные счета из плана счетов, которые проводятся для этой комбинации</td></tr>
+                <tr><td><strong>Aktiv</strong></td><td>Применяются только активные правила</td></tr>
+            </table>
+            <div class="hb-warn">⚠️ Этот раздел настраивается один раз бухгалтером. Обычным сотрудникам менять здесь ничего не нужно — неверные правила приведут к неверным проводкам при каждой фиксации документа.</div>
+
             <!-- ДОПОЛНИТЕЛЬНЫЕ ФУНКЦИИ -->
             <h2 id="ru-zusatz">12. Дополнительные функции</h2>
             <p>Собственные модули, расширяющие систему EspoCRM функциями полевой работы с ИИ и инфраструктурой.</p>
@@ -2006,6 +2135,77 @@ kbd {
                 <li>Каждый запрос данных загружает актуальные цифры из системы — устаревших значений из истории диалога нет</li>
                 <li>EspoCRM-термины (<em>Festschreibung</em>, <em>Ausgleich</em>, <em>Mahnstufe</em>) всегда остаются на немецком</li>
             </ul>
+
+            <h3 id="ru-tickets">12.4 Тикеты (Tickets)</h3>
+            <p>Простая внутренняя система заявок для вопросов, задач или проблем, которые не относятся к другому модулю (например, IT-заявки, внутренние вопросы).</p>
+            <p><strong>Меню → Tickets</strong></p>
+            <table>
+                <tr><th>Поле</th><th>Значение</th></tr>
+                <tr><td><strong>Titel</strong></td><td>Короткое название заявки</td></tr>
+                <tr><td><strong>Beschreibung</strong></td><td>Подробности</td></tr>
+                <tr><td><strong>Priorität</strong></td><td>Низкий / Обычный / Высокий</td></tr>
+                <tr><td><strong>Status</strong></td><td>Открыт / В работе / Выполнен</td></tr>
+                <tr><td><strong>Bereich / Link</strong></td><td>Необязательная ссылка на связанную запись или раздел</td></tr>
+                <tr><td><strong>Assigned User</strong></td><td>Ответственный сотрудник</td></tr>
+            </table>
+            <ul class="hb-steps">
+                <li>Меню <strong>Tickets</strong> → <kbd>Erstellen</kbd></li>
+                <li>Заполнить название, описание, приоритет, при необходимости — ответственного и ссылку/раздел</li>
+                <li><kbd>Speichern</kbd></li>
+                <li>По ходу работы менять статус на <strong>In Bearbeitung</strong> / <strong>Erledigt</strong></li>
+            </ul>
+
+            <h3 id="ru-einstellungstest">12.5 Тест при приёме на работу (Einstellungstest)</h3>
+            <p>Онлайн-тест для кандидатов (общая эрудиция, экономика, математика, логическое и пространственное мышление, техническое понимание). Сам тест кандидат проходит по отдельной ссылке вне EspoCRM — здесь хранится только запись с результатом и PDF-отчётом.</p>
+            <p><strong>Меню → Einstellungstests</strong></p>
+            <table>
+                <tr><th>Статус</th><th>Значение</th></tr>
+                <tr><td>Offen</td><td>Тест создан, кандидат ещё не начал</td></tr>
+                <tr><td>Läuft</td><td>Кандидат начал тест</td></tr>
+                <tr><td>Abgeschlossen</td><td>Тест завершён, баллы получены</td></tr>
+            </table>
+            <ul class="hb-steps">
+                <li>В списке нажать <kbd>Neuen Test erstellen</kbd></li>
+                <li>Указать название (например, имя кандидата) и позицию → <kbd>Erstellen</kbd></li>
+                <li>Система покажет ссылку доступа — передать её кандидату (лично, через WhatsApp или email)</li>
+                <li>Пока тест открыт или идёт, ссылку всегда можно скопировать прямо в карточке записи (кнопка <kbd>Kopieren</kbd>)</li>
+                <li>После завершения теста кандидатом статус автоматически меняется на <strong>Abgeschlossen</strong></li>
+                <li>В карточке нажать <kbd>Bericht generieren</kbd> — сформируется PDF-отчёт с общим баллом и результатами по каждой категории</li>
+            </ul>
+            <div class="hb-tip">Ссылка кандидату автоматически по email не отправляется — её нужно передать вручную.</div>
+
+            <h3 id="ru-mitarbeiterkompass">12.6 Компас сотрудника (Mitarbeiterkompass)</h3>
+            <p>Полугодовой, полностью анонимный опрос сотрудников. Измеряет шесть индексов — мотивация (KMI), руководство (KFI), организация (KOI), команда (KTI), коммуникация (KKI), лояльность (KBI) — и общий индекс (KGI). Отдельные ответы никогда не привязываются к конкретному человеку.</p>
+            <p><strong>Меню → Mitarbeiterkompass Berichte</strong></p>
+            <table>
+                <tr><th>Статус волны</th><th>Значение</th></tr>
+                <tr><td>Neu</td><td>Волна только создана</td></tr>
+                <tr><td>Einladungen versendet</td><td>Приглашения отправлены участникам по email</td></tr>
+                <tr><td>Geschlossen</td><td>Дальнейшие ответы больше не принимаются</td></tr>
+                <tr><td>Ausgewertet</td><td>Отчёт сформирован</td></tr>
+            </table>
+            <ul class="hb-steps">
+                <li>В списке нажать <kbd>Neue Welle anlegen</kbd></li>
+                <li>Выбрать год и полугодие, отметить получателей из списка сотрудников (доступны только те, у кого указан email)</li>
+                <li><kbd>Erstellen &amp; einladen</kbd> — создаёт волну и автоматически рассылает приглашения по email</li>
+                <li>На карточке отчёта видно статус участия (кто уже ответил)</li>
+                <li>При необходимости — <kbd>Erinnerungen an Unbeantwortete senden</kbd></li>
+                <li>Когда получено достаточно ответов: <kbd>Welle schließen</kbd> — после этого новые ответы не принимаются</li>
+                <li><kbd>Bericht generieren</kbd> — рассчитывает индексы и формирует PDF-отчёт для руководства</li>
+            </ul>
+            <div class="hb-tip">Полный список вопросов (27 вопросов + 3 открытых) доступен прямо в списке модуля, в блоке «Über diese Seite &amp; Fragebogen».</div>
+
+            <h3 id="ru-mail-assistent">12.7 KI-Mail-Assistent для Outlook</h3>
+            <p>Работает полностью вне EspoCRM, прямо на почтовых ящиках Outlook через Microsoft Graph — не требует входа в Espo и не имеет отдельного интерфейса. Заметен через автоматически создаваемые задачи в Espo, черновики ответов в Outlook и ежедневное письмо-сводку.</p>
+            <table>
+                <tr><th>Что делает автоматически</th><th>Подробности</th></tr>
+                <tr><td><strong>Классификация</strong></td><td>Каждое новое письмо получает категорию (запрос клиента, предложение, бухгалтерия, термин, внутреннее, спам) и короткое резюме</td></tr>
+                <tr><td><strong>Распознавание сроков и терминов</strong></td><td>Только явные, уже подтверждённые обязательства — для них автоматически создаётся <strong>задача (Task)</strong> в EspoCRM для ответственного сотрудника</td></tr>
+                <tr><td><strong>Черновики ответов</strong></td><td>Для отдельных писем ИИ готовит черновик прямо в папке Outlook <strong>«Черновики»</strong> — он <strong>никогда не отправляется автоматически</strong>, только для проверки и правки. Необработанные черновики автоматически удаляются через 7 дней</td></tr>
+                <tr><td><strong>Дневная сводка</strong></td><td>Каждый день в 17:00 личное письмо «📋 KleSec Tages-Zusammenfassung» с письмами за день, распознанными терминами и до сих пор без ответа (просроченными) письмами</td></tr>
+            </table>
+            <div class="hb-tip">Сейчас активно для: <strong>schiller@</strong> (Tobias Schiller), <strong>rally@</strong> (Bianca Rally), общих ящиков <strong>info@ / service@ / rechnung@</strong>, а также <strong>it@</strong> (Павел, только для тестов). У техников ассистент пока отключён.</div>
+            <div class="hb-warn">⚠️ В EspoCRM ассистент виден только косвенно — через задачи с пометкой «Automatisch aus einer E-Mail erkannt (KI-Mail-Assistent)» в описании.</div>
 
         </div><!-- Ende RU -->
 
