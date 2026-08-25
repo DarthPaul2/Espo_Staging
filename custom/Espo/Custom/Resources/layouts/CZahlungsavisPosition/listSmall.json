@@ -1,0 +1,27 @@
+[
+    {
+        "name": "eingangsrechnung",
+        "width": 34,
+        "align": "left"
+    },
+    {
+        "name": "betrag",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "zahlung",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "skonto",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "bemerkung",
+        "width": 18,
+        "align": "left"
+    }
+]

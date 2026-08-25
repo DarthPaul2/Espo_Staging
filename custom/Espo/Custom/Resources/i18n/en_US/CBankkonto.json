@@ -9,10 +9,12 @@
         "startSaldo": "Startsaldo",
         "startSaldoDatum": "Startsaldo Datum",
         "beschreibung": "Beschreibung",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "zahlungsavise": "Zahlungsavise"
     },
     "links": {
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "zahlungsavise": "Zahlungsavise"
     },
     "labels": {
         "Create CBankkonto": "Create Bankkonto"

@@ -1,0 +1,37 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "avisNummer"
+                },
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "datum"
+                }
+            ],
+            [
+                {
+                    "name": "betragGesamt"
+                },
+                {
+                    "name": "pdfUrl"
+                }
+            ],
+            [
+                {
+                    "name": "description"
+                }
+            ],
+            [
+                {
+                    "name": "lieferant"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

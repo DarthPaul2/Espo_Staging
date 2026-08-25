@@ -1,0 +1,28 @@
+[
+    {
+        "name": "zahlungsavis",
+        "width": 22,
+        "align": "left"
+    },
+    {
+        "name": "eingangsrechnung",
+        "width": 28,
+        "align": "left"
+    },
+    {
+        "name": "betrag",
+        "width": 14
+    },
+    {
+        "name": "zahlung",
+        "width": 14
+    },
+    {
+        "name": "skonto",
+        "width": 14
+    },
+    {
+        "name": "bemerkung",
+        "width": 18
+    }
+]

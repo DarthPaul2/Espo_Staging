@@ -18,13 +18,15 @@
         "bic": "BIC",
         "bankName": "Bank Name",
         "zahlung": "Zahlung",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "zahlungsavise": "Zahlungsavise"
     },
     "links": {
         "eingangsrechnungen": "Eingangsrechnungen",
         "eingangsrechnungImporte": "Eingangsrechnung Importe",
         "zahlung": "Zahlung",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "zahlungsavise": "Zahlungsavise"
     },
     "labels": {
         "Create CLieferant": "Create Lieferant"

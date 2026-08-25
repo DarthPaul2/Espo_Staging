@@ -1,0 +1,17 @@
+{
+    "labels": {
+        "Create CZahlungsavisPosition": "Create Zahlungsavisposition"
+    },
+    "fields": {
+        "zahlungsavis": "Zahlungsavis",
+        "eingangsrechnung": "Eingangsrechnung",
+        "betrag": "Betrag",
+        "zahlung": "Zahlung",
+        "skonto": "Skonto",
+        "bemerkung": "Bemerkung"
+    },
+    "links": {
+        "zahlungsavis": "Zahlungsavis",
+        "eingangsrechnung": "Eingangsrechnung"
+    }
+}

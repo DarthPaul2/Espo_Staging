@@ -402,6 +402,13 @@
             "entity": "CAusgleich",
             "audited": false,
             "isCustom": true
+        },
+        "zahlungsavisPosition": {
+            "type": "hasMany",
+            "foreign": "eingangsrechnung",
+            "entity": "CZahlungsavisPosition",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

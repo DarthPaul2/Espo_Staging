@@ -1,0 +1,19 @@
+{
+    "labels": {
+        "Create CZahlungsavis": "Zahlungsavis erstellen"
+    },
+    "fields": {
+        "avisNummer": "Avis Nummer",
+        "datum": "Datum",
+        "lieferant": "Lieferant",
+        "bankkonto": "Bankkonto",
+        "betragGesamt": "Gesamt",
+        "pdfUrl": "PDF-Url",
+        "zahlungsavisPosition": "Zahlungsavispositionen"
+    },
+    "links": {
+        "lieferant": "Lieferant",
+        "bankkonto": "Bankkonto",
+        "zahlungsavisPosition": "Zahlungsavispositionen"
+    }
+}

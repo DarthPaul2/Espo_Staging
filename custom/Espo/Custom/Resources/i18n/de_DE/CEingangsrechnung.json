@@ -2,6 +2,9 @@
     "labels": {
         "Create CEingangsrechnung": "Erstellen Eingangsbeleg"
     },
+    "massActions": {
+        "zahlungsavisErstellen": "Zahlungsavis erstellen"
+    },
     "presetFilters": {
         "offen": "Offen",
         "bezahlt": "Bezahlt",
@@ -46,7 +49,8 @@
         "belegTyp": "Belegtyp",
         "bezugsRechnungsnummer": "Referenz Nr.",
         "buchungsWirkung": "Buchungswirkung",
-        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg"
+        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg",
+        "zahlungsavisPosition": "Zahlungsavis Positionen"
     },
     "options": {
         "steuerfall": {
@@ -98,7 +102,8 @@
         "ausgleiche": "Ausgleiche",
         "storniertVon": "Storniert von",
         "bankbewegungen": "Bankbewegungen",
-        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg"
+        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg",
+        "zahlungsavisPosition": "Zahlungsavis Positionen"
     },
     "tooltips": {
         "ersetztBelegId": "Der Lesername der alten Eingangsrechnung.",

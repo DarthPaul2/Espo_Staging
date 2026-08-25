@@ -1,0 +1,29 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "eingangsrechnung"
+                }
+            ],
+            [
+                {
+                    "name": "betrag"
+                },
+                {
+                    "name": "zahlung"
+                },
+                {
+                    "name": "skonto"
+                }
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

@@ -179,6 +179,13 @@
             "entity": "CBankbewegung",
             "audited": false,
             "isCustom": true
+        },
+        "zahlungsavise": {
+            "type": "hasMany",
+            "foreign": "lieferant",
+            "entity": "CZahlungsavis",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

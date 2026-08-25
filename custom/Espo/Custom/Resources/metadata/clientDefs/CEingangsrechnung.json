@@ -8,13 +8,33 @@
     },
     "controller": "controllers/record",
     "filterList": [
-        {"name": "offen", "style": "primary"},
-        {"name": "bezahlt", "style": "success"},
-        {"name": "ueberfaellig", "style": "danger"}
+        {
+            "name": "offen",
+            "style": "primary"
+        },
+        {
+            "name": "bezahlt",
+            "style": "success"
+        },
+        {
+            "name": "ueberfaellig",
+            "style": "danger"
+        }
     ],
     "boolFilterList": [
         "onlyMy"
     ],
+    "massActionList": [
+        "zahlungsavisErstellen"
+    ],
+    "massActionDefs": {
+        "zahlungsavisErstellen": {
+            "label": "Zahlungsavis erstellen",
+            "handler": "custom:handlers/c-eingangsrechnung/mass-zahlungsavis-erstellen",
+            "acl": "edit",
+            "groupIndex": 9
+        }
+    },
     "color": "#e30000",
     "iconClass": "fas fa-arrow-down-short-wide",
     "relationshipPanels": {
@@ -51,6 +71,10 @@
             "selectPrimaryFilterName": null
         },
         "gegenbelegEingangsrechnung": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "zahlungsavisPosition": {
             "layout": null,
             "selectPrimaryFilterName": null
         }

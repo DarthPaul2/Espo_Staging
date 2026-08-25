@@ -14,7 +14,8 @@
         "beschreibung": "Beschreibung",
         "name": "Hauptkonto Sparkasse",
         "description": "Description",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "zahlungsavise": "Zahlungsavise"
     },
     "options": {
         "waehrung": {
@@ -22,6 +23,7 @@
         }
     },
     "links": {
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "zahlungsavise": "Zahlungsavise"
     }
 }

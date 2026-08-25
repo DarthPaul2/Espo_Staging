@@ -13,6 +13,10 @@
         "bankbewegungen": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "zahlungsavise": {
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

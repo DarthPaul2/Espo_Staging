@@ -38,7 +38,8 @@
         "belegTyp": "Belegtyp",
         "bezugsRechnungsnummer": "Referenz Nr.",
         "buchungsWirkung": "Buchungswirkung",
-        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg"
+        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg",
+        "zahlungsavisPosition": "Zahlungsavis Positionen"
     },
     "links": {
         "lieferant": "Lieferant",
@@ -49,7 +50,8 @@
         "ausgleiche": "Ausgleiche",
         "storniertVon": "Storniert von",
         "bankbewegungen": "Bankbewegungen",
-        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg"
+        "gegenbelegEingangsrechnung": "Gutschrift / Gegenbeleg",
+        "zahlungsavisPosition": "Zahlungsavis Positionen"
     },
     "labels": {
         "Create CEingangsrechnung": "Erstellen Eingangsbeleg"

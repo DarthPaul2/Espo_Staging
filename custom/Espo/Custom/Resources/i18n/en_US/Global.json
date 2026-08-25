@@ -41,7 +41,9 @@
         "CMitarbeiterkompassBericht": "Mitarbeiterkompass Bericht",
         "CEinstellungstest": "Einstellungstest",
         "CTicket": "Ticket",
-        "CProzesshandbuch": "Prozesshandbuch"
+        "CProzesshandbuch": "Prozesshandbuch",
+        "CZahlungsavis": "Zahlungsavis",
+        "CZahlungsavisPosition": "Zahlungsavisposition"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -85,7 +87,9 @@
         "CMitarbeiterkompassBericht": "Mitarbeiterkompass Berichte",
         "CEinstellungstest": "Einstellungstests",
         "CTicket": "Ticket",
-        "CProzesshandbuch": "Prozesshandbücher"
+        "CProzesshandbuch": "Prozesshandbücher",
+        "CZahlungsavis": "Zahlungsavise",
+        "CZahlungsavisPosition": "Zahlungsavispositionen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

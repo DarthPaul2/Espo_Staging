@@ -1,0 +1,49 @@
+{
+    "controller": "controllers/record",
+    "views": {
+        "list": "custom:views/c-zahlungsavis/list"
+    },
+    "recordViews": {
+        "detail": "custom:views/c-zahlungsavis/record/detail"
+    },
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "dynamicLogic": {
+        "fields": {
+            "betragGesamt": {
+                "readOnly": {
+                    "conditionGroup": [
+                        {"type": "isTrue", "attribute": "id"}
+                    ]
+                }
+            },
+            "pdfUrl": {
+                "readOnly": {
+                    "conditionGroup": [
+                        {"type": "isTrue", "attribute": "id"}
+                    ]
+                }
+            }
+        }
+    },
+    "color": "#8710cb",
+    "iconClass": "fas fa-a",
+    "relationshipPanels": {
+        "lieferant": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "bankkonto": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "zahlungsavisPosition": {
+            "label": "Positionen",
+            "create": true,
+            "select": false,
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}
