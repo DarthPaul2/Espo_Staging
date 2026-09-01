@@ -3,8 +3,9 @@ console.log('[LOAD] custom:views/c-rechnung/record/detail');
 
 define('custom:views/c-rechnung/record/detail', [
     'views/record/detail',
-    'custom:global/loader'
-], function (Dep, Loader) {
+    'custom:global/loader',
+    'ui/dialog'
+], function (Dep, Loader, Dialog) {
 
     const LOG_NS = '[CRechnung/detail]';
     const L = (tag, payload) => { try { console.log(LOG_NS, tag, payload || ''); } catch (e) { } };
@@ -956,6 +957,42 @@ define('custom:views/c-rechnung/record/detail', [
             });
         },
 
+        // Это красивая табличка вместо обычного notify,
+        // когда роль пользователя (Chef-Techniker) не имеет права на Festschreibung.
+        _showFestschreibenRoleForbiddenDialog: function (message) {
+            const text = message || 'Für die Festschreibung dieser Rechnung wenden Sie sich bitte an die Geschäftsführung.';
+
+            const body = `
+                <div style="display: flex; gap: 14px; align-items: flex-start; padding: 4px 2px;">
+                    <div style="font-size: 30px; line-height: 1;">🔒</div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 15px; font-weight: 600; margin-bottom: 8px; color: #333;">
+                            Festschreibung nicht möglich
+                        </div>
+                        <div style="font-size: 14px; line-height: 1.5; color: #555;">
+                            ${_.escape(text)}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const dialog = new Dialog({
+                header: 'Berechtigung erforderlich',
+                body: body,
+                backdrop: true,
+                buttons: [
+                    {
+                        name: 'close',
+                        text: 'Verstanden',
+                        style: 'danger',
+                        onClick: () => dialog.close()
+                    }
+                ]
+            });
+
+            dialog.show();
+        },
+
         // Это action для кнопки "Festgeschrieben".
         // Он вызывает server-side Festschreibung и потом обновляет карточку.
         actionWorkflowFestgeschrieben: function () {
@@ -986,6 +1023,11 @@ define('custom:views/c-rechnung/record/detail', [
                 this.hideLoader(notifyId);
 
                 if (!resp || resp.success === false) {
+                    if (resp && resp.code === 'FESTSCHREIBEN_ROLE_FORBIDDEN') {
+                        this._showFestschreibenRoleForbiddenDialog(resp.message);
+                        return;
+                    }
+
                     this.notify((resp && resp.message) || 'Festschreibung konnte nicht abgeschlossen werden.', 'error');
                     return;
                 }

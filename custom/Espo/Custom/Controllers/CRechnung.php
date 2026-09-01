@@ -1154,6 +1154,16 @@ public function postActionFestschreiben($params, $data, $request)
     // Это проверка прав: нужен доступ на редактирование счета.
     $this->acl->check('CRechnung', 'edit');
 
+    // Это fachliche Sperre: Chef-Techniker darf Rechnungen freigeben,
+    // aber nicht selbst festschreiben - dafür braucht es Buchhaltung/Geschäftsleitung.
+    if ($this->userIsRestrictedFromFestschreiben()) {
+        return [
+            'success' => false,
+            'code' => 'FESTSCHREIBEN_ROLE_FORBIDDEN',
+            'message' => 'Für die Festschreibung dieser Rechnung wenden Sie sich bitte an die Geschäftsführung.'
+        ];
+    }
+
     // Это получение ID счета из URL-параметров или из POST-body.
     $id = $params['id'] ?? null;
     if (!$id && isset($data->id)) {
@@ -2869,5 +2879,35 @@ public function getActionStornierteBelegeKontrolleReport($params, $data, $reques
             'ustBetrag' => $ustBetrag,
             'steuerSatz' => $steuerSatz,
         ];
+    }
+
+    /**
+     * Prüft, ob der aktuelle Nutzer nur die Rolle "Chef-Techniker" hat
+     * (ohne Buchhaltung/Geschäftsleitung) und daher keine Rechnungen festschreiben darf.
+     */
+    private function userIsRestrictedFromFestschreiben(): bool
+    {
+        if ($this->user->isAdmin()) {
+            return false;
+        }
+
+        $roleCollection = $this->getEntityManager()
+            ->getRDBRepository('User')
+            ->getRelation($this->user, 'roles')
+            ->find();
+
+        $roleNames = [];
+        foreach ($roleCollection as $role) {
+            $roleNames[] = (string) $role->get('name');
+        }
+
+        $isChefTechniker = in_array('Chef-Techniker', $roleNames, true);
+        if (!$isChefTechniker) {
+            return false;
+        }
+
+        $hasOverrideRole = (bool) array_intersect(['Buchhaltung', 'Geschäftsleitung'], $roleNames);
+
+        return !$hasOverrideRole;
     }
 }
