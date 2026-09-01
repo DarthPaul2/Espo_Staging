@@ -11,13 +11,25 @@
         "ticket": "Ticket"
     },
     "tooltips": {
-        "bereich": "Optional: zu welchem Bereich des Systems gehört dieser Prozess (z. B. Buchhaltung, Angebote, Techniker, Arbeitszeiten) — hilft bei der Einordnung, hat aber keine technische Funktion."
+        "bereich": "Zu welchem Unternehmensbereich gehört dieser Prozess (nach VEU-Schema) — hilft bei der Einordnung, hat aber keine technische Funktion."
     },
     "options": {
         "prozessStatus": {
             "vorgeschlagen": "Vorgeschlagen",
             "inBearbeitung": "In Bearbeitung",
             "fertig": "Fertig"
+        },
+        "bereich": {
+            "": "-",
+            "01_GES_Geschäftsführung": "01_GES_Geschäftsführung",
+            "02_MIT_Mitarbeiter": "02_MIT_Mitarbeiter",
+            "03_MRK_Marke": "03_MRK_Marke",
+            "04_FIN_Finanzen": "04_FIN_Finanzen",
+            "05_KUG_Kundengewinnung": "05_KUG_Kundengewinnung",
+            "06_LEB_Leistungserbringung": "06_LEB_Leistungserbringung",
+            "07_ADM_Administration": "07_ADM_Administration",
+            "08_INF_Infrastruktur": "08_INF_Infrastruktur",
+            "09_QLT_Qualität": "09_QLT_Qualität"
         }
     }
 }

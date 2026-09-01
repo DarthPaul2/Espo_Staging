@@ -15,7 +15,8 @@
         },
         "ausgleiche": {
             "layout": null,
-            "selectPrimaryFilterName": null
+            "selectPrimaryFilterName": null,
+            "view": "custom:views/c-zahlung/record/panels/ausgleiche"
         },
         "buchungsjournal": {
             "layout": null,

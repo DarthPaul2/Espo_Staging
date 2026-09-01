@@ -44,6 +44,29 @@ class CEingangsrechnungCalculator
 
         $betragBrutto = round($betragNetto + $steuerBetrag, 2);
 
+        // Что это: Rundungsdifferenz-Korrektur — siehe ausführlichen Kommentar in
+        // CEingangsrechnung::postActionFestschreiben (identische Logik, zwei Aufrufstellen: hier
+        // bei jedem Positions-Speichern, dort zusätzlich direkt vor der Festschreibung).
+        $quellImportList = $this->em
+            ->getRDBRepository('CEingangsrechnungImport')
+            ->where([
+                'eingangsrechnungId' => $eingangsrechnungId,
+                'deleted' => false,
+            ])
+            ->find();
+
+        if ($quellImportList && count($quellImportList)) {
+            $quellImport = $quellImportList[0];
+            $importBrutto = $quellImport->get('betragBrutto');
+            $diff = $importBrutto !== null ? abs($betragBrutto - (float) $importBrutto) : null;
+
+            if ($diff !== null && $diff > 0 && $diff <= 0.02) {
+                $betragNetto = (float) $quellImport->get('betragNetto');
+                $steuerBetrag = (float) $quellImport->get('steuerBetrag');
+                $betragBrutto = (float) $importBrutto;
+            }
+        }
+
         $eingangsrechnung->set('betragNetto', $betragNetto);
         $eingangsrechnung->set('steuerBetrag', $steuerBetrag);
         $eingangsrechnung->set('betragBrutto', $betragBrutto);

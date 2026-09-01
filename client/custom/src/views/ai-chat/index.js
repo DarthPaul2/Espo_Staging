@@ -1,8 +1,6 @@
 Espo.define('custom:views/ai-chat/index', ['view'], function (Dep) {
 
-    // Testinstanz (staging-Espo) — nach Migration von CAiConversation/CAiMessage nach Prod
-    // auf 'https://klesec.pagekite.me/api' umstellen (siehe project_ai_standalone_chat_design).
-    var FLASK_BASE  = 'https://klesec5001.pagekite.me/api';
+    var FLASK_BASE  = 'https://klesec.pagekite.me/api';
     var AI_CHAT_KEY = '866a34aae36bee0a730e892ee9585552b202613ce1c5f963f505eb6e164eb3ea';
     var SEED_STORAGE_KEY = 'kbAiSeed';
 
@@ -46,7 +44,7 @@ Espo.define('custom:views/ai-chat/index', ['view'], function (Dep) {
 
     // Kleiner Spaß, wenn in einer Sitzung viele Fragen am Stück kommen — kein echter
     // Modellaufruf, rein clientseitig, alle BREAK_JOKES_EVERY Nachrichten eingestreut.
-    var BREAK_JOKES_EVERY = 4;
+    var BREAK_JOKES_EVERY = 12;
     var BREAK_JOKES = [
         'Puh, {n} Fragen am Stück, krass! Vielleicht mal kurz chillen — ich bin schon ganz durch. 😅',
         'Respekt, {n} Fragen ohne Punkt und Komma! Läuft bei dir heute richtig. Kaffee gefällig? ☕',

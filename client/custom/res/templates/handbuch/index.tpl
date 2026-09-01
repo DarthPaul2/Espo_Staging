@@ -228,6 +228,7 @@ kbd {
                     <li class="muted"><a href="#de-zahlung">→ Zahlungen</a></li>
                     <li class="muted"><a href="#de-bankbewegung">→ Bankbewegungen</a></li>
                     <li class="muted"><a href="#de-ausgleich">→ Ausgleiche</a></li>
+                    <li class="muted"><a href="#de-zahlungsavis">→ Zahlungsavis</a></li>
                     <li class="section muted"><a href="#de-buchhaltung">Buchhaltung</a></li>
                     <li class="muted"><a href="#de-cockpit">→ Finanz-Cockpit (Dashboard)</a></li>
                     <li class="muted"><a href="#de-buchungsjournal">→ Buchungsjournal</a></li>
@@ -288,6 +289,7 @@ kbd {
                     <li class="muted"><a href="#ru-zahlung">→ Платежи</a></li>
                     <li class="muted"><a href="#ru-bankbewegung">→ Банк. движения</a></li>
                     <li class="muted"><a href="#ru-ausgleich">→ Зачёт</a></li>
+                    <li class="muted"><a href="#ru-zahlungsavis">→ Авизо об оплате</a></li>
                     <li class="section muted"><a href="#ru-buchhaltung">Бухгалтерия</a></li>
                     <li class="muted"><a href="#ru-cockpit">→ Finanz-Cockpit (Dashboard)</a></li>
                     <li class="muted"><a href="#ru-buchungsjournal">→ Журнал проводок</a></li>
@@ -342,7 +344,7 @@ kbd {
             </table>
             <div class="hb-tip">Die meisten Nummern (Rechnungen, Aufträge, Angebote) werden <strong>automatisch vergeben</strong> — keine manuelle Eingabe erforderlich.</div>
             <div class="hb-warn">Festgeschriebene Datensätze können <strong>nicht mehr geändert</strong> werden. Dies ist ein buchhalterisches Erfordernis.</div>
-            <div class="hb-tip">📎 Nicht verwechseln: Dieses <strong>Handbuch</strong> erklärt die Bedienung von EspoCRM. Das Modul <strong>„Prozesshandbuch"</strong> (Menü → Prozesshandbücher) ist etwas anderes — dort werden Klesec-eigene Geschäftsprozesse dokumentiert („wie machen WIR X bei uns"), nicht die Bedienung von Espo selbst.</div>
+            <div class="hb-tip">📎 Nicht verwechseln: Dieses <strong>Handbuch</strong> erklärt die Bedienung von EspoCRM. Das Modul <strong>„Prozesshandbuch"</strong> (Menü → Handbuch → Prozesshandbücher) ist etwas anderes — dort werden Klesec-eigene Geschäftsprozesse dokumentiert („wie machen WIR X bei uns"), nicht die Bedienung von Espo selbst.</div>
 
             <!-- STAMMDATEN -->
             <!-- STAMMDATEN -->
@@ -405,7 +407,7 @@ kbd {
             <h3 id="de-material">2.4 Materialien</h3>
             <div class="hb-warn">⚠️ Vor dem Anlegen eines neuen Materials zunächst im Katalog suchen — nach Bezeichnung, Artikelnummer oder Kategorie. Doppelte Einträge führen zu unnötigem Aufblähen der Datenbank.</div>
             <p>Katalog aller Materialien, Waren und Dienstleistungen. Bei der Erstellung von Positionen in Angebot oder Rechnung wird das Material aus diesem Katalog ausgewählt — Preis und Beschreibung werden automatisch übernommen.</p>
-            <p><strong>Menü → Materialien</strong></p>
+            <p><strong>Menü → Materialen → Materialien</strong></p>
             <ul class="hb-steps">
                 <li>Menü <strong>Materialien</strong> → <kbd>Erstellen</kbd></li>
                 <li>Felder ausfüllen: <strong>Name</strong>, <strong>Kategorie</strong>, <strong>Einheit</strong>, <strong>Preis</strong>, <strong>EK-Preis</strong>, <strong>MwSt-Satz</strong></li>
@@ -630,13 +632,14 @@ kbd {
                 <li>Erstellten Datensatz öffnen und nochmals prüfen</li>
             </ul>
             <div class="hb-tip">Wenn etwas falsch erkannt wurde: Felder vor dem Erstellen manuell korrigieren. Danach in <strong>Eingangsrechnungen</strong> bearbeiten.</div>
+            <div class="hb-tip">Einträge entstehen hier nicht nur manuell, sondern auch automatisch — aus E-Mails an <strong>rechnung@klesec.de</strong> sowie aus Fotos, die Techniker über die FormularApp direkt vom Handy hochladen. Solche Einträge sind an der <strong>Bemerkung</strong> erkennbar ("Automatisch aus einer E-Mail erkannt..." bzw. "Automatisch per Foto aus der FormularApp hochgeladen..."). Konnte die KI nichts Verwertbares lesen, bleibt der Name allgemein (z.B. nur "Foto", ohne Lieferant) — das ist kein Fehler, sondern ein nicht lesbares Dokument; die Daten müssen dann manuell ergänzt werden.</div>
 
             <!-- WERKZEUGE -->
             <h2 id="de-werkzeuge">5. Werkzeuge &amp; Geräte</h2>
 
             <h3 id="de-werkzeug">5.1 Werkzeuge</h3>
             <p>Verwaltung aller Werkzeuge, Maschinen und Geräte des Unternehmens. Jedes Werkzeug hat eine Inventarnummer, einen Barcode und eine Ausgabehistorie.</p>
-            <p><strong>Menü → Werkzeuge</strong></p>
+            <p><strong>Menü → Materialen → Werkzeuge</strong></p>
             <table>
                 <tr><th>Zustand</th><th>Bedeutung</th></tr>
                 <tr><td>Funktionsfähig</td><td>Einsatzbereit</td></tr>
@@ -685,7 +688,7 @@ kbd {
 
             <h3 id="de-mahnung">7.1 Mahnungen</h3>
             <p>Das System erstellt Mahnungen für überfällige Rechnungen automatisch. Der Buchhalter prüft und versendet sie.</p>
-            <p><strong>Menü → Mahnungen</strong></p>
+            <p><strong>Menü → Buchhaltung → Mahnungen</strong></p>
             <table>
                 <tr><th>Stufe</th><th>Bedeutung</th></tr>
                 <tr><td>Zahlungserinnerung</td><td>Erste freundliche Erinnerung</td></tr>
@@ -708,13 +711,14 @@ kbd {
                 <li><kbd>PDF erstellen</kbd> → an Kunden senden</li>
                 <li>Nach dem Versand: Status auf <strong>Gesendet</strong> setzen</li>
             </ul>
+            <div class="hb-tip">Die Fristen (Tage überfällig) und Gebühren je Mahnstufe stammen nicht von hier, sondern aus der zentralen <strong>Mahnregel</strong> (i.d.R. nur ein aktiver Datensatz, „Standard Mahnregel") — <strong>Menü → Buchhaltung → Mahnregeln</strong>. Dort wird pro Stufe hinterlegt, ab wie vielen Tagen überfällig sie greift und welche Gebühr fällig wird. Diese Einstellungen sollten nur bei einer echten Änderung der Zahlungsbedingungen angepasst werden, nicht für einzelne Rechnungen.</div>
 
             <!-- ARBEITSZEIT -->
             <h2 id="de-arbeitszeit">8. Arbeitszeiterfassung</h2>
 
             <h3 id="de-az">8.1 Arbeitszeiten</h3>
             <p>Arbeitsstunden der Techniker — Daten kommen automatisch aus der mobilen App. Der Techniker meldet sich in der App an und ab, die Daten werden synchronisiert.</p>
-            <p><strong>Menü → Arbeitszeiten</strong></p>
+            <p><strong>Menü → Personal → Arbeitszeiten</strong></p>
             <p>Anzeige: Datum, Beginn/Ende, Gesamtdauer, Nettozeit (ohne Pausen), Überstunden, GPS-Koordinaten. Monats- und Jahresübersichten in den jeweiligen Registerkarten verfügbar.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Monats- und Jahresübersicht: Soll, Netto, Bilanz</h4>
@@ -746,7 +750,7 @@ kbd {
 
             <h3 id="de-abwesenheit">8.3 Abwesenheit</h3>
             <p>Erfassung von Abwesenheiten — Urlaub, Krankheit, Freizeitausgleich. Wird im Teamkalender angezeigt.</p>
-            <p><strong>Menü → Abwesenheiten</strong></p>
+            <p><strong>Menü → Personal → Abwesenheiten</strong></p>
             <ul class="hb-steps">
                 <li>Menü <strong>Abwesenheiten</strong> → <kbd>Erstellen</kbd> (oder im Kalender auf den Tag klicken)</li>
                 <li>Felder: <strong>Assigned User</strong>, <strong>Typ</strong> (U=Urlaub, K=Krank, Freizeitausgleich), <strong>Datum Start / Ende</strong>, <strong>Ganztägig</strong></li>
@@ -758,7 +762,7 @@ kbd {
 
             <h3 id="de-melder">9.1 Melder Quartal</h3>
             <p>Quartalsberichte der technischen Inspektion von Brand- und Einbruchmeldeanlagen. Werden vom Techniker in der App ausgefüllt und automatisch im System gespeichert.</p>
-            <p><strong>Menü → Melder Quartale</strong></p>
+            <p><strong>Menü → Meldeprüfliste → Melder Quartale</strong></p>
             <p>In der Objekt- oder Kundenkarte ist unter <strong>Melder Gesamt PDFs</strong> der jährliche Gesamtbericht aller Quartale verfügbar.</p>
 
             <h3 id="de-briefe">9.2 Briefe</h3>
@@ -774,7 +778,7 @@ kbd {
             <h2 id="de-bank">10. Zahlungen &amp; Bank</h2>
             <h3 id="de-bankkonto">10.1 Bankkonten</h3>
             <p>Bankkonten der Firma Klesec, über die Ein- und Auszahlungen laufen. Wird einmalig vom Buchhalter eingerichtet.</p>
-            <p><strong>Menü → Bankkonten</strong></p>
+            <p><strong>Menü → Buchhaltung → Bankkonten</strong></p>
             <ul class="hb-steps">
                 <li>Menü <strong>Bankkonten</strong> → <kbd>Erstellen</kbd></li>
                 <li>Felder: <strong>Name</strong> (z.B. „Hauptkonto Sparkasse"), <strong>IBAN</strong>, <strong>BIC</strong>, <strong>Bankname</strong>, <strong>Startsaldo</strong>, <strong>Startsaldo Datum</strong></li>
@@ -783,7 +787,7 @@ kbd {
 
             <h3 id="de-zahlung">10.2 Zahlungen</h3>
             <p>Aufzeichnung einer Zahlung — eingehend (Kunde zahlt uns) oder ausgehend (wir zahlen Lieferant). Die Verknüpfung mit der Rechnung erfolgt über den Ausgleich — danach wird der Zahlungsstatus automatisch aktualisiert.</p>
-            <p><strong>Menü → Zahlungen</strong></p>
+            <p><strong>Menü → Buchhaltung → Zahlungen</strong></p>
             <table>
                 <tr><th>Richtung</th><th>Bedeutung</th></tr>
                 <tr><td>Eingang</td><td>Eingang — Kunde hat uns bezahlt</td></tr>
@@ -921,6 +925,51 @@ kbd {
             <p>Wenn ein Ausgleich falsch erstellt wurde (z.B. falsche Rechnung verknüpft), kann er storniert werden — sofern die zugehörige Zahlung <strong>noch nicht festgeschrieben</strong> ist. Nach der Festschreibung der Zahlung ist weder Bearbeitung noch Stornierung möglich. In diesem Fall muss zunächst die Zahlung storniert werden.</p>
             <div class="hb-tip"><strong>Wichtig:</strong> Ein stornierter Ausgleich erhält den Status „Storniert" und wird bei der Berechnung des Zahlungsstatus der Rechnung nicht mehr berücksichtigt.</div>
 
+            <h3 id="de-zahlungsavis">10.5 Zahlungsavis</h3>
+            <p>Ein Zahlungsavis ist ein formelles PDF-Schreiben an einen Lieferanten, das auflistet, welche Eingangsrechnung(en) mit einer Zahlung beglichen werden — dient dem Lieferanten als Nachweis, welche Beträge welchen Rechnungen zugeordnet wurden, besonders wichtig bei Sammelüberweisungen mit mehreren Rechnungen auf einmal.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Wann wird ein Zahlungsavis erstellt?</h4>
+            <ul>
+                <li><strong>Eine einzelne Lieferantenrechnung wird bezahlt</strong> und der Lieferant soll eine formelle Bestätigung erhalten.</li>
+                <li><strong>Mehrere Rechnungen desselben Lieferanten werden zusammen in einer Sammelüberweisung bezahlt</strong> — das Avis listet alle betroffenen Rechnungen mit Einzelbeträgen und Gesamtsumme auf einem gemeinsamen PDF auf.</li>
+            </ul>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Weg 1: Über die Zahlungsavis-Liste (empfohlen für mehrere Rechnungen)</h4>
+            <ol>
+                <li>Menü <strong>Buchhaltung → Zahlungsavise</strong> öffnen.</li>
+                <li>Schaltfläche <kbd>Erstellen</kbd> klicken — ein Assistent öffnet sich.</li>
+                <li><strong>Lieferant</strong> auswählen — darunter erscheinen automatisch alle offenen Eingangsrechnungen dieses Lieferanten.</li>
+                <li>Gewünschte Rechnungen per Checkbox markieren (mindestens eine).</li>
+                <li><strong>Datum</strong> bei Bedarf anpassen (Standard = heutiges Datum).</li>
+                <li><kbd>Erstellen</kbd> klicken.</li>
+            </ol>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Weg 2: Direkt aus der Eingangsbeleg-Liste (schnell für bereits ausgewählte Rechnungen)</h4>
+            <ol>
+                <li>Menü <strong>Eingangsbelege</strong> öffnen.</li>
+                <li>Die gewünschten Eingangsrechnungen per Checkbox in der Liste markieren (mehrere möglich).</li>
+                <li>Über die Mehrfachaktionen <kbd>Zahlungsavis erstellen</kbd> wählen.</li>
+                <li>Im sich öffnenden Fenster das <strong>Datum</strong> bestätigen/anpassen und <kbd>Erstellen</kbd> klicken.</li>
+            </ol>
+
+            <div class="hb-warn">⚠️ Beide Wege prüfen automatisch: alle ausgewählten Rechnungen müssen zum <strong>selben Lieferanten</strong> gehören — sonst lehnt Espo die Erstellung mit einer Fehlermeldung ab.</div>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Nach dem Erstellen: PDF erzeugen</h4>
+            <p>Direkt nach dem Klick auf <kbd>Erstellen</kbd> erscheint eine Übersicht mit Lieferant, der automatisch aus dem Lieferantenstamm übernommenen Bankverbindung (IBAN/BIC), allen Positionen und der Gesamtsumme. Über die Schaltfläche <kbd>PDF speichern &amp; ansehen</kbd> wird das fertige PDF erzeugt, auf dem Server gespeichert und direkt geöffnet.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Felder im Überblick</h4>
+            <table class="hb-table">
+                <thead><tr><th>Feld</th><th>Bedeutung</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Avis-Nr.</strong></td><td>Automatisch vergebene, fortlaufende Nummer (jahresübergreifend, z.B. 26-101) — nicht manuell änderbar</td></tr>
+                    <tr><td><strong>Datum</strong></td><td>Datum des Avis, Standard = heutiges Datum</td></tr>
+                    <tr><td><strong>Lieferant</strong></td><td>Empfänger des Avis</td></tr>
+                    <tr><td><strong>Gesamtbetrag</strong></td><td>Summe aller Positionsbeträge — wird automatisch berechnet</td></tr>
+                    <tr><td><strong>PDF</strong></td><td>Link zum gespeicherten PDF — erscheint nach Klick auf „PDF speichern &amp; ansehen", danach auch direkt auf der Kartenansicht abrufbar</td></tr>
+                </tbody>
+            </table>
+            <div class="hb-tip">Die Bankverbindung im PDF stammt automatisch aus dem Lieferantenstamm (IBAN/BIC/Bankname) — es gibt beim Erstellen kein eigenes Auswahlfeld für ein Bankkonto, ein Konto für die Auszahlung wird hier nicht ausgewählt.</div>
+
             <!-- BUCHHALTUNG -->
             <h2 id="de-buchhaltung">11. Buchhaltung</h2>
 
@@ -966,7 +1015,7 @@ kbd {
             <p>Unter beiden Registerkarten erscheint automatisch eine farblich hervorgehobene <strong>Arbeitsliste</strong>: Sie zeigt alle offenen Punkte, die Aufmerksamkeit erfordern — z. B. unklare Bankbewegungen, unausgeglichene Belege, OP-Differenzen oder kritische Forderungen. Jeder Eintrag enthält einen direkten Link zur betreffenden Auswertung.</p>
 
             <h3 id="de-buchungsjournal">11.1 Buchungsjournal</h3>
-            <p><strong>Menü → Buchungsjournale</strong></p>
+            <p><strong>Menü → Buchhaltung → Buchungsjournale</strong></p>
             <div class="hb-tip">Buchungsjournale werden vollautomatisch erstellt — normale Mitarbeiter müssen hier nichts tun. Dieser Bereich ist für die Buchhaltung zur Kontrolle und Prüfung.</div>
 
             <h4 style="margin-top:16px;color:#2c3e6a;">Was ist ein Buchungsjournal?</h4>
@@ -1016,7 +1065,7 @@ kbd {
             </table>
 
             <h3 id="de-auswertung">11.2 Buchhaltung Auswertungen</h3>
-            <p><strong>Menü → Buchhaltung Auswertungen</strong></p>
+            <p><strong>Menü → Buchhaltung → Buchhaltung Auswertungen</strong></p>
             <p>Vorkonfigurierte Berichte — jeden Bericht öffnen, Zeitraum (Von/Bis) einstellen und <kbd>Aktualisieren</kbd> klicken.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Ausgangsrechnungen</h4>
@@ -1099,7 +1148,7 @@ kbd {
 
             <h3 id="de-buchungsregel">11.3 Buchungsregeln</h3>
             <p>Legt fest, auf welche Konten (Debitor, Erlös, Steuer, Aufwand, Vorsteuer, Verbindlichkeit, Bank, Kasse) das System bei der Festschreibung eines Belegs automatisch bucht — abhängig von Belegquelle (Ausgangsrechnung / Eingangsrechnung / Zahlung), Dokumenttyp und Steuerfall.</p>
-            <p><strong>Menü → Buchungsregeln</strong></p>
+            <p><strong>Menü → Buchhaltung → Buchungsregeln</strong></p>
             <table>
                 <tr><th>Feld</th><th>Bedeutung</th></tr>
                 <tr><td><strong>Quelle Typ</strong></td><td>Woher die Buchung stammt: Ausgangsrechnung, Eingangsrechnung oder Zahlung</td></tr>
@@ -1226,7 +1275,7 @@ kbd {
 
             <h3 id="de-tickets">12.4 Tickets</h3>
             <p>Einfaches internes Ticketsystem für Anfragen, Aufgaben oder Probleme, die in kein anderes Modul passen (z.&nbsp;B. IT-Anfragen, interne Anliegen).</p>
-            <p><strong>Menü → Tickets</strong></p>
+            <p><strong>Menü → Handbuch → Tickets</strong></p>
             <table>
                 <tr><th>Feld</th><th>Bedeutung</th></tr>
                 <tr><td><strong>Titel</strong></td><td>Kurze Bezeichnung des Anliegens</td></tr>
@@ -1245,7 +1294,7 @@ kbd {
 
             <h3 id="de-einstellungstest">12.5 Einstellungstest</h3>
             <p>Online-Eignungstest für Bewerber (Allgemeinbildung, Wirtschaft &amp; Arbeitswelt, Mathematik, logisches und räumliches Denken, technisches Verständnis). Der Test selbst läuft über einen separaten Zugangslink außerhalb von EspoCRM — hier wird nur der Datensatz mit Ergebnis und PDF-Bericht verwaltet.</p>
-            <p><strong>Menü → Einstellungstests</strong></p>
+            <p><strong>Menü → Umfragen → Einstellungstests</strong></p>
             <table>
                 <tr><th>Status</th><th>Bedeutung</th></tr>
                 <tr><td>Offen</td><td>Test angelegt, Bewerber hat noch nicht begonnen</td></tr>
@@ -1264,7 +1313,7 @@ kbd {
 
             <h3 id="de-mitarbeiterkompass">12.6 Mitarbeiterkompass</h3>
             <p>Halbjährliche, vollständig anonyme Mitarbeiterbefragung. Misst sechs Indizes — Motivation (KMI), Führung (KFI), Organisation (KOI), Team (KTI), Kommunikation (KKI), Bindung (KBI) — sowie einen Gesamtindex (KGI). Einzelne Antworten sind nie einer Person zuordenbar.</p>
-            <p><strong>Menü → Mitarbeiterkompass Berichte</strong></p>
+            <p><strong>Menü → Umfragen → Mitarbeiterkompass Berichte</strong></p>
             <table>
                 <tr><th>Wellen-Status</th><th>Bedeutung</th></tr>
                 <tr><td>Neu</td><td>Welle gerade angelegt</td></tr>
@@ -1293,6 +1342,7 @@ kbd {
                 <tr><td><strong>Tages-Zusammenfassung</strong></td><td>Täglich um 17:00 Uhr eine persönliche E-Mail „📋 KleSec Tages-Zusammenfassung" mit den Mails des Tages, erkannten Terminen und noch unbeantworteten (überfälligen) Mails</td></tr>
             </table>
             <div class="hb-tip">Aktuell aktiv für: <strong>schiller@</strong> (Tobias Schiller), <strong>rally@</strong> (Bianca Rally), die gemeinsamen Postfächer <strong>info@ / service@ / rechnung@</strong>, sowie <strong>it@</strong> (Pavel, nur zum Testen). Bei den Technikern ist der Assistent derzeit noch deaktiviert.</div>
+            <div class="hb-tip"><strong>rechnung@klesec.de</strong> durchläuft die normale Klassifizierung/Fristenerkennung/Tages-Zusammenfassung genauso wie info@ und service@ (standardmäßig Tobias Schiller zugeordnet) — ZUSÄTZLICH läuft dort unabhängig ein zweiter Vorgang: automatische Belegerkennung für Anhänge, siehe <a href="#de-import">4.2 OCR / AI Import</a>. Eine Mahnung/Zahlungserinnerung erzeugt dabei bewusst keinen neuen Import, wird aber trotzdem ganz normal klassifiziert — bei erkannter Zahlungsfrist entsteht wie bei jeder anderen Mail eine Aufgabe, nichts geht verloren.</div>
             <div class="hb-warn">⚠️ In EspoCRM ist der Assistent nur indirekt sichtbar — über Aufgaben mit dem Hinweis „Automatisch aus einer E-Mail erkannt (KI-Mail-Assistent)" in der Beschreibung.</div>
 
         </div><!-- Ende DE -->
@@ -1315,7 +1365,7 @@ kbd {
             </table>
             <div class="hb-tip">Большинство номеров (счета, заказы, предложения) генерируются <strong>автоматически</strong> — вводить вручную не нужно.</div>
             <div class="hb-warn">Зафиксированные записи (festgeschrieben) <strong>нельзя изменить</strong>. Это бухгалтерское требование.</div>
-            <div class="hb-tip">📎 Не путать: этот <strong>Handbuch</strong> объясняет, как пользоваться EspoCRM. Модуль <strong>«Prozesshandbuch»</strong> (Меню → Prozesshandbücher) — это другое: там документируются собственные бизнес-процессы Klesec («как МЫ делаем X у себя»), а не инструкция по работе с самим Espo.</div>
+            <div class="hb-tip">📎 Не путать: этот <strong>Handbuch</strong> объясняет, как пользоваться EspoCRM. Модуль <strong>«Prozesshandbuch»</strong> (Меню → Handbuch → Prozesshandbücher) — это другое: там документируются собственные бизнес-процессы Klesec («как МЫ делаем X у себя»), а не инструкция по работе с самим Espo.</div>
 
             <!-- СПРАВОЧНИКИ -->
             <h2 id="ru-stammdaten">2. Основные справочники (Stammdaten)</h2>
@@ -1376,7 +1426,7 @@ kbd {
             <h3 id="ru-material">2.4 Материалы (Material)</h3>
             <div class="hb-warn">⚠️ Перед добавлением нового материала обязательно поищите его в каталоге — по названию, артикулу или категории. Дубликаты приводят к излишнему переполнению БД.</div>
             <p>Каталог всех материалов, товаров и услуг. При создании позиций материал выбирается из каталога — цена и описание подтягиваются автоматически.</p>
-            <p><strong>Меню → Materialien</strong></p>
+            <p><strong>Меню → Materialen → Materialien</strong></p>
             <ul class="hb-steps">
                 <li>Меню <strong>Materialien</strong> → <kbd>Erstellen</kbd></li>
                 <li>Заполнить: <strong>Name</strong>, <strong>Kategorie</strong>, <strong>Einheit</strong>, <strong>Preis</strong>, <strong>EK-Preis</strong>, <strong>MwSt-Satz</strong></li>
@@ -1584,13 +1634,14 @@ kbd {
                 <li>Открыть созданную запись и проверить ещё раз</li>
             </ul>
             <div class="hb-tip">Если что-то распознано неверно — исправить поля до нажатия кнопки создания.</div>
+            <div class="hb-tip">Записи здесь появляются не только вручную, но и автоматически — из писем на <strong>rechnung@klesec.de</strong>, а также из фото, которые техники снимают прямо с телефона через приложение FormularApp. Такие записи можно узнать по полю <strong>Bemerkung</strong> («Automatisch aus einer E-Mail erkannt...» или «Automatisch per Foto aus der FormularApp hochgeladen...»). Если ИИ не смог ничего разобрать, название останется общим (например, просто «Foto», без поставщика) — это не ошибка, а нечитаемый документ; данные в этом случае нужно внести вручную.</div>
 
             <!-- ПЛАТЕЖИ И БАНК -->
             <h2 id="ru-werkzeuge">5. Инструменты и оборудование</h2>
 
             <h3 id="ru-werkzeug">5.1 Инструменты (Werkzeug)</h3>
             <p>Учёт всех инструментов, машин и оборудования. Каждый инструмент имеет инвентарный номер и историю выдачи.</p>
-            <p><strong>Меню → Werkzeuge</strong></p>
+            <p><strong>Меню → Materialen → Werkzeuge</strong></p>
             <ul class="hb-steps">
                 <li>Меню <strong>Werkzeuge</strong> → <kbd>Erstellen</kbd></li>
                 <li>Заполнить: <strong>Name</strong>, <strong>Kategorie</strong>, <strong>Seriennummer</strong>, <strong>Zustand</strong>, <strong>Letzte Prüfung</strong>, <strong>Nächste Prüfung</strong>, <strong>Standort</strong></li>
@@ -1622,7 +1673,7 @@ kbd {
 
             <h3 id="ru-mahnung">7.1 Напоминания (Mahnung)</h3>
             <p>Система автоматически создаёт напоминания для просроченных счетов. Бухгалтер проверяет и отправляет.</p>
-            <p><strong>Меню → Mahnungen</strong></p>
+            <p><strong>Меню → Buchhaltung → Mahnungen</strong></p>
             <table>
                 <tr><th>Уровень</th><th>Значение</th></tr>
                 <tr><td>Zahlungserinnerung</td><td>Первое вежливое напоминание</td></tr>
@@ -1637,13 +1688,14 @@ kbd {
                 <li><kbd>Bearbeiten</kbd> → статус <strong>Erstellt</strong> → <kbd>Speichern</kbd></li>
                 <li><kbd>PDF erstellen</kbd> → отправить клиенту → статус <strong>Gesendet</strong></li>
             </ul>
+            <div class="hb-tip">Сроки (дней просрочки) и суммы штрафа по каждому уровню берутся не отсюда, а из центрального правила <strong>Mahnregel</strong> (обычно один активный запис — «Standard Mahnregel») — <strong>Меню → Buchhaltung → Mahnregeln</strong>. Там для каждого уровня задаётся, через сколько дней просрочки он срабатывает и какая сумма штрафа применяется. Эти настройки стоит менять только при реальном изменении условий оплаты, а не для отдельных счетов.</div>
 
             <!-- ИНСТРУМЕНТЫ -->
             <h2 id="ru-arbeitszeit">8. Учёт рабочего времени</h2>
 
             <h3 id="ru-az">8.1 Рабочее время (Arbeitszeit)</h3>
             <p>Данные приходят автоматически из мобильного приложения. Техник отмечается в приложении — данные синхронизируются с системой.</p>
-            <p><strong>Меню → Arbeitszeiten</strong></p>
+            <p><strong>Меню → Personal → Arbeitszeiten</strong></p>
             <p>Отображается: дата, начало/конец, продолжительность, чистое время, переработки, GPS-координаты. Сводки по месяцам и годам — в соответствующих вкладках.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Сводка по месяцам и годам: Soll, Netto, Bilanz</h4>
@@ -1668,7 +1720,7 @@ kbd {
 
             <h3 id="ru-abwesenheit">8.3 Отсутствие (Abwesenheit)</h3>
             <p>Учёт отсутствий — отпуск, больничный, отгул. Отображается в общем календаре.</p>
-            <p><strong>Меню → Abwesenheiten</strong></p>
+            <p><strong>Меню → Personal → Abwesenheiten</strong></p>
             <ul class="hb-steps">
                 <li>Меню <strong>Abwesenheiten</strong> → <kbd>Erstellen</kbd> (или из Календаря)</li>
                 <li>Заполнить: <strong>Assigned User</strong>, <strong>Typ</strong> (U=Urlaub, K=Krank, Freizeitausgleich), <strong>Datum Start / Ende</strong></li>
@@ -1680,7 +1732,7 @@ kbd {
 
             <h3 id="ru-melder">9.1 Квартальные проверки (Melder Quartal)</h3>
             <p>Квартальные отчёты технического осмотра систем. Заполняются техником в приложении, автоматически появляются в системе.</p>
-            <p><strong>Меню → Melder Quartale</strong></p>
+            <p><strong>Меню → Meldeprüfliste → Melder Quartale</strong></p>
             <p>В карточке объекта или клиента: вкладка <strong>Melder Gesamt PDFs</strong> — сводный PDF за год.</p>
 
             <h3 id="ru-briefe">9.2 Переписка (Briefe)</h3>
@@ -1695,13 +1747,13 @@ kbd {
             <h2 id="ru-bank">10. Платежи и банк</h2>
             <h3 id="ru-bankkonto">10.1 Банковские счета (Bankkonto)</h3>
             <p>Банковские счета компании Klesec. Настраиваются один раз бухгалтером.</p>
-            <p><strong>Меню → Bankkonten</strong></p>
+            <p><strong>Меню → Buchhaltung → Bankkonten</strong></p>
 
             <!-- ПРОЦЕСС ПРОДАЖ -->
 
             <h3 id="ru-zahlung">10.2 Платежи (Zahlung)</h3>
             <p>Запись о платеже — входящем (клиент заплатил нам) или исходящем (мы заплатили поставщику).</p>
-            <p><strong>Меню → Zahlungen</strong></p>
+            <p><strong>Меню → Buchhaltung → Zahlungen</strong></p>
             <ul class="hb-steps">
                 <li>Меню <strong>Zahlungen</strong> → <kbd>Erstellen</kbd></li>
                 <li>Заполнить: <strong>Zahlungsrichtung</strong> (Eingang/Ausgang), <strong>Zahlungsdatum</strong>, <strong>Betrag</strong>, <strong>Zahlungsart</strong>, <strong>Account</strong> или <strong>Lieferant</strong></li>
@@ -1833,6 +1885,51 @@ kbd {
             <p>Если зачёт создан ошибочно (например, выбран неверный документ), его можно аннулировать — но только если связанный платёж <strong>ещё не зафиксирован (nicht festgeschrieben)</strong>. После фиксации платежа ни редактирование, ни удаление Ausgleich невозможны. В таком случае сначала нужно сторнировать платёж.</p>
             <div class="hb-tip"><strong>Важно:</strong> Аннулированный Ausgleich получает статус «Storniert» и больше не учитывается при расчёте статуса оплаты документа.</div>
 
+            <h3 id="ru-zahlungsavis">10.5 Авизо об оплате (Zahlungsavis)</h3>
+            <p>Zahlungsavis — формальное PDF-письмо поставщику, в котором перечислено, какие входящие счета оплачиваются данным платежом. Служит поставщику подтверждением, каким счетам соответствуют какие суммы — особенно важно при сборных переводах на несколько счетов сразу.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Когда создаётся Zahlungsavis?</h4>
+            <ul>
+                <li><strong>Оплачивается один счёт поставщика</strong>, и поставщику нужно официальное подтверждение.</li>
+                <li><strong>Несколько счетов одного поставщика оплачиваются одним сборным переводом</strong> — авизо перечисляет все эти счета с суммами по каждому и общим итогом на одном PDF.</li>
+            </ul>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Способ 1: через список Zahlungsavise (рекомендуется для нескольких счетов)</h4>
+            <ol>
+                <li>Открыть меню <strong>Buchhaltung → Zahlungsavise</strong>.</li>
+                <li>Нажать кнопку <kbd>Erstellen</kbd> — откроется мастер.</li>
+                <li>Выбрать <strong>поставщика (Lieferant)</strong> — под ним автоматически появятся все открытые счета этого поставщика.</li>
+                <li>Отметить нужные счета чекбоксами (минимум один).</li>
+                <li>При необходимости изменить <strong>дату</strong> (по умолчанию — сегодняшняя).</li>
+                <li>Нажать <kbd>Erstellen</kbd>.</li>
+            </ol>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Способ 2: прямо из списка входящих документов (быстро, если счета уже выбраны)</h4>
+            <ol>
+                <li>Открыть меню <strong>Eingangsbelege</strong>.</li>
+                <li>Отметить чекбоксами в списке нужные входящие счета (можно несколько).</li>
+                <li>Через массовые действия выбрать <kbd>Zahlungsavis erstellen</kbd>.</li>
+                <li>В открывшемся окне подтвердить/изменить <strong>дату</strong> и нажать <kbd>Erstellen</kbd>.</li>
+            </ol>
+
+            <div class="hb-warn">⚠️ Оба способа автоматически проверяют: все выбранные счета должны принадлежать <strong>одному и тому же поставщику</strong> — иначе Espo откажет с сообщением об ошибке.</div>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">После создания: получение PDF</h4>
+            <p>Сразу после нажатия <kbd>Erstellen</kbd> появляется сводка: поставщик, банковские реквизиты (IBAN/BIC), автоматически взятые из карточки поставщика, все позиции и итоговая сумма. Кнопка <kbd>PDF speichern &amp; ansehen</kbd> формирует готовый PDF, сохраняет его на сервере и сразу открывает.</p>
+
+            <h4 style="margin-top:18px;color:#2c3e6a;">Поля на карточке</h4>
+            <table class="hb-table">
+                <thead><tr><th>Поле</th><th>Значение</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Avis-Nr.</strong></td><td>Присваивается автоматически, сквозная нумерация (не привязана к году, например 26-101) — вручную не редактируется</td></tr>
+                    <tr><td><strong>Datum</strong></td><td>Дата авизо, по умолчанию — сегодняшняя</td></tr>
+                    <tr><td><strong>Lieferant</strong></td><td>Получатель авизо</td></tr>
+                    <tr><td><strong>Gesamtbetrag</strong></td><td>Сумма всех позиций — считается автоматически</td></tr>
+                    <tr><td><strong>PDF</strong></td><td>Ссылка на сохранённый PDF — появляется после нажатия «PDF speichern &amp; ansehen», далее также доступна прямо на карточке</td></tr>
+                </tbody>
+            </table>
+            <div class="hb-tip">Банковские реквизиты в PDF берутся автоматически из карточки поставщика (IBAN/BIC/название банка) — отдельного поля для выбора банковского счёта при создании нет, счёт для выплаты здесь не выбирается.</div>
+
             <!-- БУХГАЛТЕРИЯ -->
             <h2 id="ru-buchhaltung">11. Бухгалтерия</h2>
 
@@ -1878,7 +1975,7 @@ kbd {
             <p>Под обеими вкладками автоматически появляется цветной <strong>список задач</strong>: все открытые пункты, требующие внимания — неразмеченные банковские движения, незакрытые документы, расхождения ОП или критические дебиторы. Каждый пункт содержит прямую ссылку на соответствующий отчёт.</p>
 
             <h3 id="ru-buchungsjournal">11.1 Журнал проводок (Buchungsjournal)</h3>
-            <p><strong>Меню → Buchungsjournale</strong></p>
+            <p><strong>Меню → Buchhaltung → Buchungsjournale</strong></p>
             <div class="hb-tip">Журналы создаются полностью автоматически — обычным сотрудникам здесь ничего делать не нужно. Раздел предназначен для бухгалтера — контроль и проверка проводок.</div>
 
             <h4 style="margin-top:16px;color:#2c3e6a;">Что такое журнал проводок?</h4>
@@ -1928,7 +2025,7 @@ kbd {
             </table>
 
             <h3 id="ru-auswertung">11.2 Отчёты бухгалтерии (Buchhaltung Auswertung)</h3>
-            <p><strong>Меню → Buchhaltung Auswertungen</strong></p>
+            <p><strong>Меню → Buchhaltung → Buchhaltung Auswertungen</strong></p>
             <p>Преднастроенные отчёты — открыть нужный, задать период (Von/Bis) и нажать <kbd>Aktualisieren</kbd>.</p>
 
             <h4 style="margin-top:18px;color:#2c3e6a;">Исходящие счета</h4>
@@ -2011,7 +2108,7 @@ kbd {
 
             <h3 id="ru-buchungsregel">11.3 Правила проводок (Buchungsregel)</h3>
             <p>Определяет, на какие счета (дебитор, доход, налог, расходы, входящий НДС, обязательства, банк, касса) система автоматически проводит операцию при фиксации документа — в зависимости от источника (исходящий счёт / входящий счёт / платёж), типа документа и налогового случая.</p>
-            <p><strong>Меню → Buchungsregeln</strong></p>
+            <p><strong>Меню → Buchhaltung → Buchungsregeln</strong></p>
             <table>
                 <tr><th>Поле</th><th>Значение</th></tr>
                 <tr><td><strong>Quelle Typ</strong></td><td>Источник проводки: исходящий счёт, входящий счёт или платёж</td></tr>
@@ -2138,7 +2235,7 @@ kbd {
 
             <h3 id="ru-tickets">12.4 Тикеты (Tickets)</h3>
             <p>Простая внутренняя система заявок для вопросов, задач или проблем, которые не относятся к другому модулю (например, IT-заявки, внутренние вопросы).</p>
-            <p><strong>Меню → Tickets</strong></p>
+            <p><strong>Меню → Handbuch → Tickets</strong></p>
             <table>
                 <tr><th>Поле</th><th>Значение</th></tr>
                 <tr><td><strong>Titel</strong></td><td>Короткое название заявки</td></tr>
@@ -2157,7 +2254,7 @@ kbd {
 
             <h3 id="ru-einstellungstest">12.5 Тест при приёме на работу (Einstellungstest)</h3>
             <p>Онлайн-тест для кандидатов (общая эрудиция, экономика, математика, логическое и пространственное мышление, техническое понимание). Сам тест кандидат проходит по отдельной ссылке вне EspoCRM — здесь хранится только запись с результатом и PDF-отчётом.</p>
-            <p><strong>Меню → Einstellungstests</strong></p>
+            <p><strong>Меню → Umfragen → Einstellungstests</strong></p>
             <table>
                 <tr><th>Статус</th><th>Значение</th></tr>
                 <tr><td>Offen</td><td>Тест создан, кандидат ещё не начал</td></tr>
@@ -2176,7 +2273,7 @@ kbd {
 
             <h3 id="ru-mitarbeiterkompass">12.6 Компас сотрудника (Mitarbeiterkompass)</h3>
             <p>Полугодовой, полностью анонимный опрос сотрудников. Измеряет шесть индексов — мотивация (KMI), руководство (KFI), организация (KOI), команда (KTI), коммуникация (KKI), лояльность (KBI) — и общий индекс (KGI). Отдельные ответы никогда не привязываются к конкретному человеку.</p>
-            <p><strong>Меню → Mitarbeiterkompass Berichte</strong></p>
+            <p><strong>Меню → Umfragen → Mitarbeiterkompass Berichte</strong></p>
             <table>
                 <tr><th>Статус волны</th><th>Значение</th></tr>
                 <tr><td>Neu</td><td>Волна только создана</td></tr>
@@ -2205,6 +2302,7 @@ kbd {
                 <tr><td><strong>Дневная сводка</strong></td><td>Каждый день в 17:00 личное письмо «📋 KleSec Tages-Zusammenfassung» с письмами за день, распознанными терминами и до сих пор без ответа (просроченными) письмами</td></tr>
             </table>
             <div class="hb-tip">Сейчас активно для: <strong>schiller@</strong> (Tobias Schiller), <strong>rally@</strong> (Bianca Rally), общих ящиков <strong>info@ / service@ / rechnung@</strong>, а также <strong>it@</strong> (Павел, только для тестов). У техников ассистент пока отключён.</div>
+            <div class="hb-tip"><strong>rechnung@klesec.de</strong> проходит обычную классификацию/распознавание сроков/дневную сводку точно так же, как info@ и service@ (по умолчанию привязан к Tobias Schiller) — ДОПОЛНИТЕЛЬНО там независимо работает второй процесс: автоматическое распознавание счетов во вложениях, см. <a href="#ru-import">4.2 OCR / AI Импорт</a>. Напоминание об оплате (Mahnung) при этом сознательно не создаёт новый Import, но всё равно проходит обычную классификацию — при распознанном сроке оплаты создаётся задача, как для любого другого письма, ничего не теряется.</div>
             <div class="hb-warn">⚠️ В EspoCRM ассистент виден только косвенно — через задачи с пометкой «Automatisch aus einer E-Mail erkannt (KI-Mail-Assistent)» в описании.</div>
 
         </div><!-- Ende RU -->

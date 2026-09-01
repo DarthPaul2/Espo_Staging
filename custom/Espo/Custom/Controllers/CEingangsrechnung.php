@@ -448,6 +448,33 @@ class CEingangsrechnung extends Base
 
             $betragBrutto = round($betragNetto + $steuerBetrag, 2);
 
+            // Что это: Rundungsdifferenz-Korrektur (Schutznetz, analog zur Import-Seite in
+            // _korrigiere_rundungsdifferenz, app/mail_rechnung.py). Real beobachtet (ELTEN GmbH,
+            // 27.08.2026): wenn ein Lieferant Netto/Steuer/Brutto jeweils unabhängig rundet, kann
+            // die aus den Positionen neu berechnete Summe um 1-2 Cent vom tatsächlich gedruckten
+            // Rechnungsbetrag abweichen. Bei kleiner Abweichung (<= 2 Cent) wird NICHT die eigene
+            // Neuberechnung verwendet, sondern der ursprünglich erkannte/bestätigte Betrag aus dem
+            // Quell-Import wiederhergestellt — nur wenn ein verknüpfter Import überhaupt existiert.
+            $quellImportList = $em
+                ->getRDBRepository('CEingangsrechnungImport')
+                ->where([
+                    'eingangsrechnungId' => $id,
+                    'deleted' => false,
+                ])
+                ->find();
+
+            if ($quellImportList && count($quellImportList)) {
+                $quellImport = $quellImportList[0];
+                $importBrutto = $quellImport->get('betragBrutto');
+                $diff = $importBrutto !== null ? abs($betragBrutto - (float) $importBrutto) : null;
+
+                if ($diff !== null && $diff > 0 && $diff <= 0.02) {
+                    $betragNetto = (float) $quellImport->get('betragNetto');
+                    $steuerBetrag = (float) $quellImport->get('steuerBetrag');
+                    $betragBrutto = (float) $importBrutto;
+                }
+            }
+
             if ($betragNetto <= 0 || $betragBrutto <= 0) {
                 return [
                     'success' => false,

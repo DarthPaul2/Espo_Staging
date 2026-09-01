@@ -1,0 +1,8 @@
+{
+    "fields": {
+        "aussendienstlerTermin": "Außendienstler-Termin"
+    },
+    "tooltips": {
+        "aussendienstlerTermin": "Markiert diesen Anruf als Termin mit einem Außendienstler/Vertriebler/Verkäufer — der Titel bekommt automatisch ein Symbol, damit er bei Terminüberschneidungen im Kalender sofort erkennbar ist."
+    }
+}

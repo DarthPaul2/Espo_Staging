@@ -60,6 +60,7 @@
         "richtung": {
             "type": "enum",
             "options": [
+                "",
                 "forderungsausgleich",
                 "verbindlichkeitsausgleich"
             ],
@@ -67,7 +68,6 @@
                 "forderungsausgleich": null,
                 "verbindlichkeitsausgleich": null
             },
-            "default": "forderungsausgleich",
             "maxLength": 100,
             "isCustom": true
         },

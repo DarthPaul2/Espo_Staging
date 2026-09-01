@@ -23,6 +23,7 @@
     },
     "options": {
         "richtung": {
+            "": "-",
             "forderungsausgleich": "Forderungsausgleich",
             "verbindlichkeitsausgleich": "Verbindlichkeitsausgleich"
         },

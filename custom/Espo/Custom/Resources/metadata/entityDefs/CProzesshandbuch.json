@@ -26,7 +26,19 @@
             "isCustom": true
         },
         "bereich": {
-            "type": "varchar",
+            "type": "enum",
+            "options": [
+                "",
+                "01_GES_Geschäftsführung",
+                "02_MIT_Mitarbeiter",
+                "03_MRK_Marke",
+                "04_FIN_Finanzen",
+                "05_KUG_Kundengewinnung",
+                "06_LEB_Leistungserbringung",
+                "07_ADM_Administration",
+                "08_INF_Infrastruktur",
+                "09_QLT_Qualität"
+            ],
             "notNull": false,
             "tooltip": true,
             "isCustom": true
