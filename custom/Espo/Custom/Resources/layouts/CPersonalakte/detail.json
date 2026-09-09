@@ -1,0 +1,77 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "user"
+                }
+            ],
+            [
+                {
+                    "name": "userVollerName"
+                },
+                {
+                    "name": "userFunktion"
+                },
+                {
+                    "name": "userEmail"
+                },
+                {
+                    "name": "userTelefon"
+                }
+            ],
+            [
+                {
+                    "name": "personalnummer"
+                },
+                {
+                    "name": "userIstAktiv"
+                },
+                {
+                    "name": "eintrittsdatum"
+                },
+                {
+                    "name": "austrittsdatum"
+                }
+            ],
+            [
+                {
+                    "name": "beschaeftigungsart"
+                },
+                {
+                    "name": "position"
+                },
+                {
+                    "name": "wochenstunden"
+                },
+                {
+                    "name": "probezeitBis"
+                }
+            ],
+            [
+                {
+                    "name": "kuendigungsfrist"
+                },
+                {
+                    "name": "aktuellesBruttogehalt"
+                },
+                {
+                    "name": "aktuellerStundenlohn"
+                },
+                {
+                    "name": "datumLetzteGehaltsaenderung"
+                }
+            ],
+            [
+                {
+                    "name": "urlaubsanspruchTage"
+                },
+                false,
+                false,
+                false
+            ]
+        ],
+        "style": "default",
+        "label": "Overview"
+    }
+]

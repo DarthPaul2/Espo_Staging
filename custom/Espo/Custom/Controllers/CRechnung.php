@@ -486,7 +486,7 @@ if (!is_array($ids) || !count($ids)) {
 
     $em = $this->getEntityManager();
 
-    $baseDir = '/var/www/espocrm/public/pdf/rechnungen';
+    $baseDir = dirname(__DIR__, 4) . '/public/pdf/rechnungen';
 
     $zipName = 'rechnungen_' . date('Y-m-d_His') . '.zip';
     $tmpZip  = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $zipName;

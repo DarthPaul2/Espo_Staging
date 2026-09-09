@@ -1,0 +1,14 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#24c8fb",
+    "iconClass": "fas fa-money-bill",
+    "relationshipPanels": {
+        "personalakte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

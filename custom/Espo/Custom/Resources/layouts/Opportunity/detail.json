@@ -1,0 +1,29 @@
+[
+    {
+        "rows": [
+            [{"name": "name"}, {"name": "account"}],
+            [{"name": "stage"}, {"name": "amount"}],
+            [{"name": "probability"}, {"name":"closeDate"}],
+            [{"name": "contacts"}, {"name": "leadSource"}],
+            [{"name": "description"}]
+        ]
+    },
+    {
+        "label": "Stufen erreicht",
+        "rows": [
+            [{"name": "stufeAdresseAm"}, {"name": "stufeKontaktAm"}],
+            [{"name": "stufeInteressentAngebotAngefordertAm"}, {"name": "stufeInteressentAngebotInErstellungAm"}],
+            [{"name": "stufeKaeuferAngebotErhaltenAm"}, {"name": "stufeKundeInDispositionAm"}],
+            [{"name": "stufeKundeLeistungserbringungAm"}, {"name": "stufeBestandskundeAm"}]
+        ]
+    },
+    {
+        "label": "Stufen verlassen",
+        "rows": [
+            [{"name": "stufeAdresseVerlassenAm"}, {"name": "stufeKontaktVerlassenAm"}],
+            [{"name": "stufeInteressentAngebotAngefordertVerlassenAm"}, {"name": "stufeInteressentAngebotInErstellungVerlassenAm"}],
+            [{"name": "stufeKaeuferAngebotErhaltenVerlassenAm"}, {"name": "stufeKundeInDispositionVerlassenAm"}],
+            [{"name": "stufeKundeLeistungserbringungVerlassenAm"}, false]
+        ]
+    }
+]

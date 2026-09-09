@@ -4,5 +4,12 @@
         "edit": "all",
         "delete": "all",
         "create": "all"
+    },
+    "mandatory": {
+        "scopeFieldLevel": {
+            "User": {
+                "cPersonalakte": false
+            }
+        }
     }
 }

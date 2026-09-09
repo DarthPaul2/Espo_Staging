@@ -1,0 +1,22 @@
+[
+    {
+        "name": "gueltigAb",
+        "width": 16
+    },
+    {
+        "name": "bruttogehalt",
+        "width": 16
+    },
+    {
+        "name": "stundenlohn",
+        "width": 16
+    },
+    {
+        "name": "grundDerAenderung",
+        "width": 16
+    },
+    {
+        "name": "createdBy",
+        "width": 16
+    }
+]

@@ -1,0 +1,16 @@
+{
+    "labels": {
+        "Create CPersonalakteFrist": "Personalakte-Frist erstellen"
+    },
+    "fields": {
+        "personalakte": "Personalakte",
+        "art": "Art der Frist",
+        "faelligAm": "Fällig am",
+        "status": "Status",
+        "bemerkung": "Bemerkung",
+        "description": "Description"
+    },
+    "links": {
+        "personalakte": "Personalakte"
+    }
+}

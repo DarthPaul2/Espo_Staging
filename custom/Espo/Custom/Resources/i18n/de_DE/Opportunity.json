@@ -1,0 +1,48 @@
+{
+    "fields": {
+        "stufeAdresseAm": "Stufe erreicht: Adresse",
+        "stufeAdresseVerlassenAm": "Stufe verlassen: Adresse",
+        "stufeKontaktAm": "Stufe erreicht: Kontakt",
+        "stufeKontaktVerlassenAm": "Stufe verlassen: Kontakt",
+        "stufeInteressentAngebotAngefordertAm": "Stufe erreicht: Interessent (Angebot angefordert)",
+        "stufeInteressentAngebotAngefordertVerlassenAm": "Stufe verlassen: Interessent (Angebot angefordert)",
+        "stufeInteressentAngebotInErstellungAm": "Stufe erreicht: Interessent (Angebot in Erstellung)",
+        "stufeInteressentAngebotInErstellungVerlassenAm": "Stufe verlassen: Interessent (Angebot in Erstellung)",
+        "stufeKaeuferAngebotErhaltenAm": "Stufe erreicht: Käufer (Angebot erhalten)",
+        "stufeKaeuferAngebotErhaltenVerlassenAm": "Stufe verlassen: Käufer (Angebot erhalten)",
+        "stufeKundeInDispositionAm": "Stufe erreicht: Kunde (in Disposition)",
+        "stufeKundeInDispositionVerlassenAm": "Stufe verlassen: Kunde (in Disposition)",
+        "stufeKundeLeistungserbringungAm": "Stufe erreicht: Kunde (Leistungserbringung)",
+        "stufeKundeLeistungserbringungVerlassenAm": "Stufe verlassen: Kunde (Leistungserbringung)",
+        "stufeBestandskundeAm": "Stufe erreicht: Bestandskunde"
+    },
+    "tooltips": {
+        "stufeAdresseAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
+        "stufeAdresseVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
+        "stufeKontaktAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
+        "stufeKontaktVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
+        "stufeInteressentAngebotAngefordertAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
+        "stufeInteressentAngebotAngefordertVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
+        "stufeInteressentAngebotInErstellungAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
+        "stufeInteressentAngebotInErstellungVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
+        "stufeKaeuferAngebotErhaltenAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
+        "stufeKaeuferAngebotErhaltenVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
+        "stufeKundeInDispositionAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
+        "stufeKundeInDispositionVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
+        "stufeKundeLeistungserbringungAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
+        "stufeKundeLeistungserbringungVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
+        "stufeBestandskundeAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Endstufe — keine weitere Stufe danach, daher kein Verlassen-Datum."
+    },
+    "options": {
+        "stage": {
+            "adresseNeu": "Adresse | neu",
+            "kontaktOffen": "Kontakt | offen",
+            "interessentAngebotAngefordert": "Interessent | Angebot angefordert",
+            "interessentAngebotInErstellung": "Interessent | Angebot in Erstellung",
+            "kaeuferAngebotErhalten": "Käufer | Angebot erhalten",
+            "kundeInDisposition": "Kunde | in Disposition",
+            "kundeLeistungserbringung": "Kunde | Errichtung / Wartung / Störungsbeseitigung",
+            "bestandskunde": "Bestandskunde"
+        }
+    }
+}

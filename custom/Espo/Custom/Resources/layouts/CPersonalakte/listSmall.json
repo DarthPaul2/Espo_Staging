@@ -1,0 +1,14 @@
+[
+    {
+        "name": "name",
+        "link": true
+    },
+    {
+        "name": "personalnummer",
+        "width": 20
+    },
+    {
+        "name": "eintrittsdatum",
+        "width": 20
+    }
+]

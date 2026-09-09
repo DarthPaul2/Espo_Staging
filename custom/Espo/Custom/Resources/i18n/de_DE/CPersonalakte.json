@@ -1,0 +1,37 @@
+{
+    "labels": {
+        "Create CPersonalakte": "Personalakte anlegen"
+    },
+    "fields": {
+        "user": "Mitarbeiter",
+        "userVollerName": "Name",
+        "userFunktion": "Funktion",
+        "userEmail": "E-Mail",
+        "userTelefon": "Telefon",
+        "userIstAktiv": "Aktiv",
+        "personalnummer": "Personalnummer",
+        "eintrittsdatum": "Eintrittsdatum",
+        "austrittsdatum": "Austrittsdatum",
+        "beschaeftigungsart": "Beschäftigungsart",
+        "position": "Position",
+        "wochenstunden": "Wochenstunden",
+        "probezeitBis": "Probezeit bis",
+        "kuendigungsfrist": "Kündigungsfrist",
+        "aktuellesBruttogehalt": "Aktuelles Bruttogehalt",
+        "aktuellerStundenlohn": "Aktueller Stundenlohn",
+        "datumLetzteGehaltsaenderung": "Datum letzte Gehaltsänderung",
+        "urlaubsanspruchTage": "Urlaubsanspruch (Tage/Jahr)",
+        "personalakteGehalts": "Gehaltsverlauf",
+        "personalakteDokuments": "Dokumente",
+        "personalakteVerlaufs": "Historie",
+        "personalakteFrists": "Fristen",
+        "description": "Description"
+    },
+    "links": {
+        "user": "Mitarbeiter",
+        "personalakteGehalts": "Gehaltsverlauf",
+        "personalakteDokuments": "Dokumente",
+        "personalakteVerlaufs": "Historie",
+        "personalakteFrists": "Fristen"
+    }
+}

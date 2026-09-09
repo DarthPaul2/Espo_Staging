@@ -43,7 +43,12 @@
         "CTicket": "Ticket",
         "CProzesshandbuch": "Prozesshandbuch",
         "CZahlungsavis": "Zahlungsavis",
-        "CZahlungsavisPosition": "Zahlungsavisposition"
+        "CZahlungsavisPosition": "Zahlungsavisposition",
+        "CPersonalakte": "Personalakte",
+        "CPersonalakteGehalt": "Personalakte-Gehalt",
+        "CPersonalakteDokument": "Personalakte-Dokument",
+        "CPersonalakteVerlauf": "Personalakte-Verlauf",
+        "CPersonalakteFrist": "Personalakte-Frist"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -89,7 +94,12 @@
         "CTicket": "Ticket",
         "CProzesshandbuch": "Prozesshandbücher",
         "CZahlungsavis": "Zahlungsavise",
-        "CZahlungsavisPosition": "Zahlungsavispositionen"
+        "CZahlungsavisPosition": "Zahlungsavispositionen",
+        "CPersonalakte": "Personalakten",
+        "CPersonalakteGehalt": "Personalakte-Gehälter",
+        "CPersonalakteDokument": "Personalakte-Dokumente",
+        "CPersonalakteVerlauf": "Personalakte-Verläufe",
+        "CPersonalakteFrist": "Personalakte-Fristen"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

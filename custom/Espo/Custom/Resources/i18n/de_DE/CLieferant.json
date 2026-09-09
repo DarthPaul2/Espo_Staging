@@ -11,6 +11,7 @@
         "plz": "PLZ",
         "ort": "Ort",
         "land": "Land",
+        "bundesland": "Bundesland",
         "ustIdNr": "USt-IdNr",
         "steuernummer": "Steuernummer",
         "aktiv": "Aktiv",
@@ -23,6 +24,9 @@
         "zahlung": "Zahlung",
         "bankbewegungen": "Bankbewegungen",
         "zahlungsavise": "Zahlungsavise"
+    },
+    "tooltips": {
+        "bundesland": "Wird automatisch aus der PLZ ermittelt. Manuell gesetzte Werte werden nie überschrieben."
     },
     "links": {
         "eingangsrechnungen": "Eingangsrechnungen",

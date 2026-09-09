@@ -51,7 +51,8 @@
             "type": "varchar",
             "maxLength": 20,
             "options": [],
-            "isCustom": true
+            "isCustom": true,
+            "view": "custom:views/fields/plz-lookup"
         },
         "cOrt": {
             "type": "varchar",
@@ -64,6 +65,13 @@
             "maxLength": 100,
             "default": "Deutschland",
             "options": [],
+            "isCustom": true
+        },
+        "cBundesland": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "tooltip": true,
             "isCustom": true
         },
         "cBezeichnungZusatz": {

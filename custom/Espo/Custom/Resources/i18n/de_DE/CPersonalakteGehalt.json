@@ -1,0 +1,17 @@
+{
+    "labels": {
+        "Create CPersonalakteGehalt": "Personalakte-Gehalt erstellen"
+    },
+    "fields": {
+        "personalakte": "Personalakte",
+        "gueltigAb": "Gültig ab",
+        "bruttogehalt": "Bruttogehalt",
+        "stundenlohn": "Stundenlohn",
+        "grundDerAenderung": "Grund der Änderung",
+        "bemerkung": "Bemerkung",
+        "description": "Description"
+    },
+    "links": {
+        "personalakte": "Personalakte"
+    }
+}

@@ -21,7 +21,8 @@
         "cEingangsImporte": "Eingangsimporte",
         "cZahlungs": "Zahlungs",
         "cStornierteRechnungen": "Stornierte Rechnungen",
-        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen"
+        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen",
+        "cPersonalakte": "Personalakte"
     },
     "tooltips": {
         "cUrlaubTage": "Summe der Urlaubs-Werktage (Mo-Fr, Typ 'U' in Abwesenheiten) im laufenden Kalenderjahr. Wird automatisch beim Speichern/Löschen einer Abwesenheit neu berechnet.",
@@ -48,6 +49,7 @@
         "cEingangsImporte": "Eingangsimporte",
         "cZahlungs": "Zahlungs",
         "cStornierteRechnungen": "Stornierte Rechnungen",
-        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen"
+        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen",
+        "cPersonalakte": "Personalakte"
     }
 }

@@ -19,7 +19,8 @@
         "cEingangsImporte": "Eingangsimporte",
         "cZahlungs": "Zahlungs",
         "cStornierteRechnungen": "Stornierte Rechnungen",
-        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen"
+        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen",
+        "cPersonalakte": "Personalakte"
     },
     "links": {
         "cArbeitszeiten": "Arbeitszeiten",
@@ -41,6 +42,7 @@
         "cEingangsImporte": "Eingangsimporte",
         "cZahlungs": "Zahlungs",
         "cStornierteRechnungen": "Stornierte Rechnungen",
-        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen"
+        "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen",
+        "cPersonalakte": "Personalakte"
     }
 }

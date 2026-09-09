@@ -25,6 +25,10 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
         selectedQuarter: null,
         dashboardData: null,
 
+        // Wunsch von Bianca Rally (01.09.2026): per Klickfeld wählen können, ob im Block
+        // "Kritische Forderungen" nur die kritischen oder alle offenen Rechnungen gezeigt werden.
+        nurKritischeForderungen: true,
+
         getTitle: function () {
             return 'Buchhaltung Cockpit';
         },
@@ -221,6 +225,15 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
                 window.print();
             });
 
+            // Wunsch von Bianca Rally (01.09.2026): Klickfeld, um zwischen "nur kritische" und
+            // "alle offenen Rechnungen" im Block "Kritische Forderungen" umzuschalten.
+            $root.off('change.kbForderungenToggle', '[data-name="topForderungenAlleToggle"]');
+            $root.on('change.kbForderungenToggle', '[data-name="topForderungenAlleToggle"]', function () {
+                self.nurKritischeForderungen = !$(this).is(':checked');
+                self.updateTopForderungenSubtitle_();
+                self.loadDashboard_();
+            });
+
             // Что это: обработчик кнопок Detailberichte.
             // Зачем: позволяет бухгалтеру быстро открыть нужную Auswertung из Cockpit.
             $root.off('click.kbOpenReport', '[data-action="kb-open-report"]');
@@ -286,7 +299,8 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
                 year: this.selectedYear,
                 dateFrom: period.dateFrom,
                 dateTo: period.dateTo,
-                periodMode: period.mode
+                periodMode: period.mode,
+                nurKritisch: this.nurKritischeForderungen ? '1' : '0'
             }).then(function (data) {
                 self.dashboardData = data || {};
 
@@ -1650,9 +1664,23 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
         // Зачем:
         // Phase 7A.5: руководство должно видеть Forderungen, по которым нужно действовать:
         // сначала ab 5.000 €, затем остальные kritische Forderungen.
+        updateTopForderungenSubtitle_: function () {
+            var $root = this.$el || $(this.el);
+
+            $root.find('[data-name="topForderungenAlleToggle"]').prop('checked', !this.nurKritischeForderungen);
+
+            $root.find('[data-name="topForderungenSubtitle"]').text(
+                this.nurKritischeForderungen
+                    ? 'Zuerst Forderungen ab 5.000 €, danach weitere kritische Forderungen nach Mahnstufe und Überfälligkeit.'
+                    : 'Alle offenen Rechnungen, sortiert nach Fälligkeitsdatum (älteste zuerst).'
+            );
+        },
+
         renderTopOpenForderungen_: function (rows) {
             var $root = this.$el || $(this.el);
             var $tbody = $root.find('[data-name="topOpenForderungenBody"]');
+
+            this.updateTopForderungenSubtitle_();
 
             if (!$tbody.length) {
                 return;

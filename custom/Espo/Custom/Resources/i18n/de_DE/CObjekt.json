@@ -8,6 +8,7 @@
         "cPLZ": "PLZ",
         "cOrt": "Ort",
         "cLand": "Land",
+        "cBundesland": "Bundesland",
         "cBezeichnungZusatz": "Bezeichnung Zusatz",
         "account": "Account",
         "angebots": "Angebots",
@@ -19,7 +20,8 @@
         "stundenberichts": "Stundenberichts"
     },
     "tooltips": {
-        "cBezeichnungZusatz": "z.B. “Halle 2 / Gebäudeteil B / Etage 3”"
+        "cBezeichnungZusatz": "z.B. “Halle 2 / Gebäudeteil B / Etage 3”",
+        "cBundesland": "Wird automatisch aus der PLZ ermittelt. Manuell gesetzte Werte werden nie überschrieben."
     },
     "links": {
         "account": "Account",

@@ -1,0 +1,17 @@
+{
+    "labels": {
+        "Create CPersonalakteVerlauf": "Personalakte-Verlauf erstellen"
+    },
+    "fields": {
+        "personalakte": "Personalakte",
+        "datum": "Datum",
+        "art": "Art der Änderung",
+        "alterWert": "Bisheriger Wert",
+        "neuerWert": "Neuer Wert",
+        "bemerkung": "Bemerkung",
+        "description": "Description"
+    },
+    "links": {
+        "personalakte": "Personalakte"
+    }
+}

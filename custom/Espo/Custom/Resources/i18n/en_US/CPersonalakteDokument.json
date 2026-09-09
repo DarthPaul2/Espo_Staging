@@ -1,0 +1,12 @@
+{
+    "fields": {
+        "personalakte": "Personalakte",
+        "dokumentdatum": "Datum"
+    },
+    "links": {
+        "personalakte": "Personalakte"
+    },
+    "labels": {
+        "Create CPersonalakteDokument": "Create Personalakte-Dokument"
+    }
+}

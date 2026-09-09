@@ -335,6 +335,7 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                 await this.tryAutoMatchLieferant_();
                 await this.syncImportPositionenFromAiData_(data);
                 await this.autoMatchImportPositionenToMaterial_();
+                await this.pruefeBetragGegenErkennung_(recognized);
 
                 this.notify(false);
                 Espo.Ui.success('Dokument wurde erkannt.');
@@ -430,7 +431,31 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
             // Зачем: рабочие позиции должны жить в CEingangsrechnungImportPosition, а не только в aiJson.
 
             const importId = this.model.id;
-            const positions = Array.isArray(data?.positions) ? data.positions : [];
+            let positions = Array.isArray(data?.positions) ? data.positions : [];
+
+            if (positions.length === 0) {
+                // Что это: Fallback, wenn die KI gar keine Positionen liefert (z.B. Kassenbon
+                // ohne erkennbare Positionstabelle), aber der Gesamtbetrag im Dokumentkopf klar
+                // ist. Зачем: ohne mindestens eine Position bleibt der Datensatz sonst bei 0 EUR
+                // stehen (RecalculateImportTotals.php summiert nur über Positionen) — dieselbe
+                // Sammelposition wie im Mail-/Foto-Kanal (siehe _erstelle_synthetische_position
+                // in mail_rechnung.py).
+                const recognized = data?.recognized_data || {};
+                const betragNetto = recognized.betragNetto != null ? parseFloat(recognized.betragNetto) : null;
+
+                if (betragNetto != null && !isNaN(betragNetto)) {
+                    positions = [{
+                        name: recognized.leistungsbeschreibung || 'Rechnungsbetrag (Zweck nicht erkennbar)',
+                        beschreibung: 'Automatisch erzeugte Sammelposition — im Originaldokument sind keine Einzelpositionen aufgeführt.',
+                        menge: 1,
+                        einheit: 'pausch',
+                        einzelpreisNetto: betragNetto,
+                        rabattProzent: 0,
+                        rabattBetrag: 0,
+                        gesamtNetto: betragNetto
+                    }];
+                }
+            }
 
             // Что это: сначала читаем уже существующие import-позиции текущего документа.
             // Зачем: перед созданием новых нужно удалить старые, чтобы не плодить дубли.
@@ -461,10 +486,22 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                 const p = positions[i] || {};
 
                 const menge = p.menge != null ? parseFloat(p.menge) : null;
-                const einzelpreisNetto = p.einzelpreisNetto != null ? parseFloat(p.einzelpreisNetto) : null;
+                let einzelpreisNetto = p.einzelpreisNetto != null ? parseFloat(p.einzelpreisNetto) : null;
+                const gesamtNettoErkannt = p.gesamtNetto != null ? parseFloat(p.gesamtNetto) : null;
+
+                // Что это: gesamtNetto ist in Espo readOnly (der PHP-Hook berechnet es serverseitig
+                // neu aus menge*einzelpreisNetto) — ein hier gesendeter gesamtNetto-Wert wird beim
+                // Anlegen ignoriert. Fehlt einzelpreisNetto (z.B. Kassenbon mit nur einer
+                // Gesamtsumme, ohne Einzelpreis), bliebe die Position sonst bei 0 stehen. Fix:
+                // Einzelpreis aus der erkannten Summe zurückrechnen, damit der Hook denselben
+                // Betrag reproduziert.
+                if (einzelpreisNetto == null && gesamtNettoErkannt != null && menge != null && menge !== 0) {
+                    einzelpreisNetto = gesamtNettoErkannt / menge;
+                }
+
                 const gesamtNetto =
-                    p.gesamtNetto != null
-                        ? parseFloat(p.gesamtNetto)
+                    gesamtNettoErkannt != null
+                        ? gesamtNettoErkannt
                         : ((menge != null && einzelpreisNetto != null) ? (menge * einzelpreisNetto) : null);
 
                 const rabattProzent =
@@ -490,6 +527,66 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                     gesamtNetto: gesamtNetto,
                     warnhinweis: null
                 });
+            }
+        },
+
+        pruefeBetragGegenErkennung_: async function (recognized) {
+            // Что это: vergleicht den von der KI erkannten Bruttobetrag mit dem, was der
+            // Espo-Hook (RecalculateImportTotals.php) tatsächlich aus den Positionen berechnet
+            // hat — dieselbe Prüfung wie bei Mail-/Foto-Kanal (_korrigiere_rundungsdifferenz in
+            // mail_rechnung.py), aber direkt über Espo statt über einen zusätzlichen
+            // Flask-Request. Real beobachtet (08.09.2026): der Flask-Umweg lief in eine Race
+            // Condition — ein schneller Klick auf "übernehmen" direkt nach "Dokument erkennen"
+            // erwischte noch den unkorrigierten Betrag, bevor die asynchrone Korrektur fertig
+            // war. Direkt über Espo.Ajax (gleicher Origin, kein zusätzlicher Hop) ist das
+            // innerhalb dieser einen awaited Funktion abgeschlossen, bevor der Nutzer überhaupt
+            // wieder klicken kann.
+            const kiBrutto = recognized.betragBrutto != null ? parseFloat(recognized.betragBrutto) : null;
+            if (kiBrutto == null || isNaN(kiBrutto)) {
+                return;
+            }
+
+            let aktuell;
+            try {
+                aktuell = await Espo.Ajax.getRequest('CEingangsrechnungImport/' + this.model.id);
+            } catch (e) {
+                console.error('Betrag-Prüfung: Datensatz konnte nicht geladen werden.', e);
+                return;
+            }
+
+            const aktuellerBrutto = aktuell.betragBrutto != null ? parseFloat(aktuell.betragBrutto) : null;
+            if (aktuellerBrutto == null || isNaN(aktuellerBrutto)) {
+                return;
+            }
+
+            const diff = Math.round(Math.abs(aktuellerBrutto - kiBrutto) * 100) / 100;
+            if (diff === 0) {
+                return;
+            }
+
+            try {
+                if (diff <= 0.02) {
+                    await Espo.Ajax.patchRequest('CEingangsrechnungImport/' + this.model.id, {
+                        betragNetto: recognized.betragNetto != null ? parseFloat(recognized.betragNetto) : null,
+                        steuerBetrag: recognized.steuerBetrag != null ? parseFloat(recognized.steuerBetrag) : null,
+                        betragBrutto: kiBrutto
+                    });
+                    return;
+                }
+
+                const hinweis =
+                    'Abweichung zwischen erkanntem Betrag (' + kiBrutto.toFixed(2) + ' EUR brutto) und ' +
+                    'aus den Positionen berechnetem Betrag (' + aktuellerBrutto.toFixed(2) + ' EUR brutto, ' +
+                    'Differenz ' + diff.toFixed(2) + ' EUR) — bitte Positionen/Betrag manuell prüfen.';
+                const bestehend = (aktuell.warnhinweise || '').trim();
+
+                if (!bestehend.includes(hinweis)) {
+                    await Espo.Ajax.patchRequest('CEingangsrechnungImport/' + this.model.id, {
+                        warnhinweise: bestehend ? (bestehend + '\n' + hinweis) : hinweis
+                    });
+                }
+            } catch (e) {
+                console.error('Betrag-Prüfung: Korrektur/Warnhinweis fehlgeschlagen.', e);
             }
         },
 

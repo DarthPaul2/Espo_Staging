@@ -1,0 +1,19 @@
+{
+    "fields": {
+        "user": "Benutzer",
+        "personalakteGehalts": "Personalakte-Gehälter",
+        "personalakteDokuments": "Personalakte-Dokumente",
+        "personalakteVerlaufs": "Historie",
+        "personalakteFrists": "Personalakte-Fristen"
+    },
+    "links": {
+        "user": "Benutzer",
+        "personalakteGehalts": "Personalakte-Gehälter",
+        "personalakteDokuments": "Personalakte-Dokumente",
+        "personalakteVerlaufs": "Historie",
+        "personalakteFrists": "Personalakte-Fristen"
+    },
+    "labels": {
+        "Create CPersonalakte": "Create Personalakte"
+    }
+}

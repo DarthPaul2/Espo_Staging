@@ -61,7 +61,8 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         $monthly = $this->loadMonthly($pdo, $whereDate, $sqlParams);
         $konten = $this->loadKonten($pdo, $whereDate, $sqlParams);
         $checks = $this->loadChecks($pdo, $whereDate, $sqlParams);
-        $topOpenForderungen = $this->loadTopOpenForderungen($pdo);
+        $nurKritischeForderungen = $request->getQueryParam('nurKritisch') !== '0';
+        $topOpenForderungen = $this->loadTopOpenForderungen($pdo, $nurKritischeForderungen);
         $vorschauNaechsteWochen = $this->loadVorschauNaechsteWochen($pdo);
 
         return [
@@ -565,8 +566,31 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
      * 2. danach alle weiteren kritischen Forderungen
      * 3. innerhalb der Gruppen: Mahnstufe / Überfälligkeit / Betrag
      */
-    private function loadTopOpenForderungen(\PDO $pdo): array
+    private function loadTopOpenForderungen(\PDO $pdo, bool $nurKritisch = true): array
     {
+        $kritischWhere = $nurKritisch
+            ? "AND (
+                    r.restbetrag_offen >= 5000
+                    OR r.mahnstufe IN ('mahnung2', 'mahnung3', 'inkasso')
+                    OR (r.faellig_am IS NOT NULL AND r.faellig_am < CURDATE())
+            )"
+            : '';
+
+        $orderBy = $nurKritisch
+            ? "CASE
+                    WHEN r.restbetrag_offen >= 5000 THEN 0
+                    ELSE 1
+                END ASC,
+
+                r.restbetrag_offen DESC,
+
+                mahn_prioritaet DESC,
+                tage_ueberfaellig DESC,
+                r.faellig_am ASC"
+            : "r.faellig_am ASC";
+
+        $limit = $nurKritisch ? 20 : 200;
+
         $sql = "
             SELECT
                 r.id,
@@ -607,25 +631,11 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
             AND IFNULL(r.ist_storniert, 0) = 0
             AND r.restbetrag_offen > 0
 
-            AND (
-                    r.restbetrag_offen >= 5000
-                    OR r.mahnstufe IN ('mahnung2', 'mahnung3', 'inkasso')
-                    OR (r.faellig_am IS NOT NULL AND r.faellig_am < CURDATE())
-            )
+            {$kritischWhere}
 
-            ORDER BY
-                CASE
-                    WHEN r.restbetrag_offen >= 5000 THEN 0
-                    ELSE 1
-                END ASC,
+            ORDER BY {$orderBy}
 
-                r.restbetrag_offen DESC,
-
-                mahn_prioritaet DESC,
-                tage_ueberfaellig DESC,
-                r.faellig_am ASC
-
-            LIMIT 20
+            LIMIT {$limit}
         ";
 
         $rows = $pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC) ?: [];

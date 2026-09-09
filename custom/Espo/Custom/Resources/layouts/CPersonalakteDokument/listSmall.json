@@ -1,0 +1,26 @@
+[
+    {
+        "name": "name",
+        "link": true
+    },
+    {
+        "name": "dokumentart",
+        "width": 24,
+        "align": "left"
+    },
+    {
+        "name": "dokumentdatum",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "gueltigBis",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "createdBy",
+        "width": 12,
+        "align": "left"
+    }
+]

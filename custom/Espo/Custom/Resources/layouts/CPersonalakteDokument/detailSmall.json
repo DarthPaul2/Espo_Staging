@@ -1,0 +1,40 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "personalakte"
+                }
+            ],
+            [
+                {
+                    "name": "dokumentart"
+                },
+                {
+                    "name": "dokumentdatum"
+                }
+            ],
+            [
+                {
+                    "name": "gueltigAb"
+                },
+                {
+                    "name": "gueltigBis"
+                }
+            ],
+            [
+                {
+                    "name": "datei"
+                },
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

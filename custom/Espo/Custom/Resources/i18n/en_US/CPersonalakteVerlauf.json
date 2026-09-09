@@ -1,0 +1,11 @@
+{
+    "fields": {
+        "personalakte": "Personalakte"
+    },
+    "links": {
+        "personalakte": "Personalakte"
+    },
+    "labels": {
+        "Create CPersonalakteVerlauf": "Create Personalakte-Verlauf"
+    }
+}

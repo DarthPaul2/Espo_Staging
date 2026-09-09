@@ -28,6 +28,14 @@
             ],
             [
                 {
+                    "name": "bundesland"
+                },
+                false,
+                false,
+                false
+            ],
+            [
+                {
                     "name": "ansprechpartner"
                 },
                 {

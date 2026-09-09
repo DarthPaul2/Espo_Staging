@@ -1,0 +1,12 @@
+{
+    "fields": {
+        "cPersonalakte": {
+            "onlyAdmin": true
+        }
+    },
+    "links": {
+        "cPersonalakte": {
+            "onlyAdmin": true
+        }
+    }
+}

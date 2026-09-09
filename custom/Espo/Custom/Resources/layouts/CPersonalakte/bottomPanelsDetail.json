@@ -1,0 +1,20 @@
+{
+    "stream": {
+        "disabled": true
+    },
+    "_delimiter_": {
+        "disabled": true
+    },
+    "personalakteGehalts": {
+        "index": 0
+    },
+    "personalakteDokuments": {
+        "index": 1
+    },
+    "personalakteFrists": {
+        "index": 2
+    },
+    "personalakteVerlaufs": {
+        "index": 3
+    }
+}

@@ -1,0 +1,20 @@
+[
+    {
+        "name": "art",
+        "width": 16,
+        "align": "left"
+    },
+    {
+        "name": "faelligAm",
+        "width": 14,
+        "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 20
+    },
+    {
+        "name": "bemerkung",
+        "align": "left"
+    }
+]

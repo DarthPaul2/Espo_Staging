@@ -1,0 +1,12 @@
+[
+    {
+        "route": "/PlzLookup",
+        "method": "get",
+        "actionClassName": "Espo\\Custom\\Classes\\Api\\PlzLookup"
+    },
+    {
+        "route": "/OpportunityKanbanStats",
+        "method": "get",
+        "actionClassName": "Espo\\Custom\\Classes\\Api\\OpportunityKanbanStats"
+    }
+]

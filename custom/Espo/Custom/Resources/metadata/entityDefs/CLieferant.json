@@ -75,7 +75,8 @@
             "type": "varchar",
             "maxLength": 100,
             "options": [],
-            "isCustom": true
+            "isCustom": true,
+            "view": "custom:views/fields/plz-lookup"
         },
         "ort": {
             "type": "varchar",
@@ -88,6 +89,13 @@
             "maxLength": 100,
             "default": "Deutschland",
             "options": [],
+            "isCustom": true
+        },
+        "bundesland": {
+            "type": "varchar",
+            "maxLength": 100,
+            "options": [],
+            "tooltip": true,
             "isCustom": true
         },
         "ustIdNr": {

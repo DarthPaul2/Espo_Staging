@@ -1,0 +1,5 @@
+{
+    "primaryFilterClassNameMap": {
+        "qualifikationen": "Espo\\Custom\\Select\\CPersonalakteDokument\\PrimaryFilters\\Qualifikationen"
+    }
+}

@@ -1,0 +1,24 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "art"
+                },
+                {
+                    "name": "faelligAm"
+                }
+            ],
+            [
+                {
+                    "name": "status"
+                },
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

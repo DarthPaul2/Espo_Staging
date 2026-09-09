@@ -1,0 +1,127 @@
+{
+    "fields": {
+        "stage": {
+            "type": "enum",
+            "options": [
+                "adresseNeu",
+                "kontaktOffen",
+                "interessentAngebotAngefordert",
+                "interessentAngebotInErstellung",
+                "kaeuferAngebotErhalten",
+                "kundeInDisposition",
+                "kundeLeistungserbringung",
+                "bestandskunde"
+            ],
+            "default": "adresseNeu",
+            "probabilityMap": {
+                "adresseNeu": 5,
+                "kontaktOffen": 15,
+                "interessentAngebotAngefordert": 30,
+                "interessentAngebotInErstellung": 45,
+                "kaeuferAngebotErhalten": 65,
+                "kundeInDisposition": 85,
+                "kundeLeistungserbringung": 100,
+                "bestandskunde": 100
+            },
+            "style": {
+                "kontaktOffen": "info",
+                "interessentAngebotAngefordert": "primary",
+                "interessentAngebotInErstellung": "primary",
+                "kaeuferAngebotErhalten": "warning",
+                "kundeInDisposition": "success",
+                "kundeLeistungserbringung": "success",
+                "bestandskunde": "success"
+            }
+        },
+        "stufeAdresseAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeAdresseVerlassenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKontaktAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKontaktVerlassenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeInteressentAngebotAngefordertAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeInteressentAngebotAngefordertVerlassenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeInteressentAngebotInErstellungAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeInteressentAngebotInErstellungVerlassenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKaeuferAngebotErhaltenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKaeuferAngebotErhaltenVerlassenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKundeInDispositionAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKundeInDispositionVerlassenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKundeLeistungserbringungAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeKundeLeistungserbringungVerlassenAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        },
+        "stufeBestandskundeAm": {
+            "type": "date",
+            "notNull": false,
+            "tooltip": true,
+            "isCustom": true
+        }
+    }
+}

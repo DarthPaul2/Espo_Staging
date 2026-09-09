@@ -1,17 +1,67 @@
 [
     {
-        "label": "",
         "rows": [
-            [{"name":"userName"}, false],
-            [{"name": "name"}, {"name": "title"}],
-            [{"name": "emailAddress"}, {"name": "phoneNumber"}],
-            [{"name":"gender"}, false]
-        ]
+            [
+                {
+                    "name": "userName"
+                },
+                false
+            ],
+            [
+                {
+                    "name": "name"
+                },
+                {
+                    "name": "title"
+                }
+            ],
+            [
+                {
+                    "name": "emailAddress"
+                },
+                {
+                    "name": "phoneNumber"
+                }
+            ],
+            [
+                {
+                    "name": "gender"
+                },
+                false
+            ]
+        ],
+        "style": "default",
+        "label": ""
     },
     {
-        "label": "Abwesenheiten",
         "rows": [
-            [{"name": "cUrlaubTage"}, {"name": "cKrankTage"}]
-        ]
+            [
+                {
+                    "name": "cUrlaubTage"
+                },
+                {
+                    "name": "cKrankTage"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Abwesenheiten"
+    },
+    {
+        "rows": [
+            [
+                {
+                    "name": "cPersonalakte"
+                }
+            ]
+        ],
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "tabBreak": false,
+        "tabLabel": null,
+        "hidden": false,
+        "noteText": null,
+        "noteStyle": "info",
+        "customLabel": ""
     }
 ]

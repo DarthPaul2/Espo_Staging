@@ -677,8 +677,13 @@
             </div>
 
             <div class="kb-small-box">
-                <div class="kb-box-title">Kritische Forderungen</div>
-                <div class="text-muted small" style="margin-bottom: 8px;">
+                <div class="kb-box-title" style="display:flex; justify-content:space-between; align-items:center;">
+                    <span>Kritische Forderungen</span>
+                    <label style="font-weight:normal; font-size:12px; cursor:pointer; margin:0;">
+                        <input type="checkbox" data-name="topForderungenAlleToggle"> Alle offenen Rechnungen anzeigen
+                    </label>
+                </div>
+                <div class="text-muted small" style="margin-bottom: 8px;" data-name="topForderungenSubtitle">
                     Zuerst Forderungen ab 5.000 €, danach weitere kritische Forderungen nach Mahnstufe und Überfälligkeit.
                 </div>
 

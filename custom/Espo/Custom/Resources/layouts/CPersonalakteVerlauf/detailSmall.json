@@ -1,0 +1,29 @@
+[
+    {
+        "rows": [
+            [
+                {
+                    "name": "datum"
+                },
+                {
+                    "name": "art"
+                }
+            ],
+            [
+                {
+                    "name": "alterWert"
+                },
+                {
+                    "name": "neuerWert"
+                }
+            ],
+            [
+                {
+                    "name": "bemerkung"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": ""
+    }
+]

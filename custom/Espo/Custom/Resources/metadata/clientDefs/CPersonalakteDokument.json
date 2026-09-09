@@ -1,0 +1,14 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#3ac1fb",
+    "iconClass": "far fa-folder-closed",
+    "relationshipPanels": {
+        "personalakte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

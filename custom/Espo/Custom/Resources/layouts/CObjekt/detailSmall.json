@@ -24,7 +24,9 @@
                 {
                     "name": "cLand"
                 },
-                false
+                {
+                    "name": "cBundesland"
+                }
             ]
         ],
         "style": "default",

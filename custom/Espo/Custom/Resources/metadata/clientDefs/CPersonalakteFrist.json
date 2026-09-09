@@ -1,0 +1,14 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#33d3fc",
+    "iconClass": "fas fa-calendar-check",
+    "relationshipPanels": {
+        "personalakte": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

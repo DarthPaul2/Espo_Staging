@@ -1,0 +1,22 @@
+{
+    "labels": {
+        "Create CPersonalakteDokument": "Personalakte-Dokument erstellen"
+    },
+    "fields": {
+        "personalakte": "Personalakte",
+        "name": "Bezeichnung",
+        "dokumentart": "Dokumentart",
+        "dokumentdatum": "Datum",
+        "gueltigAb": "Gültig ab",
+        "gueltigBis": "Gültig bis",
+        "bemerkung": "Bemerkung",
+        "datei": "Datei",
+        "description": "Description"
+    },
+    "links": {
+        "personalakte": "Personalakte"
+    },
+    "presetFilters": {
+        "qualifikationen": "Qualifikationen"
+    }
+}

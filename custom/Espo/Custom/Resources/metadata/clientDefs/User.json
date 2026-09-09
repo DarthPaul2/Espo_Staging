@@ -1,4 +1,8 @@
 {
+    "recordViews": {
+        "detail": "custom:views/user/record/detail",
+        "list": "custom:views/user/record/list"
+    },
     "relationshipPanels": {
         "techniker": {
             "layout": null,
@@ -121,6 +125,14 @@
             "selectPrimaryFilterName": null
         },
         "stornierteEingangsrechnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "ticket": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "personalakte": {
             "layout": null,
             "selectPrimaryFilterName": null
         }

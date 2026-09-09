@@ -1,0 +1,20 @@
+[
+    {
+        "name": "datum",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "art",
+        "width": 30,
+        "align": "left"
+    },
+    {
+        "name": "alterWert",
+        "width": 20
+    },
+    {
+        "name": "neuerWert",
+        "align": "left"
+    }
+]

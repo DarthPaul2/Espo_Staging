@@ -13,6 +13,9 @@
             "min": 0,
             "tooltip": true,
             "isCustom": true
+        },
+        "cPersonalakte": {
+            "type": "linkOne"
         }
     },
     "links": {
@@ -169,6 +172,12 @@
             "foreign": "empfaenger",
             "entity": "CMitarbeiterkompassBericht",
             "audited": false,
+            "isCustom": true
+        },
+        "cPersonalakte": {
+            "type": "hasOne",
+            "foreign": "user",
+            "entity": "CPersonalakte",
             "isCustom": true
         }
     }

@@ -1,0 +1,5 @@
+{
+    "recordViews": {
+        "kanban": "custom:views/opportunity/record/kanban"
+    }
+}

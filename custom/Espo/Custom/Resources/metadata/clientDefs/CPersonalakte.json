@@ -1,0 +1,31 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#14caf8",
+    "iconClass": "far fa-address-card",
+    "relationshipPanels": {
+        "user": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "personalakteGehalts": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "personalakteDokuments": {
+            "layout": null,
+            "selectPrimaryFilterName": null,
+            "filterList": ["all", "qualifikationen"]
+        },
+        "personalakteVerlaufs": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "personalakteFrists": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}
