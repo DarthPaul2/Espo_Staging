@@ -1,0 +1,21 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "anforderungsTyp"}
+            ],
+            [
+                {"name": "bezugEntitaet"},
+                {"name": "bezugId"}
+            ],
+            [
+                {"name": "qualifikation"},
+                false
+            ],
+            [
+                {"name": "beschreibung", "fullWidth": true}
+            ]
+        ]
+    }
+]

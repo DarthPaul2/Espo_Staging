@@ -1,0 +1,14 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "inhaber"},
+                {"name": "rolle"}
+            ],
+            [
+                {"name": "status"},
+                false
+            ]
+        ]
+    }
+]

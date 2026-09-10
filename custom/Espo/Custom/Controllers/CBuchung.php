@@ -58,6 +58,7 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
 
         $kpi = $this->loadKpi($pdo, $whereDate, $sqlParams);
         $kpi['fakturiertBrutto'] = $this->loadFakturiertBrutto($pdo, $dateFrom, $dateTo);
+        $kpi['alleAusgestelltBrutto'] = $this->loadAlleAusgestelltBrutto($pdo, $dateFrom, $dateTo);
         $monthly = $this->loadMonthly($pdo, $whereDate, $sqlParams);
         $konten = $this->loadKonten($pdo, $whereDate, $sqlParams);
         $checks = $this->loadChecks($pdo, $whereDate, $sqlParams);
@@ -800,15 +801,22 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
 
     /**
      * Что это:
-     * Gesamtsumme aller ausgestellten Rechnungen (brutto) im Zeitraum.
+     * Gesamtsumme aller festgeschriebenen Rechnungen (brutto) im Zeitraum.
      *
      * Зачем:
-     * Zeigt im Cockpit wie viel im Zeitraum fakturiert wurde —
-     * unabhängig von Zahlungsstatus oder Buchungsstatus.
+     * Zeigt im Cockpit, wie viel im Zeitraum tatsächlich in der Buchhaltung
+     * verbucht wurde — konsistent mit den übrigen journalbasierten Kennzahlen
+     * (Umsatz netto, Offene Forderungen usw.), die ebenfalls nur
+     * buchhaltung_status = 'festgeschrieben' berücksichtigen.
+     *
+     * Bugfix (09.2026): Vorher wurden hier alle Rechnungen mit belegdatum im
+     * Zeitraum gezählt, auch nicht festgeschriebene Entwürfe. Dadurch zeigte
+     * "Fakturiert" eine andere (höhere) Grundlage als "Umsatz netto" und
+     * verwirrte die Geschäftsführung.
      */
     private function loadFakturiertBrutto(\PDO $pdo, ?string $dateFrom, ?string $dateTo): float
     {
-        $where = 'WHERE deleted = 0 AND ist_storniert = 0';
+        $where = "WHERE deleted = 0 AND ist_storniert = 0 AND buchhaltung_status = 'festgeschrieben'";
         $params = [];
 
         if ($dateFrom) {
@@ -817,6 +825,49 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         }
         if ($dateTo) {
             $where .= ' AND belegdatum <= :dateTo';
+            $params[':dateTo'] = $dateTo;
+        }
+
+        $sql = "SELECT ROUND(COALESCE(SUM(betrag_brutto), 0), 2) AS total FROM c_rechnung $where";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return (float) ($row['total'] ?? 0);
+    }
+
+    /**
+     * Что это:
+     * Gesamtsumme ALLER ausgestellten Rechnungen (brutto) im Zeitraum —
+     * unabhängig davon, ob sie bereits festgeschrieben sind oder nicht.
+     *
+     * Зачем:
+     * Viele Rechnungen haben bereits eine Rechnungsnummer und wurden an den
+     * Kunden verschickt, sind aber buchhalterisch noch nicht festgeschrieben
+     * (Status 'entwurf' oder 'freigabe'). "Fakturiert" (festgeschrieben)
+     * blendet diese aus. Diese Kennzahl soll der Geschäftsführung trotzdem
+     * zeigen, wie viel insgesamt an Kunden ausgestellt wurde.
+     *
+     * Da bei nicht festgeschriebenen Rechnungen belegdatum meist noch nicht
+     * gesetzt ist, wird hilfsweise created_at verwendet, damit diese
+     * Rechnungen überhaupt einem Zeitraum zugeordnet werden können.
+     */
+    private function loadAlleAusgestelltBrutto(\PDO $pdo, ?string $dateFrom, ?string $dateTo): float
+    {
+        $where = "
+            WHERE deleted = 0
+            AND ist_storniert = 0
+            AND rechnungsnummer IS NOT NULL
+            AND rechnungsnummer != ''
+        ";
+        $params = [];
+
+        if ($dateFrom) {
+            $where .= ' AND COALESCE(belegdatum, DATE(created_at)) >= :dateFrom';
+            $params[':dateFrom'] = $dateFrom;
+        }
+        if ($dateTo) {
+            $where .= ' AND COALESCE(belegdatum, DATE(created_at)) <= :dateTo';
             $params[':dateTo'] = $dateTo;
         }
 

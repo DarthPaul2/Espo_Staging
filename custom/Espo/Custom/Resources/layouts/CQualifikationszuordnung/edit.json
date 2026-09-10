@@ -1,0 +1,22 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                false
+            ],
+            [
+                {"name": "mitarbeiter"},
+                {"name": "qualifikation"}
+            ],
+            [
+                {"name": "gueltigVon"},
+                {"name": "gueltigBis"}
+            ],
+            [
+                {"name": "nachweisDokument"},
+                false
+            ]
+        ]
+    }
+]

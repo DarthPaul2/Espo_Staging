@@ -1,0 +1,24 @@
+{
+    "labels": {
+        "Create CMeilenstein": "Meilenstein erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "projekt": "Projekt",
+        "termin": "Termin",
+        "status": "Status",
+        "beschreibung": "Beschreibung (Detail)"
+    },
+    "options": {
+        "status": {
+            "": "-",
+            "geplant": "Geplant",
+            "erreicht": "Erreicht",
+            "verzoegert": "Verzögert"
+        }
+    },
+    "links": {
+        "projekt": "Projekt"
+    }
+}

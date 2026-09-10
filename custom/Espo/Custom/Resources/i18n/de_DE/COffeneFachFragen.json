@@ -1,0 +1,28 @@
+{
+    "labels": {
+        "Create COffeneFachFragen": "Klärungsbedarf Projekt 2030 erstellen"
+    },
+    "fields": {
+        "name": "Titel",
+        "description": "Beschreibung",
+        "frage": "Frage",
+        "kontext": "Kontext",
+        "antwort": "Antwort",
+        "status": "Status",
+        "quelle": "Quelle"
+    },
+    "tooltips": {
+        "frage": "Die konkrete offene Frage — verständlich formuliert, ohne dass Vorwissen aus einem Gespräch nötig ist.",
+        "kontext": "Pflichtfeld: wann/bei welcher Aufgabe die Frage aufkam, warum sie nicht selbst entschieden wurde, und ob/wie das Thema in den Grundlagendokumenten bereits (unvollständig) behandelt ist.",
+        "antwort": "Hier bitte die Antwort eintragen — der Status wechselt automatisch auf 'beantwortet'.",
+        "status": "'akzeptiert' setzen, sobald die Antwort final übernommen wurde — der Eintrag wird dann automatisch archiviert (aus der Liste entfernt, bleibt aber in der Datenbank/Historie erhalten).",
+        "quelle": "Verweis auf das konkrete Quelldokument (z. B. KLS-IT-SPEC-002_..._V1.1.docx, Abschnitt X)."
+    },
+    "options": {
+        "status": {
+            "offen": "Offen",
+            "beantwortet": "Beantwortet",
+            "akzeptiert": "Akzeptiert (wird archiviert)"
+        }
+    }
+}

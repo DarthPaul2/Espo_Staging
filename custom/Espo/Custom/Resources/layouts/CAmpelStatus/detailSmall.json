@@ -1,0 +1,14 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "zielEntitaet"},
+                {"name": "gesamtampel"}
+            ],
+            [
+                {"name": "zielStatus"},
+                {"name": "berechnetAm"}
+            ]
+        ]
+    }
+]

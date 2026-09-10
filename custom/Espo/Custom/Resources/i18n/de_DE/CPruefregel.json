@@ -1,0 +1,54 @@
+{
+    "labels": {
+        "Create CPruefregel": "Prüfregel erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "regelcode": "Regelcode",
+        "prozesscode": "Prozesscode",
+        "zielEntitaet": "Ziel-Entität",
+        "zielStatus": "Ziel-Status",
+        "statusFeld": "Status-Feld",
+        "kriteriumTyp": "Kriteriumstyp",
+        "teilampel": "Teilampel",
+        "pruefservice": "Prüfservice",
+        "feldOderBeziehung": "Feld oder Beziehung",
+        "operator": "Operator",
+        "erwarteterWert": "Erwarteter Wert",
+        "statuswechselBlockieren": "Statuswechsel blockieren",
+        "uebersteuerbar": "Übersteuerbar",
+        "uebersteuerungsRolle": "Übersteuerungsrolle",
+        "zustaendigeRolle": "Zuständige Rolle",
+        "aufgabenVorlage": "Aufgabenvorlage",
+        "eskalationsregel": "Eskalationsregel",
+        "meldungstext": "Meldungstext",
+        "gueltigVon": "Gültig von",
+        "gueltigBis": "Gültig bis",
+        "version": "Version"
+    },
+    "tooltips": {
+        "regelcode": "Menschenlesbare eindeutige ID der Regel, z. B. 'FREIGABE-RABATT-MARGE'.",
+        "prozesscode": "P-01..P-85 aus dem Prozesskatalog, freier Text (kein Link).",
+        "zielEntitaet": "Name der Espo-Entity, auf die die Regel wirkt, z. B. 'CAngebot'.",
+        "zielStatus": "Der Statuswert, der geprüft wird, z. B. 'freigegeben'.",
+        "statusFeld": "Welches Feld auf der Ziel-Entität den geprüften Status trägt (Standard: 'status'). Manche Entities haben mehrere Statusfelder, z. B. CRechnung.status vs. CRechnung.buchhaltungStatus.",
+        "kriteriumTyp": "MUST/EXTERNAL_MUST = harter Blocker, SHOULD/INFO = Warnung ohne Blockade.",
+        "teilampel": "Welche der 8 Teilampeln (Bereitschafts-Dimensionen) diese Regel beeinflusst.",
+        "pruefservice": "Welcher der 14 Prüfservices der RuleSet-Engine diese Regel auswertet.",
+        "feldOderBeziehung": "Welches Feld oder welche Relation auf der Ziel-Entität geprüft wird.",
+        "erwarteterWert": "Vergleichswert als Text — Typkonvertierung erfolgt im Prüfservice.",
+        "statuswechselBlockieren": "Ob eine Verletzung dieser Regel den Statuswechsel blockiert.",
+        "uebersteuerbar": "Bei kriteriumTyp=EXTERNAL_MUST immer false — wird serverseitig erzwungen.",
+        "uebersteuerungsRolle": "Nur relevant wenn 'Übersteuerbar' = true.",
+        "zustaendigeRolle": "Wer für die Behebung einer Regelverletzung zuständig ist.",
+        "aufgabenVorlage": "Vorlagentext für automatisch erzeugte Aufgabe bei Verstoß.",
+        "eskalationsregel": "Freitext-Beschreibung, in Phase 1 nicht ausführbar.",
+        "meldungstext": "Vorlage für die verständliche Fehlermeldung, Platzhalter wie {wert} erlaubt.",
+        "version": "Wird bei jeder inhaltlichen Änderung automatisch erhöht."
+    },
+    "links": {
+        "uebersteuerungsRolle": "Übersteuerungsrolle",
+        "zustaendigeRolle": "Zuständige Rolle"
+    }
+}

@@ -1,0 +1,5 @@
+[
+    {"name": "mitarbeiter"},
+    {"name": "qualifikation"},
+    {"name": "eigenerStatus", "width": 15}
+]

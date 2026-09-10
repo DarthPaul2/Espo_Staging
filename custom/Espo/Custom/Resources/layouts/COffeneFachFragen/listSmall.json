@@ -1,0 +1,13 @@
+[
+    {
+        "name": "name"
+    },
+    {
+        "name": "status",
+        "width": 15
+    },
+    {
+        "name": "createdAt",
+        "width": 20
+    }
+]

@@ -1,0 +1,26 @@
+{
+    "labels": {
+        "Create CRollenkatalog": "Rollenkatalog erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "rollencode": "Rollencode",
+        "aktiv": "Aktiv",
+        "uebergeordneteRolle": "Übergeordnete Rolle",
+        "untergeordneteRollen": "Untergeordnete Rollen"
+    },
+    "tooltips": {
+        "rollencode": "Format R-XX, z. B. R-01. Muss eindeutig sein.",
+        "aktiv": "Inaktive Rollen bleiben im Katalog sichtbar (Historie), werden aber in Auswahllisten ausgeblendet."
+    },
+    "links": {
+        "uebergeordneteRolle": "Übergeordnete Rolle",
+        "untergeordneteRollen": "Untergeordnete Rollen",
+        "cPruefregelnAlsUebersteuerungsRolle": "Prüfregeln (als Übersteuerungsrolle)",
+        "cPruefregelnAlsZustaendigeRolle": "Prüfregeln (als zuständige Rolle)",
+        "cFreigabenAlsAnfordernbeRolle": "Freigaben (als anfordernde Rolle)",
+        "cFreigabenAlsErforderlicheRolle": "Freigaben (als erforderliche Rolle)",
+        "cFreigabeschwellen": "Freigabeschwellen"
+    }
+}

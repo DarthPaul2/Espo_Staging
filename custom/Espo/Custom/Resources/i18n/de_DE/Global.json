@@ -18,7 +18,8 @@
         "CEingangsrechnung": "Eingangsbelege",
         "CEingangsrechnungsposition": "Eingangsbeleg-Positionen",
         "CTicket": "Ticket",
-        "CProzesshandbuch": "Prozesshandbücher"
+        "CProzesshandbuch": "Prozesshandbücher",
+        "CAmpelStatus": "AmpelStatus"
     },
     "Global": {
         "Today": "",

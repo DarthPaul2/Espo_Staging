@@ -1,0 +1,30 @@
+{
+    "labels": {
+        "Create CQualifikationszuordnung": "Qualifikationszuordnung erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "mitarbeiter": "Mitarbeiter",
+        "qualifikation": "Qualifikation",
+        "gueltigVon": "Gültig von",
+        "gueltigBis": "Gültig bis",
+        "nachweisDokument": "Nachweis-Dokument",
+        "eigenerStatus": "Status"
+    },
+    "tooltips": {
+        "gueltigBis": "Leer = unbefristet gültig.",
+        "eigenerStatus": "Automatisch berechnet aus Gültig-bis (Schwelle 30 Tage). Zeigt nur den Status dieser Qualifikation isoliert — der tatsächliche Status im Kontext eines konkreten Einsatzes (inkl. 'nicht erforderlich') wird vom Matching bestimmt."
+    },
+    "options": {
+        "eigenerStatus": {
+            "GUELTIG": "Gültig",
+            "LAEUFT_BALD_AB": "Läuft bald ab",
+            "ABGELAUFEN": "Abgelaufen"
+        }
+    },
+    "links": {
+        "mitarbeiter": "Mitarbeiter",
+        "qualifikation": "Qualifikation"
+    }
+}

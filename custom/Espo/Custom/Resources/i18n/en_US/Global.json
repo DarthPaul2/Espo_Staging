@@ -48,7 +48,20 @@
         "CPersonalakteGehalt": "Personalakte-Gehalt",
         "CPersonalakteDokument": "Personalakte-Dokument",
         "CPersonalakteVerlauf": "Personalakte-Verlauf",
-        "CPersonalakteFrist": "Personalakte-Frist"
+        "CPersonalakteFrist": "Personalakte-Frist",
+        "CRollenkatalog": "Rollenkatalog",
+        "CRollenzuordnung": "Rollenzuordnung",
+        "CPruefregel": "Pruefregel",
+        "CAmpelStatus": "AmpelStatus",
+        "CFreigabe": "Freigabe",
+        "CFreigabeSchwelle": "FreigabeSchwelle",
+        "COffeneFachFragen": "Klärungsbedarf Projekt 2030",
+        "CQualifikation": "Qualifikation",
+        "CQualifikationszuordnung": "Qualifikationszuordnung",
+        "CQualifikationsanforderung": "Qualifikationsanforderung",
+        "CProjekt": "Projekt",
+        "CProjektteamzuordnung": "Projektteamzuordnung",
+        "CMeilenstein": "Meilenstein"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -99,7 +112,20 @@
         "CPersonalakteGehalt": "Personalakte-Gehälter",
         "CPersonalakteDokument": "Personalakte-Dokumente",
         "CPersonalakteVerlauf": "Personalakte-Verläufe",
-        "CPersonalakteFrist": "Personalakte-Fristen"
+        "CPersonalakteFrist": "Personalakte-Fristen",
+        "CRollenkatalog": "Rollenkataloge",
+        "CRollenzuordnung": "Rollenzuordnungen",
+        "CPruefregel": "Pruefregeln",
+        "CAmpelStatus": "AmpelStatus",
+        "CFreigabe": "Freigaben",
+        "CFreigabeSchwelle": "FreigabeSchwellen",
+        "COffeneFachFragen": "Klärungsbedarfe Projekt 2030",
+        "CQualifikation": "Qualifikationen",
+        "CQualifikationszuordnung": "Qualifikationszuordnungen",
+        "CQualifikationsanforderung": "Qualifikationsanforderungen",
+        "CProjekt": "Projekte",
+        "CProjektteamzuordnung": "Projektteamzuordnungen",
+        "CMeilenstein": "Meilensteine"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

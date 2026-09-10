@@ -1,0 +1,8 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#fc8917",
+    "iconClass": "fas fa-hands-holding-circle"
+}

@@ -1,0 +1,18 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "status"}
+            ],
+            [
+                {"name": "projekt"},
+                {"name": "termin"}
+            ],
+            [
+                {"name": "beschreibung"},
+                false
+            ]
+        ]
+    }
+]

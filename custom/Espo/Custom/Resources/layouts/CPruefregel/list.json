@@ -1,0 +1,7 @@
+[
+    {"name": "regelcode"},
+    {"name": "zielEntitaet"},
+    {"name": "kriteriumTyp", "width": 12},
+    {"name": "teilampel", "width": 15},
+    {"name": "gueltigVon", "width": 10}
+]

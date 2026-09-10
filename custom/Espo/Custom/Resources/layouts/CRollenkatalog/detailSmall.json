@@ -1,0 +1,14 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "rollencode"}
+            ],
+            [
+                {"name": "aktiv"},
+                false
+            ]
+        ]
+    }
+]

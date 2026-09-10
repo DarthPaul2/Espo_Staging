@@ -1,0 +1,58 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                false
+            ],
+            [
+                {"name": "regelcode"},
+                {"name": "prozesscode"}
+            ],
+            [
+                {"name": "zielEntitaet"},
+                {"name": "zielStatus"}
+            ],
+            [
+                {"name": "statusFeld"},
+                false
+            ],
+            [
+                {"name": "kriteriumTyp"},
+                {"name": "teilampel"}
+            ],
+            [
+                {"name": "pruefservice"},
+                {"name": "feldOderBeziehung"}
+            ],
+            [
+                {"name": "operator"},
+                {"name": "erwarteterWert"}
+            ],
+            [
+                {"name": "statuswechselBlockieren"},
+                {"name": "uebersteuerbar"}
+            ],
+            [
+                {"name": "uebersteuerungsRolle"},
+                {"name": "zustaendigeRolle"}
+            ],
+            [
+                {"name": "gueltigVon"},
+                {"name": "gueltigBis"}
+            ],
+            [
+                {"name": "meldungstext", "fullWidth": true}
+            ],
+            [
+                {"name": "aufgabenVorlage", "fullWidth": true}
+            ],
+            [
+                {"name": "eskalationsregel", "fullWidth": true}
+            ],
+            [
+                {"name": "description", "fullWidth": true}
+            ]
+        ]
+    }
+]

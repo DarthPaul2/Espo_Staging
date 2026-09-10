@@ -1,0 +1,5 @@
+[
+    {"name": "name"},
+    {"name": "termin", "width": 12},
+    {"name": "status", "width": 15}
+]

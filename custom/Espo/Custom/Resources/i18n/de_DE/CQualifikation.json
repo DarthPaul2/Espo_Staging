@@ -1,0 +1,37 @@
+{
+    "labels": {
+        "Create CQualifikation": "Qualifikation erstellen"
+    },
+    "fields": {
+        "name": "Bezeichnung",
+        "description": "Beschreibung",
+        "typ": "Typ",
+        "aussteller": "Aussteller/Hersteller",
+        "nachweisArt": "Nachweis-Art",
+        "beschreibung": "Details"
+    },
+    "tooltips": {
+        "typ": "Kategorie der Qualifikation (aus 8. Dokument, Abschnitt 5).",
+        "aussteller": "Wer die Qualifikation ausstellt/anerkennt (Hersteller, Kammer, interne Stelle etc.).",
+        "nachweisArt": "Wie die Qualifikation nachgewiesen wird."
+    },
+    "options": {
+        "typ": {
+            "Herstellerfreigabe": "Herstellerfreigabe",
+            "Fachkunde": "Fachkunde",
+            "Schulung": "Schulung",
+            "Sicherheits-Kundenanforderung": "Sicherheits-/Kundenanforderung",
+            "Sonstige": "Sonstige"
+        },
+        "nachweisArt": {
+            "Zertifikat": "Zertifikat",
+            "Schulungsnachweis": "Schulungsnachweis",
+            "Bescheinigung": "Bescheinigung",
+            "Sonstige": "Sonstige"
+        }
+    },
+    "links": {
+        "cQualifikationszuordnungen": "Qualifikationszuordnungen",
+        "cQualifikationsanforderungen": "Qualifikationsanforderungen"
+    }
+}

@@ -7,6 +7,7 @@
         "einheit": "Einheit",
         "preis": "Preis",
         "einkaufspreis": "Einkaufspreis",
+        "margeProzent": "Marge (%)",
         "steuer": "Steuer",
         "rabatt": "Rabatt",
         "gesamt": "Gesamt",
@@ -39,6 +40,7 @@
         }
     },
     "tooltips": {
-        "positionsNummerHinweis": "Für die Zwischensumme eines Abschnitts verwenden Sie bitte folgende Nummerierung:\nAbschnitt 1 → 1Z\nAbschnitt 2 → 2Z\nAbschnitt 3 → 3Z\nusw.“"
+        "positionsNummerHinweis": "Für die Zwischensumme eines Abschnitts verwenden Sie bitte folgende Nummerierung:\nAbschnitt 1 → 1Z\nAbschnitt 2 → 2Z\nAbschnitt 3 → 3Z\nusw.“",
+        "margeProzent": "Automatisch berechnet aus (Preis - Einkaufspreis) / Preis. Grundlage für die Marge-Ampel (T4-08)."
     }
 }

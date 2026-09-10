@@ -22,11 +22,15 @@
         "cZahlungs": "Zahlungs",
         "cStornierteRechnungen": "Stornierte Rechnungen",
         "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen",
-        "cPersonalakte": "Personalakte"
+        "cPersonalakte": "Personalakte",
+        "fachbereich": "Fachbereich",
+        "standort": "Standort"
     },
     "tooltips": {
         "cUrlaubTage": "Summe der Urlaubs-Werktage (Mo-Fr, Typ 'U' in Abwesenheiten) im laufenden Kalenderjahr. Wird automatisch beim Speichern/Löschen einer Abwesenheit neu berechnet.",
-        "cKrankTage": "Summe der Krankheitstage (Typ 'K' in Abwesenheiten) im laufenden Kalenderjahr. Wird automatisch beim Speichern/Löschen einer Abwesenheit neu berechnet."
+        "cKrankTage": "Summe der Krankheitstage (Typ 'K' in Abwesenheiten) im laufenden Kalenderjahr. Wird automatisch beim Speichern/Löschen einer Abwesenheit neu berechnet.",
+        "fachbereich": "Techniker-Spezialisierung, mehrfach wählbar. Getrennt von Rolle — siehe Organisationshandbuch Abschnitt 6.",
+        "standort": "Basis-Standort des Mitarbeiters. Bei aktuell einem Firmenstandort niedrige Priorität, aber vorgesehen für künftiges Wachstum."
     },
     "links": {
         "cAbwesenheits": "Abwesenheiten",
@@ -50,6 +54,13 @@
         "cZahlungs": "Zahlungs",
         "cStornierteRechnungen": "Stornierte Rechnungen",
         "cStornierteEingangsrechnungen": "Stornierte Eingangsrechnungen",
-        "cPersonalakte": "Personalakte"
+        "cPersonalakte": "Personalakte",
+        "cRollenzuordnungenAlsInhaber": "Rollenzuordnungen (als Inhaber)",
+        "cRollenzuordnungenAlsVertreter": "Rollenzuordnungen (als Vertreter)",
+        "cRollenzuordnungenAlsEskalation": "Rollenzuordnungen (als Eskalation)",
+        "cFreigabenAlsFreigeber": "Freigaben (als Freigeber)",
+        "cQualifikationszuordnungen": "Qualifikationen",
+        "projekteAlsProjektleitung": "Projekte (als Projektleitung)",
+        "projektteamzuordnungen": "Projektteamzuordnungen"
     }
 }

@@ -74,9 +74,27 @@
             "maxLength": 100,
             "options": [],
             "isCustom": true
+        },
+        "ownerRolle": {
+            "type": "link",
+            "isCustom": true,
+            "tooltip": true
+        },
+        "eskalationsstufe": {
+            "type": "enum",
+            "options": ["keine", "Stufe1", "Stufe2"],
+            "default": "keine",
+            "isCustom": true,
+            "tooltip": true
         }
     },
     "links": {
+        "ownerRolle": {
+            "type": "belongsTo",
+            "entity": "CRollenzuordnung",
+            "foreign": "tasksAlsOwnerRolle",
+            "isCustom": true
+        },
         "cWartung": {
             "type": "belongsTo",
             "foreign": "tasks",

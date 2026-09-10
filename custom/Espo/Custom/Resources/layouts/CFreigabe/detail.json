@@ -1,0 +1,43 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "status"}
+            ],
+            [
+                {"name": "freigabeArt"},
+                {"name": "betrag"}
+            ],
+            [
+                {"name": "bezugEntitaet"},
+                {"name": "bezugId"}
+            ],
+            [
+                {"name": "budget"},
+                {"name": "abweichungProzent"}
+            ],
+            [
+                {"name": "abweichungBetrag"},
+                {"name": "risikostufe"}
+            ],
+            [
+                {"name": "risikokategorie", "fullWidth": true}
+            ],
+            [
+                {"name": "anfordernbeRolle"},
+                {"name": "erforderlicheRolle"}
+            ],
+            [
+                {"name": "freigeberUser"},
+                {"name": "entscheidungAm"}
+            ],
+            [
+                {"name": "entscheidungsgrund", "fullWidth": true}
+            ],
+            [
+                {"name": "description", "fullWidth": true}
+            ]
+        ]
+    }
+]

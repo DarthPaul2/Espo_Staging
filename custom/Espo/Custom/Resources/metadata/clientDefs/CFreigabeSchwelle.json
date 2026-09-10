@@ -1,0 +1,8 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#e48a06",
+    "iconClass": "fas fa-file-waveform"
+}

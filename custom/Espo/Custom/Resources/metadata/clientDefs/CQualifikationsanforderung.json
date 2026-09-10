@@ -1,0 +1,8 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#dd820b",
+    "iconClass": "fas fa-arrow-up-z-a"
+}

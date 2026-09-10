@@ -1,0 +1,7 @@
+[
+    {"name": "vorgangsart"},
+    {"name": "betragVon", "width": 12},
+    {"name": "betragBis", "width": 12},
+    {"name": "erforderlicheRolle"},
+    {"name": "aktiv", "width": 8}
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "status"}
+            ],
+            [
+                {"name": "frage", "fullWidth": true}
+            ],
+            [
+                {"name": "kontext", "fullWidth": true}
+            ],
+            [
+                {"name": "antwort", "fullWidth": true}
+            ],
+            [
+                {"name": "quelle"},
+                false
+            ]
+        ]
+    }
+]

@@ -16,9 +16,71 @@
         },
         "cPersonalakte": {
             "type": "linkOne"
+        },
+        "fachbereich": {
+            "type": "multiEnum",
+            "options": ["BMA", "EMA", "Video", "Zutritt", "IT"],
+            "isCustom": true,
+            "tooltip": true
+        },
+        "standort": {
+            "type": "varchar",
+            "maxLength": 100,
+            "default": "Hauptbüro",
+            "isCustom": true,
+            "tooltip": true
         }
     },
     "links": {
+        "cRollenzuordnungenAlsInhaber": {
+            "type": "hasMany",
+            "foreign": "inhaber",
+            "entity": "CRollenzuordnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cRollenzuordnungenAlsVertreter": {
+            "type": "hasMany",
+            "foreign": "vertreter",
+            "entity": "CRollenzuordnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cRollenzuordnungenAlsEskalation": {
+            "type": "hasMany",
+            "foreign": "zweiteEskalation",
+            "entity": "CRollenzuordnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cFreigabenAlsFreigeber": {
+            "type": "hasMany",
+            "foreign": "freigeberUser",
+            "entity": "CFreigabe",
+            "audited": false,
+            "isCustom": true
+        },
+        "cQualifikationszuordnungen": {
+            "type": "hasMany",
+            "foreign": "mitarbeiter",
+            "entity": "CQualifikationszuordnung",
+            "audited": false,
+            "isCustom": true
+        },
+        "projekteAlsProjektleitung": {
+            "type": "hasMany",
+            "foreign": "projektleitung",
+            "entity": "CProjekt",
+            "audited": false,
+            "isCustom": true
+        },
+        "projektteamzuordnungen": {
+            "type": "hasMany",
+            "foreign": "mitarbeiter",
+            "entity": "CProjektteamzuordnung",
+            "audited": false,
+            "isCustom": true
+        },
         "cAbwesenheits": {
             "type": "hasMany",
             "foreign": "assignedUser",

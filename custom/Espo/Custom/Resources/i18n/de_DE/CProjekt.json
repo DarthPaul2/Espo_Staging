@@ -1,0 +1,68 @@
+{
+    "labels": {
+        "Create CProjekt": "Projekt erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "auftrag": "Auftrag",
+        "projektleitung": "Projektleitung",
+        "budgetGeplant": "Budget (geplant)",
+        "budgetIst": "Budget (Ist)",
+        "stundenGeplant": "Stunden (geplant)",
+        "stundenIst": "Stunden (Ist)",
+        "risiken": "Risiken",
+        "einsatzTermin": "Einsatztermin",
+        "terminBestaetigt": "Termin bestätigt",
+        "technischeAuftragspruefungOk": "Technische Auftragsprüfung OK",
+        "technikerVerfuegbar": "Techniker verfügbar",
+        "technikerQualifikationStatus": "Techniker-Qualifikationsstatus",
+        "materialVerfuegbarkeitProzent": "Material verfügbar (%)",
+        "revisionsplanAktuell": "Revisionsplan aktuell",
+        "kundenzugangBestaetigt": "Kundenzugang bestätigt",
+        "status": "Status"
+    },
+    "tooltips": {
+        "auftrag": "Der zugehörige Auftrag. Ein Auftrag kann mehrere Projekte haben.",
+        "projektleitung": "Verantwortliche Projektleitung. Kriterium 'Projektleitung zugewiesen'.",
+        "budgetGeplant": "Geplantes Budget. In Phase 7 nur Datenfeld, keine Prüflogik.",
+        "budgetIst": "Tatsächlich verbrauchtes Budget. In Phase 7 nur Datenfeld, keine Prüflogik.",
+        "stundenGeplant": "Geplante Stunden. In Phase 7 nur Datenfeld, keine Prüflogik.",
+        "stundenIst": "Tatsächlich verbrauchte Stunden. In Phase 7 nur Datenfeld, keine Prüflogik.",
+        "einsatzTermin": "Basis für die Verfügbarkeitsprüfung der Techniker.",
+        "terminBestaetigt": "Kriterium 'Termin bestätigt' (MUST).",
+        "technischeAuftragspruefungOk": "Kriterium 'Technische Auftragsprüfung' (MUST, P-09).",
+        "technikerVerfuegbar": "Automatisch berechnet: sind alle zugeordneten Teammitglieder zum Einsatztermin verfügbar?",
+        "technikerQualifikationStatus": "Automatisch berechnet: schlechtester Qualifikationsstatus über alle Teammitglieder und Anforderungen.",
+        "materialVerfuegbarkeitProzent": "Manuell erfasst. Kriterium 'Material' (SHOULD, blockiert nicht).",
+        "revisionsplanAktuell": "Kriterium 'Revisionsplan aktuell' (MUST).",
+        "kundenzugangBestaetigt": "Kriterium 'Kundenzugang bestätigt' (MUST)."
+    },
+    "options": {
+        "technikerVerfuegbar": {
+            "": "-",
+            "ja": "Ja",
+            "nein": "Nein"
+        },
+        "technikerQualifikationStatus": {
+            "": "-",
+            "GUELTIG": "Gültig",
+            "LAEUFT_BALD_AB": "Läuft bald ab",
+            "ABGELAUFEN": "Abgelaufen",
+            "FEHLT": "Fehlt"
+        },
+        "status": {
+            "": "-",
+            "in_vorbereitung": "In Vorbereitung",
+            "einsatzbereit": "Einsatzbereit"
+        }
+    },
+    "links": {
+        "auftrag": "Auftrag",
+        "projektleitung": "Projektleitung",
+        "projektteamzuordnungen": "Projektteamzuordnungen",
+        "meilensteine": "Meilensteine",
+        "qualifikationsanforderungen": "Qualifikationsanforderungen",
+        "ampelstatuses": "Ampelstatus"
+    }
+}

@@ -84,6 +84,12 @@
             "type": "float",
             "isCustom": true
         },
+        "margeProzent": {
+            "type": "float",
+            "readOnly": true,
+            "isCustom": true,
+            "tooltip": true
+        },
         "steuer": {
             "type": "varchar",
             "maxLength": 100,

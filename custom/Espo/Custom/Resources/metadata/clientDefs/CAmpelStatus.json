@@ -1,0 +1,9 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#f98b0f",
+    "iconClass": "fas fa-traffic-light",
+    "kanbanViewMode": false
+}

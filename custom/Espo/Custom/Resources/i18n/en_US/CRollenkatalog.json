@@ -1,0 +1,13 @@
+{
+    "fields": {
+        "rollenkatalogParent": "Rollenkatalog Parent",
+        "rollenkatalogs": "Rollenkatalogs"
+    },
+    "links": {
+        "rollenkatalogParent": "Rollenkatalog Parent",
+        "rollenkatalogs": "Rollenkatalogs"
+    },
+    "labels": {
+        "Create CRollenkatalog": "Create Rollenkatalog"
+    }
+}

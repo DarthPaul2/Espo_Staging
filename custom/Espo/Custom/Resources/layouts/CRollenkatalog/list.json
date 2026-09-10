@@ -1,0 +1,26 @@
+[
+    {
+        "name": "rollencode",
+        "width": 10,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "name",
+        "width": 50,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "uebergeordneteRolle",
+        "width": 16
+    },
+    {
+        "name": "description",
+        "width": 16
+    },
+    {
+        "name": "aktiv",
+        "width": 10
+    }
+]

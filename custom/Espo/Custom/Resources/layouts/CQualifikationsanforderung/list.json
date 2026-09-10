@@ -1,0 +1,5 @@
+[
+    {"name": "bezugEntitaet"},
+    {"name": "qualifikation"},
+    {"name": "anforderungsTyp", "width": 15}
+]

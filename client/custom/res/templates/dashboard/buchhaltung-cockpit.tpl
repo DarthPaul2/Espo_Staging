@@ -394,6 +394,42 @@
             flex: 1 1 auto;
         }
 
+        .kb-cockpit .kb-alle-ausgestellt-box {
+            flex: 0 0 auto;
+            width: 260px;
+            padding: 14px 20px;
+            border: 1px solid #fde68a;
+            border-left: 7px solid #d97706;
+            border-right: 7px solid #d97706;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #fffbeb 0%, #ffffff 100%);
+            box-shadow: 0 3px 12px rgba(217, 119, 6, 0.12);
+            text-align: center;
+        }
+
+        .kb-cockpit .kb-alle-ausgestellt-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .kb-cockpit .kb-alle-ausgestellt-value {
+            font-size: 26px;
+            line-height: 1.1;
+            font-weight: 800;
+            color: #b45309;
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+
+        .kb-cockpit .kb-alle-ausgestellt-formula {
+            font-size: 11px;
+            color: #4b5563;
+        }
+
 
         /* Что это:
         Визуально отделяет operative Hinweise от periodischen Kennzahlen.
@@ -537,7 +573,12 @@
             <div class="kb-fakturiert-box">
                 <div class="kb-fakturiert-label">Fakturiert (brutto)</div>
                 <div class="kb-fakturiert-value" data-kpi="fakturiert">0,00 €</div>
-                <div class="kb-fakturiert-formula">Alle Rechnungen im Zeitraum</div>
+                <div class="kb-fakturiert-formula">Nur festgeschriebene Rechnungen</div>
+            </div>
+            <div class="kb-alle-ausgestellt-box">
+                <div class="kb-alle-ausgestellt-label">Alle ausgestellten Rechnungen (brutto)</div>
+                <div class="kb-alle-ausgestellt-value" data-kpi="alle-ausgestellt">0,00 €</div>
+                <div class="kb-alle-ausgestellt-formula">Unabhängig davon, ob festgeschrieben oder nicht</div>
             </div>
             <div class="kb-expected-liquidity-box">
                 <div class="kb-expected-liquidity-label">Liquiditätsbild</div>

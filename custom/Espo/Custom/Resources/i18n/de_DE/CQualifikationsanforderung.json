@@ -1,0 +1,31 @@
+{
+    "labels": {
+        "Create CQualifikationsanforderung": "Qualifikationsanforderung erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "bezugEntitaet": "Bezug-Entität",
+        "bezugId": "Bezug-ID",
+        "qualifikation": "Benötigte Qualifikation",
+        "anforderungsTyp": "Anforderungstyp",
+        "beschreibung": "Details",
+        "projekt": "Projekt"
+    },
+    "tooltips": {
+        "bezugEntitaet": "Entity-Typ des Auftrags/Vorgangs, für den diese Qualifikation benötigt wird (z. B. CAuftrag).",
+        "bezugId": "ID des Auftrags/Vorgangs.",
+        "anforderungsTyp": "MUST/EXTERNAL_MUST = fehlende Qualifikation blockiert (EXTERNAL_MUST auch bei internem Ablauf hart). SHOULD = nur Warnung."
+    },
+    "options": {
+        "anforderungsTyp": {
+            "MUST": "MUST",
+            "EXTERNAL_MUST": "EXTERNAL_MUST (gesetzlich/behördlich/Hersteller/Kunde)",
+            "SHOULD": "SHOULD"
+        }
+    },
+    "links": {
+        "qualifikation": "Benötigte Qualifikation",
+        "projekt": "Projekt"
+    }
+}

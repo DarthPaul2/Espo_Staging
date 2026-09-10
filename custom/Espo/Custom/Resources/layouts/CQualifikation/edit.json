@@ -1,0 +1,17 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "typ"}
+            ],
+            [
+                {"name": "aussteller"},
+                {"name": "nachweisArt"}
+            ],
+            [
+                {"name": "beschreibung", "fullWidth": true}
+            ]
+        ]
+    }
+]

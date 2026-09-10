@@ -1,0 +1,5 @@
+[
+    {"name": "rollencode", "width": 12},
+    {"name": "name"},
+    {"name": "aktiv", "width": 10}
+]

@@ -1,0 +1,44 @@
+{
+    "labels": {
+        "Create CFreigabe": "Freigabe erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "freigabeArt": "Freigabeart",
+        "bezugEntitaet": "Bezug-Entität",
+        "bezugId": "Bezug-ID",
+        "betrag": "Betrag",
+        "budget": "Budget",
+        "abweichungProzent": "Abweichung (%)",
+        "abweichungBetrag": "Abweichung (Betrag)",
+        "risikostufe": "Risikostufe",
+        "risikokategorie": "Risikokategorie",
+        "anfordernbeRolle": "Anfordernde Rolle",
+        "erforderlicheRolle": "Erforderliche Rolle",
+        "freigeberUser": "Freigeber",
+        "status": "Status",
+        "entscheidungsgrund": "Entscheidungsgrund",
+        "entscheidungAm": "Entscheidung am"
+    },
+    "tooltips": {
+        "bezugEntitaet": "Entity-Typ des Datensatzes, auf den sich diese Freigabe bezieht (z. B. CAngebot).",
+        "bezugId": "ID des Datensatzes, auf den sich diese Freigabe bezieht.",
+        "risikokategorie": "Wenn gesetzt, wird IMMER R-01 Geschäftsführung als erforderliche Rolle erzwungen — unabhängig vom Betrag (Risiko-Override-Regel, Pflichtenheft §15).",
+        "erforderlicheRolle": "Automatisch aus der Kompetenzmatrix (CFreigabeSchwelle) ermittelt, außer manuell überschrieben.",
+        "freigeberUser": "Aktueller Inhaber/Vertreter der erforderlichen Rolle."
+    },
+    "options": {
+        "status": {
+            "offen": "Offen",
+            "freigegeben": "Freigegeben",
+            "abgelehnt": "Abgelehnt",
+            "zurückgestellt": "Zurückgestellt"
+        }
+    },
+    "links": {
+        "anfordernbeRolle": "Anfordernde Rolle",
+        "erforderlicheRolle": "Erforderliche Rolle",
+        "freigeberUser": "Freigeber"
+    }
+}

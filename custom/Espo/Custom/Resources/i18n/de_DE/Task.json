@@ -6,19 +6,29 @@
         "cRepeatUnit": "Wiederholen: Einheit",
         "cRepeatFrom": "Wiederholen ab",
         "cRepeatTo": "Wiederholen bis",
-        "cRepeatSeriesId": "Serien-ID"
+        "cRepeatSeriesId": "Serien-ID",
+        "ownerRolle": "Owner-Rolle",
+        "eskalationsstufe": "Eskalationsstufe"
     },
     "links": {
-        "cWartung": "Wartung"
+        "cWartung": "Wartung",
+        "ownerRolle": "Owner-Rolle"
     },
     "options": {
         "cRepeatUnit": {
             "day": "Tage",
             "week": "Wochen",
             "month": "Monate"
+        },
+        "eskalationsstufe": {
+            "keine": "keine",
+            "Stufe1": "Stufe 1",
+            "Stufe2": "Stufe 2"
         }
     },
     "tooltips": {
-        "cRepeatEvery": "Gibt an, nach wie vielen Tagen, Wochen oder Monaten die Aufgabe erneut erstellt wird.\nBeispiel: Intervall = 1, Einheit = Woche → jede Woche.\nBeispiel: Intervall = 2, Einheit = Tage → jeden zweiten Tag."
+        "cRepeatEvery": "Gibt an, nach wie vielen Tagen, Wochen oder Monaten die Aufgabe erneut erstellt wird.\nBeispiel: Intervall = 1, Einheit = Woche → jede Woche.\nBeispiel: Intervall = 2, Einheit = Tage → jeden zweiten Tag.",
+        "ownerRolle": "Fachlich zuständige Rollenzuordnung für diese Aufgabe (nicht identisch mit 'Zugewiesener Benutzer').",
+        "eskalationsstufe": "Aktuelle Eskalationsstufe bei Fristüberschreitung. Wird automatisch von der Benachrichtigungs-Engine gesetzt (T4-14, noch nicht gebaut)."
     }
 }

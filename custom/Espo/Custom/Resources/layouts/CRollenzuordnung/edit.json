@@ -1,0 +1,29 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                false
+            ],
+            [
+                {"name": "inhaber"},
+                {"name": "rolle"}
+            ],
+            [
+                {"name": "vertreter"},
+                {"name": "zweiteEskalation"}
+            ],
+            [
+                {"name": "gueltigVon"},
+                {"name": "gueltigBis"}
+            ],
+            [
+                {"name": "status"},
+                false
+            ],
+            [
+                {"name": "description", "fullWidth": true}
+            ]
+        ]
+    }
+]

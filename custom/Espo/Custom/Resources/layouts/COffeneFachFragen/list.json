@@ -1,0 +1,23 @@
+[
+    {
+        "name": "name",
+        "width": 30,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "description",
+        "width": 40,
+        "align": "left"
+    },
+    {
+        "name": "status",
+        "width": 15,
+        "noLabel": true,
+        "align": "left"
+    },
+    {
+        "name": "createdAt",
+        "width": 15
+    }
+]

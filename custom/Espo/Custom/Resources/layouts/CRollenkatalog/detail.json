@@ -1,0 +1,17 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "rollencode"}
+            ],
+            [
+                {"name": "aktiv"},
+                {"name": "uebergeordneteRolle"}
+            ],
+            [
+                {"name": "description", "fullWidth": true}
+            ]
+        ]
+    }
+]

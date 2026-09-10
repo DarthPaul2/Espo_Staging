@@ -1,0 +1,6 @@
+[
+    {"name": "name"},
+    {"name": "auftrag"},
+    {"name": "status", "width": 15},
+    {"name": "einsatzTermin", "width": 12}
+]

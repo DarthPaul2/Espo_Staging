@@ -1,0 +1,22 @@
+{
+    "labels": {
+        "Create CFreigabeSchwelle": "Freigabeschwelle erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "vorgangsart": "Vorgangsart",
+        "projektbezogen": "Projektbezogen",
+        "betragVon": "Betrag von",
+        "betragBis": "Betrag bis",
+        "erforderlicheRolle": "Erforderliche Rolle",
+        "beschreibung": "Beschreibung (Originalwortlaut)",
+        "aktiv": "Aktiv"
+    },
+    "tooltips": {
+        "projektbezogen": "Leer = gilt unabhängig davon, ob projektbezogen oder nicht.",
+        "betragVon": "Untergrenze in Euro, leer = keine Untergrenze.",
+        "betragBis": "Obergrenze in Euro, leer = keine Obergrenze.",
+        "beschreibung": "Originalwortlaut aus der Kompetenzmatrix (8. Dokument, Abschnitt 2), zur Nachvollziehbarkeit."
+    }
+}

@@ -1,0 +1,7 @@
+[
+    {"name": "zielEntitaet"},
+    {"name": "zielId"},
+    {"name": "zielStatus"},
+    {"name": "gesamtampel", "width": 12},
+    {"name": "berechnetAm", "width": 15}
+]

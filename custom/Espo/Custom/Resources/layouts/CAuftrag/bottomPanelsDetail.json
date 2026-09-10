@@ -23,5 +23,8 @@
         "style": "default",
         "sticked": false,
         "index": 3
+    },
+    "projekte": {
+        "index": 4
     }
 }

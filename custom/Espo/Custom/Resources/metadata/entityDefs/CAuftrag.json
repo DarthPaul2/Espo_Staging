@@ -305,6 +305,13 @@
             "entity": "CBrief",
             "audited": false,
             "isCustom": true
+        },
+        "projekte": {
+            "type": "hasMany",
+            "foreign": "auftrag",
+            "entity": "CProjekt",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

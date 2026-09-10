@@ -7,5 +7,41 @@
     },
     "cFormulars": {
         "index": 0
+    },
+    "_tabBreak_rollen": {
+        "index": 1,
+        "tabBreak": true,
+        "tabLabel": "Rollen"
+    },
+    "cRollenzuordnungenAlsInhaber": {
+        "index": 2
+    },
+    "cRollenzuordnungenAlsVertreter": {
+        "index": 3
+    },
+    "cRollenzuordnungenAlsEskalation": {
+        "index": 4
+    },
+    "_tabBreak_projekte": {
+        "index": 5,
+        "tabBreak": true,
+        "tabLabel": "Projekte & Qualifikation"
+    },
+    "cQualifikationszuordnungen": {
+        "index": 6
+    },
+    "projekteAlsProjektleitung": {
+        "index": 7
+    },
+    "projektteamzuordnungen": {
+        "index": 8
+    },
+    "_tabBreak_freigaben": {
+        "index": 9,
+        "tabBreak": true,
+        "tabLabel": "Freigaben"
+    },
+    "cFreigabenAlsFreigeber": {
+        "index": 10
     }
 }

@@ -1,0 +1,42 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "status"}
+            ],
+            [
+                {"name": "auftrag"},
+                {"name": "projektleitung"}
+            ],
+            [
+                {"name": "einsatzTermin"},
+                {"name": "terminBestaetigt"}
+            ],
+            [
+                {"name": "technischeAuftragspruefungOk"},
+                {"name": "technikerVerfuegbar"}
+            ],
+            [
+                {"name": "technikerQualifikationStatus"},
+                {"name": "materialVerfuegbarkeitProzent"}
+            ],
+            [
+                {"name": "revisionsplanAktuell"},
+                {"name": "kundenzugangBestaetigt"}
+            ],
+            [
+                {"name": "budgetGeplant"},
+                {"name": "budgetIst"}
+            ],
+            [
+                {"name": "stundenGeplant"},
+                {"name": "stundenIst"}
+            ],
+            [
+                {"name": "risiken"},
+                false
+            ]
+        ]
+    }
+]

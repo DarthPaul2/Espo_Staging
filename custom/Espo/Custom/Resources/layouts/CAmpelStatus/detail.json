@@ -1,0 +1,41 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                false
+            ],
+            [
+                {"name": "zielEntitaet"},
+                {"name": "zielId"}
+            ],
+            [
+                {"name": "zielStatus"},
+                {"name": "gesamtampel"}
+            ],
+            [
+                {"name": "technicalReadiness"},
+                {"name": "personnelReadiness"}
+            ],
+            [
+                {"name": "qualificationReadiness"},
+                {"name": "materialReadiness"}
+            ],
+            [
+                {"name": "documentationReadiness"},
+                {"name": "customerReadiness"}
+            ],
+            [
+                {"name": "commercialReadiness"},
+                {"name": "safetyReadiness"}
+            ],
+            [
+                {"name": "berechnetAm"},
+                {"name": "ruleSetVersion"}
+            ],
+            [
+                {"name": "begruendung", "fullWidth": true}
+            ]
+        ]
+    }
+]

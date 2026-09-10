@@ -1,0 +1,7 @@
+[
+    {"name": "name"},
+    {"name": "freigabeArt"},
+    {"name": "betrag", "width": 12},
+    {"name": "status", "width": 12},
+    {"name": "erforderlicheRolle", "width": 15}
+]

@@ -1,0 +1,19 @@
+{
+    "labels": {
+        "Create CProjektteamzuordnung": "Projektteamzuordnung erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "projekt": "Projekt",
+        "mitarbeiter": "Mitarbeiter",
+        "teamrolle": "Teamrolle"
+    },
+    "tooltips": {
+        "teamrolle": "Freitext, z. B. Obermonteur, Monteur, Azubi. Keine feste Werteliste."
+    },
+    "links": {
+        "projekt": "Projekt",
+        "mitarbeiter": "Mitarbeiter"
+    }
+}

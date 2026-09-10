@@ -1,0 +1,173 @@
+{
+    "fields": {
+        "name": {
+            "type": "varchar",
+            "required": true,
+            "pattern": "$noBadCharacters"
+        },
+        "description": {
+            "type": "text"
+        },
+        "inhaber": {
+            "type": "link",
+            "required": true
+        },
+        "rolle": {
+            "type": "link",
+            "required": true
+        },
+        "vertreter": {
+            "type": "link"
+        },
+        "zweiteEskalation": {
+            "type": "link"
+        },
+        "gueltigVon": {
+            "type": "date",
+            "required": true
+        },
+        "gueltigBis": {
+            "type": "date"
+        },
+        "status": {
+            "type": "enum",
+            "options": ["aktiv", "inaktiv"],
+            "default": "aktiv",
+            "required": true,
+            "style": {
+                "aktiv": "success",
+                "inaktiv": "default"
+            }
+        },
+        "createdAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "modifiedAt": {
+            "type": "datetime",
+            "readOnly": true
+        },
+        "createdBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "modifiedBy": {
+            "type": "link",
+            "readOnly": true,
+            "view": "views/fields/user"
+        },
+        "assignedUser": {
+            "type": "link",
+            "required": false,
+            "view": "views/fields/assigned-user"
+        },
+        "teams": {
+            "type": "linkMultiple",
+            "view": "views/fields/teams"
+        }
+    },
+    "links": {
+        "createdBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "modifiedBy": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "assignedUser": {
+            "type": "belongsTo",
+            "entity": "User"
+        },
+        "teams": {
+            "type": "hasMany",
+            "entity": "Team",
+            "relationName": "entityTeam",
+            "layoutRelationshipsDisabled": true
+        },
+        "inhaber": {
+            "type": "belongsTo",
+            "foreign": "cRollenzuordnungenAlsInhaber",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "vertreter": {
+            "type": "belongsTo",
+            "foreign": "cRollenzuordnungenAlsVertreter",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "zweiteEskalation": {
+            "type": "belongsTo",
+            "foreign": "cRollenzuordnungenAlsEskalation",
+            "entity": "User",
+            "audited": false,
+            "isCustom": true
+        },
+        "rolle": {
+            "type": "belongsTo",
+            "foreign": "cRollenzuordnungen",
+            "entity": "CRollenkatalog",
+            "audited": false,
+            "isCustom": true
+        },
+        "tasksAlsOwnerRolle": {
+            "type": "hasMany",
+            "foreign": "ownerRolle",
+            "entity": "Task",
+            "audited": false,
+            "isCustom": true
+        }
+    },
+    "collection": {
+        "orderBy": "createdAt",
+        "order": "desc"
+    },
+    "indexes": {
+        "name": {
+            "columns": [
+                "name",
+                "deleted"
+            ]
+        },
+        "inhaber": {
+            "columns": [
+                "inhaberId",
+                "deleted"
+            ]
+        },
+        "rolle": {
+            "columns": [
+                "rolleId",
+                "deleted"
+            ]
+        },
+        "status": {
+            "columns": [
+                "status",
+                "deleted"
+            ]
+        },
+        "assignedUser": {
+            "columns": [
+                "assignedUserId",
+                "deleted"
+            ]
+        },
+        "createdAt": {
+            "columns": [
+                "createdAt"
+            ]
+        },
+        "createdAtId": {
+            "unique": true,
+            "columns": [
+                "createdAt",
+                "id"
+            ]
+        }
+    }
+}

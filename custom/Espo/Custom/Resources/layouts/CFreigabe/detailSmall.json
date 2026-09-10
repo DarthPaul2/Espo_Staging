@@ -1,0 +1,14 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "freigabeArt"},
+                {"name": "betrag"}
+            ],
+            [
+                {"name": "status"},
+                {"name": "erforderlicheRolle"}
+            ]
+        ]
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "regelcode"},
+                {"name": "kriteriumTyp"}
+            ],
+            [
+                {"name": "zielEntitaet"},
+                {"name": "teilampel"}
+            ]
+        ]
+    }
+]

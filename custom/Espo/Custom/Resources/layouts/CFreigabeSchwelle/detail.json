@@ -1,0 +1,25 @@
+[
+    {
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "aktiv"}
+            ],
+            [
+                {"name": "vorgangsart"},
+                {"name": "projektbezogen"}
+            ],
+            [
+                {"name": "erforderlicheRolle"},
+                false
+            ],
+            [
+                {"name": "betragVon"},
+                {"name": "betragBis"}
+            ],
+            [
+                {"name": "beschreibung", "fullWidth": true}
+            ]
+        ]
+    }
+]

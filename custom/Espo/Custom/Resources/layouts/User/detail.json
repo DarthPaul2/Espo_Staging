@@ -51,6 +51,20 @@
         "rows": [
             [
                 {
+                    "name": "fachbereich"
+                },
+                {
+                    "name": "standort"
+                }
+            ]
+        ],
+        "style": "default",
+        "label": "Rolle & Einsatz"
+    },
+    {
+        "rows": [
+            [
+                {
                     "name": "cPersonalakte"
                 }
             ]

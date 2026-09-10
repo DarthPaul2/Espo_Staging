@@ -1,0 +1,26 @@
+{
+    "_delimiter_": {
+        "disabled": true
+    },
+    "cRollenzuordnungen": {
+        "index": 0
+    },
+    "untergeordneteRollen": {
+        "index": 1
+    },
+    "cFreigabeschwellen": {
+        "index": 2
+    },
+    "cFreigabenAlsErforderlicheRolle": {
+        "index": 3
+    },
+    "cFreigabenAlsAnfordernbeRolle": {
+        "index": 4
+    },
+    "cPruefregelnAlsZustaendigeRolle": {
+        "index": 5
+    },
+    "cPruefregelnAlsUebersteuerungsRolle": {
+        "index": 6
+    }
+}

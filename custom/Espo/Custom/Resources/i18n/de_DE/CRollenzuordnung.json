@@ -1,0 +1,25 @@
+{
+    "labels": {
+        "Create CRollenzuordnung": "Rollenzuordnung erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "inhaber": "Inhaber",
+        "rolle": "Rolle",
+        "vertreter": "Vertreter",
+        "zweiteEskalation": "Zweite Eskalationsstufe",
+        "gueltigVon": "Gültig von",
+        "gueltigBis": "Gültig bis",
+        "status": "Status"
+    },
+    "options": {
+        "status": {
+            "aktiv": "Aktiv",
+            "inaktiv": "Inaktiv"
+        }
+    },
+    "links": {
+        "tasksAlsOwnerRolle": "Aufgaben (als Owner-Rolle)"
+    }
+}

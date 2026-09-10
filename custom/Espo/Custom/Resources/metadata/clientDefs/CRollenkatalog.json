@@ -1,0 +1,30 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#f98047",
+    "iconClass": "fas fa-hand-spock",
+    "relationshipPanels": {
+        "uebergeordneteRolle": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "untergeordneteRollen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "cRollenzuordnungen": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "cPruefregelnAlsUebersteuerungsRolle": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "cPruefregelnAlsZustaendigeRolle": {
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    }
+}

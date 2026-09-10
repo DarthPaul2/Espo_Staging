@@ -1,0 +1,37 @@
+{
+    "labels": {
+        "Create CAmpelStatus": "Ampelstatus erstellen"
+    },
+    "fields": {
+        "name": "Name",
+        "description": "Beschreibung",
+        "zielEntitaet": "Ziel-Entität",
+        "zielId": "Ziel-ID",
+        "zielStatus": "Ziel-Status",
+        "gesamtampel": "Gesamtampel",
+        "technicalReadiness": "Techn. Bereitschaft",
+        "personnelReadiness": "Personal-Bereitschaft",
+        "qualificationReadiness": "Qualifikations-Bereitschaft",
+        "materialReadiness": "Material-Bereitschaft",
+        "documentationReadiness": "Dokumentations-Bereitschaft",
+        "customerReadiness": "Kunden-Bereitschaft",
+        "commercialReadiness": "Kaufm. Bereitschaft",
+        "safetyReadiness": "Sicherheits-Bereitschaft",
+        "begruendung": "Begründung",
+        "berechnetAm": "Berechnet am",
+        "ruleSetVersion": "RuleSet-Version",
+        "projekt": "Projekt"
+    },
+    "tooltips": {
+        "zielEntitaet": "Entity-Typ des geprüften Datensatzes.",
+        "zielId": "ID des geprüften Datensatzes.",
+        "zielStatus": "Status, für den zuletzt geprüft wurde.",
+        "gesamtampel": "Aggregiert aus allen erforderlichen Teilampeln: RED > GREY > YELLOW > GREEN.",
+        "begruendung": "Alle roten/gelben/grauen Gründe, aus den Meldungstexten der ausgewerteten Regeln zusammengesetzt.",
+        "berechnetAm": "Zeitpunkt der letzten Ampel-Berechnung.",
+        "ruleSetVersion": "Höchste Version unter allen ausgewerteten CPruefregel-Zeilen."
+    },
+    "links": {
+        "projekt": "Projekt"
+    }
+}

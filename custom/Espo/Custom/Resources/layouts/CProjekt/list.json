@@ -1,0 +1,23 @@
+[
+    {
+        "name": "name",
+        "width": 25,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "auftrag"
+    },
+    {
+        "name": "status",
+        "width": 15
+    },
+    {
+        "name": "einsatzTermin",
+        "width": 12
+    },
+    {
+        "name": "technikerVerfuegbar",
+        "width": 10
+    }
+]
