@@ -8,11 +8,84 @@ define('custom:views/c-lieferschein/record/detail', [
     const LOG_NS = '[CLieferschein/detail]';
     const L = (tag, payload) => { try { console.log(LOG_NS, tag, payload || ''); } catch (e) { } };
 
+    // Notfall-Fallback, falls der Sachbearbeiter (assignedUser) keine
+    // E-Mail/Telefon-Daten in Espo hat oder der Ajax-Abruf fehlschlägt.
+    const FALLBACK_CONTACT = {
+        name: 'Tobias Schiller',
+        email: 'schiller@klesec.de',
+        phone: '0171 6969930'
+    };
+
+    function buildDefaultEinleitung(contact) {
+        const c = contact || FALLBACK_CONTACT;
+        return `Sehr geehrte Damen und Herren,
+mit diesem Lieferschein bestätigen wir Ihnen die Lieferung der nachfolgend aufgeführten Positionen.
+
+Bitte prüfen Sie die Angaben sorgfältig. Sollten Sie Rückfragen zu den gelieferten Artikeln oder zur Abwicklung haben, steht Ihnen Ihr persönlicher Ansprechpartner selbstverständlich zur Verfügung:
+
+Ihr Ansprechpartner: ${c.name}
+E-Mail: ${c.email}
+Tel.: ${c.phone}
+
+Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel Erfolg mit den gelieferten Produkten und Leistungen.`;
+    }
+
+    // Ersetzt in einem bereits vorhandenen Einleitungstext den alten,
+    // fest eingetragenen "Tobias Schiller"-Kontaktblock durch die Daten
+    // des tatsächlichen Sachbearbeiters (siehe c-angebot/record/detail.js
+    // für den gleichen Fix und die ausführliche Begründung).
+    function withDynamicContact(text, contact) {
+        if (!text) return text;
+        const c = contact || FALLBACK_CONTACT;
+        return text
+            .replace(/Ihr Ansprechpartner:\s*Tobias Schiller/g, `Ihr Ansprechpartner: ${c.name}`)
+            .replace(/E-Mail:\s*schiller@klesec\.de/g, `E-Mail: ${c.email}`)
+            .replace(/Tel\.:\s*0171 6969930/g, `Tel.: ${c.phone}`);
+    }
+
     return Dep.extend({
 
         // ==== API ====
         FLASK_BASE: 'https://klesec.pagekite.me/api',
         BASIC_AUTH: 'Basic ' + btoa('admin:test123'),
+
+        // Lädt Name/E-Mail/Telefon des zugewiesenen Sachbearbeiters (assignedUser)
+        // aus Espo und cacht das Ergebnis pro Benutzer-ID (siehe c-angebot/record/detail.js).
+        _ensureSachbearbeiterContact: function () {
+            const userId = this.model.get('assignedUserId');
+            if (!userId) {
+                this._currentSachbearbeiterContact = null;
+                return Promise.resolve(null);
+            }
+
+            if (this._sachbearbeiterContactCache[userId]) {
+                return this._sachbearbeiterContactCache[userId].then(contact => {
+                    this._currentSachbearbeiterContact = contact;
+                    return contact;
+                });
+            }
+
+            const promise = Espo.Ajax.getRequest(`User/${userId}`)
+                .then(user => {
+                    const contact = {
+                        name: this.model.get('assignedUserName') || user.name || FALLBACK_CONTACT.name,
+                        email: user.emailAddress || FALLBACK_CONTACT.email,
+                        phone: user.phoneNumber || FALLBACK_CONTACT.phone
+                    };
+                    L('sachbearbeiterContact geladen', contact);
+                    return contact;
+                })
+                .catch(err => {
+                    L('sachbearbeiterContact: Ajax-Fehler, Fallback', err?.message || err);
+                    return null;
+                });
+
+            this._sachbearbeiterContactCache[userId] = promise;
+            return promise.then(contact => {
+                this._currentSachbearbeiterContact = contact;
+                return contact;
+            });
+        },
 
         // ==== helpers ====
         getPanelView() {
@@ -30,22 +103,18 @@ define('custom:views/c-lieferschein/record/detail', [
 
         // ==== PDF payload ====
         buildPayload: function (positions) {
-            const defaultEinleitung = `Sehr geehrte Damen und Herren,
-mit diesem Lieferschein bestätigen wir Ihnen die Lieferung der nachfolgend aufgeführten Positionen.
-
-Bitte prüfen Sie die Angaben sorgfältig. Sollten Sie Rückfragen zu den gelieferten Artikeln oder zur Abwicklung haben, steht Ihnen Ihr persönlicher Ansprechpartner selbstverständlich zur Verfügung:
-
-Ihr Ansprechpartner: Tobias Schiller
-E-Mail: schiller@klesec.de
-Tel.: 0171 6969930
-
-Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel Erfolg mit den gelieferten Produkten und Leistungen.`;
+            // Пользовательский текст (если есть) — с заменой старого контакта
+            // "Tobias Schiller" на актуального Sachbearbeiter; иначе — дефолт
+            // сразу с актуальным контактом.
+            const currentEinleitung = (this.model.get('einleitung') || '').trim();
+            const einleitung = currentEinleitung
+                ? withDynamicContact(currentEinleitung, this._currentSachbearbeiterContact)
+                : buildDefaultEinleitung(this._currentSachbearbeiterContact);
 
             return {
                 id: this.model.id,
                 titel: 'LIEFERSCHEIN',
-                // 🔹 всегда этот текст (как в Angebot)
-                einleitung: defaultEinleitung,
+                einleitung: einleitung,
                 bemerkung: this.model.get('bemerkung') || '',
 
                 betrag_netto: this.model.get('betragNetto') || 0,
@@ -88,6 +157,13 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
         setup: function () {
             Dep.prototype.setup.call(this);
 
+            this._sachbearbeiterContactCache = {};
+            this._currentSachbearbeiterContact = null;
+            this._ensureSachbearbeiterContact();
+            this.listenTo(this.model, 'change:assignedUserId', () => {
+                this._ensureSachbearbeiterContact();
+            });
+
             this.once('after:render', () => this._applyPdfLinkLabel(), this);
             this.listenTo(this.model, 'change:pdfUrl', () => setTimeout(() => this._applyPdfLinkLabel(), 0));
 
@@ -121,29 +197,31 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
             // показываем лоадер и блокируем кнопки
             Loader.showFor(this, 'PDF-Vorschau wird erstellt…');
 
-            const positions = this.getPositionsCollection()?.toJSON() || [];
-            const payload = this.buildPayload(this.buildPositionsForPdf(positions));
-            const url = `${this.FLASK_BASE}/lieferschein/${encodeURIComponent(id)}/preview_pdf`;
+            this._ensureSachbearbeiterContact().then(() => {
+                const positions = this.getPositionsCollection()?.toJSON() || [];
+                const payload = this.buildPayload(this.buildPositionsForPdf(positions));
+                const url = `${this.FLASK_BASE}/lieferschein/${encodeURIComponent(id)}/preview_pdf`;
 
-            $.ajax({
-                url,
-                method: 'POST',
-                contentType: 'application/json',
-                xhrFields: { responseType: 'blob' },
-                headers: { 'Authorization': this.BASIC_AUTH },
-                data: JSON.stringify(payload),
-                success: (blob) => {
-                    const blobUrl = URL.createObjectURL(blob);
-                    window.open(blobUrl, '_blank');
-                },
-                error: (xhr) => {
-                    this.notify('Fehler bei PDF-Vorschau', 'error');
-                    console.error('[CLieferschein/detail] pdfPreview:error', xhr);
-                },
-                complete: () => {
-                    // в любом случае снимаем лоадер и разблокируем кнопки
-                    Loader.hideFor(this);
-                }
+                $.ajax({
+                    url,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    xhrFields: { responseType: 'blob' },
+                    headers: { 'Authorization': this.BASIC_AUTH },
+                    data: JSON.stringify(payload),
+                    success: (blob) => {
+                        const blobUrl = URL.createObjectURL(blob);
+                        window.open(blobUrl, '_blank');
+                    },
+                    error: (xhr) => {
+                        this.notify('Fehler bei PDF-Vorschau', 'error');
+                        console.error('[CLieferschein/detail] pdfPreview:error', xhr);
+                    },
+                    complete: () => {
+                        // в любом случае снимаем лоадер и разблокируем кнопки
+                        Loader.hideFor(this);
+                    }
+                });
             });
         },
 
@@ -157,32 +235,34 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
 
             const notifyId = this.notify('PDF wird gespeichert…', 'loading');
 
-            const positions = this.getPositionsCollection()?.toJSON() || [];
-            const payload = this.buildPayload(this.buildPositionsForPdf(positions));
-            const url = `${this.FLASK_BASE}/lieferschein/${encodeURIComponent(id)}/save_pdf`;
+            this._ensureSachbearbeiterContact().then(() => {
+                const positions = this.getPositionsCollection()?.toJSON() || [];
+                const payload = this.buildPayload(this.buildPositionsForPdf(positions));
+                const url = `${this.FLASK_BASE}/lieferschein/${encodeURIComponent(id)}/save_pdf`;
 
-            $.ajax({
-                url,
-                method: 'POST',
-                contentType: 'application/json',
-                headers: { 'Authorization': this.BASIC_AUTH },
-                data: JSON.stringify(payload),
-                success: (resp) => {
-                    this.notify(false, 'loading', notifyId);
-                    this.notify('PDF gespeichert', 'success');
-                    if (resp?.pdfUrl) {
-                        this.model.save({ pdfUrl: resp.pdfUrl }, { success: () => this.reRender() });
+                $.ajax({
+                    url,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    headers: { 'Authorization': this.BASIC_AUTH },
+                    data: JSON.stringify(payload),
+                    success: (resp) => {
+                        this.notify(false, 'loading', notifyId);
+                        this.notify('PDF gespeichert', 'success');
+                        if (resp?.pdfUrl) {
+                            this.model.save({ pdfUrl: resp.pdfUrl }, { success: () => this.reRender() });
+                        }
+                    },
+                    error: (xhr) => {
+                        this.notify(false, 'loading', notifyId);
+                        this.notify('Fehler beim Speichern der PDF', 'error');
+                        L('pdfSave:error', xhr);
+                    },
+                    complete: () => {
+                        // в любом случае снимаем лоадер и разблокируем кнопки
+                        Loader.hideFor(this);
                     }
-                },
-                error: (xhr) => {
-                    this.notify(false, 'loading', notifyId);
-                    this.notify('Fehler beim Speichern der PDF', 'error');
-                    L('pdfSave:error', xhr);
-                },
-                complete: () => {
-                    // в любом случае снимаем лоадер и разблокируем кнопки
-                    Loader.hideFor(this);
-                }
+                });
             });
         },
 

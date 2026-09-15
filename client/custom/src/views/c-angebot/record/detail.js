@@ -8,20 +8,52 @@ define('custom:views/c-angebot/record/detail', [
 
 
     const LOG_NS = '[CAngebot/detail]';
-    const DEFAULT_EINLEITUNG = `Sehr geehrte Damen und Herren,
+
+    // Notfall-Fallback, falls der Sachbearbeiter (assignedUser) keine
+    // E-Mail/Telefon-Daten in Espo hat oder der Ajax-Abruf fehlschlägt.
+    const FALLBACK_CONTACT = {
+        name: 'Tobias Schiller',
+        email: 'schiller@klesec.de',
+        phone: '0171 6969930'
+    };
+
+    // Ersetzt in einem BELIEBIGEN Einleitungstext die alten, fest eingetragenen
+    // Kontaktdaten (Name/E-Mail/Telefon von Tobias Schiller) durch die des
+    // tatsächlichen Sachbearbeiters. Nötig, weil das Feld "einleitung" in Espo
+    // einen statischen Default-Wert mit "Tobias Schiller" hat (siehe
+    // entityDefs/CAngebot.json) und Anwender diesen Text oft nur ergänzen
+    // (z. B. eine Projektnotiz einfügen), statt ihn komplett neu zu schreiben —
+    // der alte Kontaktblock bleibt dann sonst stehen, auch wenn ein anderer
+    // Sachbearbeiter zugewiesen ist.
+    function withDynamicContact(text, contact) {
+        if (!text) return text;
+        const c = contact || FALLBACK_CONTACT;
+        return text
+            .replace(/Ihr Ansprechpartner:\s*Tobias Schiller/g, `Ihr Ansprechpartner: ${c.name}`)
+            .replace(/E-Mail:\s*schiller@klesec\.de/g, `E-Mail: ${c.email}`)
+            .replace(/Tel\.:\s*0171 6969930/g, `Tel.: ${c.phone}`)
+            .replace(/Beauftragungen bitte an:\s*schiller@klesec\.de/g, `Beauftragungen bitte an: ${c.email}`);
+    }
+
+    // Baut den Einleitungstext mit dem tatsächlich zugewiesenen Sachbearbeiter
+    // (assignedUser) als Ansprechpartner, statt fest "Tobias Schiller".
+    function buildDefaultEinleitung(contact) {
+        const c = contact || FALLBACK_CONTACT;
+        return `Sehr geehrte Damen und Herren,
 wir danken Ihnen für Ihr Interesse an den Leistungen der KleSec GmbH.
 Nachfolgend erhalten Sie das Angebot für Sie.
 
 Haben Sie Fragen zu dem Angebot oder wünschen Sie detailliertere Informationen zu unseren Ausführungen?
 Dann zögern Sie bitte nicht, mit Ihrem persönlichen Ansprechpartner über folgende Kommunikationswege in Verbindung zu treten:
 
-Ihr Ansprechpartner: Tobias Schiller  
-E-Mail: schiller@klesec.de  
-Tel.: 0171 6969930  
+Ihr Ansprechpartner: ${c.name}
+E-Mail: ${c.email}
+Tel.: ${c.phone}
 
-Beauftragungen bitte an: schiller@klesec.de  
+Beauftragungen bitte an: ${c.email}
 
 Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinweisen zusammen.`;
+    }
 
     const L = (tag, payload) => {
         try { console.log(LOG_NS, tag, payload || ''); } catch (e) { }
@@ -75,6 +107,45 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
         },
 
 
+        // Lädt Name/E-Mail/Telefon des zugewiesenen Sachbearbeiters (assignedUser)
+        // aus Espo und cacht das Ergebnis pro Benutzer-ID. Läuft asynchron im
+        // Hintergrund; buildPayload() liest nur das zwischengespeicherte Ergebnis.
+        _ensureSachbearbeiterContact: function () {
+            const userId = this.model.get('assignedUserId');
+            if (!userId) {
+                this._currentSachbearbeiterContact = null;
+                return Promise.resolve(null);
+            }
+
+            if (this._sachbearbeiterContactCache[userId]) {
+                return this._sachbearbeiterContactCache[userId].then(contact => {
+                    this._currentSachbearbeiterContact = contact;
+                    return contact;
+                });
+            }
+
+            const promise = Espo.Ajax.getRequest(`User/${userId}`)
+                .then(user => {
+                    const contact = {
+                        name: this.model.get('assignedUserName') || user.name || FALLBACK_CONTACT.name,
+                        email: user.emailAddress || FALLBACK_CONTACT.email,
+                        phone: user.phoneNumber || FALLBACK_CONTACT.phone
+                    };
+                    L('sachbearbeiterContact geladen', contact);
+                    return contact;
+                })
+                .catch(err => {
+                    L('sachbearbeiterContact: Ajax-Fehler, Fallback', err?.message || err);
+                    return null;
+                });
+
+            this._sachbearbeiterContactCache[userId] = promise;
+            return promise.then(contact => {
+                this._currentSachbearbeiterContact = contact;
+                return contact;
+            });
+        },
+
         // ==== Payload für Flask ====
         buildPayload: function (positions) {
             const netto = this.model.get('betragNetto') || 0;
@@ -82,9 +153,15 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             const steuer = Math.round((brutto - netto) * 100) / 100;
 
             // Берём то, что пользователь ввёл в поле "einleitung".
-            // Если поле пустое – используем старый дефолтный текст.
-            const einleitung =
-                (this.model.get('einleitung') || '').trim() || DEFAULT_EINLEITUNG;
+            // Ist das Feld leer, generieren wir den Standardtext mit dem
+            // tatsächlichen Sachbearbeiter. Ist es nicht leer (z. B. weil der
+            // Anwender den Default-Text nur um eine Projektnotiz ergänzt hat),
+            // ersetzen wir trotzdem den alten "Tobias Schiller"-Kontaktblock
+            // durch die Daten des tatsächlichen Sachbearbeiters.
+            const currentEinleitung = (this.model.get('einleitung') || '').trim();
+            const einleitung = currentEinleitung
+                ? withDynamicContact(currentEinleitung, this._currentSachbearbeiterContact)
+                : buildDefaultEinleitung(this._currentSachbearbeiterContact);
 
             // имя ответственного пользователя (assignedUser)
             const assignedUserName = this.model.get('assignedUserName') || '';
@@ -246,6 +323,14 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
 
             // что это: фиксируем обычный режим страницы на V2
             this.USE_PDF_V2 = true;
+
+            // --- Kontaktdaten des zugewiesenen Sachbearbeiters (für Einleitung) ---
+            this._sachbearbeiterContactCache = {};
+            this._currentSachbearbeiterContact = null;
+            this._ensureSachbearbeiterContact();
+            this.listenTo(this.model, 'change:assignedUserId', () => {
+                this._ensureSachbearbeiterContact();
+            });
 
 
             this.on('after:render', () => this._applyPdfLinkLabel(), this);
@@ -463,8 +548,8 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
                 });
             };
 
-            this.loadPositionsViaRest(id)
-                .then(proceed)
+            Promise.all([this.loadPositionsViaRest(id), this._ensureSachbearbeiterContact()])
+                .then(([rows]) => proceed(rows))
                 .catch(err => {
                     // ошибка ещё до AJAX (позиции не загрузились)
                     L('pdfPreview: positions load failed', err?.message || err);
@@ -488,8 +573,8 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
 
             const notifyId = this.notify('PDF wird erzeugt und gespeichert…', 'loading');
 
-            this.loadPositionsViaRest(espoId)
-                .then(rows => {
+            Promise.all([this.loadPositionsViaRest(espoId), this._ensureSachbearbeiterContact()])
+                .then(([rows]) => {
                     const pos = this.buildPositionsForPdf(rows);
                     if (!pos.length) {
                         this.notify('Keine Positionen gefunden.', 'error');
@@ -622,8 +707,8 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             Loader.showFor(this, 'PDF (mit Preis) wird erzeugt und gespeichert…');
             const notifyId = this.notify('PDF (mit Preis) wird erzeugt und gespeichert…', 'loading');
 
-            this.loadPositionsViaRest(espoId)
-                .then(rows => {
+            Promise.all([this.loadPositionsViaRest(espoId), this._ensureSachbearbeiterContact()])
+                .then(([rows]) => {
                     const pos = this.buildPositionsForPdf(rows);
                     if (!pos.length) {
                         this.notify('Keine Positionen gefunden.', 'error');
