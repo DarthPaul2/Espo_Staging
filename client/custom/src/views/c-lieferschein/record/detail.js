@@ -87,6 +87,23 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
             });
         },
 
+        // Aktualisiert das angezeigte/gespeicherte Feld "einleitung" im Model,
+        // sobald der Kontakt des Sachbearbeiters geladen ist (siehe c-angebot).
+        _refreshEinleitungDisplay: function () {
+            const current = (this.model.get('einleitung') || '').trim();
+            if (!current) return;
+
+            const updated = withDynamicContact(current, this._currentSachbearbeiterContact);
+            if (updated === current) return;
+
+            this.model.set('einleitung', updated);
+
+            const fv = this.getFieldView && this.getFieldView('einleitung');
+            if (fv && fv.reRender) {
+                fv.reRender();
+            }
+        },
+
         // ==== helpers ====
         getPanelView() {
             return (this.getView && (this.getView('lieferscheinpositions') || this.getView('positionen'))) || null;
@@ -159,9 +176,9 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
 
             this._sachbearbeiterContactCache = {};
             this._currentSachbearbeiterContact = null;
-            this._ensureSachbearbeiterContact();
+            this._ensureSachbearbeiterContact().then(() => this._refreshEinleitungDisplay());
             this.listenTo(this.model, 'change:assignedUserId', () => {
-                this._ensureSachbearbeiterContact();
+                this._ensureSachbearbeiterContact().then(() => this._refreshEinleitungDisplay());
             });
 
             this.once('after:render', () => this._applyPdfLinkLabel(), this);

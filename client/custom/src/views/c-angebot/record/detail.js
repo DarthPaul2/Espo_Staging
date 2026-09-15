@@ -146,6 +146,25 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             });
         },
 
+        // Aktualisiert das angezeigte/gespeicherte Feld "einleitung" im Model,
+        // sobald der Kontakt des Sachbearbeiters geladen ist — damit der alte
+        // "Tobias Schiller"-Block nicht nur im PDF, sondern auch im Formular
+        // und beim nächsten Speichern korrekt ist.
+        _refreshEinleitungDisplay: function () {
+            const current = (this.model.get('einleitung') || '').trim();
+            if (!current) return;
+
+            const updated = withDynamicContact(current, this._currentSachbearbeiterContact);
+            if (updated === current) return;
+
+            this.model.set('einleitung', updated);
+
+            const fv = this.getFieldView && this.getFieldView('einleitung');
+            if (fv && fv.reRender) {
+                fv.reRender();
+            }
+        },
+
         // ==== Payload für Flask ====
         buildPayload: function (positions) {
             const netto = this.model.get('betragNetto') || 0;
@@ -327,9 +346,9 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             // --- Kontaktdaten des zugewiesenen Sachbearbeiters (für Einleitung) ---
             this._sachbearbeiterContactCache = {};
             this._currentSachbearbeiterContact = null;
-            this._ensureSachbearbeiterContact();
+            this._ensureSachbearbeiterContact().then(() => this._refreshEinleitungDisplay());
             this.listenTo(this.model, 'change:assignedUserId', () => {
-                this._ensureSachbearbeiterContact();
+                this._ensureSachbearbeiterContact().then(() => this._refreshEinleitungDisplay());
             });
 
 
