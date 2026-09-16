@@ -3,7 +3,7 @@
 namespace Espo\Custom\Hooks\CEingangsrechnung;
 
 use Espo\ORM\Entity;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 // Что это: запрещает удаление festgeschriebene Eingangsrechnung.
 class PreventDeleteIfFestgeschrieben
@@ -16,6 +16,6 @@ class PreventDeleteIfFestgeschrieben
             return;
         }
 
-        throw new Forbidden('Festgeschriebene Eingangsrechnungen dürfen nicht gelöscht werden.');
+        throw new BadRequest('Festgeschriebene Eingangsrechnungen dürfen nicht gelöscht werden.');
     }
 }

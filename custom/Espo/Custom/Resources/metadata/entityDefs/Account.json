@@ -84,6 +84,13 @@
             "audited": false,
             "isCustom": true
         },
+        "cServicevorgaenge": {
+            "type": "hasMany",
+            "foreign": "account",
+            "entity": "CServicevorgang",
+            "audited": false,
+            "isCustom": true
+        },
         "cLieferscheins": {
             "type": "hasMany",
             "foreign": "account",

@@ -1,39 +1,67 @@
 [
     {
+        "customLabel": "Überblick",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                {"name": "status"}
-            ],
-            [
                 {"name": "freigabeArt"},
-                {"name": "betrag"}
-            ],
+                {"name": "betrag"},
+                {"name": "status"}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Wer entscheidet",
+        "style": "primary",
+        "rows": [
             [
-                {"name": "bezugEntitaet"},
-                {"name": "bezugId"}
-            ],
+                {"name": "anfordernbeRolle"},
+                {"name": "anfordernbeRolleRollencode"},
+                {"name": "erforderlicheRolle"},
+                {"name": "erforderlicheRolleRollencode"}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Risiko & Budget (optional)",
+        "style": "warning",
+        "rows": [
             [
                 {"name": "budget"},
-                {"name": "abweichungProzent"}
-            ],
-            [
                 {"name": "abweichungBetrag"},
+                {"name": "abweichungProzent"},
                 {"name": "risikostufe"}
             ],
             [
                 {"name": "risikokategorie", "fullWidth": true}
-            ],
-            [
-                {"name": "anfordernbeRolle"},
-                {"name": "erforderlicheRolle"}
-            ],
+            ]
+        ]
+    },
+    {
+        "customLabel": "Entscheidung",
+        "style": "success",
+        "rows": [
             [
                 {"name": "freigeberUser"},
-                {"name": "entscheidungAm"}
+                {"name": "entscheidungAm"},
+                false,
+                false
             ],
             [
                 {"name": "entscheidungsgrund", "fullWidth": true}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Bezug & Notizen",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "bezugEntitaet"},
+                {"name": "bezugId"},
+                false,
+                false
             ],
             [
                 {"name": "description", "fullWidth": true}

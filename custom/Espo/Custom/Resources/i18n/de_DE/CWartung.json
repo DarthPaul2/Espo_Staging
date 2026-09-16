@@ -76,10 +76,12 @@
     },
     "links": {
         "account": "Account",
+        "servicevorgaenge": "Servicevorgänge",
         "tasks": "Tasks",
         "documents": "Documents",
         "werkzeugs": "Werkzeugs",
         "user": "User",
-        "objekt": "Objekt"
+        "objekt": "Objekt",
+        "formulare": "Berichte (App)"
     }
 }

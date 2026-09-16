@@ -51,6 +51,14 @@
         },
         "uebergeordneteRolle": {
             "type": "link"
+        },
+        "uebergeordneteRolleRollencode": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "uebergeordneteRolle",
+            "field": "rollencode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
         }
     },
     "links": {

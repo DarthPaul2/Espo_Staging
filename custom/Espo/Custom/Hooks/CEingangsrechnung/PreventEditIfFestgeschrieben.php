@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\CEingangsrechnung;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 // Что это:
 // запрещает обычное редактирование festgeschriebene Eingangsrechnung.
@@ -44,6 +44,6 @@ class PreventEditIfFestgeschrieben
             return;
         }
 
-        throw new Forbidden('Festgeschriebene Eingangsrechnungen dürfen nicht mehr bearbeitet werden.');
+        throw new BadRequest('Festgeschriebene Eingangsrechnungen dürfen nicht mehr bearbeitet werden.');
     }
 }

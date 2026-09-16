@@ -19,6 +19,14 @@
             ],
             [
                 {
+                    "name": "ownerRolle"
+                },
+                {
+                    "name": "eskalationsstufe"
+                }
+            ],
+            [
+                {
                     "name": "dateStart"
                 },
                 {

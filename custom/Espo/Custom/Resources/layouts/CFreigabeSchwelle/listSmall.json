@@ -1,4 +1,5 @@
 [
     {"name": "vorgangsart"},
-    {"name": "erforderlicheRolle"}
+    {"name": "erforderlicheRolle"},
+    {"name": "erforderlicheRolleRollencode", "width": 8}
 ]

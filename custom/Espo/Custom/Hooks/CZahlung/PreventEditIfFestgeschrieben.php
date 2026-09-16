@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\CZahlung;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 // Что это:
 // запрещает обычное редактирование festgeschriebene Zahlung.
@@ -42,6 +42,6 @@ class PreventEditIfFestgeschrieben
             return;
         }
 
-        throw new Forbidden('Festgeschriebene Zahlungen dürfen nicht mehr bearbeitet werden.');
+        throw new BadRequest('Festgeschriebene Zahlungen dürfen nicht mehr bearbeitet werden.');
     }
 }

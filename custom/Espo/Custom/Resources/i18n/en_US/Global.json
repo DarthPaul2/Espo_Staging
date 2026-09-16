@@ -61,7 +61,8 @@
         "CQualifikationsanforderung": "Qualifikationsanforderung",
         "CProjekt": "Projekt",
         "CProjektteamzuordnung": "Projektteamzuordnung",
-        "CMeilenstein": "Meilenstein"
+        "CMeilenstein": "Meilenstein",
+        "CServicevorgang": "Servicevorgang"
     },
     "scopeNamesPlural": {
         "CArbeitszeit": "Arbeitszeiten",
@@ -125,7 +126,8 @@
         "CQualifikationsanforderung": "Qualifikationsanforderungen",
         "CProjekt": "Projekte",
         "CProjektteamzuordnung": "Projektteamzuordnungen",
-        "CMeilenstein": "Meilensteine"
+        "CMeilenstein": "Meilensteine",
+        "CServicevorgang": "Servicevorgänge"
     },
     "labels": {
         "Schedule CAbwesenheit": "Schedule Abwesenheit",

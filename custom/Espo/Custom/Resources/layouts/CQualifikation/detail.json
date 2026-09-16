@@ -1,11 +1,11 @@
 [
     {
+        "customLabel": "Überblick",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                {"name": "typ"}
-            ],
-            [
+                {"name": "typ"},
                 {"name": "aussteller"},
                 {"name": "nachweisArt"}
             ],

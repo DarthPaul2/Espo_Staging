@@ -168,12 +168,28 @@
             "tooltip": true,
             "audited": true
         },
+        "uebersteuerungsRolleRollencode": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "uebersteuerungsRolle",
+            "field": "rollencode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
         "zustaendigeRolle": {
             "type": "link",
             "required": true,
             "isCustom": true,
             "tooltip": true,
             "audited": true
+        },
+        "zustaendigeRolleRollencode": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "zustaendigeRolle",
+            "field": "rollencode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
         },
         "aufgabenVorlage": {
             "type": "text",

@@ -1,0 +1,11 @@
+{
+    "fields": {
+        "stundenberichte": "Stundenberichte"
+    },
+    "links": {
+        "stundenberichte": "Stundenberichte"
+    },
+    "labels": {
+        "Create CServicevorgang": "Create Servicevorgang"
+    }
+}

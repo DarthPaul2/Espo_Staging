@@ -1,18 +1,32 @@
 [
     {
+        "customLabel": "Anforderung",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                {"name": "anforderungsTyp"}
-            ],
-            [
-                {"name": "bezugEntitaet"},
-                {"name": "bezugId"}
-            ],
-            [
                 {"name": "qualifikation"},
+                {"name": "anforderungsTyp"},
                 false
-            ],
+            ]
+        ]
+    },
+    {
+        "customLabel": "Bezug",
+        "style": "primary",
+        "rows": [
+            [
+                {"name": "projekt"},
+                {"name": "bezugEntitaet"},
+                {"name": "bezugId"},
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Notizen",
+        "style": "default",
+        "rows": [
             [
                 {"name": "beschreibung", "fullWidth": true}
             ]

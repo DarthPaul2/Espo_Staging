@@ -53,6 +53,7 @@
     },
     "links": {
         "account": "Account",
+        "servicevorgaenge": "Servicevorgänge",
         "rechnungs": "Rechnungen",
         "lieferscheins": "Lieferscheine",
         "angebots": "Angebote",

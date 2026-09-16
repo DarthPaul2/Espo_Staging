@@ -21,7 +21,7 @@ class PreventRemoveSystemReports implements BeforeRemove
         ];
 
         if (in_array($auswertungTyp, $protectedTypes, true)) {
-            throw new Forbidden('System-Auswertungen dürfen nicht gelöscht werden.');
+            throw new BadRequest('System-Auswertungen dürfen nicht gelöscht werden.');
         }
     }
 }

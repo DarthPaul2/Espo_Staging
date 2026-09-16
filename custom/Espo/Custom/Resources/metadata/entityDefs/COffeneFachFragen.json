@@ -54,17 +54,42 @@
         },
         "status": {
             "type": "enum",
-            "options": ["offen", "beantwortet", "akzeptiert"],
+            "options": [
+                "offen",
+                "beantwortet",
+                "akzeptiert"
+            ],
             "default": "offen",
             "isCustom": true,
             "tooltip": true,
-            "style": {"offen": "warning", "beantwortet": "success", "akzeptiert": "default"}
+            "style": {
+                "offen": "warning",
+                "beantwortet": "success",
+                "akzeptiert": "default"
+            }
         },
         "quelle": {
             "type": "varchar",
             "maxLength": 250,
             "isCustom": true,
             "tooltip": true
+        },
+        "prioritaet": {
+            "type": "enum",
+            "options": [
+                "hoch",
+                "mittel",
+                "niedrig"
+            ],
+            "default": "mittel",
+            "isCustom": true,
+            "tooltip": true,
+            "style": {
+                "hoch": "danger",
+                "mittel": "warning",
+                "niedrig": "success"
+            },
+            "displayAsLabel": true
         }
     },
     "links": {

@@ -29,6 +29,11 @@
         "objekt": {
             "layout": null,
             "selectPrimaryFilterName": null
+        },
+        "formulare": {
+            "removeDisabled": true,
+            "layout": null,
+            "selectPrimaryFilterName": null
         }
     }
 }

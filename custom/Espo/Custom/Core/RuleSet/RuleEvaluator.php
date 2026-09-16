@@ -132,7 +132,7 @@ class RuleEvaluator
         $kriteriumTyp = (string) $rule->get('kriteriumTyp');
         $regelcode = (string) $rule->get('regelcode');
         $meldungstext = (string) ($rule->get('meldungstext') ?: 'Prüfregel verletzt.');
-        $message = "[$regelcode] " . str_replace('{wert}', $wert, $meldungstext);
+        $message = str_replace('{wert}', $wert, $meldungstext) . " Regel: [$regelcode]";
 
         $isMust = in_array($kriteriumTyp, ['MUST', 'EXTERNAL_MUST'], true);
 

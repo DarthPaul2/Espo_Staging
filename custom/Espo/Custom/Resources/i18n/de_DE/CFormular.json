@@ -12,7 +12,8 @@
         "parentFormKey": "ParentFormKey",
         "account": "Account",
         "user": "User",
-        "formularberichte": "Formularberichte"
+        "formularberichte": "Formularberichte",
+        "cWartung": "Wartungsvertrag"
     },
     "options": {
         "formType": {
@@ -26,6 +27,7 @@
     "links": {
         "account": "Account",
         "user": "User",
-        "formularberichte": "Formularberichte"
+        "formularberichte": "Formularberichte",
+        "cWartung": "Wartungsvertrag"
     }
 }

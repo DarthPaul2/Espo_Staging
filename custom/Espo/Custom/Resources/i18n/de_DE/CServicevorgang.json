@@ -1,0 +1,107 @@
+{
+    "labels": {
+        "Create CServicevorgang": "Servicevorgang erstellen"
+    },
+    "links": {
+        "stundenberichte": "Stundenberichte",
+        "tasks": "Offene Punkte"
+    },
+    "fields": {
+        "name": "Nummer",
+        "description": "Beschreibung",
+        "vorgangsart": "Vorgangsart",
+        "status": "Status",
+        "prioritaet": "Priorität",
+        "dringlichkeitsangabeKunde": "Dringlichkeit laut Kunde",
+        "account": "Kunde",
+        "objekt": "Objekt",
+        "anlageTyp": "Anlagentyp",
+        "problem": "Problem/Störung",
+        "meldungsart": "Meldungsart",
+        "wartung": "Wartungsvertrag",
+        "geplanterTermin": "Geplanter Termin",
+        "technikers": "Zugewiesene Techniker",
+        "anruferName": "Anrufer Name",
+        "anruferTelefon": "Anrufer Telefon",
+        "alarmierungAm": "Alarmierung am",
+        "alarmBestaetigtAm": "Alarm bestätigt am",
+        "alarmEskaliert": "Alarm eskaliert",
+        "rueckrufAm": "Rückruf am",
+        "rueckrufDurch": "Rückruf durch",
+        "entscheidung": "Entscheidung",
+        "kundensperreErkannt": "Kundensperre erkannt",
+        "kundensperreEntscheidung": "Kundensperre — Entscheidung",
+        "reaktionszeitMinuten": "Reaktionszeit (Minuten)",
+        "reklamationSystemisch": "Systemische Ursache",
+        "reklamationUrsache": "Ursache (Reklamation)",
+        "reklamationMassnahme": "Maßnahme (Reklamation)",
+        "reklamationFrist": "Frist (Reklamation)",
+        "bezugAuftrag": "Bezug-Auftrag",
+        "abnahmeDatum": "Abnahmedatum",
+        "berechtigt": "Berechtigt (Gewährleistung)",
+        "mangelFestgestellt": "Mangel festgestellt",
+        "mangelBeschreibung": "Mangel — Beschreibung",
+        "erzeugtesAngebot": "Erzeugtes Angebot",
+        "stundenberichte": "Stundenberichte"
+    },
+    "tooltips": {
+        "vorgangsart": "Bestimmt, welche Zusatzfelder relevant sind (Notdienst/Reklamation/Gewährleistung/Wartung).",
+        "account": "Nur Pflichtfeld, wenn kein Objekt gewählt ist — bei einem Objekt mit hinterlegtem Kunden wird der Kunde automatisch übernommen.",
+        "wartung": "Falls dieser Vorgang aus einer fälligen Wartung entstanden ist.",
+        "kundensperreEntscheidung": "Bei Notdienst trotz kaufmännischer Kundensperre: Entscheidung und Begründung dokumentieren.",
+        "reaktionszeitMinuten": "Bewusst ohne festen Vorgabewert — Tobias: 'legen wir später je Vertrag/Notdienstmodell fest.'",
+        "reklamationSystemisch": "Bei wiederkehrender/systemischer Ursache eskaliert an R-31 QM, sonst zuständiger Fachbereich.",
+        "abnahmeDatum": "Tatsächliches Abnahme-/Übergabedatum als Basis für Gewährleistungsfristen.",
+        "berechtigt": "Kundenbehauptung allein begründet keine automatische kostenlose Leistung."
+    },
+    "options": {
+        "vorgangsart": {
+            "service": "Standard-Service",
+            "wartung": "Wartung",
+            "notdienst": "Notdienst",
+            "reklamation": "Reklamation",
+            "gewaehrleistung": "Gewährleistung"
+        },
+        "status": {
+            "neu": "Neu",
+            "geprueft": "Geprüft",
+            "geplant": "Geplant",
+            "inArbeit": "In Arbeit",
+            "rueckfrageMaterial": "Rückfrage/Material",
+            "abgeschlossen": "Abgeschlossen",
+            "abrechnungsfaehig": "Abrechnungsfähig"
+        },
+        "prioritaet": {
+            "kritisch": "Kritisch",
+            "hoch": "Hoch",
+            "normal": "Normal",
+            "planbar": "Planbar"
+        },
+        "anlageTyp": {
+            "": "—",
+            "bma": "BMA",
+            "ema": "EMA",
+            "video": "Video",
+            "zutritt": "Zutritt",
+            "other": "Sonstige"
+        },
+        "meldungsart": {
+            "": "—",
+            "telefon": "Telefon",
+            "email": "E-Mail",
+            "formular": "Formular/App",
+            "sonstiges": "Sonstiges"
+        },
+        "entscheidung": {
+            "": "—",
+            "telefonischGeloest": "Telefonisch gelöst",
+            "vorOrtEinsatz": "Vor-Ort-Einsatz",
+            "eskaliert": "Eskaliert"
+        },
+        "berechtigt": {
+            "zuPruefen": "Zu prüfen",
+            "ja": "Ja",
+            "nein": "Nein"
+        }
+    }
+}

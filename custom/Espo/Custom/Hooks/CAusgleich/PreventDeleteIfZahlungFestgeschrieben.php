@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\CAusgleich;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 // Что это:
 // запрещает удаление Ausgleich,
@@ -36,6 +36,6 @@ class PreventDeleteIfZahlungFestgeschrieben
             return;
         }
 
-        throw new Forbidden('Ausgleiche einer festgeschriebenen Zahlung dürfen nicht gelöscht werden.');
+        throw new BadRequest('Ausgleiche einer festgeschriebenen Zahlung dürfen nicht gelöscht werden.');
     }
 }

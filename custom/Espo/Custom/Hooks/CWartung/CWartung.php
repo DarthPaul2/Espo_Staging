@@ -3,9 +3,12 @@
 namespace Espo\Custom\Hooks\CWartung;
 
 use Espo\ORM\Entity;
+use Espo\ORM\EntityManager;
 
 class CWartung
 {
+    public function __construct(private EntityManager $em) {}
+
     /**
      * Обрабатываем даты и статусы до сохранения записи.
      */
@@ -14,7 +17,17 @@ class CWartung
         // --- 0. Автогенерация Name, если пусто
         if (!$entity->get('name')) {
             $accountName = trim((string) $entity->get('accountName'));
-            $anlage      = (string) $entity->get('anlageTyp');
+
+            // Bei einem frisch erstellten Datensatz ist der denormalisierte
+            // "accountName"-Cache noch leer (wird erst nach dem Speichern
+            // über die Relation aufgefüllt) — direkt nachschlagen, damit der
+            // Name nicht fälschlich auf "Ohne Firma" fällt.
+            if (!$accountName && $entity->get('accountId')) {
+                $account = $this->em->getEntity('Account', $entity->get('accountId'));
+                $accountName = $account ? trim((string) $account->get('name')) : '';
+            }
+
+            $anlage = (string) $entity->get('anlageTyp');
 
             $labels = [
                 'bma'     => 'BMA',
@@ -29,23 +42,25 @@ class CWartung
             $entity->set('name', $title);
         }
 
-        // --- 1. Если статус "beendet" — ничего не пересчитываем
-        if ($entity->get('status') === 'beendet') {
-            $entity->set('faelligkeitsStatus', 'beendet');
-            return;
-        }
-
-        // --- 2. Проверяем наличие базовых полей
+        // --- 1. Проверяем наличие базовых полей
         $intervall     = $entity->get('intervall');
         $regelModus    = $entity->get('regelModus') ?? 'abLetzterWartung';
         $startDatum    = $entity->get('startDatum');
         $letzteWartung = $entity->get('letzteWartung');
+        $status        = $entity->get('status');
 
         if (!$intervall || (!$startDatum && !$letzteWartung)) {
+            if ($status === 'beendet') {
+                $entity->set('faelligkeitsStatus', 'beendet');
+            }
             return; // нечего считать
         }
 
-        // --- 3. Рассчитываем следующую дату обслуживания ТОЛЬКО если она ещё не задана вручную
+        // --- 2. Рассчитываем следующую дату обслуживания ТОЛЬКО если она ещё не задана вручную.
+        // Wichtig: das gilt UNABHÄNGIG vom Status — auch wenn "beendet" gerade gesetzt wird
+        // (z. B. durch Task/WartungUpdate.php nach Abschluss eines Wartungsbesuchs), muss die
+        // nächste fällige Wartung trotzdem korrekt (unter Beachtung von regelModus) berechnet
+        // werden. Nur das faelligkeitsStatus-Label wird unten für "beendet" überschrieben.
         $naechste = $entity->get('naechsteWartung');
 
         if (empty($naechste)) {
@@ -81,6 +96,13 @@ class CWartung
             $entity->set('naechsteWartung', $naechste);
         }
 
+        // --- 3. Bei "beendet" bleibt das Label immer "beendet", unabhängig vom Datum
+        // (die Reaktivierung auf "aktiv" übernimmt wartung_check() im Flask-Cron).
+        if ($status === 'beendet') {
+            $entity->set('faelligkeitsStatus', 'beendet');
+            return;
+        }
+
         // --- 4. Определяем статус фаличности (по фактической naechsteWartung)
         if (empty($naechste)) {
             return;
@@ -90,18 +112,18 @@ class CWartung
         $due      = new \DateTime($naechste);
         $warnDays = (int) ($entity->get('vorwarnTage') ?? 30);
 
-        $status = 'nichtFaellig';
+        $faelligkeitsStatus = 'nichtFaellig';
 
         if ($today > $due) {
-            $status = 'faellig';
+            $faelligkeitsStatus = 'faellig';
         } else {
             $todayPlus = new \DateTime(); // ✅ отдельный объект, чтобы не менять $today
             if ($todayPlus->modify("+{$warnDays} days") >= $due) {
-                $status = 'baldFaellig';
+                $faelligkeitsStatus = 'baldFaellig';
             }
         }
 
-        $entity->set('faelligkeitsStatus', $status);
+        $entity->set('faelligkeitsStatus', $faelligkeitsStatus);
     }
 
     /**

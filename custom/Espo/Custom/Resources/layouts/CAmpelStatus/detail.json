@@ -1,38 +1,50 @@
 [
     {
+        "customLabel": "Was wurde geprüft",
+        "style": "default",
         "rows": [
             [
-                {"name": "name"},
-                false
-            ],
-            [
                 {"name": "zielEntitaet"},
-                {"name": "zielId"}
-            ],
-            [
+                {"name": "zielId"},
                 {"name": "zielStatus"},
-                {"name": "gesamtampel"}
-            ],
+                {"name": "projekt"}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Gesamtampel",
+        "style": "primary",
+        "rows": [
+            [
+                {"name": "gesamtampel"},
+                {"name": "berechnetAm"},
+                {"name": "ruleSetVersion"},
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Teilampeln",
+        "style": "default",
+        "rows": [
             [
                 {"name": "technicalReadiness"},
-                {"name": "personnelReadiness"}
-            ],
-            [
+                {"name": "personnelReadiness"},
                 {"name": "qualificationReadiness"},
                 {"name": "materialReadiness"}
             ],
             [
                 {"name": "documentationReadiness"},
-                {"name": "customerReadiness"}
-            ],
-            [
+                {"name": "customerReadiness"},
                 {"name": "commercialReadiness"},
                 {"name": "safetyReadiness"}
-            ],
-            [
-                {"name": "berechnetAm"},
-                {"name": "ruleSetVersion"}
-            ],
+            ]
+        ]
+    },
+    {
+        "customLabel": "Begründung",
+        "style": "warning",
+        "rows": [
             [
                 {"name": "begruendung", "fullWidth": true}
             ]

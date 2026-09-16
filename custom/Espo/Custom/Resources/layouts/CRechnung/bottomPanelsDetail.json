@@ -22,5 +22,12 @@
         "dynamicLogicStyled": null,
         "sticked": false,
         "index": 2
+    },
+    "ampelstatuses": {
+        "dynamicLogicVisible": null,
+        "style": "default",
+        "dynamicLogicStyled": null,
+        "sticked": false,
+        "index": 3
     }
 }

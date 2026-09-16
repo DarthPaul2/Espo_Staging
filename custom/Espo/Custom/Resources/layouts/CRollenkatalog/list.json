@@ -16,6 +16,10 @@
         "width": 16
     },
     {
+        "name": "uebergeordneteRolleRollencode",
+        "width": 8
+    },
+    {
         "name": "description",
         "width": 16
     },

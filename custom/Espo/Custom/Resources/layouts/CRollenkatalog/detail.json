@@ -1,13 +1,16 @@
 [
     {
+        "customLabel": "Überblick",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                {"name": "rollencode"}
+                {"name": "rollencode"},
+                {"name": "aktiv"},
+                {"name": "uebergeordneteRolleRollencode"}
             ],
             [
-                {"name": "aktiv"},
-                {"name": "uebergeordneteRolle"}
+                {"name": "uebergeordneteRolle", "fullWidth": true}
             ],
             [
                 {"name": "description", "fullWidth": true}

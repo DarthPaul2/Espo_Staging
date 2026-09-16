@@ -1,23 +1,28 @@
 [
     {
         "name": "name",
-        "width": 30,
+        "width": 25,
         "link": true,
         "align": "left"
     },
     {
+        "name": "prioritaet",
+        "width": 10,
+        "align": "left"
+    },
+    {
         "name": "description",
-        "width": 40,
+        "width": 35,
         "align": "left"
     },
     {
         "name": "status",
-        "width": 15,
+        "width": 12,
         "noLabel": true,
         "align": "left"
     },
     {
         "name": "createdAt",
-        "width": 15
+        "width": 12
     }
 ]

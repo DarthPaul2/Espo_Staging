@@ -1,7 +1,29 @@
 [
-    {"name": "vorgangsart"},
-    {"name": "betragVon", "width": 12},
-    {"name": "betragBis", "width": 12},
-    {"name": "erforderlicheRolle"},
-    {"name": "aktiv", "width": 8}
+    {
+        "name": "vorgangsart",
+        "width": 25,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "betragVon",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "betragBis",
+        "width": 12,
+        "align": "left"
+    },
+    {
+        "name": "erforderlicheRolle"
+    },
+    {
+        "name": "erforderlicheRolleRollencode",
+        "width": 8
+    },
+    {
+        "name": "aktiv",
+        "width": 8
+    }
 ]

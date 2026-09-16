@@ -77,7 +77,8 @@
         "buchungsjournale": "Buchungsjournale",
         "ausgleiche": "Ausgleiche",
         "storniertVon": "Storniert von",
-        "bankbewegungen": "Bankbewegungen"
+        "bankbewegungen": "Bankbewegungen",
+        "ampelstatuses": "Prüfergebnis (Ampel)"
     },
     "options": {
         "status": {

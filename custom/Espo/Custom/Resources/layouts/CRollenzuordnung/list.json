@@ -1,6 +1,20 @@
 [
-    {"name": "inhaber"},
-    {"name": "rolle"},
-    {"name": "status", "width": 10},
-    {"name": "gueltigVon", "width": 12}
+    {
+        "name": "inhaber"
+    },
+    {
+        "name": "rolleRollencode",
+        "width": 8
+    },
+    {
+        "name": "rolle"
+    },
+    {
+        "name": "status",
+        "width": 10
+    },
+    {
+        "name": "gueltigVon",
+        "width": 12
+    }
 ]

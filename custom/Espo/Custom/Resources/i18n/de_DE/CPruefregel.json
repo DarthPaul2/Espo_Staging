@@ -19,7 +19,9 @@
         "statuswechselBlockieren": "Statuswechsel blockieren",
         "uebersteuerbar": "Übersteuerbar",
         "uebersteuerungsRolle": "Übersteuerungsrolle",
+        "uebersteuerungsRolleRollencode": "Code",
         "zustaendigeRolle": "Zuständige Rolle",
+        "zustaendigeRolleRollencode": "Code",
         "aufgabenVorlage": "Aufgabenvorlage",
         "eskalationsregel": "Eskalationsregel",
         "meldungstext": "Meldungstext",
@@ -33,7 +35,7 @@
         "zielEntitaet": "Name der Espo-Entity, auf die die Regel wirkt, z. B. 'CAngebot'.",
         "zielStatus": "Der Statuswert, der geprüft wird, z. B. 'freigegeben'.",
         "statusFeld": "Welches Feld auf der Ziel-Entität den geprüften Status trägt (Standard: 'status'). Manche Entities haben mehrere Statusfelder, z. B. CRechnung.status vs. CRechnung.buchhaltungStatus.",
-        "kriteriumTyp": "MUST/EXTERNAL_MUST = harter Blocker, SHOULD/INFO = Warnung ohne Blockade.",
+        "kriteriumTyp": "Pflicht/Zwingend = harter Blocker, Empfehlung/Information = Warnung ohne Blockade.",
         "teilampel": "Welche der 8 Teilampeln (Bereitschafts-Dimensionen) diese Regel beeinflusst.",
         "pruefservice": "Welcher der 14 Prüfservices der RuleSet-Engine diese Regel auswertet.",
         "feldOderBeziehung": "Welches Feld oder welche Relation auf der Ziel-Entität geprüft wird.",
@@ -50,5 +52,45 @@
     "links": {
         "uebersteuerungsRolle": "Übersteuerungsrolle",
         "zustaendigeRolle": "Zuständige Rolle"
+    },
+    "options": {
+        "kriteriumTyp": {
+            "MUST": "Pflicht (intern)",
+            "EXTERNAL_MUST": "Zwingend (extern)",
+            "SHOULD": "Empfehlung",
+            "INFO": "Information"
+        },
+        "teilampel": {
+            "technicalReadiness": "Technische Bereitschaft",
+            "personnelReadiness": "Personal-Bereitschaft",
+            "qualificationReadiness": "Qualifikations-Bereitschaft",
+            "materialReadiness": "Material-Bereitschaft",
+            "documentationReadiness": "Dokumentations-Bereitschaft",
+            "customerReadiness": "Kunden-Bereitschaft",
+            "commercialReadiness": "Kaufmännische Bereitschaft",
+            "safetyReadiness": "Sicherheits-Bereitschaft"
+        },
+        "pruefservice": {
+            "checkRequiredFields": "Pflichtfelder prüfen",
+            "checkRoleAssignment": "Rollenbesetzung prüfen",
+            "checkSubstitution": "Vertretung prüfen",
+            "checkTechnicianQualification": "Techniker-Qualifikation prüfen",
+            "checkAvailability": "Verfügbarkeit prüfen",
+            "checkMaterialReadiness": "Material-Bereitschaft prüfen",
+            "checkDocumentCompleteness": "Dokumenten-Vollständigkeit prüfen",
+            "checkApproval": "Freigabe prüfen",
+            "checkBudget": "Budget prüfen",
+            "checkCustomerConfirmation": "Kundenbestätigung prüfen",
+            "checkOpenCriticalItems": "Kritische offene Punkte prüfen",
+            "checkInvoiceReadiness": "Rechnungs-Bereitschaft prüfen",
+            "checkProjectCloseReadiness": "Projekt-Abschluss-Bereitschaft prüfen",
+            "checkDataQuality": "Datenqualität prüfen"
+        },
+        "operator": {
+            "existiert": "existiert",
+            "existiertNicht": "existiert nicht",
+            "enthaltenIn": "enthalten in",
+            "nichtEnthaltenIn": "nicht enthalten in"
+        }
     }
 }

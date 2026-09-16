@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\CAusgleich;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 // Что это:
 // запрещает обычное редактирование Ausgleich,
@@ -53,6 +53,6 @@ class PreventEditIfZahlungFestgeschrieben
             return;
         }
 
-        throw new Forbidden('Ausgleiche einer festgeschriebenen Zahlung dürfen nicht mehr bearbeitet werden.');
+        throw new BadRequest('Ausgleiche einer festgeschriebenen Zahlung dürfen nicht mehr bearbeitet werden.');
     }
 }

@@ -100,11 +100,27 @@
             "isCustom": true,
             "tooltip": true
         },
+        "anfordernbeRolleRollencode": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "anfordernbeRolle",
+            "field": "rollencode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
         "erforderlicheRolle": {
             "type": "link",
             "readOnly": true,
             "isCustom": true,
             "tooltip": true
+        },
+        "erforderlicheRolleRollencode": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "erforderlicheRolle",
+            "field": "rollencode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
         },
         "freigeberUser": {
             "type": "link",

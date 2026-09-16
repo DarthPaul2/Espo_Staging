@@ -6,6 +6,10 @@
                 {"name": "status"}
             ],
             [
+                {"name": "prioritaet"},
+                false
+            ],
+            [
                 {"name": "frage", "fullWidth": true}
             ],
             [

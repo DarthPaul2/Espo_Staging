@@ -430,6 +430,42 @@
             color: #4b5563;
         }
 
+        .kb-cockpit .kb-alle-offene-rechnungen-box {
+            flex: 0 0 auto;
+            width: 260px;
+            padding: 14px 20px;
+            border: 1px solid #fbcfe8;
+            border-left: 7px solid #db2777;
+            border-right: 7px solid #db2777;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #fdf2f8 0%, #ffffff 100%);
+            box-shadow: 0 3px 12px rgba(219, 39, 119, 0.12);
+            text-align: center;
+        }
+
+        .kb-cockpit .kb-alle-offene-rechnungen-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #9d174d;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .kb-cockpit .kb-alle-offene-rechnungen-value {
+            font-size: 26px;
+            line-height: 1.1;
+            font-weight: 800;
+            color: #be185d;
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+
+        .kb-cockpit .kb-alle-offene-rechnungen-formula {
+            font-size: 11px;
+            color: #4b5563;
+        }
+
 
         /* Что это:
         Визуально отделяет operative Hinweise от periodischen Kennzahlen.
@@ -579,6 +615,16 @@
                 <div class="kb-alle-ausgestellt-label">Alle ausgestellten Rechnungen (brutto)</div>
                 <div class="kb-alle-ausgestellt-value" data-kpi="alle-ausgestellt">0,00 €</div>
                 <div class="kb-alle-ausgestellt-formula">Unabhängig davon, ob festgeschrieben oder nicht</div>
+            </div>
+            <div class="kb-alle-offene-rechnungen-box">
+                <div class="kb-alle-offene-rechnungen-label">Offene Rechnungen gesamt (brutto)</div>
+                <div class="kb-alle-offene-rechnungen-value" data-kpi="alle-offene-rechnungen">0,00 €</div>
+                <div class="kb-alle-offene-rechnungen-formula">
+                    Summe aller unbezahlten Rechnungen seit 2024, auch nicht festgeschriebene.
+                    Kein Zeitraumfilter, kein Altersfilter.<br>
+                    Kein Buchhaltungswert &mdash; nicht identisch mit "Offene Forderungen" unten
+                    (nur festgeschriebene Rechnungen).
+                </div>
             </div>
             <div class="kb-expected-liquidity-box">
                 <div class="kb-expected-liquidity-label">Liquiditätsbild</div>

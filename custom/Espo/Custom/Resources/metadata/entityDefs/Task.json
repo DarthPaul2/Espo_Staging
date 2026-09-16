@@ -8,6 +8,9 @@
         "cWartung": {
             "type": "link"
         },
+        "cServicevorgang": {
+            "type": "link"
+        },
         "parent": {
             "entityList": [
                 "Account",
@@ -15,7 +18,8 @@
                 "Lead",
                 "Opportunity",
                 "Case",
-                "CWartung"
+                "CWartung",
+                "CServicevorgang"
             ]
         },
         "collaborators": {
@@ -99,6 +103,13 @@
             "type": "belongsTo",
             "foreign": "tasks",
             "entity": "CWartung",
+            "audited": false,
+            "isCustom": true
+        },
+        "cServicevorgang": {
+            "type": "belongsTo",
+            "foreign": "tasks",
+            "entity": "CServicevorgang",
             "audited": false,
             "isCustom": true
         },

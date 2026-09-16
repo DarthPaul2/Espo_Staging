@@ -1,21 +1,37 @@
 [
     {
+        "customLabel": "Regel",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                {"name": "aktiv"}
-            ],
+                {"name": "aktiv"},
+                false,
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Wann gilt diese Schwelle",
+        "style": "primary",
+        "rows": [
             [
                 {"name": "vorgangsart"},
-                {"name": "projektbezogen"}
-            ],
-            [
-                {"name": "erforderlicheRolle"},
-                false
-            ],
-            [
+                {"name": "projektbezogen"},
                 {"name": "betragVon"},
                 {"name": "betragBis"}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Erforderliche Rolle",
+        "style": "success",
+        "rows": [
+            [
+                {"name": "erforderlicheRolle"},
+                {"name": "erforderlicheRolleRollencode"},
+                false,
+                false
             ],
             [
                 {"name": "beschreibung", "fullWidth": true}

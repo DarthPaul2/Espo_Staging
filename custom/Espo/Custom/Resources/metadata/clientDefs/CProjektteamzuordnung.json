@@ -4,5 +4,9 @@
         "onlyMy"
     ],
     "color": "#d47309",
-    "iconClass": "fas fa-people-line"
+    "iconClass": "fas fa-people-line",
+    "recordViews": {
+        "edit": "custom:views/c-projektteamzuordnung/record/edit",
+        "editSmall": "custom:views/c-projektteamzuordnung/record/edit"
+    }
 }

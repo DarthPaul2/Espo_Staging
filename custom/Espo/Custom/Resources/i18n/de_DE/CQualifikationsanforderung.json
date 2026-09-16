@@ -15,13 +15,13 @@
     "tooltips": {
         "bezugEntitaet": "Entity-Typ des Auftrags/Vorgangs, für den diese Qualifikation benötigt wird (z. B. CAuftrag).",
         "bezugId": "ID des Auftrags/Vorgangs.",
-        "anforderungsTyp": "MUST/EXTERNAL_MUST = fehlende Qualifikation blockiert (EXTERNAL_MUST auch bei internem Ablauf hart). SHOULD = nur Warnung."
+        "anforderungsTyp": "Pflicht/Zwingend = fehlende Qualifikation blockiert (Zwingend/extern auch bei Ablauf hart). Empfehlung = nur Warnung."
     },
     "options": {
         "anforderungsTyp": {
-            "MUST": "MUST",
-            "EXTERNAL_MUST": "EXTERNAL_MUST (gesetzlich/behördlich/Hersteller/Kunde)",
-            "SHOULD": "SHOULD"
+            "MUST": "Pflicht (intern)",
+            "EXTERNAL_MUST": "Zwingend (extern)",
+            "SHOULD": "Empfehlung"
         }
     },
     "links": {

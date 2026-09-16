@@ -1,6 +1,7 @@
 {
     "fields": {
         "cWartung": "Wartung",
+        "cServicevorgang": "Servicevorgang",
         "cRepeatEnabled": "Wiederholen",
         "cRepeatEvery": "Wiederholen: Intervall",
         "cRepeatUnit": "Wiederholen: Einheit",
@@ -12,6 +13,7 @@
     },
     "links": {
         "cWartung": "Wartung",
+        "cServicevorgang": "Servicevorgang",
         "ownerRolle": "Owner-Rolle"
     },
     "options": {

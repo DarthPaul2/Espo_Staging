@@ -1,4 +1,5 @@
 [
-    {"name": "zielEntitaet"},
-    {"name": "gesamtampel", "width": 12}
+    {"name": "zielEntitaet", "link": true, "width": 15},
+    {"name": "gesamtampel", "width": 12},
+    {"name": "begruendung"}
 ]

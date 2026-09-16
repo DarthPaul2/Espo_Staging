@@ -1,5 +1,16 @@
 [
-    {"name": "name"},
-    {"name": "termin", "width": 12},
-    {"name": "status", "width": 15}
+    {
+        "name": "name",
+        "width": 40,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "termin",
+        "width": 12
+    },
+    {
+        "name": "status",
+        "width": 15
+    }
 ]

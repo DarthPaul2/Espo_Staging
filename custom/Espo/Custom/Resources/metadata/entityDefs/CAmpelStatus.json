@@ -74,7 +74,9 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true,
+            "default": "GREEN"
         },
         "technicalReadiness": {
             "type": "enum",
@@ -93,7 +95,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "personnelReadiness": {
             "type": "enum",
@@ -112,7 +115,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "qualificationReadiness": {
             "type": "enum",
@@ -131,7 +135,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "materialReadiness": {
             "type": "enum",
@@ -150,7 +155,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "documentationReadiness": {
             "type": "enum",
@@ -169,7 +175,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "customerReadiness": {
             "type": "enum",
@@ -188,7 +195,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "commercialReadiness": {
             "type": "enum",
@@ -207,7 +215,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "safetyReadiness": {
             "type": "enum",
@@ -226,7 +235,8 @@
                 "RED": "danger",
                 "GREY": "default"
             },
-            "readOnly": true
+            "readOnly": true,
+            "displayAsLabel": true
         },
         "begruendung": {
             "type": "text",
@@ -247,6 +257,13 @@
             "readOnly": true
         },
         "projekt": {
+            "type": "link",
+            "required": false,
+            "readOnly": true,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "rechnung": {
             "type": "link",
             "required": false,
             "readOnly": true,
@@ -276,6 +293,12 @@
         "projekt": {
             "type": "belongsTo",
             "entity": "CProjekt",
+            "foreign": "ampelstatuses",
+            "isCustom": true
+        },
+        "rechnung": {
+            "type": "belongsTo",
+            "entity": "CRechnung",
             "foreign": "ampelstatuses",
             "isCustom": true
         }
@@ -313,6 +336,12 @@
         "projekt": {
             "columns": [
                 "projektId",
+                "deleted"
+            ]
+        },
+        "rechnung": {
+            "columns": [
+                "rechnungId",
                 "deleted"
             ]
         },

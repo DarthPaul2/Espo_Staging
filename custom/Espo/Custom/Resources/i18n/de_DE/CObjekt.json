@@ -25,6 +25,7 @@
     },
     "links": {
         "account": "Account",
+        "servicevorgaenge": "Servicevorgänge",
         "angebots": "Angebots",
         "rechnungs": "Rechnungs",
         "contact": "Contact",

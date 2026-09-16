@@ -178,7 +178,7 @@ define('custom:views/c-stundenbericht/record/detail', ['views/record/detail'], f
                 materialien: []
             };
 
-            // --- Techniker[0..4] ---
+            // --- Техniker[0..4] ---
             for (let i = 1; i <= 5; i++) {
                 const datum = model.get(`techniker${i}Datum`);
                 const fahrzeit = model.get(`techniker${i}Fahrzeit`);

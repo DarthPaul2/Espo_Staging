@@ -312,6 +312,13 @@
             "entity": "CProjekt",
             "audited": false,
             "isCustom": true
+        },
+        "servicevorgaenge": {
+            "type": "hasMany",
+            "foreign": "bezugAuftrag",
+            "entity": "CServicevorgang",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

@@ -1,0 +1,110 @@
+[
+    {
+        "customLabel": "Überblick",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "name"},
+                {"name": "vorgangsart"},
+                {"name": "status"},
+                {"name": "prioritaet"}
+            ],
+            [
+                {"name": "account"},
+                {"name": "objekt"},
+                {"name": "anlageTyp"},
+                {"name": "meldungsart"}
+            ],
+            [
+                {"name": "wartung"},
+                {"name": "geplanterTermin"},
+                {"name": "dringlichkeitsangabeKunde"},
+                {"name": "technikers"}
+            ],
+            [
+                {"name": "problem", "fullWidth": true}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Notdienst",
+        "style": "danger",
+        "rows": [
+            [
+                {"name": "anruferName"},
+                {"name": "anruferTelefon"},
+                {"name": "reaktionszeitMinuten"},
+                false
+            ],
+            [
+                {"name": "alarmierungAm"},
+                {"name": "alarmBestaetigtAm"},
+                {"name": "alarmEskaliert"},
+                false
+            ],
+            [
+                {"name": "rueckrufAm"},
+                {"name": "rueckrufDurch"},
+                {"name": "entscheidung"},
+                {"name": "kundensperreErkannt"}
+            ],
+            [
+                {"name": "kundensperreEntscheidung", "fullWidth": true}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Reklamation",
+        "style": "warning",
+        "rows": [
+            [
+                {"name": "reklamationSystemisch"},
+                {"name": "reklamationFrist"},
+                false,
+                false
+            ],
+            [
+                {"name": "reklamationUrsache", "fullWidth": true}
+            ],
+            [
+                {"name": "reklamationMassnahme", "fullWidth": true}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Gewährleistung",
+        "style": "primary",
+        "rows": [
+            [
+                {"name": "bezugAuftrag"},
+                {"name": "abnahmeDatum"},
+                {"name": "berechtigt"},
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Wartungsmangel",
+        "style": "primary",
+        "rows": [
+            [
+                {"name": "mangelFestgestellt"},
+                {"name": "erzeugtesAngebot"},
+                false,
+                false
+            ],
+            [
+                {"name": "mangelBeschreibung", "fullWidth": true}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Notizen",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "description", "fullWidth": true}
+            ]
+        ]
+    }
+]

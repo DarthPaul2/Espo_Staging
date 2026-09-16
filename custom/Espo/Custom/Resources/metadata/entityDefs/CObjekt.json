@@ -142,6 +142,13 @@
             "audited": false,
             "isCustom": true
         },
+        "servicevorgaenge": {
+            "type": "hasMany",
+            "foreign": "objekt",
+            "entity": "CServicevorgang",
+            "audited": false,
+            "isCustom": true
+        },
         "melderQuartals": {
             "type": "hasMany",
             "foreign": "objekt",

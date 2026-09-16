@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\CZahlung;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 use Espo\Core\Utils\Log;
 
 // Что это:
@@ -32,7 +32,7 @@ class PreventDeleteIfFestgeschrieben
 
         // 1) Festgeschriebene Zahlung löschen запрещено
         if ($status === 'festgeschrieben') {
-            throw new Forbidden('Festgeschriebene Zahlungen dürfen nicht gelöscht werden.');
+            throw new BadRequest('Festgeschriebene Zahlungen dürfen nicht gelöscht werden.');
         }
 
         // 2) Если Zahlung ещё НЕ festgeschrieben, то перед удалением

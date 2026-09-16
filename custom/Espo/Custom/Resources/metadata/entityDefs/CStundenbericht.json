@@ -552,6 +552,12 @@
         },
         "objektAuswahl": {
             "type": "link"
+        },
+        "servicevorgang": {
+            "type": "link",
+            "required": false,
+            "isCustom": true,
+            "tooltip": true
         }
     },
     "links": {
@@ -630,6 +636,13 @@
             "type": "belongsTo",
             "foreign": "stundenberichts",
             "entity": "CObjekt",
+            "audited": false,
+            "isCustom": true
+        },
+        "servicevorgang": {
+            "type": "belongsTo",
+            "foreign": "stundenberichte",
+            "entity": "CServicevorgang",
             "audited": false,
             "isCustom": true
         }

@@ -374,6 +374,7 @@ Espo.define('custom:views/dashboard/buchhaltung-cockpit', [
             this.setKpi_($root, 'steuer', kpi.steuerSaldo, true, true);
             this.setKpi_($root, 'fakturiert', kpi.fakturiertBrutto);
             this.setKpi_($root, 'alle-ausgestellt', kpi.alleAusgestelltBrutto);
+            this.setKpi_($root, 'alle-offene-rechnungen', kpi.alleOffenenRechnungenBrutto);
             this.setKpi_($root, 'liquiditaet', kpi.liquiditaetsbewegung, true);
             this.setKpi_($root, 'erwartete-liquiditaet', liquiditaetsbild, true);
         },

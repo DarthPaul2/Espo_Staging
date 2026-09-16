@@ -14,14 +14,19 @@ class WartungUpdate
 
     /**
      * После сохранения задачи проверяем: связана ли она с CWartung.
-     * Если да — и задача завершена, обновляем данные в CWartung.
+     * Если да — и задача завершена, закрываем текущий Wartung-Zyklus.
+     *
+     * Die eigentliche Berechnung von naechsteWartung (unter Beachtung von
+     * regelModus/vorwarnTage) übernimmt AUSSCHLIESSLICH CWartung::beforeSave —
+     * hier wird bewusst NICHT mehr selbst gerechnet (15.09.2026: doppelte,
+     * abweichende Berechnung hier führte zu falschen Daten bei regelModus
+     * "abStartdatum").
      */
     public function afterSave(Entity $entity, array $options = []): void
     {
         try {
-            // 1️⃣ Проверяем: не завершена ли задача
-            $status = $entity->get('status');
-            if (!in_array($status, ['Completed', 'Erledigt', 'Abgeschlossen'])) {
+            // 1️⃣ Nur bei echtem Abschluss reagieren (Task.status-Enum: siehe Task.json)
+            if ($entity->get('status') !== 'Completed') {
                 return;
             }
 
@@ -38,30 +43,18 @@ class WartungUpdate
                 return;
             }
 
-            // 4️⃣ Обновляем даты
-            $letzte = new \DateTime();
-            $wartung->set('letzteWartung', $letzte->format('Y-m-d'));
-
-            // Расчёт следующей даты по интервалу
-            $intervall = $wartung->get('intervall') ?? 'jaehrlich';
-            $naechste = clone $letzte;
-            switch ($intervall) {
-                case 'monatlich':     $naechste->modify('+1 month'); break;
-                case 'quartal':       $naechste->modify('+3 months'); break;
-                case 'halbjaehrlich': $naechste->modify('+6 months'); break;
-                case 'jaehrlich':     $naechste->modify('+1 year');  break;
-            }
-
-            $wartung->set('naechsteWartung', $naechste->format('Y-m-d'));
-
-            // Меняем статусы
+            // 4️⃣ Zyklus schließen: letzteWartung=heute, naechsteWartung leeren
+            // (damit CWartung::beforeSave sie korrekt neu berechnet) und beendet setzen.
+            $wartung->set('letzteWartung', (new \DateTime())->format('Y-m-d'));
+            $wartung->set('naechsteWartung', null);
             $wartung->set('status', 'beendet');
-            $wartung->set('faelligkeitsStatus', 'beendet');
 
-            // Сохраняем обновлённую Wartung
             $this->em->saveEntity($wartung);
 
-            $this->log->info("[WartungUpdate] ✅ Wartung {$wartungId} updated: beendet, nächste={$naechste->format('Y-m-d')}");
+            $this->log->info(
+                "[WartungUpdate] ✅ Wartung {$wartungId} geschlossen: beendet, "
+                . "naechsteWartung=" . $wartung->get('naechsteWartung')
+            );
 
         } catch (\Throwable $e) {
             $this->log->error('[WartungUpdate] Exception: ' . $e->getMessage());

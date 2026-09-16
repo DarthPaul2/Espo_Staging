@@ -4,5 +4,16 @@
         "onlyMy"
     ],
     "color": "#f27508",
-    "iconClass": "fas fa-diagram-project"
+    "iconClass": "fas fa-diagram-project",
+    "recordViews": {
+        "detail": "custom:views/c-projekt/record/detail"
+    },
+    "relationshipPanels": {
+        "projektteamzuordnungen": {
+            "unlinkDisabled": true
+        },
+        "meilensteine": {
+            "unlinkDisabled": true
+        }
+    }
 }

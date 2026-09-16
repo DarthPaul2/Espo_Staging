@@ -241,6 +241,14 @@
             "foreign": "user",
             "entity": "CPersonalakte",
             "isCustom": true
+        },
+        "servicevorgaengeAlsTechniker": {
+            "type": "hasMany",
+            "entity": "CServicevorgang",
+            "foreign": "technikers",
+            "relationName": "cServicevorgangTechniker",
+            "audited": false,
+            "isCustom": true
         }
     }
 }

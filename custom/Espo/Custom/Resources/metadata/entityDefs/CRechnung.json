@@ -593,6 +593,12 @@
             "entity": "CBankbewegung",
             "audited": false,
             "isCustom": true
+        },
+        "ampelstatuses": {
+            "type": "hasMany",
+            "entity": "CAmpelStatus",
+            "foreign": "rechnung",
+            "isCustom": true
         }
     },
     "collection": {

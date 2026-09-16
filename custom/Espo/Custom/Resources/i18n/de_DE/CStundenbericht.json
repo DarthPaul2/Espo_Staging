@@ -98,7 +98,8 @@
         "techniker5Arbeitszeit": "Arbeitszeit5",
         "technikerUnterschrift": "Techniker Unterschrift",
         "kundeUnterschrift": "Kunde Unterschrift",
-        "objektAuswahl": "Objekt auswählen"
+        "objektAuswahl": "Objekt auswählen",
+        "servicevorgang": "Servicevorgang"
     },
     "options": {
         "status": {
@@ -127,6 +128,7 @@
         "stundenberichteTechniker4": "Stundenberichte (Techniker 4)",
         "stundenberichteTechniker5": "Stundenberichte (Techniker 5)",
         "stundenbericht": "Stundenbericht",
-        "objektAuswahl": "Objekt auswählen"
+        "objektAuswahl": "Objekt auswählen",
+        "servicevorgang": "Servicevorgang"
     }
 }

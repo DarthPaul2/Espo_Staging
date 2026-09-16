@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\CEingangsrechnung;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 // Зачем:
 // Предотвращает сохранение счёта, если в базе уже есть незаменённый (не сторнированный)
@@ -74,7 +74,7 @@ class CheckDuplicates
             ? $duplicate['eingangsrechnungsnummer']
             : $duplicate['id'];
 
-        throw new Forbidden(
+        throw new BadRequest(
             'Es existiert bereits ein Eingangsrechnungs-Datensatz mit identischen Daten '
             . '(Lieferant, Rechnungsnummer, Belegdatum, Betrag Brutto): ' . $nr . '. '
             . 'Bitte prüfen Sie, ob die Rechnung bereits erfasst wurde.'

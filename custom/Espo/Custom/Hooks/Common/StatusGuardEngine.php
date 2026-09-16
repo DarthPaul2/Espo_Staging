@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\Common;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 use Espo\Custom\Core\RuleSet\RuleEvaluator;
 
 /**
@@ -77,7 +77,10 @@ class StatusGuardEngine
         }
 
         if (count($violations) > 0) {
-            throw new Forbidden(implode(' | ', $violations));
+            // BadRequest statt Forbidden (403 "Zugriff verweigert"): das ist eine
+            // Geschaeftsregel-Blockade, kein Rechteproblem. Gleiche Wahl wie in
+            // CRechnung/PreventEditAfterFestschreibung.php fuer denselben Fall.
+            throw new BadRequest(implode(' | ', $violations));
         }
     }
 

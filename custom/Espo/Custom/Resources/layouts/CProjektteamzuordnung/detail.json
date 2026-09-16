@@ -1,17 +1,13 @@
 [
     {
+        "customLabel": "Zuordnung",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                false
-            ],
-            [
                 {"name": "projekt"},
-                {"name": "mitarbeiter"}
-            ],
-            [
-                {"name": "teamrolle"},
-                false
+                {"name": "mitarbeiter"},
+                {"name": "teamrolle"}
             ]
         ]
     }

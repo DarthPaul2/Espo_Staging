@@ -294,6 +294,20 @@
             "entity": "CObjekt",
             "audited": false,
             "isCustom": true
+        },
+        "servicevorgaenge": {
+            "type": "hasMany",
+            "foreign": "wartung",
+            "entity": "CServicevorgang",
+            "audited": false,
+            "isCustom": true
+        },
+        "formulare": {
+            "type": "hasMany",
+            "foreign": "cWartung",
+            "entity": "CFormular",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

@@ -1,50 +1,80 @@
 [
     {
+        "customLabel": "Regel-Identität",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                false
-            ],
-            [
                 {"name": "regelcode"},
-                {"name": "prozesscode"}
+                {"name": "prozesscode"},
+                false
             ],
             [
                 {"name": "zielEntitaet"},
-                {"name": "zielStatus"}
-            ],
-            [
                 {"name": "statusFeld"},
+                {"name": "zielStatus"},
                 false
-            ],
+            ]
+        ]
+    },
+    {
+        "customLabel": "Was wird geprüft",
+        "style": "primary",
+        "rows": [
             [
                 {"name": "kriteriumTyp"},
-                {"name": "teilampel"}
+                {"name": "teilampel"},
+                false,
+                false
             ],
             [
                 {"name": "pruefservice"},
-                {"name": "feldOderBeziehung"}
+                false,
+                false,
+                false
             ],
             [
+                {"name": "feldOderBeziehung"},
                 {"name": "operator"},
-                {"name": "erwarteterWert"}
-            ],
+                {"name": "erwarteterWert"},
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Blockierung & Übersteuerung",
+        "style": "danger",
+        "rows": [
             [
                 {"name": "statuswechselBlockieren"},
-                {"name": "uebersteuerbar"}
+                {"name": "uebersteuerbar"},
+                false,
+                false
             ],
             [
                 {"name": "uebersteuerungsRolle"},
-                {"name": "zustaendigeRolle"}
-            ],
+                {"name": "uebersteuerungsRolleRollencode"},
+                {"name": "zustaendigeRolle"},
+                {"name": "zustaendigeRolleRollencode"}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Gültigkeit",
+        "style": "default",
+        "rows": [
             [
                 {"name": "gueltigVon"},
-                {"name": "gueltigBis"}
-            ],
-            [
+                {"name": "gueltigBis"},
                 {"name": "version"},
                 false
-            ],
+            ]
+        ]
+    },
+    {
+        "customLabel": "Texte für Anwender",
+        "style": "success",
+        "rows": [
             [
                 {"name": "meldungstext", "fullWidth": true}
             ],

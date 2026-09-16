@@ -1,26 +1,36 @@
 [
     {
+        "customLabel": "Zuordnung",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                false
-            ],
-            [
-                {"name": "inhaber"},
-                {"name": "rolle"}
-            ],
-            [
-                {"name": "vertreter"},
-                {"name": "zweiteEskalation"}
-            ],
-            [
+                {"name": "status"},
                 {"name": "gueltigVon"},
                 {"name": "gueltigBis"}
             ],
             [
-                {"name": "status"},
+                {"name": "inhaber"},
+                {"name": "rolle"},
+                {"name": "rolleRollencode"},
                 false
-            ],
+            ]
+        ]
+    },
+    {
+        "customLabel": "Vertretung",
+        "style": "warning",
+        "rows": [
+            [
+                {"name": "vertreter"},
+                {"name": "zweiteEskalation"}
+            ]
+        ]
+    },
+    {
+        "customLabel": "Notizen",
+        "style": "default",
+        "rows": [
             [
                 {"name": "description", "fullWidth": true}
             ]

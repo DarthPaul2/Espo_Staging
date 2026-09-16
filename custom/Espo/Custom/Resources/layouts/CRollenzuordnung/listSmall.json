@@ -1,6 +1,7 @@
 [
     {"name": "inhaber"},
     {"name": "rolle"},
+    {"name": "rolleRollencode", "width": 8},
     {"name": "status", "width": 10},
     {"name": "gueltigVon", "width": 12}
 ]

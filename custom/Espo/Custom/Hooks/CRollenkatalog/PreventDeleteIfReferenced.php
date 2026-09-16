@@ -6,7 +6,7 @@ use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
 use Espo\ORM\Repository\Option\RemoveOptions;
 use Espo\Core\Hook\Hook\BeforeRemove;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 /**
  * Что это:
@@ -35,7 +35,7 @@ class PreventDeleteIfReferenced implements BeforeRemove
             ->count();
 
         if ($count > 0) {
-            throw new Forbidden(
+            throw new BadRequest(
                 'Diese Rolle wird noch von ' . $count . ' aktiver Rollenzuordnung referenziert und kann nicht gelöscht werden. ' .
                 'Bitte zuerst die Zuordnung(en) beenden (Status "inaktiv") oder die Rolle stattdessen auf "Aktiv" = nein setzen.'
             );

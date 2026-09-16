@@ -1,17 +1,16 @@
 [
     {
+        "customLabel": "Meilenstein",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
+                {"name": "projekt"},
+                {"name": "termin"},
                 {"name": "status"}
             ],
             [
-                {"name": "projekt"},
-                {"name": "termin"}
-            ],
-            [
-                {"name": "beschreibung"},
-                false
+                {"name": "beschreibung", "fullWidth": true}
             ]
         ]
     }

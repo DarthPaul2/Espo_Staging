@@ -8,6 +8,7 @@
         "rollencode": "Rollencode",
         "aktiv": "Aktiv",
         "uebergeordneteRolle": "Übergeordnete Rolle",
+        "uebergeordneteRolleRollencode": "Code",
         "untergeordneteRollen": "Untergeordnete Rollen"
     },
     "tooltips": {

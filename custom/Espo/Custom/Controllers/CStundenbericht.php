@@ -2,6 +2,7 @@
 
 namespace Espo\Custom\Controllers;
 
+use Espo\Core\Exceptions\BadRequest;
 use Espo\Core\Templates\Controllers\Base;
 
 class CStundenbericht extends Base

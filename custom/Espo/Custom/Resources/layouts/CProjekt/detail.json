@@ -1,41 +1,58 @@
 [
     {
+        "customLabel": "Überblick",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                {"name": "status"}
-            ],
-            [
+                {"name": "status"},
                 {"name": "auftrag"},
                 {"name": "projektleitung"}
-            ],
+            ]
+        ]
+    },
+    {
+        "customLabel": "Termin & Technik",
+        "style": "primary",
+        "rows": [
             [
                 {"name": "einsatzTermin"},
-                {"name": "terminBestaetigt"}
-            ],
-            [
+                {"name": "terminBestaetigt"},
                 {"name": "technischeAuftragspruefungOk"},
-                {"name": "technikerVerfuegbar"}
+                false
             ],
             [
+                {"name": "technikerVerfuegbar"},
                 {"name": "technikerQualifikationStatus"},
-                {"name": "materialVerfuegbarkeitProzent"}
-            ],
+                false,
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Kunde, Material & Dokumentation",
+        "style": "success",
+        "rows": [
             [
+                {"name": "kundenzugangBestaetigt"},
                 {"name": "revisionsplanAktuell"},
-                {"name": "kundenzugangBestaetigt"}
-            ],
+                {"name": "materialVerfuegbarkeitProzent"},
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Budget & Stunden (optional, aktuell ohne Prüflogik)",
+        "style": "warning",
+        "rows": [
             [
                 {"name": "budgetGeplant"},
-                {"name": "budgetIst"}
-            ],
-            [
+                {"name": "budgetIst"},
                 {"name": "stundenGeplant"},
                 {"name": "stundenIst"}
             ],
             [
-                {"name": "risiken"},
-                false
+                {"name": "risiken", "fullWidth": true}
             ]
         ]
     }

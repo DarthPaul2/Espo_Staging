@@ -110,7 +110,7 @@ class AmpelAggregationEngine
                     $worst = $farbe;
                 }
                 if ($eval['message'] !== null) {
-                    $begruendungen[] = "[$teilampel] " . $eval['message'];
+                    $begruendungen[] = $eval['message'];
                 }
 
                 $version = (int) ($rule->get('version') ?? 0);
@@ -142,10 +142,12 @@ class AmpelAggregationEngine
             $data[$t] = $teilampelResult[$t] ?? '';
         }
 
-        // Zusaetzliche echte belongsTo-Verknuepfung fuer den Sonderfall CProjekt (auf Wunsch
-        // von Pavel, 10.09.2026), damit CAmpelStatus als Panel auf der CProjekt-Detailseite
-        // erscheint — der generische zielEntitaet/zielId-Mechanismus bleibt unveraendert.
+        // Zusaetzliche echte belongsTo-Verknuepfung fuer CProjekt (10.09.2026) und CRechnung
+        // (14.09.2026, gleicher Grund: Pavel wollte den Ampel-Stand sichtbar auf der
+        // Detailseite, nicht nur in der DB) — der generische zielEntitaet/zielId-Mechanismus
+        // bleibt fuer alle anderen Entity-Typen unveraendert.
         $data['projektId'] = $entity->getEntityType() === 'CProjekt' ? $entity->getId() : null;
+        $data['rechnungId'] = $entity->getEntityType() === 'CRechnung' ? $entity->getId() : null;
 
         // Bekannte, aktuell nicht ausgeloeste Einschraenkung (Phase 7, PHASE7_TECHSPEC.md):
         // CAmpelStatus hat einen Unique-Index nur auf (zielEntitaet, zielId), nicht zusaetzlich

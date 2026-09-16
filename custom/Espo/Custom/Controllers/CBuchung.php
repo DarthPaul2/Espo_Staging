@@ -59,6 +59,7 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         $kpi = $this->loadKpi($pdo, $whereDate, $sqlParams);
         $kpi['fakturiertBrutto'] = $this->loadFakturiertBrutto($pdo, $dateFrom, $dateTo);
         $kpi['alleAusgestelltBrutto'] = $this->loadAlleAusgestelltBrutto($pdo, $dateFrom, $dateTo);
+        $kpi['alleOffenenRechnungenBrutto'] = $this->loadAlleOffenenRechnungenBrutto($pdo);
         $monthly = $this->loadMonthly($pdo, $whereDate, $sqlParams);
         $konten = $this->loadKonten($pdo, $whereDate, $sqlParams);
         $checks = $this->loadChecks($pdo, $whereDate, $sqlParams);
@@ -875,6 +876,36 @@ class CBuchung extends \Espo\Core\Templates\Controllers\Base
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return (float) ($row['total'] ?? 0);
+    }
+
+    /**
+     * Что это:
+     * Gesamtsumme aller noch offenen (unbezahlten) Rechnungen (brutto),
+     * unabhängig vom Buchhaltungsstatus (festgeschrieben, freigabe, entwurf).
+     *
+     * Зачем:
+     * Die Kachel "Offene Forderungen" zählt nur festgeschriebene Rechnungen
+     * (Konto 1200), weil sie an das Journal gebunden ist. Rechnungen, die
+     * bereits an Kunden verschickt wurden (status = 'offen'), aber
+     * buchhalterisch noch nicht festgeschrieben sind, fehlen dort komplett.
+     * Diese Kennzahl zeigt der Geschäftsführung die tatsächliche offene
+     * Summe aus allen Rechnungen, damit sie nicht unterschätzt wird.
+     *
+     * Aktueller Stand (kein Zeitraumfilter), analog zu "Offene Forderungen".
+     */
+    private function loadAlleOffenenRechnungenBrutto(\PDO $pdo): float
+    {
+        $sql = "
+            SELECT ROUND(COALESCE(SUM(restbetrag_offen), 0), 2) AS total
+            FROM c_rechnung
+            WHERE deleted = 0
+              AND IFNULL(ist_storniert, 0) = 0
+              AND status IN ('offen', 'teilweise_bezahlt')
+        ";
+
+        $row = $pdo->query($sql)->fetch(\PDO::FETCH_ASSOC);
 
         return (float) ($row['total'] ?? 0);
     }

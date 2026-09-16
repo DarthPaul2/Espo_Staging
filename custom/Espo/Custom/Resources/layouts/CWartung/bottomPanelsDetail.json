@@ -10,5 +10,11 @@
     },
     "werkzeugs": {
         "index": 2
+    },
+    "servicevorgaenge": {
+        "index": 3
+    },
+    "formulare": {
+        "index": 4
     }
 }

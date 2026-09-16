@@ -1,21 +1,34 @@
 [
     {
+        "customLabel": "Wer & was",
+        "style": "default",
         "rows": [
             [
                 {"name": "name"},
-                {"name": "eigenerStatus"}
-            ],
-            [
                 {"name": "mitarbeiter"},
-                {"name": "qualifikation"}
-            ],
+                {"name": "qualifikation"},
+                false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Gültigkeit",
+        "style": "primary",
+        "rows": [
             [
                 {"name": "gueltigVon"},
-                {"name": "gueltigBis"}
-            ],
-            [
-                {"name": "nachweisDokument"},
+                {"name": "gueltigBis"},
+                {"name": "eigenerStatus"},
                 false
+            ]
+        ]
+    },
+    {
+        "customLabel": "Nachweis",
+        "style": "default",
+        "rows": [
+            [
+                {"name": "nachweisDokument", "fullWidth": true}
             ]
         ]
     }

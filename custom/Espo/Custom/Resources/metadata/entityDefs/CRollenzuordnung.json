@@ -16,6 +16,14 @@
             "type": "link",
             "required": true
         },
+        "rolleRollencode": {
+            "readOnly": true,
+            "type": "foreign",
+            "link": "rolle",
+            "field": "rollencode",
+            "view": "views/fields/foreign-varchar",
+            "isCustom": true
+        },
         "vertreter": {
             "type": "link"
         },

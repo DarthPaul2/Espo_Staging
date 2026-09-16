@@ -2,6 +2,6 @@
     {"name": "zielEntitaet"},
     {"name": "zielId"},
     {"name": "zielStatus"},
-    {"name": "gesamtampel", "width": 12},
+    {"name": "gesamtampel", "width": 12, "link": true},
     {"name": "berechnetAm", "width": 15}
 ]

@@ -94,6 +94,10 @@
         },
         "formularberichte": {
             "type": "link"
+        },
+        "cWartung": {
+            "type": "link",
+            "isCustom": true
         }
     },
     "links": {
@@ -133,6 +137,13 @@
             "type": "belongsTo",
             "foreign": "stundenbericht",
             "entity": "CStundenbericht",
+            "audited": false,
+            "isCustom": true
+        },
+        "cWartung": {
+            "type": "belongsTo",
+            "foreign": "formulare",
+            "entity": "CWartung",
             "audited": false,
             "isCustom": true
         }

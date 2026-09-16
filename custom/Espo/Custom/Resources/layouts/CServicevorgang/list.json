@@ -1,0 +1,33 @@
+[
+    {
+        "name": "name",
+        "width": 15,
+        "link": true
+    },
+    {
+        "name": "vorgangsart",
+        "width": 12,
+        "link": true,
+        "align": "left"
+    },
+    {
+        "name": "account",
+        "width": 20
+    },
+    {
+        "name": "objekt",
+        "width": 16
+    },
+    {
+        "name": "prioritaet",
+        "width": 10
+    },
+    {
+        "name": "status",
+        "width": 14
+    },
+    {
+        "name": "createdAt",
+        "width": 12
+    }
+]

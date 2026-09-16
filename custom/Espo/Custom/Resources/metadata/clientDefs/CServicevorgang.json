@@ -1,0 +1,288 @@
+{
+    "controller": "controllers/record",
+    "boolFilterList": [
+        "onlyMy"
+    ],
+    "color": "#0048ff",
+    "iconClass": "fas fa-wrench",
+    "recordViews": {
+        "detail": "custom:views/c-servicevorgang/record/detail"
+    },
+    "relationshipPanels": {
+        "stundenberichte": {
+            "create": true,
+            "select": true,
+            "removeDisabled": true,
+            "layout": null,
+            "selectPrimaryFilterName": null
+        },
+        "tasks": {
+            "removeDisabled": true,
+            "layout": null,
+            "selectPrimaryFilterName": null
+        }
+    },
+    "dynamicLogic": {
+        "fields": {
+            "account": {"required": {"conditionGroup": [{"type": "isEmpty", "attribute": "objektId"}]}},
+            "anruferName": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "anruferTelefon": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "alarmierungAm": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "alarmBestaetigtAm": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "alarmEskaliert": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "rueckrufAm": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "rueckrufDurch": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "entscheidung": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "kundensperreErkannt": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "kundensperreEntscheidung": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "reaktionszeitMinuten": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
+            "reklamationSystemisch": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "reklamation"
+                        }
+                    ]
+                }
+            },
+            "reklamationUrsache": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "reklamation"
+                        }
+                    ]
+                }
+            },
+            "reklamationMassnahme": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "reklamation"
+                        }
+                    ]
+                }
+            },
+            "reklamationFrist": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "reklamation"
+                        }
+                    ]
+                }
+            },
+            "bezugAuftrag": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "gewaehrleistung"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "gewaehrleistung"
+                        }
+                    ]
+                }
+            },
+            "abnahmeDatum": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "gewaehrleistung"
+                        }
+                    ]
+                }
+            },
+            "berechtigt": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "gewaehrleistung"
+                        }
+                    ]
+                }
+            },
+            "mangelFestgestellt": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "wartung"
+                        }
+                    ]
+                }
+            },
+            "mangelBeschreibung": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "wartung"
+                        }
+                    ]
+                }
+            },
+            "erzeugtesAngebot": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "wartung"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

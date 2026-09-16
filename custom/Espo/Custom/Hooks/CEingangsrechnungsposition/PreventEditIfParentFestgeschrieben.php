@@ -4,7 +4,7 @@ namespace Espo\Custom\Hooks\CEingangsrechnungsposition;
 
 use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
-use Espo\Core\Exceptions\Forbidden;
+use Espo\Core\Exceptions\BadRequest;
 
 // Что это: запрещает добавление и редактирование позиции,
 // если родительская Eingangsrechnung уже festgeschrieben.
@@ -32,6 +32,6 @@ class PreventEditIfParentFestgeschrieben
             return;
         }
 
-        throw new Forbidden('Positionen einer festgeschriebenen Eingangsrechnung dürfen nicht mehr bearbeitet werden.');
+        throw new BadRequest('Positionen einer festgeschriebenen Eingangsrechnung dürfen nicht mehr bearbeitet werden.');
     }
 }
