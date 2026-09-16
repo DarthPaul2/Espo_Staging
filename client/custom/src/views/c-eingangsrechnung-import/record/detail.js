@@ -300,9 +300,14 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                 const aiRawJson = data.ai_raw_json
                     ? JSON.stringify(data.ai_raw_json, null, 2)
                     : null;
+                // Что это: Backend markiert komplett unlesbare Fotos/Scans über dieses Flag
+                // (siehe Regel 30 im Prompt, routes_eingangsrechnung_import_ai.py).
+                // Зачем: Status und Name sollen das sichtbar widerspiegeln, statt wie ein
+                // normaler "zur Prüfung"-Datensatz mit dem alten Upload-Namen dazustehen.
+                const recognitionFailed = !!data.recognition_failed;
 
                 const payload = {
-                    status: 'zur_pruefung',
+                    status: recognitionFailed ? 'fehler' : 'zur_pruefung',
                     dokumentTyp: recognized.dokumentTyp || 'unbekannt',
                     recognizedLieferantName: recognized.recognizedLieferantName || null,
                     recognizedIban: recognized.recognizedIban || null,
@@ -328,11 +333,17 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                     aiJson: aiRawJson || null
                 };
 
+                if (recognitionFailed) {
+                    payload.name = `${recognized.recognizedLieferantName || ''} ${recognized.belegdatum || ''}`.trim();
+                }
+
                 await this.model.save(payload, {
                     patch: true,
                     silent: true
                 });
-                await this.tryAutoMatchLieferant_();
+                if (!recognitionFailed) {
+                    await this.tryAutoMatchLieferant_();
+                }
                 await this.syncImportPositionenFromAiData_(data);
                 await this.autoMatchImportPositionenToMaterial_();
                 await this.pruefeBetragGegenErkennung_(recognized);
