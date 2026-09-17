@@ -185,9 +185,20 @@
                 "",
                 "telefonischGeloest",
                 "vorOrtEinsatz",
-                "eskaliert"
+                "eskaliert",
+                "fehlalarm"
             ],
-            "isCustom": true
+            "isCustom": true,
+            "tooltip": true,
+            "style": {
+                "eskaliert": "danger",
+                "fehlalarm": "muted"
+            }
+        },
+        "rueckrufNotiz": {
+            "type": "text",
+            "isCustom": true,
+            "tooltip": true
         },
         "kundensperreErkannt": {
             "type": "bool",
@@ -202,6 +213,17 @@
             "type": "int",
             "isCustom": true,
             "tooltip": true
+        },
+        "reaktionszeitManuell": {
+            "type": "bool",
+            "isCustom": true,
+            "layoutListDisabled": true,
+            "layoutDetailDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "layoutFiltersDisabled": true,
+            "importDisabled": true,
+            "exportDisabled": true,
+            "customizationDisabled": true
         },
         "reklamationSystemisch": {
             "type": "bool",
@@ -240,9 +262,24 @@
             "isCustom": true,
             "tooltip": true
         },
+        "wartungshinweis": {
+            "type": "text",
+            "notStorable": true,
+            "isCustom": true,
+            "view": "custom:views/c-servicevorgang/fields/wartungshinweis",
+            "layoutListDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "layoutFiltersDisabled": true,
+            "importDisabled": true,
+            "exportDisabled": true,
+            "customizationDisabled": true
+        },
         "mangelFestgestellt": {
             "type": "bool",
-            "isCustom": true
+            "isCustom": true,
+            "tooltip": true,
+            "readOnly": true,
+            "view": "custom:views/c-servicevorgang/fields/mangel-festgestellt"
         },
         "mangelBeschreibung": {
             "type": "text",

@@ -34,5 +34,12 @@ class ValidateVorgangsart
                 throw new BadRequest('Bei Gewährleistung muss ein Bezugs-Auftrag angegeben werden.');
             }
         }
+
+        // 16.09.2026, Pavel: ein Servicevorgang mit vorgangsart=wartung existiert per
+        // Definition nur wegen eines gefundenen Mangels — "Mangel festgestellt" ist im
+        // UI dafür bereits read-only und wird dort automatisch gesetzt (siehe
+        // mangel-festgestellt.js); hier zusätzlich serverseitig erzwungen, damit es auch
+        // bei einer Speicherung außerhalb dieses Formulars (z. B. per API) korrekt bleibt.
+        $entity->set('mangelFestgestellt', $art === 'wartung');
     }
 }

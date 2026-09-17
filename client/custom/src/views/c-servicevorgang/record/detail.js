@@ -20,6 +20,28 @@ define('custom:views/c-servicevorgang/record/detail', ['views/record/detail'], f
             this.listenTo(this.model, 'change:status', this.toggleOffenePunktBlock_, this);
         },
 
+        // 17.09.2026, Pavel: beim Speichern mit leerem Pflichtfeld zeigt Espo nur ganz oben
+        // ein generisches "Ungültig"-Banner — die eigentliche Meldung existiert bereits als
+        // Popover direkt am betroffenen Feld, ist aber unsichtbar, wenn der Nutzer weiter
+        // oben im Formular steht. Rein additiv (Dep.prototype.afterNotValid läuft zuerst
+        // unverändert) — scrollt zusätzlich zum sichtbar gewordenen Popover.
+        // Global (views/record/base) NICHT möglich — dieser Kern-Klasse ist bereits fest im
+        // kompilierten espo-main.js verdrahtet, ein eigenes client/custom/src/views/record/
+        // base.js wird vom Loader nie angefragt (per Server-Log verifiziert). Muss deshalb
+        // pro Entity im jeweiligen eigenen record/detail.js wiederholt werden.
+        afterNotValid: function () {
+            Dep.prototype.afterNotValid.call(this);
+
+            setTimeout(() => {
+                const popovers = document.querySelectorAll('.popover');
+                const popover = popovers.length ? popovers[popovers.length - 1] : null;
+
+                if (popover) {
+                    popover.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+            }, 50);
+        },
+
         afterRender: function () {
             Dep.prototype.afterRender.call(this);
 

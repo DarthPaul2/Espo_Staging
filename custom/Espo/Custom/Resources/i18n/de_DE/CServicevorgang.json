@@ -20,7 +20,7 @@
         "meldungsart": "Meldungsart",
         "wartung": "Wartungsvertrag",
         "geplanterTermin": "Geplanter Termin",
-        "technikers": "Zugewiesene Techniker",
+        "technikers": "Weitere Techniker",
         "anruferName": "Anrufer Name",
         "anruferTelefon": "Anrufer Telefon",
         "alarmierungAm": "Alarmierung am",
@@ -29,6 +29,7 @@
         "rueckrufAm": "Rückruf am",
         "rueckrufDurch": "Rückruf durch",
         "entscheidung": "Entscheidung",
+        "rueckrufNotiz": "Notiz zum Rückruf",
         "kundensperreErkannt": "Kundensperre erkannt",
         "kundensperreEntscheidung": "Kundensperre — Entscheidung",
         "reaktionszeitMinuten": "Reaktionszeit (Minuten)",
@@ -39,6 +40,7 @@
         "bezugAuftrag": "Bezug-Auftrag",
         "abnahmeDatum": "Abnahmedatum",
         "berechtigt": "Berechtigt (Gewährleistung)",
+        "wartungshinweis": "Hinweis",
         "mangelFestgestellt": "Mangel festgestellt",
         "mangelBeschreibung": "Mangel — Beschreibung",
         "erzeugtesAngebot": "Erzeugtes Angebot",
@@ -49,10 +51,16 @@
         "account": "Nur Pflichtfeld, wenn kein Objekt gewählt ist — bei einem Objekt mit hinterlegtem Kunden wird der Kunde automatisch übernommen.",
         "wartung": "Falls dieser Vorgang aus einer fälligen Wartung entstanden ist.",
         "kundensperreEntscheidung": "Bei Notdienst trotz kaufmännischer Kundensperre: Entscheidung und Begründung dokumentieren.",
-        "reaktionszeitMinuten": "Bewusst ohne festen Vorgabewert — Tobias: 'legen wir später je Vertrag/Notdienstmodell fest.'",
+        "reaktionszeitMinuten": "Bewusst ohne festen Vorgabewert — Tobias: 'legen wir später je Vertrag/Notdienstmodell fest.' Wird automatisch aus 'Alarmierung am' und 'Rückruf am' berechnet, solange dieses Feld nicht manuell bearbeitet wurde — nach einer manuellen Änderung wird es nie wieder automatisch überschrieben.",
         "reklamationSystemisch": "Bei wiederkehrender/systemischer Ursache eskaliert an R-31 QM, sonst zuständiger Fachbereich.",
         "abnahmeDatum": "Tatsächliches Abnahme-/Übergabedatum als Basis für Gewährleistungsfristen.",
-        "berechtigt": "Kundenbehauptung allein begründet keine automatische kostenlose Leistung."
+        "berechtigt": "Kundenbehauptung allein begründet keine automatische kostenlose Leistung.",
+        "technikers": "Nur zusätzliche/unterstützende Techniker (z. B. bei Einsätzen zu zweit). Wer die eigentliche Aufgabe/Benachrichtigung bekommt, wird über 'Zugewiesener Benutzer' gesteuert.",
+        "entscheidung": "Wie der Notdienst-Fall gelöst wurde. 'Eskaliert' benachrichtigt automatisch die Chef-Techniker.",
+        "rueckrufNotiz": "Freitext vom Techniker nach dem Rückruf — was der Kunde gesagt hat, eigene Beobachtungen."
+    },
+    "messages": {
+        "wartungshinweis": "⚠️ Für den normalen Wartungsablauf ist dieser Eintrag NICHT nötig — das läuft automatisch über 'Wartungen'. <strong>Nur bei einem gefundenen Mangel mit Angebotspotenzial anlegen.</strong>"
     },
     "options": {
         "vorgangsart": {
@@ -96,7 +104,8 @@
             "": "—",
             "telefonischGeloest": "Telefonisch gelöst",
             "vorOrtEinsatz": "Vor-Ort-Einsatz",
-            "eskaliert": "Eskaliert"
+            "eskaliert": "Eskaliert",
+            "fehlalarm": "Fehlalarm"
         },
         "berechtigt": {
             "zuPruefen": "Zu prüfen",

@@ -212,6 +212,7 @@ kbd {
                     <li><a href="#de-ausgabe">→ Werkzeugausgabe</a></li>
                     <li class="section"><a href="#de-wartung">Wartung</a></li>
                     <li><a href="#de-wartung">→ Wartungen</a></li>
+                    <li><a href="#de-servicevorgang">→ Servicevorgang</a></li>
                     <li class="hb-nav-sep"></li>
                     <li class="section purple"><a href="#de-mahnwesen">Mahnwesen</a></li>
                     <li class="purple"><a href="#de-mahnung">→ Mahnungen</a></li>
@@ -273,6 +274,7 @@ kbd {
                     <li><a href="#ru-ausgabe">→ Ausgabe</a></li>
                     <li class="section"><a href="#ru-wartung">Обслуживание</a></li>
                     <li><a href="#ru-wartung">→ Wartungen</a></li>
+                    <li><a href="#ru-servicevorgang">→ Servicevorgang</a></li>
                     <li class="hb-nav-sep"></li>
                     <li class="section purple"><a href="#ru-mahnwesen">Напоминания</a></li>
                     <li class="purple"><a href="#ru-mahnung">→ Mahnungen</a></li>
@@ -682,6 +684,12 @@ kbd {
                 <li><kbd>Speichern</kbd> — nächster Wartungstermin wird automatisch berechnet</li>
             </ul>
             <div class="hb-tip">Filter <strong>Fälligkeitsstatus = Fällig</strong> in der Liste zeigt alle Objekte, die jetzt gewartet werden müssen.</div>
+
+            <!-- SERVICEVORGANG -->
+            <h2 id="de-servicevorgang">6a. Servicevorgang</h2>
+            <p>Servicevorgang dokumentiert Kundenanliegen, die <strong>nicht</strong> über den automatischen Wartungs-Ablauf laufen: normaler Serviceanruf, Notdienst, Reklamation, Gewährleistung. Die Art wird über das Feld <strong>Vorgangsart</strong> gesteuert, das Formular blendet je nach Art automatisch die passenden Felder ein.</p>
+            <div class="hb-tip">⚠️ <strong>Ausnahme Wartung:</strong> der reguläre Wartungs-Zyklus (Fälligkeit → Aufgabe → Techniker → Bericht → Abschluss) läuft komplett automatisch über <strong>Wartungen</strong> — dafür wird KEIN Servicevorgang gebraucht. Nur wenn beim Wartungstermin ein Mangel gefunden wird, der ein separates Angebot nach sich ziehen soll, legt man zusätzlich einen Servicevorgang mit Art <strong>Wartung</strong> an und verknüpft ihn über das Feld <strong>Wartung</strong> mit dem betroffenen Wartungs-Eintrag.</div>
+            <p><strong>Menü → Servicevorgänge</strong></p>
 
             <!-- MAHNWESEN -->
             <h2 id="de-mahnwesen">7. Mahnwesen</h2>
@@ -1667,6 +1675,12 @@ kbd {
                 <li><kbd>Speichern</kbd> — следующая дата обслуживания рассчитается автоматически</li>
             </ul>
             <div class="hb-tip">Фильтр <strong>Fälligkeitsstatus = Fällig</strong> в списке покажет все объекты, которые нужно обслужить сейчас.</div>
+
+            <!-- SERVICEVORGANG -->
+            <h2 id="ru-servicevorgang">6a. Servicevorgang</h2>
+            <p>Servicevorgang документирует обращения клиентов, которые <strong>не</strong> проходят через автоматический процесс Wartung: обычный сервисный вызов, аварийный вызов, рекламация, гарантийный случай. Тип задаётся полем <strong>Vorgangsart</strong>, форма сама показывает нужные поля в зависимости от типа.</p>
+            <div class="hb-tip">⚠️ <strong>Исключение — Wartung:</strong> обычный цикл обслуживания (наступление срока → задача → техник → отчёт → завершение) идёт полностью автоматически через <strong>Wartungen</strong> — для этого Servicevorgang НЕ нужен. Только если во время визита обнаружен дефект, из которого должно родиться отдельное предложение клиенту, дополнительно создаётся Servicevorgang с типом <strong>Wartung</strong> и привязывается через поле <strong>Wartung</strong> к соответствующей записи обслуживания.</div>
+            <p><strong>Меню → Servicevorgänge</strong></p>
 
             <!-- РАБОЧЕЕ ВРЕМЯ -->
             <h2 id="ru-mahnwesen">7. Напоминания об оплате (Mahnwesen)</h2>

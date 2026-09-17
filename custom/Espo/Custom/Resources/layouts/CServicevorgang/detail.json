@@ -27,6 +27,7 @@
         ]
     },
     {
+        "name": "notdienst",
         "customLabel": "Notdienst",
         "style": "danger",
         "rows": [
@@ -49,11 +50,15 @@
                 {"name": "kundensperreErkannt"}
             ],
             [
+                {"name": "rueckrufNotiz", "fullWidth": true}
+            ],
+            [
                 {"name": "kundensperreEntscheidung", "fullWidth": true}
             ]
         ]
     },
     {
+        "name": "reklamation",
         "customLabel": "Reklamation",
         "style": "warning",
         "rows": [
@@ -72,6 +77,7 @@
         ]
     },
     {
+        "name": "gewaehrleistung",
         "customLabel": "Gewährleistung",
         "style": "primary",
         "rows": [
@@ -84,9 +90,13 @@
         ]
     },
     {
+        "name": "wartungsmangel",
         "customLabel": "Wartungsmangel",
         "style": "primary",
         "rows": [
+            [
+                {"name": "wartungshinweis", "fullWidth": true}
+            ],
             [
                 {"name": "mangelFestgestellt"},
                 {"name": "erzeugtesAngebot"},

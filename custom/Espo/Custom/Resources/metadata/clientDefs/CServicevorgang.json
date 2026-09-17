@@ -23,6 +23,36 @@
         }
     },
     "dynamicLogic": {
+        "panels": {
+            "notdienst": {
+                "visible": {
+                    "conditionGroup": [
+                        {"type": "equals", "attribute": "vorgangsart", "value": "notdienst"}
+                    ]
+                }
+            },
+            "reklamation": {
+                "visible": {
+                    "conditionGroup": [
+                        {"type": "equals", "attribute": "vorgangsart", "value": "reklamation"}
+                    ]
+                }
+            },
+            "gewaehrleistung": {
+                "visible": {
+                    "conditionGroup": [
+                        {"type": "equals", "attribute": "vorgangsart", "value": "gewaehrleistung"}
+                    ]
+                }
+            },
+            "wartungsmangel": {
+                "visible": {
+                    "conditionGroup": [
+                        {"type": "equals", "attribute": "vorgangsart", "value": "wartung"}
+                    ]
+                }
+            }
+        },
         "fields": {
             "account": {"required": {"conditionGroup": [{"type": "isEmpty", "attribute": "objektId"}]}},
             "anruferName": {
@@ -131,6 +161,17 @@
                     ]
                 }
             },
+            "rueckrufNotiz": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "notdienst"
+                        }
+                    ]
+                }
+            },
             "kundensperreErkannt": {
                 "visible": {
                     "conditionGroup": [
@@ -149,6 +190,11 @@
                             "type": "equals",
                             "attribute": "vorgangsart",
                             "value": "notdienst"
+                        },
+                        {
+                            "type": "equals",
+                            "attribute": "kundensperreErkannt",
+                            "value": true
                         }
                     ]
                 }
@@ -246,6 +292,17 @@
                             "type": "equals",
                             "attribute": "vorgangsart",
                             "value": "gewaehrleistung"
+                        }
+                    ]
+                }
+            },
+            "wartungshinweis": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "vorgangsart",
+                            "value": "wartung"
                         }
                     ]
                 }

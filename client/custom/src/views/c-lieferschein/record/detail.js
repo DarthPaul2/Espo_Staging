@@ -45,6 +45,24 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
 
     return Dep.extend({
 
+        // 17.09.2026, Pavel: beim Speichern mit leerem Pflichtfeld zeigt Espo nur ganz oben
+        // ein generisches "Ungültig"-Banner - die eigentliche Meldung existiert bereits als
+        // Popover direkt am betroffenen Feld, ist aber unsichtbar, wenn der Nutzer weiter
+        // oben im Formular steht. Rein additiv (Dep.prototype.afterNotValid laeuft zuerst
+        // unveraendert) - scrollt zusaetzlich zum sichtbar gewordenen Popover.
+        afterNotValid: function () {
+            Dep.prototype.afterNotValid.call(this);
+
+            setTimeout(() => {
+                const popovers = document.querySelectorAll('.popover');
+                const popover = popovers.length ? popovers[popovers.length - 1] : null;
+
+                if (popover) {
+                    popover.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+            }, 50);
+        },
+
         // ==== API ====
         FLASK_BASE: 'https://klesec.pagekite.me/api',
         BASIC_AUTH: 'Basic ' + btoa('admin:test123'),
