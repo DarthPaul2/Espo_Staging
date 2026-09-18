@@ -519,12 +519,23 @@ define('custom:views/c-eingangsrechnung-import/record/detail', ['views/record/de
                 const gesamtNettoErkannt = p.gesamtNetto != null ? parseFloat(p.gesamtNetto) : null;
 
                 // Что это: gesamtNetto ist in Espo readOnly (der PHP-Hook berechnet es serverseitig
-                // neu aus menge*einzelpreisNetto) — ein hier gesendeter gesamtNetto-Wert wird beim
-                // Anlegen ignoriert. Fehlt einzelpreisNetto (z.B. Kassenbon mit nur einer
-                // Gesamtsumme, ohne Einzelpreis), bliebe die Position sonst bei 0 stehen. Fix:
-                // Einzelpreis aus der erkannten Summe zurückrechnen, damit der Hook denselben
-                // Betrag reproduziert.
-                if (einzelpreisNetto == null && gesamtNettoErkannt != null && menge != null && menge !== 0) {
+                // neu aus menge*einzelpreisNetto). Зачем: Real beobachtet (star Tankstelle,
+                // 17.-18.09.2026): einzelpreisNetto von der KI ist oft nur auf 3 Nachkommastellen
+                // genau (z.B. 1,983 statt 1,98267...) — bei größerer Menge (48,48 Liter) weicht
+                // menge*einzelpreisNetto dadurch um mehrere Cent vom korrekt erkannten gesamtNetto
+                // ab, und der Hook reproduziert dann den ungenauen statt den korrekten Betrag.
+                // Fix (spiegelt _erstelle_positionen() in mail_rechnung.py/foto_beleg.py, wo genau
+                // dieser Fall schon einmal korrigiert wurde, aber nur serverseitig — dieser
+                // Button hier hatte die gleiche Korrektur nie): ohne Rabatt IMMER den präziseren
+                // Einzelpreis aus gesamtNetto/menge zurückrechnen, statt dem von der KI
+                // gerundeten Wert zu vertrauen, auch wenn dieser vorhanden ist. Nur mit Rabatt
+                // bleibt der von der KI gelieferte Einzelpreis stehen, weil der Hook dort
+                // gesamtNetto = menge×einzelpreisNetto − rabattBetrag bildet.
+                const hatRabatt =
+                    (p.rabattProzent != null && p.rabattProzent !== '' && parseFloat(p.rabattProzent) !== 0) ||
+                    (p.rabattBetrag != null && p.rabattBetrag !== '' && parseFloat(p.rabattBetrag) !== 0);
+
+                if (!hatRabatt && gesamtNettoErkannt != null && menge != null && menge !== 0) {
                     einzelpreisNetto = gesamtNettoErkannt / menge;
                 }
 
