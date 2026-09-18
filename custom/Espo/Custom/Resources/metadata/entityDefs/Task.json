@@ -90,6 +90,73 @@
             "default": "keine",
             "isCustom": true,
             "tooltip": true
+        },
+        "cServicevorgangArt": {
+            "type": "varchar",
+            "maxLength": 50,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cAnruferName": {
+            "type": "varchar",
+            "maxLength": 150,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cAnruferTelefon": {
+            "type": "varchar",
+            "maxLength": 50,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cKundeTelefon": {
+            "type": "varchar",
+            "maxLength": 50,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cKundeAdresse": {
+            "type": "varchar",
+            "maxLength": 255,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cProblem": {
+            "type": "text",
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cPrioritaet": {
+            "type": "varchar",
+            "maxLength": 50,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cAlarmierungAm": {
+            "type": "datetime",
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cAlarmBestaetigtAm": {
+            "type": "datetime",
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cEntscheidung": {
+            "type": "varchar",
+            "maxLength": 50,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cRueckrufAm": {
+            "type": "datetime",
+            "isCustom": true,
+            "tooltip": true
+        },
+        "cRueckrufNotiz": {
+            "type": "text",
+            "isCustom": true,
+            "tooltip": true
         }
     },
     "links": {

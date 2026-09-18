@@ -191,8 +191,7 @@
             "isCustom": true,
             "tooltip": true,
             "style": {
-                "eskaliert": "danger",
-                "fehlalarm": "muted"
+                "eskaliert": "danger"
             }
         },
         "rueckrufNotiz": {

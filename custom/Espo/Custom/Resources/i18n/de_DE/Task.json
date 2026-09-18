@@ -9,7 +9,19 @@
         "cRepeatTo": "Wiederholen bis",
         "cRepeatSeriesId": "Serien-ID",
         "ownerRolle": "Owner-Rolle",
-        "eskalationsstufe": "Eskalationsstufe"
+        "eskalationsstufe": "Eskalationsstufe",
+        "cServicevorgangArt": "Servicevorgang: Art",
+        "cAnruferName": "Anrufer Name",
+        "cAnruferTelefon": "Anrufer Telefon",
+        "cKundeTelefon": "Kunde Telefon",
+        "cKundeAdresse": "Kunde Adresse",
+        "cProblem": "Problem",
+        "cPrioritaet": "Priorität",
+        "cAlarmierungAm": "Alarmierung am",
+        "cAlarmBestaetigtAm": "Alarm bestätigt am",
+        "cEntscheidung": "Entscheidung",
+        "cRueckrufAm": "Rückruf am",
+        "cRueckrufNotiz": "Rückruf-Notiz"
     },
     "links": {
         "cWartung": "Wartung",
@@ -31,6 +43,18 @@
     "tooltips": {
         "cRepeatEvery": "Gibt an, nach wie vielen Tagen, Wochen oder Monaten die Aufgabe erneut erstellt wird.\nBeispiel: Intervall = 1, Einheit = Woche → jede Woche.\nBeispiel: Intervall = 2, Einheit = Tage → jeden zweiten Tag.",
         "ownerRolle": "Fachlich zuständige Rollenzuordnung für diese Aufgabe (nicht identisch mit 'Zugewiesener Benutzer').",
-        "eskalationsstufe": "Aktuelle Eskalationsstufe bei Fristüberschreitung. Wird automatisch von der Benachrichtigungs-Engine gesetzt (T4-14, noch nicht gebaut)."
+        "eskalationsstufe": "Aktuelle Eskalationsstufe bei Fristüberschreitung. Wird automatisch von der Benachrichtigungs-Engine gesetzt (T4-14, noch nicht gebaut).",
+        "cServicevorgangArt": "Denormalisierte Kopie von CServicevorgang.vorgangsart — für die App-Anbindung (Notdienst-Brücke), damit Flask diese ohne Zusatzabfrage per Webhook erhält. Wird automatisch vom Hook gesetzt, nicht manuell pflegen.",
+        "cAnruferName": "Nur bei Notdienst befüllt — Kopie von CServicevorgang.anruferName, für die App-Anzeige.",
+        "cAnruferTelefon": "Nur bei Notdienst befüllt — Kopie von CServicevorgang.anruferTelefon, für die App-Anzeige.",
+        "cKundeTelefon": "Nur bei Notdienst befüllt — Telefon des verknüpften Kunden (Account), für die App-Anzeige.",
+        "cKundeAdresse": "Nur bei Notdienst befüllt — Adresse des verknüpften Kunden (Account), für die App-Anzeige.",
+        "cProblem": "Nur bei Notdienst befüllt — Kopie von CServicevorgang.problem, für die App-Anzeige.",
+        "cPrioritaet": "Nur bei Notdienst befüllt — Kopie von CServicevorgang.prioritaet, für die App-Anzeige.",
+        "cAlarmierungAm": "Nur bei Notdienst befüllt — Kopie von CServicevorgang.alarmierungAm, für die App-Anzeige.",
+        "cAlarmBestaetigtAm": "Nur bei Notdienst befüllt, wird bei jeder Änderung neu gespiegelt — Kopie von CServicevorgang.alarmBestaetigtAm, damit die App den Bestätigt-Status beim Poll aus Espo sieht statt aus lokalem Cache.",
+        "cEntscheidung": "Nur bei Notdienst befüllt, wird bei jeder Änderung neu gespiegelt — Kopie von CServicevorgang.entscheidung, für den App-Poll.",
+        "cRueckrufAm": "Nur bei Notdienst befüllt, wird bei jeder Änderung neu gespiegelt — Kopie von CServicevorgang.rueckrufAm, für den App-Poll.",
+        "cRueckrufNotiz": "Nur bei Notdienst befüllt, wird bei jeder Änderung neu gespiegelt — Kopie von CServicevorgang.rueckrufNotiz, für den App-Poll."
     }
 }

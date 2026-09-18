@@ -1,0 +1,15 @@
+{
+    "fields": {
+        "entscheidung": {
+            "visible": {
+                "conditionGroup": [
+                    {
+                        "type": "equals",
+                        "attribute": "vorgangsart",
+                        "value": "notdienst"
+                    }
+                ]
+            }
+        }
+    }
+}

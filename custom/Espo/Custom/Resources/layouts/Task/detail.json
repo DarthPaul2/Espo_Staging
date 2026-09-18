@@ -11,6 +11,14 @@
             ],
             [
                 {
+                    "name": "cServicevorgang"
+                },
+                {
+                    "name": "cWartung"
+                }
+            ],
+            [
+                {
                     "name": "status"
                 },
                 {

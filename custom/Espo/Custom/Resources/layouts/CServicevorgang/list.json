@@ -27,6 +27,11 @@
         "width": 14
     },
     {
+        "name": "entscheidung",
+        "width": 16,
+        "align": "left"
+    },
+    {
         "name": "createdAt",
         "width": 12
     }
