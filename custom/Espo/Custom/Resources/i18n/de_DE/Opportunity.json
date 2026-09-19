@@ -1,5 +1,7 @@
 {
     "fields": {
+        "adresse": "Adresse",
+        "kontaktdaten": "Kontaktdaten",
         "stufeAdresseAm": "Stufe erreicht: Adresse",
         "stufeAdresseVerlassenAm": "Stufe verlassen: Adresse",
         "stufeKontaktAm": "Stufe erreicht: Kontakt",
@@ -34,6 +36,15 @@
         "stufeBestandskundeAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Endstufe — keine weitere Stufe danach, daher kein Verlassen-Datum."
     },
     "options": {
+        "leadSource": {
+            "Call": "Anruf",
+            "Email": "E-Mail",
+            "Existing Customer": "Bestandskunde",
+            "Web Site": "Webseite",
+            "Campaign": "Kampagne",
+            "Other": "Andere",
+            "Empfehlungen": "Empfehlungen"
+        },
         "stage": {
             "adresseNeu": "Adresse | neu",
             "kontaktOffen": "Kontakt | offen",

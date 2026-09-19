@@ -1,5 +1,34 @@
 {
     "fields": {
+        "adresse": {
+            "type": "text",
+            "isCustom": true
+        },
+        "kontaktdaten": {
+            "type": "text",
+            "isCustom": true
+        },
+        "amount": {
+            "required": false
+        },
+        "closeDate": {
+            "required": false
+        },
+        "leadSource": {
+            "optionsReference": null,
+            "options": [
+                "",
+                "Call",
+                "Email",
+                "Existing Customer",
+                "Partner",
+                "Public Relations",
+                "Web Site",
+                "Campaign",
+                "Other",
+                "Empfehlungen"
+            ]
+        },
         "stage": {
             "type": "enum",
             "options": [
