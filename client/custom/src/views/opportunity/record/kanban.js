@@ -44,6 +44,38 @@ Espo.define('custom:views/opportunity/record/kanban', ['crm:views/opportunity/re
             Dep.prototype.afterRender.call(this);
 
             this.ladeKanbanStatistik_();
+            this.aktiviereKlickAufGanzeKarte_();
+        },
+
+        // Wunsch von Bianca Rally (19.09.2026, WhatsApp: "wenn ich darein klicke, egal wohin,
+        // soll sich das öffnen"). Ursache (per Logauswertung bestätigt, 19.09.2026): Standard-
+        // Espo-Kanban macht per "click a.link" NUR den Namen der Karte klickbar — der Rest der
+        // Karte (Betrag, Firma, freier Bereich) hat gar keinen Klick-Handler. Auf dem iPad führte
+        // ein Tippen daneben dazu, dass nichts passierte bzw. versehentlich der "+"-Button der
+        // Spalte getroffen wurde (führte zur leeren "erstellen"-Seite statt zur echten Karte).
+        // Fix: zusätzlicher Klick-Handler auf die ganze Karte (".item"), der dieselbe Navigation
+        // auslöst wie der Namens-Link — per addEventListener statt Backbone-"events"-Override,
+        // damit das bestehende Verhalten (Namens-Link, Drei-Punkte-Menü, Drag-Sortierung) unverändert
+        // bleibt und nicht versehentlich überschrieben wird.
+        aktiviereKlickAufGanzeKarte_: function () {
+            this.$el.off('click.kartenKlick');
+            this.$el.on('click.kartenKlick', '.item', function (e) {
+                if ($(e.target).closest('a.link, .item-menu-container').length) {
+                    return;
+                }
+
+                var id = $(e.currentTarget).data('id');
+
+                if (!id) {
+                    return;
+                }
+
+                var scope = this.getModelScope(id);
+                var model = this.collection.get(id);
+
+                this.getRouter().navigate('#' + scope + '/view/' + id, {trigger: false});
+                this.getRouter().dispatch(scope, 'view', {id: id, model: model});
+            }.bind(this));
         },
 
         ladeKanbanStatistik_: function () {
