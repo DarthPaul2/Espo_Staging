@@ -50,11 +50,7 @@
     "_tabBreak_1": {
         "index": 11,
         "tabBreak": true,
-        "tabLabel": "$Account"
-    },
-    "stream": {
-        "sticked": false,
-        "index": 12
+        "tabLabel": "Verkaufschancen"
     },
     "opportunities": {
         "index": 13
