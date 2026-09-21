@@ -1,5 +1,8 @@
 {
     "fields": {
+        "assignedUser": {
+            "audited": true
+        },
         "adresse": {
             "type": "text",
             "isCustom": true

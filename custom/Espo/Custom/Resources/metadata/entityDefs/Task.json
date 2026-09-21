@@ -5,6 +5,9 @@
         ]
     },
     "fields": {
+        "assignedUser": {
+            "audited": true
+        },
         "cWartung": {
             "type": "link"
         },

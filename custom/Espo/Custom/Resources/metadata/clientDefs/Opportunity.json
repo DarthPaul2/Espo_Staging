@@ -1,5 +1,20 @@
 {
     "recordViews": {
         "kanban": "custom:views/opportunity/record/kanban"
+    },
+    "bottomPanels": {
+        "detail": [
+            {
+                "name": "activities",
+                "reference": "activities",
+                "disabled": false,
+                "view": "crm:views/opportunity/record/panels/activities"
+            },
+            {
+                "name": "history",
+                "reference": "history",
+                "disabled": false
+            }
+        ]
     }
 }
