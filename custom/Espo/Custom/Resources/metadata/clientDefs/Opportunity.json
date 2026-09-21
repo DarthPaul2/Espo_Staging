@@ -50,7 +50,10 @@
                 "name": "activities",
                 "reference": "activities",
                 "disabled": false,
-                "view": "crm:views/opportunity/record/panels/activities"
+                "view": "crm:views/opportunity/record/panels/activities",
+                "createAttributeMap": {
+                    "adresse": "adresse"
+                }
             },
             {
                 "name": "history",

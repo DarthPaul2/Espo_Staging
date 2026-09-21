@@ -1,0 +1,10 @@
+{
+    "fields": {
+        "adresse": {
+            "type": "varchar",
+            "maxLength": 250,
+            "isCustom": true,
+            "tooltip": true
+        }
+    }
+}

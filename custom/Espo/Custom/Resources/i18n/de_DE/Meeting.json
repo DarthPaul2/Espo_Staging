@@ -1,0 +1,8 @@
+{
+    "fields": {
+        "adresse": "Adresse"
+    },
+    "tooltips": {
+        "adresse": "AW-Bianca-Gerd Punkt 8: Adresse des Termins — wird beim Anlegen aus einer Verkaufschance automatisch übernommen, falls dort vorhanden."
+    }
+}
