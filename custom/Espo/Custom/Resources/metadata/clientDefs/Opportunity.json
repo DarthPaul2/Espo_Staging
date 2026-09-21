@@ -2,6 +2,28 @@
     "recordViews": {
         "kanban": "custom:views/opportunity/record/kanban"
     },
+    "dynamicLogic": {
+        "fields": {
+            "account": {
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "in",
+                            "attribute": "stage",
+                            "value": [
+                                "interessentAngebotAngefordert",
+                                "interessentAngebotInErstellung",
+                                "kaeuferAngebotErhalten",
+                                "kundeInDisposition",
+                                "kundeLeistungserbringung",
+                                "bestandskunde"
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
     "bottomPanels": {
         "detail": [
             {
