@@ -29,6 +29,12 @@
         "ownerRolle": "Owner-Rolle"
     },
     "options": {
+        "status": {
+            "Not Started": "Offen",
+            "Started": "In Bearbeitung",
+            "Completed": "Erledigt",
+            "Deferred": "Verschoben"
+        },
         "cRepeatUnit": {
             "day": "Tage",
             "week": "Wochen",

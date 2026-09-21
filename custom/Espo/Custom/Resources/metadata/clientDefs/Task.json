@@ -11,5 +11,20 @@
     },
     "kanbanViewMode": true,
     "color": null,
-    "iconClass": "fas fa-tasks"
+    "iconClass": "fas fa-tasks",
+    "dynamicLogic": {
+        "fields": {
+            "dateEnd": {
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "status",
+                            "value": "Deferred"
+                        }
+                    ]
+                }
+            }
+        }
+    }
 }
