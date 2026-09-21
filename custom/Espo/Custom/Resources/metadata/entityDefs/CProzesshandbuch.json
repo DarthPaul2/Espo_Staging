@@ -47,6 +47,11 @@
             "type": "link",
             "isCustom": true
         },
+        "rolle": {
+            "type": "link",
+            "isCustom": true,
+            "tooltip": true
+        },
         "createdAt": {
             "type": "datetime",
             "readOnly": true
@@ -79,6 +84,13 @@
         "ticket": {
             "type": "belongsTo",
             "entity": "CTicket"
+        },
+        "rolle": {
+            "type": "belongsTo",
+            "entity": "CRollenkatalog",
+            "foreign": "prozesse",
+            "audited": false,
+            "isCustom": true
         },
         "createdBy": {
             "type": "belongsTo",

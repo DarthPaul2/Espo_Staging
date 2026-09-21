@@ -22,5 +22,8 @@
     },
     "cPruefregelnAlsUebersteuerungsRolle": {
         "index": 6
+    },
+    "prozesse": {
+        "index": 7
     }
 }

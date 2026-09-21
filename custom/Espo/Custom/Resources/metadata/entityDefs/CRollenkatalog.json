@@ -135,6 +135,13 @@
             "entity": "CFreigabeSchwelle",
             "audited": false,
             "isCustom": true
+        },
+        "prozesse": {
+            "type": "hasMany",
+            "foreign": "rolle",
+            "entity": "CProzesshandbuch",
+            "audited": false,
+            "isCustom": true
         }
     },
     "collection": {

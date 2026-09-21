@@ -19,6 +19,12 @@
             ],
             [
                 {
+                    "name": "rolle"
+                },
+                false
+            ],
+            [
+                {
                     "name": "beschreibung",
                     "fullWidth": true
                 }

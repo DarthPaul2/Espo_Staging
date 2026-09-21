@@ -8,10 +8,12 @@
         "beschreibung": "Beschreibung",
         "prozessStatus": "Status",
         "bereich": "Bereich",
-        "ticket": "Ticket"
+        "ticket": "Ticket",
+        "rolle": "Zuständige Rolle"
     },
     "tooltips": {
-        "bereich": "Zu welchem Unternehmensbereich gehört dieser Prozess (nach VEU-Schema) — hilft bei der Einordnung, hat aber keine technische Funktion."
+        "bereich": "Zu welchem Unternehmensbereich gehört dieser Prozess (nach VEU-Schema) — hilft bei der Einordnung, hat aber keine technische Funktion.",
+        "rolle": "AW-Bianca-Gerd Punkt 17: welche Rolle ist für diesen Prozess zuständig (Process Owner). Verknüpft mit dem Rollenkatalog."
     },
     "options": {
         "prozessStatus": {

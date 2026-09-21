@@ -22,6 +22,7 @@
         "cPruefregelnAlsZustaendigeRolle": "Prüfregeln (als zuständige Rolle)",
         "cFreigabenAlsAnfordernbeRolle": "Freigaben (als anfordernde Rolle)",
         "cFreigabenAlsErforderlicheRolle": "Freigaben (als erforderliche Rolle)",
-        "cFreigabeschwellen": "Freigabeschwellen"
+        "cFreigabeschwellen": "Freigabeschwellen",
+        "prozesse": "Zugehörige Prozesse"
     }
 }
