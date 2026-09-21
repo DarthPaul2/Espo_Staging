@@ -9,6 +9,17 @@
         ]
     },
     {
+        "name": "qualifizierung",
+        "label": "Qualifizierung (P-03)",
+        "style": "primary",
+        "rows": [
+            [{"name": "qualifizierungLeitfaden", "fullWidth": true}],
+            [{"name": "gewerk"}, {"name": "kundenZeitrahmen"}],
+            [{"name": "entscheidungsweg"}, {"name": "kundenBudgetrahmen"}],
+            [{"name": "qualifizierungsErgebnis"}, {"name": "noGoGrund"}]
+        ]
+    },
+    {
         "label": "Zusatzinfos (noch nicht bestätigt)",
         "rows": [
             [false, {"name": "probability"}],

@@ -89,7 +89,11 @@
         },
         "eskalationsstufe": {
             "type": "enum",
-            "options": ["keine", "Stufe1", "Stufe2"],
+            "options": [
+                "keine",
+                "Stufe1",
+                "Stufe2"
+            ],
             "default": "keine",
             "isCustom": true,
             "tooltip": true
@@ -160,6 +164,15 @@
             "type": "text",
             "isCustom": true,
             "tooltip": true
+        },
+        "status": {
+            "options": [
+                "Not Started",
+                "Started",
+                "Completed",
+                "Deferred",
+                "Canceled"
+            ]
         }
     },
     "links": {

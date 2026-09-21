@@ -21,6 +21,26 @@
                         }
                     ]
                 }
+            },
+            "noGoGrund": {
+                "visible": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "qualifizierungsErgebnis",
+                            "value": "noGo"
+                        }
+                    ]
+                },
+                "required": {
+                    "conditionGroup": [
+                        {
+                            "type": "equals",
+                            "attribute": "qualifizierungsErgebnis",
+                            "value": "noGo"
+                        }
+                    ]
+                }
             }
         }
     },

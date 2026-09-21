@@ -2,6 +2,13 @@
     "fields": {
         "adresse": "Adresse",
         "kontaktdaten": "Kontaktdaten",
+        "qualifizierungLeitfaden": "Leitfaden",
+        "gewerk": "Gewerk",
+        "kundenZeitrahmen": "Zeitrahmen (Kundenwunsch)",
+        "entscheidungsweg": "Entscheidungsweg",
+        "kundenBudgetrahmen": "Budgetrahmen (Kunde)",
+        "qualifizierungsErgebnis": "Qualifizierung",
+        "noGoGrund": "Grund (No-Go)",
         "stufeAdresseAm": "Stufe erreicht: Adresse",
         "stufeAdresseVerlassenAm": "Stufe verlassen: Adresse",
         "stufeKontaktAm": "Stufe erreicht: Kontakt",
@@ -33,7 +40,13 @@
         "stufeKundeInDispositionVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
         "stufeKundeLeistungserbringungAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Manuell gesetzte Werte werden nie überschrieben.",
         "stufeKundeLeistungserbringungVerlassenAm": "Wird automatisch gesetzt, sobald die Chance diese Stufe zum ersten Mal wieder verlässt (zur nächsten Stufe wechselt).",
-        "stufeBestandskundeAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Endstufe — keine weitere Stufe danach, daher kein Verlassen-Datum."
+        "stufeBestandskundeAm": "Wird automatisch gesetzt, sobald die Chance zum ersten Mal diese Stufe erreicht. Endstufe — keine weitere Stufe danach, daher kein Verlassen-Datum.",
+        "gewerk": "Betroffene Fachbereiche (Mehrfachauswahl möglich, z. B. EMA + Video bei einem Objekt).",
+        "kundenZeitrahmen": "Kundenwunsch, kein bestätigter Termin — laut P-03: 'Kundenwunschtermin ≠ bestätigter KleSec-Termin.'",
+        "entscheidungsweg": "Wer entscheidet, wer beeinflusst, wer bestellt — größen-/risikogerecht erfassen, nicht bei jeder Kleinigkeit nötig.",
+        "kundenBudgetrahmen": "Soweit sinnvoll erfragen, kein Pflichtfeld — ein Kunde ohne Budgetangabe wird dadurch nicht automatisch disqualifiziert.",
+        "qualifizierungsErgebnis": "Ergebnis der Qualifizierung nach P-03: GO (weiter zum Angebot), KLÄREN (fehlende Info, mit Wiedervorlage), NO-GO (strukturiert begründet beendet).",
+        "noGoGrund": "Nachvollziehbarer Grund bei NO-GO — nicht nach Bauchgefühl, sondern aus der festgelegten Liste."
     },
     "options": {
         "leadSource": {
@@ -45,6 +58,33 @@
             "Other": "Andere",
             "Empfehlungen": "Empfehlungen"
         },
+        "gewerk": {
+            "bma": "BMA",
+            "ema": "EMA",
+            "video": "Video",
+            "zutritt": "Zutritt",
+            "sonstiges": "Sonstiges"
+        },
+        "qualifizierungsErgebnis": {
+            "": "—",
+            "go": "GO",
+            "klaeren": "KLÄREN",
+            "noGo": "NO-GO"
+        },
+        "noGoGrund": {
+            "": "—",
+            "nichtImPortfolio": "Leistung nicht im Portfolio",
+            "technischNichtMachbar": "Technisch nicht machbar",
+            "kapazitaetTerminUnmoeglich": "Kapazität/Termin unmöglich",
+            "wirtschaftlichUngeeignet": "Wirtschaftlich ungeeignet",
+            "regionUngeeignet": "Region ungeeignet",
+            "kundeGesperrt": "Kunde gesperrt",
+            "vertragsbedingungenNichtAkzeptabel": "Vertragsbedingungen nicht akzeptabel",
+            "unverhaeltnismaessigerAufwand": "Unverhältnismäßiger Angebotsaufwand",
+            "keineRealistischeAbschlusschance": "Keine realistische Abschlusschance",
+            "keineRueckmeldungKunde": "Keine Rückmeldung vom Kunden",
+            "sonstiges": "Sonstiges"
+        },
         "stage": {
             "adresseNeu": "Adresse | neu",
             "kontaktOffen": "Kontakt | offen",
@@ -55,5 +95,8 @@
             "kundeLeistungserbringung": "Kunde | Errichtung / Wartung / Störungsbeseitigung",
             "bestandskunde": "Bestandskunde"
         }
+    },
+    "messages": {
+        "qualifizierungLeitfaden": "<strong>Leitfaden P-03 — was während des Gesprächs geklärt werden soll:</strong> Kunde · Bedarf (was soll wirklich gelöst werden, nicht nur der genannte Wunsch) · Objekt · Gewerk · Umfang · Zeitrahmen (Kundenwunsch, keine Zusage) · Entscheidungsweg · Budget (soweit sinnvoll) · technische Machbarkeit soweit erkennbar · wirtschaftliche Attraktivität · nächster Schritt.<br><br>Ergebnis am Ende immer eindeutig: <strong>GO</strong> (weiter zum Angebot) · <strong>KLÄREN</strong> (fehlende Info + Wiedervorlage, keine Anfrage bleibt einfach liegen) · <strong>NO-GO</strong> (nachvollziehbarer Grund dokumentiert, nicht nach Bauchgefühl)."
     }
 }

@@ -11,6 +11,72 @@
             "type": "text",
             "isCustom": true
         },
+        "qualifizierungLeitfaden": {
+            "type": "text",
+            "notStorable": true,
+            "isCustom": true,
+            "view": "custom:views/opportunity/fields/qualifizierung-leitfaden",
+            "layoutListDisabled": true,
+            "layoutMassUpdateDisabled": true,
+            "layoutFiltersDisabled": true,
+            "importDisabled": true,
+            "exportDisabled": true,
+            "customizationDisabled": true
+        },
+        "gewerk": {
+            "type": "multiEnum",
+            "options": ["bma", "ema", "video", "zutritt", "sonstiges"],
+            "isCustom": true,
+            "tooltip": true
+        },
+        "kundenZeitrahmen": {
+            "type": "varchar",
+            "maxLength": 150,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "entscheidungsweg": {
+            "type": "varchar",
+            "maxLength": 200,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "kundenBudgetrahmen": {
+            "type": "varchar",
+            "maxLength": 100,
+            "isCustom": true,
+            "tooltip": true
+        },
+        "qualifizierungsErgebnis": {
+            "type": "enum",
+            "options": ["", "go", "klaeren", "noGo"],
+            "isCustom": true,
+            "tooltip": true,
+            "style": {
+                "go": "success",
+                "klaeren": "warning",
+                "noGo": "danger"
+            }
+        },
+        "noGoGrund": {
+            "type": "enum",
+            "options": [
+                "",
+                "nichtImPortfolio",
+                "technischNichtMachbar",
+                "kapazitaetTerminUnmoeglich",
+                "wirtschaftlichUngeeignet",
+                "regionUngeeignet",
+                "kundeGesperrt",
+                "vertragsbedingungenNichtAkzeptabel",
+                "unverhaeltnismaessigerAufwand",
+                "keineRealistischeAbschlusschance",
+                "keineRueckmeldungKunde",
+                "sonstiges"
+            ],
+            "isCustom": true,
+            "tooltip": true
+        },
         "amount": {
             "required": false
         },
