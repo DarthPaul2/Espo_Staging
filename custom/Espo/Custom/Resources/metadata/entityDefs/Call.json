@@ -1,5 +1,16 @@
 {
     "fields": {
+        "ergebnis": {
+            "type": "enum",
+            "options": ["", "erreicht", "nichtErreicht", "terminVereinbaren"],
+            "isCustom": true,
+            "tooltip": true,
+            "style": {
+                "erreicht": "success",
+                "nichtErreicht": "warning",
+                "terminVereinbaren": "primary"
+            }
+        },
         "aussendienstlerTermin": {
             "type": "bool",
             "default": false,
