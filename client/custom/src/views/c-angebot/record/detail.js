@@ -17,22 +17,23 @@ define('custom:views/c-angebot/record/detail', [
         phone: '0171 6969930'
     };
 
-    // Ersetzt in einem BELIEBIGEN Einleitungstext die alten, fest eingetragenen
-    // Kontaktdaten (Name/E-Mail/Telefon von Tobias Schiller) durch die des
-    // tatsächlichen Sachbearbeiters. Nötig, weil das Feld "einleitung" in Espo
-    // einen statischen Default-Wert mit "Tobias Schiller" hat (siehe
-    // entityDefs/CAngebot.json) und Anwender diesen Text oft nur ergänzen
-    // (z. B. eine Projektnotiz einfügen), statt ihn komplett neu zu schreiben —
-    // der alte Kontaktblock bleibt dann sonst stehen, auch wenn ein anderer
-    // Sachbearbeiter zugewiesen ist.
+    // Ersetzt in einem BELIEBIGEN Einleitungstext den Inhalt der festen
+    // Kontakt-Zeilen (Ansprechpartner/E-Mail/Tel./Beauftragungen) durch die
+    // Daten des tatsächlichen Sachbearbeiters — unabhängig davon, wer dort
+    // vorher stand. Wichtig: NICHT nur den alten "Tobias Schiller"-Default
+    // abgleichen, sonst bleibt der Block stehen, sobald schon einmal ein
+    // ANDERER Sachbearbeiter (z. B. Kevin) eingetragen war und der
+    // Sachbearbeiter danach nochmal wechselt (siehe 21.09.26: Kevin → Tobias,
+    // Block blieb bei "Kevin Braun" stehen, weil der alte Fix nur "Tobias
+    // Schiller" als Alt-Wert kannte).
     function withDynamicContact(text, contact) {
         if (!text) return text;
         const c = contact || FALLBACK_CONTACT;
         return text
-            .replace(/Ihr Ansprechpartner:\s*Tobias Schiller/g, `Ihr Ansprechpartner: ${c.name}`)
-            .replace(/E-Mail:\s*schiller@klesec\.de/g, `E-Mail: ${c.email}`)
-            .replace(/Tel\.:\s*0171 6969930/g, `Tel.: ${c.phone}`)
-            .replace(/Beauftragungen bitte an:\s*schiller@klesec\.de/g, `Beauftragungen bitte an: ${c.email}`);
+            .replace(/(Ihr Ansprechpartner:[ \t]*)(.*)/, `$1${c.name}`)
+            .replace(/(E-Mail:[ \t]*)(.*)/, `$1${c.email}`)
+            .replace(/(Tel\.:[ \t]*)(.*)/, `$1${c.phone}`)
+            .replace(/(Beauftragungen bitte an:[ \t]*)(.*)/, `$1${c.email}`);
     }
 
     // Baut den Einleitungstext mit dem tatsächlich zugewiesenen Sachbearbeiter
@@ -145,7 +146,10 @@ Das Angebot setzt sich aus den nachstehenden Positionen und aufgeführten Hinwei
             const promise = Espo.Ajax.getRequest(`User/${userId}`)
                 .then(user => {
                     const contact = {
-                        name: this.model.get('assignedUserName') || user.name || FALLBACK_CONTACT.name,
+                        // user.name zuerst — frisch anhand der aktuellen assignedUserId
+                        // geladen. assignedUserName im Model kann direkt nach einem
+                        // Wechsel noch veraltet sein (siehe PHP-Hook, 21.09.26).
+                        name: user.name || this.model.get('assignedUserName') || FALLBACK_CONTACT.name,
                         email: user.emailAddress || FALLBACK_CONTACT.email,
                         phone: user.phoneNumber || FALLBACK_CONTACT.phone
                     };

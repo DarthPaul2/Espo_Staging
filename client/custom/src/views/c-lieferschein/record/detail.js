@@ -38,9 +38,9 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
         if (!text) return text;
         const c = contact || FALLBACK_CONTACT;
         return text
-            .replace(/Ihr Ansprechpartner:\s*Tobias Schiller/g, `Ihr Ansprechpartner: ${c.name}`)
-            .replace(/E-Mail:\s*schiller@klesec\.de/g, `E-Mail: ${c.email}`)
-            .replace(/Tel\.:\s*0171 6969930/g, `Tel.: ${c.phone}`);
+            .replace(/(Ihr Ansprechpartner:[ \t]*)(.*)/, `$1${c.name}`)
+            .replace(/(E-Mail:[ \t]*)(.*)/, `$1${c.email}`)
+            .replace(/(Tel\.:[ \t]*)(.*)/, `$1${c.phone}`);
     }
 
     return Dep.extend({
@@ -86,7 +86,8 @@ Wir danken Ihnen für Ihr Vertrauen in die KleSec GmbH und wünschen Ihnen viel 
             const promise = Espo.Ajax.getRequest(`User/${userId}`)
                 .then(user => {
                     const contact = {
-                        name: this.model.get('assignedUserName') || user.name || FALLBACK_CONTACT.name,
+                        // user.name zuerst — siehe c-angebot/record/detail.js für den Grund.
+                        name: user.name || this.model.get('assignedUserName') || FALLBACK_CONTACT.name,
                         email: user.emailAddress || FALLBACK_CONTACT.email,
                         phone: user.phoneNumber || FALLBACK_CONTACT.phone
                     };

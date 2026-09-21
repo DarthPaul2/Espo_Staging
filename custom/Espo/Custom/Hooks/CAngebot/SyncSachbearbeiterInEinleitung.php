@@ -6,11 +6,14 @@ use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
 
 // Зачем:
-// Das Feld "einleitung" enthält beim Anlegen einen statischen Default-Text mit
-// "Ihr Ansprechpartner: Tobias Schiller" (siehe entityDefs/CAngebot.json).
-// Beim Speichern ersetzen wir diesen (auch wenn der Text zwischenzeitlich um
-// eigene Zeilen ergänzt wurde) durch die Kontaktdaten des tatsächlich
-// zugewiesenen Sachbearbeiters (assignedUser). Der clientseitige Fix in
+// Das Feld "einleitung" enthält feste Zeilen "Ihr Ansprechpartner:"/"E-Mail:"/
+// "Tel.:"/"Beauftragungen bitte an:", deren Inhalt den zugewiesenen
+// Sachbearbeiter (assignedUser) widerspiegeln soll. Wir ersetzen den WERT
+// dieser Zeilen bei jedem Speichern durch die aktuellen Kontaktdaten —
+// unabhängig davon, wer/was dort vorher stand (nicht nur den alten "Tobias
+// Schiller"-Default abgleichen: sonst bleibt z. B. "Kevin Braun" stehen,
+// wenn der Sachbearbeiter danach nochmal auf Tobias wechselt, siehe
+// 21.09.26). Der clientseitige Fix in
 // client/custom/src/views/c-angebot/record/detail.js macht dasselbe schon für
 // Anzeige/PDF — dieser Hook sorgt zusätzlich dafür, dass es auch nach dem
 // Speichern (und bei API-Zugriffen ohne diese View) in der Datenbank stimmt.
@@ -37,27 +40,34 @@ class SyncSachbearbeiterInEinleitung
             return;
         }
 
-        $name = (string) ($entity->get('assignedUserName') ?: $user->get('name') ?: 'Tobias Schiller');
+        // WICHTIG: $user->get('name') zuerst — er ist frisch anhand der GERADE
+        // gesetzten assignedUserId geladen. $entity->get('assignedUserName')
+        // ist ein gecachtes Foreign-Feld und kann direkt nach einem
+        // assignedUserId-Wechsel noch den ALTEN Namen enthalten (führte am
+        // 21.09.26 dazu, dass Name und E-Mail/Tel. von unterschiedlichen
+        // Personen stammten).
+        $name = (string) ($user->get('name') ?: $entity->get('assignedUserName') ?: 'Tobias Schiller');
         $email = (string) ($user->get('emailAddress') ?: 'schiller@klesec.de');
         $phone = (string) ($user->get('phoneNumber') ?: '0171 6969930');
 
-        $updated = preg_replace(
-            [
-                '/Ihr Ansprechpartner:\s*Tobias Schiller/u',
-                '/E-Mail:\s*schiller@klesec\.de/u',
-                '/Tel\.:\s*0171 6969930/u',
-                '/Beauftragungen bitte an:\s*schiller@klesec\.de/u',
-            ],
-            [
-                'Ihr Ansprechpartner: ' . $name,
-                'E-Mail: ' . $email,
-                'Tel.: ' . $phone,
-                'Beauftragungen bitte an: ' . $email,
-            ],
-            $text
-        );
+        $replacements = [
+            '/(Ihr Ansprechpartner:[ \t]*).*/u' => $name,
+            '/(E-Mail:[ \t]*).*/u' => $email,
+            '/(Tel\.:[ \t]*).*/u' => $phone,
+            '/(Beauftragungen bitte an:[ \t]*).*/u' => $email,
+        ];
 
-        if ($updated !== null && $updated !== $text) {
+        $updated = $text;
+        foreach ($replacements as $pattern => $value) {
+            $updated = preg_replace_callback(
+                $pattern,
+                fn (array $m) => $m[1] . $value,
+                $updated,
+                1
+            ) ?? $updated;
+        }
+
+        if ($updated !== $text) {
             $entity->set('einleitung', $updated);
         }
     }

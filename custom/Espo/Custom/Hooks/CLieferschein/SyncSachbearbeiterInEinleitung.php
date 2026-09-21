@@ -6,8 +6,8 @@ use Espo\ORM\Entity;
 use Espo\ORM\EntityManager;
 
 // Зачем: siehe Espo\Custom\Hooks\CAngebot\SyncSachbearbeiterInEinleitung
-// (gleicher Fix, ohne "Beauftragungen bitte an:"-Zeile, die es im
-// Lieferschein-Text nicht gibt).
+// (gleicher Fix — Zeilen werden per Label ersetzt, nicht per altem Wert,
+// ohne "Beauftragungen bitte an:"-Zeile, die es im Lieferschein-Text nicht gibt).
 class SyncSachbearbeiterInEinleitung
 {
     public function __construct(
@@ -31,25 +31,29 @@ class SyncSachbearbeiterInEinleitung
             return;
         }
 
-        $name = (string) ($entity->get('assignedUserName') ?: $user->get('name') ?: 'Tobias Schiller');
+        // WICHTIG: siehe Espo\Custom\Hooks\CAngebot\SyncSachbearbeiterInEinleitung
+        // — $user->get('name') zuerst, nicht das ggf. gecachte assignedUserName.
+        $name = (string) ($user->get('name') ?: $entity->get('assignedUserName') ?: 'Tobias Schiller');
         $email = (string) ($user->get('emailAddress') ?: 'schiller@klesec.de');
         $phone = (string) ($user->get('phoneNumber') ?: '0171 6969930');
 
-        $updated = preg_replace(
-            [
-                '/Ihr Ansprechpartner:\s*Tobias Schiller/u',
-                '/E-Mail:\s*schiller@klesec\.de/u',
-                '/Tel\.:\s*0171 6969930/u',
-            ],
-            [
-                'Ihr Ansprechpartner: ' . $name,
-                'E-Mail: ' . $email,
-                'Tel.: ' . $phone,
-            ],
-            $text
-        );
+        $replacements = [
+            '/(Ihr Ansprechpartner:[ \t]*).*/u' => $name,
+            '/(E-Mail:[ \t]*).*/u' => $email,
+            '/(Tel\.:[ \t]*).*/u' => $phone,
+        ];
 
-        if ($updated !== null && $updated !== $text) {
+        $updated = $text;
+        foreach ($replacements as $pattern => $value) {
+            $updated = preg_replace_callback(
+                $pattern,
+                fn (array $m) => $m[1] . $value,
+                $updated,
+                1
+            ) ?? $updated;
+        }
+
+        if ($updated !== $text) {
             $entity->set('einleitung', $updated);
         }
     }
