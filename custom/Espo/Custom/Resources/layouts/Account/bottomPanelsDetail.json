@@ -28,6 +28,9 @@
     "cFormulars": {
         "index": 5
     },
+    "documents": {
+        "index": 5.5
+    },
     "_tabBreak_3": {
         "index": 6,
         "tabBreak": true,
@@ -42,9 +45,10 @@
     "_tabBreak_0": {
         "index": 9,
         "tabBreak": true,
-        "tabLabel": "$Stream"
+        "tabLabel": "Ereignisse"
     },
-    "documents": {
+    "stream": {
+        "sticked": false,
         "index": 10
     },
     "_tabBreak_1": {
