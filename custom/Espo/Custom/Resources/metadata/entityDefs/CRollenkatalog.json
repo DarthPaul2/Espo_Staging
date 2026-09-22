@@ -49,6 +49,21 @@
             "type": "linkMultiple",
             "view": "views/fields/teams"
         },
+        "bereich": {
+            "type": "enum",
+            "options": [
+                "",
+                "geschaeftsfuehrung",
+                "verkaufMarketing",
+                "technikService",
+                "backOffice",
+                "itDigitalisierung",
+                "stabsstelleQualitaet",
+                "stabsstelleRecht"
+            ],
+            "isCustom": true,
+            "tooltip": true
+        },
         "uebergeordneteRolle": {
             "type": "link"
         },

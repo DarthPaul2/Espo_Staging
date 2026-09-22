@@ -9,11 +9,25 @@
         "aktiv": "Aktiv",
         "uebergeordneteRolle": "Übergeordnete Rolle",
         "uebergeordneteRolleRollencode": "Code",
-        "untergeordneteRollen": "Untergeordnete Rollen"
+        "untergeordneteRollen": "Untergeordnete Rollen",
+        "bereich": "Bereich (Organigramm)"
     },
     "tooltips": {
         "rollencode": "Format R-XX, z. B. R-01. Muss eindeutig sein.",
-        "aktiv": "Inaktive Rollen bleiben im Katalog sichtbar (Historie), werden aber in Auswahllisten ausgeblendet."
+        "aktiv": "Inaktive Rollen bleiben im Katalog sichtbar (Historie), werden aber in Auswahllisten ausgeblendet.",
+        "bereich": "Zuordnung zum Organigramm 2030 (freigegebene Version). Steuert die Gruppierung im Organigramm-Widget."
+    },
+    "options": {
+        "bereich": {
+            "": "—",
+            "geschaeftsfuehrung": "Geschäftsführung",
+            "verkaufMarketing": "Verkauf & Marketing",
+            "technikService": "Technik & Service",
+            "backOffice": "Back Office",
+            "itDigitalisierung": "IT & Digitalisierung",
+            "stabsstelleQualitaet": "Stabsstelle Qualität",
+            "stabsstelleRecht": "Stabsstelle Recht"
+        }
     },
     "links": {
         "uebergeordneteRolle": "Übergeordnete Rolle",
