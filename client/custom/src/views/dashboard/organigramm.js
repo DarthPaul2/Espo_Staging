@@ -49,19 +49,21 @@ Espo.define('custom:views/dashboard/organigramm', ['view'], function (Dep) {
         ladeUndRendereOrganigramm_: function () {
             Promise.all([
                 Espo.Ajax.getRequest('CRollenkatalog', {
-                    select: 'id,name,rollencode,bereich',
-                    where: [{type: 'equals', attribute: 'aktiv', value: true}],
+                    select: 'id,name,rollencode,bereich,aktiv',
                     orderBy: 'rollencode',
                     maxSize: 200
                 }),
                 Espo.Ajax.getRequest('CRollenzuordnung', {
-                    select: 'rolleId,inhaberId,inhaberName',
-                    where: [{type: 'equals', attribute: 'status', value: 'aktiv'}],
+                    select: 'rolleId,inhaberId,inhaberName,status',
                     maxSize: 200
                 })
             ]).then(function (results) {
-                var rollen = (results[0] && results[0].list) || [];
-                var zuordnungen = (results[1] && results[1].list) || [];
+                var rollen = ((results[0] && results[0].list) || []).filter(function (r) {
+                    return r.aktiv !== false;
+                });
+                var zuordnungen = ((results[1] && results[1].list) || []).filter(function (z) {
+                    return z.status === 'aktiv';
+                });
 
                 var inhaberJeRolle = {};
                 zuordnungen.forEach(function (z) {
