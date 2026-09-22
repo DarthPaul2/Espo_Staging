@@ -1,0 +1,7 @@
+{
+    "view": "custom:views/dashboard/organigramm",
+    "name": "Organigramm",
+    "label": "Organigramm 2030",
+    "aclScope": "CRollenkatalog",
+    "entityType": "CRollenkatalog"
+}
