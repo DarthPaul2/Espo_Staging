@@ -101,8 +101,10 @@ Espo.define('custom:views/dashboard/organigramm', ['view'], function (Dep) {
 
                 return (
                     '<div class="og-zeile">' +
-                        '<span class="og-code">' + self.escape_(code) + '</span>' +
-                        '<span class="og-name">' + self.escape_(rolle.name) + '</span>' +
+                        '<div class="og-zeile-kopf">' +
+                            '<span class="og-code">' + self.escape_(code) + '</span>' +
+                            '<span class="og-name">' + self.escape_(rolle.name) + '</span>' +
+                        '</div>' +
                         '<span class="og-inhaber' + (inhaber.length ? '' : ' og-unbesetzt') + '">' +
                             self.escape_(inhaberText) +
                         '</span>' +
