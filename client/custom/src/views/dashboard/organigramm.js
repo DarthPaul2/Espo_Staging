@@ -84,7 +84,8 @@ Espo.define('custom:views/dashboard/organigramm', ['view'], function (Dep) {
 
         rendereGrid_: function (rollen, inhaberJeRolle) {
             var $root = this.$el || $(this.el);
-            var $ges = $root.find('[data-name="ges-block"]');
+            var $r02Block = $root.find('[data-name="r02-block"]');
+            var $r01Block = $root.find('[data-name="r01-block"]');
             var $stab = $root.find('[data-name="stab-block"]');
             var $grid = $root.find('[data-name="bereiche-grid"]');
 
@@ -117,21 +118,22 @@ Espo.define('custom:views/dashboard/organigramm', ['view'], function (Dep) {
             var r01 = gfRollen.filter(function (r) { return r.rollencode === 'R-01'; })[0];
             var r02 = gfRollen.filter(function (r) { return r.rollencode === 'R-02'; })[0];
 
-            var gesHtml = '';
             if (r02) {
-                gesHtml += '<div class="og-r02">' + zeileHtml(r02) + '</div>';
-                gesHtml += '<div class="og-verbinder"></div>';
+                $r02Block.html(
+                    '<div class="og-r02">' + zeileHtml(r02) + '</div>' +
+                    '<div class="og-verbinder"></div>'
+                );
             }
             if (r01) {
                 var r01Inhaber = (inhaberJeRolle[r01.id] || []).join(', ') || 'unbesetzt';
-                gesHtml +=
+                $r01Block.html(
                     '<div class="og-r01">' +
                         '<div class="og-r01-code">' + self.escape_(r01.rollencode) + '</div>' +
                         '<div class="og-r01-name">' + self.escape_(r01Inhaber) + '</div>' +
                         '<div class="og-r01-rolle">' + self.escape_(r01.name) + '</div>' +
-                    '</div>';
+                    '</div>'
+                );
             }
-            $ges.html(gesHtml);
 
             // Stabsstellen (Qualität, Recht) oben rechts.
             var qualRollen = rollen.filter(function (r) { return r.bereich === 'stabsstelleQualitaet'; });
