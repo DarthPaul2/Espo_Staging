@@ -9,7 +9,8 @@
         "prozessStatus": "Status",
         "bereich": "Bereich",
         "ticket": "Ticket",
-        "rolle": "Zuständige Rolle"
+        "rolle": "Zuständige Rolle",
+        "chancen": "Verknüpfte Verkaufschancen"
     },
     "tooltips": {
         "bereich": "Zu welchem Unternehmensbereich gehört dieser Prozess (nach VEU-Schema) — hilft bei der Einordnung, hat aber keine technische Funktion.",

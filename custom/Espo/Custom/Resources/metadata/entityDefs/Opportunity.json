@@ -11,6 +11,11 @@
             "type": "text",
             "isCustom": true
         },
+        "prozess": {
+            "type": "link",
+            "isCustom": true,
+            "tooltip": true
+        },
         "qualifizierungLeitfaden": {
             "type": "text",
             "notStorable": true,
@@ -219,6 +224,15 @@
             "type": "date",
             "notNull": false,
             "tooltip": true,
+            "isCustom": true
+        }
+    },
+    "links": {
+        "prozess": {
+            "type": "belongsTo",
+            "entity": "CProzesshandbuch",
+            "foreign": "chancen",
+            "audited": false,
             "isCustom": true
         }
     }

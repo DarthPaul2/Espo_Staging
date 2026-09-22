@@ -16,7 +16,8 @@
             [{"name": "qualifizierungLeitfaden", "fullWidth": true}],
             [{"name": "gewerk"}, {"name": "kundenZeitrahmen"}],
             [{"name": "entscheidungsweg"}, {"name": "kundenBudgetrahmen"}],
-            [{"name": "qualifizierungsErgebnis"}, {"name": "noGoGrund"}]
+            [{"name": "qualifizierungsErgebnis"}, {"name": "noGoGrund"}],
+            [{"name": "prozess", "fullWidth": true}]
         ]
     },
     {

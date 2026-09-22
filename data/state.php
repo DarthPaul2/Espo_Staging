@@ -1,11 +1,11 @@
 <?php
 return [
-  'cacheTimestamp' => 1790000384,
-  'microtimeState' => 1790000384.336201,
+  'cacheTimestamp' => 1790056916,
+  'microtimeState' => 1790056916.024263,
   'currencyRates' => [
     'EUR' => 1.0
   ],
-  'appTimestamp' => 1790000384,
+  'appTimestamp' => 1790056916,
   'version' => '10.0.8',
   'latestVersion' => '10.0.8'
 ];

@@ -92,6 +92,13 @@
             "audited": false,
             "isCustom": true
         },
+        "chancen": {
+            "type": "hasMany",
+            "entity": "Opportunity",
+            "foreign": "prozess",
+            "audited": false,
+            "isCustom": true
+        },
         "createdBy": {
             "type": "belongsTo",
             "entity": "User"
