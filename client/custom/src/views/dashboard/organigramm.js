@@ -36,6 +36,10 @@ Espo.define('custom:views/dashboard/organigramm', ['view'], function (Dep) {
             return 'default';
         },
 
+        getActionItemDataList: function () {
+            return [];
+        },
+
         afterRender: function () {
             Dep.prototype.afterRender.call(this);
 
