@@ -120,6 +120,7 @@ Espo.define('custom:views/dashboard/organigramm', ['view'], function (Dep) {
             var gesHtml = '';
             if (r02) {
                 gesHtml += '<div class="og-r02">' + zeileHtml(r02) + '</div>';
+                gesHtml += '<div class="og-verbinder"></div>';
             }
             if (r01) {
                 var r01Inhaber = (inhaberJeRolle[r01.id] || []).join(', ') || 'unbesetzt';

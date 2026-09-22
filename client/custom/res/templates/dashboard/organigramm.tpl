@@ -1,18 +1,19 @@
 <style>
     .og-wrap { font-size: 12px; line-height: 1.4; }
-    .og-top { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
-    .og-ges { flex: 1 1 260px; display: flex; gap: 8px; align-items: stretch; }
-    .og-r02 { flex: 0 0 150px; }
-    .og-r02 .og-zeile { background: #eef3f8; border-radius: 6px; padding: 8px; height: 100%; border-bottom: none; }
+    .og-top { display: flex; gap: 0; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+    .og-ges { flex: 0 1 320px; display: flex; align-items: center; }
+    .og-r02 { flex: 0 0 130px; }
+    .og-r02 .og-zeile { background: #eef3f8; border-radius: 6px; padding: 8px; border-bottom: none; }
     .og-r02 .og-code { color: #15305c; font-weight: 700; }
     .og-r02 .og-name { color: #15305c; }
     .og-r02 .og-inhaber { color: #15305c; padding-left: 0; }
-    .og-r01 { flex: 1; background: #15305c; color: #fff; border-radius: 6px; padding: 10px 14px; text-align: center; }
+    .og-verbinder { flex: 0 0 24px; height: 2px; border-top: 2px dashed #9fb3c8; align-self: center; position: relative; }
+    .og-r01 { flex: 0 0 170px; background: #15305c; color: #fff; border-radius: 6px; padding: 10px 14px; text-align: center; }
     .og-r01-code { font-size: 11px; opacity: 0.8; }
     .og-r01-name { font-size: 15px; font-weight: 700; margin: 2px 0; }
     .og-r01-rolle { font-size: 11px; opacity: 0.9; }
-    .og-stab-wrap { flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 2px dashed #9fb3c8; position: relative; }
-    .og-stab-wrap::before { content: '↳ berichtet direkt an R-01 Geschäftsführung'; position: absolute; top: -9px; left: 0; background: #fff; padding: 0 6px; font-size: 9.5px; color: #6b8199; font-style: italic; }
+    .og-stab-wrap { flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; padding-left: 14px; border-left: 2px dashed #9fb3c8; margin-left: 10px; position: relative; }
+    .og-stab-wrap::before { content: 'berichtet an R-01'; position: absolute; top: -9px; left: 8px; background: #fff; padding: 0 6px; font-size: 9.5px; color: #6b8199; font-style: italic; white-space: nowrap; }
     .og-stab { border-radius: 6px; padding: 6px 8px; }
     .og-stab-qualitaet { background: #fff4e0; border: 1px solid #f5a623; }
     .og-stab-recht { background: #eaf1f5; border: 1px solid #4a6f8a; }
