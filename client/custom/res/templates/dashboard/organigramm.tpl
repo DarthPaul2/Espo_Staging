@@ -11,7 +11,8 @@
     .og-r01-code { font-size: 11px; opacity: 0.8; }
     .og-r01-name { font-size: 15px; font-weight: 700; margin: 2px 0; }
     .og-r01-rolle { font-size: 11px; opacity: 0.9; }
-    .og-stab-wrap { flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; }
+    .og-stab-wrap { flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 2px dashed #9fb3c8; position: relative; }
+    .og-stab-wrap::before { content: '↳ berichtet direkt an R-01 Geschäftsführung'; position: absolute; top: -9px; left: 0; background: #fff; padding: 0 6px; font-size: 9.5px; color: #6b8199; font-style: italic; }
     .og-stab { border-radius: 6px; padding: 6px 8px; }
     .og-stab-qualitaet { background: #fff4e0; border: 1px solid #f5a623; }
     .og-stab-recht { background: #eaf1f5; border: 1px solid #4a6f8a; }
@@ -34,8 +35,9 @@
     .og-stakeholder-box-titel, .og-support-box-titel { font-weight: 700; color: #3a5a78; margin-bottom: 3px; }
     .og-stakeholder-box-sub, .og-support-box-sub { opacity: 0.75; }
 
-    .og-phasen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px; margin-bottom: 6px; }
-    .og-phase-box { color: #fff; border-radius: 6px; padding: 8px 10px; }
+    .og-phasen-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-bottom: 6px; }
+    .og-phase-box { color: #fff; border-radius: 6px; padding: 8px 10px; flex: 1 1 150px; min-width: 140px; }
+    .og-phase-pfeil { flex: 0 0 auto; font-size: 16px; font-weight: 700; color: #9fb3c8; }
     .og-phase-nr { font-size: 10px; opacity: 0.85; }
     .og-phase-titel { font-weight: 700; margin: 2px 0; }
     .og-phase-p { font-size: 10.5px; opacity: 0.9; }
@@ -76,31 +78,37 @@
             <div class="og-phase-p">P-01 bis P-08</div>
             <div class="og-phase-sub">Bedarf | Angebot | Auftrag</div>
         </div>
+        <div class="og-phase-pfeil">→</div>
         <div class="og-phase-box" style="background:#3d8fc7;">
             <div class="og-phase-nr">2. Planung &amp; Projekt</div>
             <div class="og-phase-p">P-09 bis P-17</div>
             <div class="og-phase-sub">Planung | Umsetzung</div>
         </div>
+        <div class="og-phase-pfeil">→</div>
         <div class="og-phase-box" style="background:#e08a3c;">
             <div class="og-phase-nr">3. Service &amp; Wartung</div>
             <div class="og-phase-p">P-18 bis P-27</div>
             <div class="og-phase-sub">Wartung | Störung | Notdienst</div>
         </div>
+        <div class="og-phase-pfeil">→</div>
         <div class="og-phase-box" style="background:#c0504d;">
             <div class="og-phase-nr">4. Finanzen</div>
             <div class="og-phase-p">P-28 bis P-33</div>
             <div class="og-phase-sub">Rechnung | Zahlung | Controlling</div>
         </div>
+        <div class="og-phase-pfeil">→</div>
         <div class="og-phase-box" style="background:#8a5fb5;">
             <div class="og-phase-nr">5. Personal &amp; Organisation</div>
             <div class="og-phase-p">P-34 bis P-50</div>
             <div class="og-phase-sub">Menschen | Ressourcen</div>
         </div>
+        <div class="og-phase-pfeil">→</div>
         <div class="og-phase-box" style="background:#3d9e9e;">
             <div class="og-phase-nr">6. Führung &amp; QM</div>
             <div class="og-phase-p">P-51 bis P-78</div>
             <div class="og-phase-sub">Steuerung | Qualität</div>
         </div>
+        <div class="og-phase-pfeil">→</div>
         <div class="og-phase-box" style="background:#3dbfc7;">
             <div class="og-phase-nr">7. IT &amp; KI</div>
             <div class="og-phase-p">P-79 bis P-85</div>
